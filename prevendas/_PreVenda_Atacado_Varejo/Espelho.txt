@@ -1,5 +1,0 @@
-001   004596     FITA ISOL. AUTO FUSAO BT 0,76MMX19MMX10M
-               5,000      x 13,00      = 65,00                                                                                C0,65      
-002   000350     PLUG JACK MINI DIN 8 PINOS         
-               5,000      x 4,00       = 20,00                                                                                C0,20      
-

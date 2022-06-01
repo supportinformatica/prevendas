@@ -1,6 +1,0 @@
-Data de expiração|20/03/2012
-IP|192.168.254.5
-Nome da Máquina|ADM01
-Data de criação|13/01/2012
-Tipo do sistema|Atacado
-Nome do banco|Eletronica
