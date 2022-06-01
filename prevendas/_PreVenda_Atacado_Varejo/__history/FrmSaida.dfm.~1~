@@ -1,0 +1,736 @@
+object FrmRelSaida: TFrmRelSaida
+  Left = 402
+  Top = 211
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  Caption = 'Relat'#243'rio de Sa'#237'das Anal'#237'tico'
+  ClientHeight = 420
+  ClientWidth = 594
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label5: TLabel
+    Left = 323
+    Top = 75
+    Width = 196
+    Height = 13
+    Caption = 'Localizar especifica'#231#227'o contendo:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    PopupMenu = PopupMenu1
+    Visible = False
+  end
+  object LblMdConsulta: TLabel
+    Left = 322
+    Top = 76
+    Width = 117
+    Height = 13
+    Caption = 'Texto para Pesquisa'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    PopupMenu = PopupMenu1
+  end
+  object LblListados: TLabel
+    Left = 322
+    Top = 136
+    Width = 67
+    Height = 13
+    Caption = 'Listados--> '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 24
+    Top = 370
+    Width = 92
+    Height = 31
+    Caption = 'Per'#237'odo'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Times New Roman'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 257
+    Top = 370
+    Width = 12
+    Height = 31
+    Caption = #224
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -27
+    Font.Name = 'Times New Roman'
+    Font.Style = []
+    ParentFont = False
+  end
+  object LblEspecificacao: TLabel
+    Left = 336
+    Top = 38
+    Width = 196
+    Height = 13
+    Caption = 'Localizar especifica'#231#227'o contendo:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    PopupMenu = PopupMenu1
+    Visible = False
+  end
+  object Label4: TLabel
+    Left = 7
+    Top = 407
+    Width = 123
+    Height = 13
+    Caption = 'Pressione "ESC" para sair'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label30: TLabel
+    Left = 121
+    Top = 325
+    Width = 40
+    Height = 13
+    Caption = 'Cliente'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    PopupMenu = PopupMenu1
+  end
+  object Label8: TLabel
+    Left = 64
+    Top = 325
+    Width = 40
+    Height = 13
+    Caption = 'C'#243'digo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    PopupMenu = PopupMenu1
+  end
+  object Label3: TPanel
+    Left = 0
+    Top = 0
+    Width = 594
+    Height = 69
+    BevelInner = bvRaised
+    BevelWidth = 3
+    Caption = 'Relat'#243'rio de Sa'#237'das Anal'#237'tico'
+    Color = clNavy
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 6
+    object Shape2: TShape
+      Left = 6
+      Top = 6
+      Width = 582
+      Height = 57
+      Align = alClient
+      Brush.Color = clNavy
+      ExplicitLeft = 12
+      ExplicitTop = 12
+    end
+    object Label7: TLabel
+      Left = 171
+      Top = 22
+      Width = 268
+      Height = 24
+      Caption = 'Relat'#243'rio de Sa'#237'das Anal'#237'tico'
+    end
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 0
+    Top = 71
+    Width = 317
+    Height = 78
+    Caption = 'Pesquisar por'
+    Columns = 2
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ItemIndex = 0
+    Items.Strings = (
+      'Ctrl + F4 C'#243'digo'
+      'F4 Descri'#231#227'o'
+      'F5 Ref Interna'
+      'F6 Ref F'#225'brica'
+      'F7 Cod Adicional'
+      'Descri'#231#227'o Contendo'
+      'Todos Produtos')
+    ParentFont = False
+    PopupMenu = PopupMenu1
+    TabOrder = 7
+    OnClick = RadioGroup1Click
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 152
+    Width = 594
+    Height = 166
+    Hint = 'Resultado da pesquisa'
+    Color = clInfoBk
+    DataSource = DataSource1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
+    ParentShowHint = False
+    PopupMenu = PopupMenu1
+    ShowHint = True
+    TabOrder = 8
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'C'#211'DIGO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        PickList.Strings = (
+          '')
+        Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 51
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'UNIDADE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Title.Caption = 'Unidade'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 52
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'REFER'#202'NCIA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Title.Caption = 'Ref Fabrica'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 83
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CDCODIGODIC'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Title.Caption = 'Ref Interna'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 84
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Title.Caption = 'Descri'#231#227'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 229
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Title.Caption = 'Pre'#231'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clBlack
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = []
+        Width = 59
+        Visible = True
+      end>
+  end
+  object EdtConsulta: TEdit
+    Left = 322
+    Top = 93
+    Width = 270
+    Height = 21
+    Hint = 
+      'Digite aqui o texto para filtro ou tecle CTRL + E para consulta ' +
+      'do produto'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    MaxLength = 35
+    ParentFont = False
+    ParentShowHint = False
+    PopupMenu = PopupMenu1
+    ShowHint = True
+    TabOrder = 0
+    OnChange = EdtConsultaChange
+    OnKeyDown = EdtConsultaKeyDown
+    OnKeyPress = EdtConsultaKeyPress
+  end
+  object CheckBox1: TCheckBox
+    Left = 322
+    Top = 117
+    Width = 192
+    Height = 17
+    Caption = 'Listar so&mente produtos ativos'
+    Checked = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    State = cbChecked
+    TabOrder = 9
+  end
+  object DTinicial: TDateTimePicker
+    Left = 121
+    Top = 371
+    Width = 127
+    Height = 28
+    Date = 36316.000000000000000000
+    Time = 36316.000000000000000000
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnKeyPress = DTinicialKeyPress
+  end
+  object DTfinal: TDateTimePicker
+    Left = 280
+    Top = 371
+    Width = 127
+    Height = 28
+    Date = 36316.000000000000000000
+    Time = 36316.000000000000000000
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 4
+    OnKeyPress = DTinicialKeyPress
+  end
+  object BitBtn2: TBitBtn
+    Left = 488
+    Top = 373
+    Width = 95
+    Height = 33
+    Caption = 'Sai&r'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00330000000000
+      03333377777777777F333301111111110333337F333333337F33330111111111
+      0333337F333333337F333301111111110333337F333333337F33330111111111
+      0333337F333333337F333301111111110333337F333333337F33330111111111
+      0333337F3333333F7F333301111111B10333337F333333737F33330111111111
+      0333337F333333337F333301111111110333337F33FFFFF37F3333011EEEEE11
+      0333337F377777F37F3333011EEEEE110333337F37FFF7F37F3333011EEEEE11
+      0333337F377777337F333301111111110333337F333333337F33330111111111
+      0333337FFFFFFFFF7F3333000000000003333377777777777333}
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 10
+    OnClick = BitBtn2Click
+    OnKeyPress = DTinicialKeyPress
+  end
+  object BitBtn1: TBitBtn
+    Left = 488
+    Top = 332
+    Width = 95
+    Height = 33
+    Caption = '&Imprimir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+      00033FFFFFFFFFFFFFFF0888888888888880777777777777777F088888888888
+      8880777777777777777F0000000000000000FFFFFFFFFFFFFFFF0F8F8F8F8F8F
+      8F80777777777777777F08F8F8F8F8F8F9F0777777777777777F0F8F8F8F8F8F
+      8F807777777777777F7F0000000000000000777777777777777F3330FFFFFFFF
+      03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
+      03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
+      33333337F3FF7F3733333330F08F0F0333333337F7737F7333333330FFFF0033
+      33333337FFFF7733333333300000033333333337777773333333}
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 5
+    OnClick = BitBtn1Click
+    OnKeyPress = DTinicialKeyPress
+  end
+  object CbxCliente: TComboBox
+    Left = 121
+    Top = 339
+    Width = 285
+    Height = 21
+    Hint = 'Nome do cliente para esta pr'#233'-venda'
+    AutoDropDown = True
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ImeMode = imOpen
+    ParentFont = False
+    ParentShowHint = False
+    PopupMenu = PopupMenu1
+    ShowHint = True
+    TabOrder = 2
+    OnChange = CbxClienteChange
+  end
+  object EdtCdCliente: TEdit
+    Left = 64
+    Top = 339
+    Width = 53
+    Height = 21
+    PopupMenu = PopupMenu1
+    TabOrder = 1
+    OnExit = EdtCdClienteExit
+    OnKeyPress = EdtCdClienteKeyPress
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 49
+    Top = 254
+    object Help1: TMenuItem
+      Caption = 'Pr'#233'-Venda'
+      ShortCut = 112
+    end
+    object Banese1: TMenuItem
+      Caption = 'Alterar'
+      ShortCut = 113
+    end
+    object HiperCard1: TMenuItem
+      Caption = 'Or'#231'amento'
+      ShortCut = 114
+    end
+    object Cdigo1: TMenuItem
+      Caption = 'C'#243'digo'
+      ShortCut = 16499
+      OnClick = Cdigo1Click
+    end
+    object RedeCard1: TMenuItem
+      Caption = 'Descri'#231#227'o'
+      ShortCut = 115
+      OnClick = RedeCard1Click
+    end
+    object VisaNet1: TMenuItem
+      Caption = 'Ref Interna'
+      ShortCut = 116
+      OnClick = VisaNet1Click
+    end
+    object AmericanExpress1: TMenuItem
+      Caption = 'Ref Interna'
+      ShortCut = 117
+      OnClick = AmericanExpress1Click
+    end
+    object DescrioContendo1: TMenuItem
+      Caption = 'Cod Adicional'
+      ShortCut = 118
+      OnClick = DescrioContendo1Click
+    end
+    object Produtossimilares1: TMenuItem
+      Caption = 'Produtos similares'
+      ShortCut = 119
+    end
+    object ConsultaClientepeloCPFouCNPJ1: TMenuItem
+      Caption = 'Confimar'
+      ShortCut = 120
+    end
+    object Registraperdadevemdaporestoqueinsuficiente1: TMenuItem
+      Caption = 'Registra perda de venda por estoque insuficiente'
+      ShortCut = 121
+    end
+    object Desconto1: TMenuItem
+      Caption = 'Desconto'
+      ShortCut = 122
+    end
+    object ConsultaEspecificacao1: TMenuItem
+      Caption = 'ConsultaEspecificacao'
+      ShortCut = 123
+    end
+    object Excluiritens1: TMenuItem
+      Caption = 'Excluir itens'
+      ShortCut = 46
+    end
+    object Limpatextoparapesquisa1: TMenuItem
+      Caption = 'Limpa texto para pesquisa'
+      ShortCut = 32776
+    end
+    object ConsultaProduto1: TMenuItem
+      Caption = 'ConsultaProduto'
+      ShortCut = 16453
+    end
+    object Alterarpreodoproduto1: TMenuItem
+      Caption = 'Alterar pre'#231'o do produto'
+      ShortCut = 16497
+    end
+    object Cadastrodeclientes1: TMenuItem
+      Caption = 'Cadastro de clientes'
+      ShortCut = 16505
+    end
+    object Consultadecrditodocliente1: TMenuItem
+      Caption = 'Consulta de cr'#233'dito do cliente'
+      ShortCut = 16506
+    end
+    object Consultavendas1: TMenuItem
+      Caption = 'Consulta vendas...'
+      ShortCut = 16507
+    end
+  end
+  object ADOSPConsulta: TADOStoredProc
+    Connection = DModulo.Conexao
+    CursorType = ctStatic
+    CommandTimeout = 99
+    ProcedureName = 'SP_CON_ESTOQUE_RILDON;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@DSATIVO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@ATACADOVAREJO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 1
+        Value = Null
+      end
+      item
+        Name = '@OPCAO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@CDPRODUTO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@NMPRODUTO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@DSREFERENCIA'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@NMGRUPO'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@NMPRODUTO2'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@C_BARRAS'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 40
+        Value = Null
+      end
+      item
+        Name = '@CDCODIGODIC'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 20
+        Value = Null
+      end>
+    Left = 80
+    Top = 254
+    object ADOSPConsultaCDIGO: TIntegerField
+      FieldName = 'C'#211'DIGO'
+    end
+    object ADOSPConsultaCDIGO_BARRAS: TStringField
+      FieldName = 'C'#211'DIGO_BARRAS'
+      Size = 15
+    end
+    object ADOSPConsultaREFERNCIA: TStringField
+      FieldName = 'REFER'#202'NCIA'
+      Size = 15
+    end
+    object ADOSPConsultaDESCRIO: TStringField
+      FieldName = 'DESCRI'#199#195'O'
+      Size = 40
+    end
+    object ADOSPConsultaFABRICANTE: TStringField
+      FieldName = 'FABRICANTE'
+      Size = 40
+    end
+    object ADOSPConsultaVALOR: TBCDField
+      FieldName = 'VALOR'
+      Precision = 19
+    end
+    object ADOSPConsultaCDCODIGODIC: TStringField
+      FieldName = 'CDCODIGODIC'
+    end
+    object ADOSPConsultaPRATELEIRA: TStringField
+      FieldName = 'PRATELEIRA'
+      Size = 10
+    end
+    object ADOSPConsultaESTOQUE: TFloatField
+      FieldName = 'ESTOQUE'
+    end
+    object ADOSPConsultaPEDIDO: TFloatField
+      FieldName = 'PEDIDO'
+    end
+    object ADOSPConsultaUNIDADE: TStringField
+      FieldName = 'UNIDADE'
+      Size = 3
+    end
+    object ADOSPConsultaEMBALAGEM: TStringField
+      FieldName = 'EMBALAGEM'
+      Size = 15
+    end
+    object ADOSPConsultaPESO: TFloatField
+      FieldName = 'PESO'
+    end
+    object ADOSPConsultaGRUPO: TStringField
+      FieldName = 'GRUPO'
+    end
+    object ADOSPConsultaFORNECEDOR: TIntegerField
+      FieldName = 'FORNECEDOR'
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOSPConsulta
+    Left = 136
+    Top = 208
+  end
+  object ADOQryCliente: TADOQuery
+    Connection = DModulo.Conexao
+    Parameters = <>
+    Left = 368
+    Top = 384
+  end
+end
