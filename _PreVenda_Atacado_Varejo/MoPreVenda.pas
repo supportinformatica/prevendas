@@ -16021,46 +16021,59 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
+    Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
+    Editor.Lines.Add('Q338,24');
+    Editor.Lines.Add('q834');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
-    Editor.Lines.Add('q834');
-    Editor.Lines.Add('Q338,24');
-    Editor.Lines.Add('JB');
-    Editor.Lines.Add('D9');
-    Editor.Lines.Add('S2');
-    Editor.Lines.Add('O');
+
+
+    //Editor.Lines.Add('D9');
+    //Editor.Lines.Add('S2');
+
     // Editor.Lines.Add('B36,40,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');
     // Editor.Lines.Add('B320,36,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');  // Cod. Produto
     // Editor.Lines.Add('B594,38,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');
     Editor.Lines.Add('A14,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
       19)) + '"');
-    Editor.Lines.Add('A296,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-      19)) + '"'); // Cod. Barra
-    Editor.Lines.Add('A578,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-      19)) + '"');
     Editor.Lines.Add('A228,32,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
       20)) + '"');
+    Editor.Lines.Add('A16,124,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3, L] + '"');
+    Editor.Lines.Add('B8,52,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A296,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
+      19)) + '"');
     Editor.Lines.Add('A512,34,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-      20)) + '"'); // Descricao part 1
+      20)) + '"');
+    Editor.Lines.Add('A298,126,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3, L] +
+      '"');
+    Editor.Lines.Add('B292,52,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A578,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
+      19)) + '"');
     Editor.Lines.Add('A796,34,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
       20)) + '"');
-    Editor.Lines.Add('A16,124,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('A298,126,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3, L] +
-      '"'); // Descricao part 2
     Editor.Lines.Add('A580,124,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3,
       L] + '"');
-    Editor.Lines.Add('B8,52,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('B292,52,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    // Preco de Venda
     Editor.Lines.Add('B576,50,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+
     // Cálculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
       vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
         div 3) + 1;
-    Editor.Lines.Add('P1,' + FloatToStr(vqtd));
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -16225,7 +16238,7 @@ begin
     else
       vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
         div 3) + 1;
-    Editor.Lines.Add('P' + FloatToStr(vqtd));
+    Editor.Lines.Add('P1,' + FloatToStr(vqtd));
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -16522,52 +16535,55 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
+    Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
+    Editor.Lines.Add('Q460,24');
+    Editor.Lines.Add('q1142');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
-    Editor.Lines.Add('q1142');
-    Editor.Lines.Add('Q460,24');
-    Editor.Lines.Add('JB');
-    Editor.Lines.Add('D7');
-    Editor.Lines.Add('S2');
-    Editor.Lines.Add('O');
-    Editor.Lines.Add('B240,224,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+    //Editor.Lines.Add('S2');
+
     Editor.Lines.Add('A204,362,2,2,1,1,N,"' + nmEmpresa + '"');
+    Editor.Lines.Add('A262,320,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
+    Editor.Lines.Add('A262,302,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
+    Editor.Lines.Add('B240,224,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('B238,116,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('A264,342,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7,
-      L] + '"');
-    Editor.Lines.Add('A262,320,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-      19)) + '"');
+    Editor.Lines.Add('A264,342,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
     Editor.Lines.Add('A262,282,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('B514,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
     Editor.Lines.Add('A486,356,2,2,1,1,N,"' + nmEmpresa + '"');
+    Editor.Lines.Add('A544,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
+    Editor.Lines.Add('A544,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
+    Editor.Lines.Add('B514,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('B512,110,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('A546,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7,
-      L] + '"');
-    Editor.Lines.Add('A544,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-      19)) + '"');
+    Editor.Lines.Add('A546,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
     Editor.Lines.Add('A544,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('B796,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
     Editor.Lines.Add('A770,356,2,2,1,1,N,"' + nmEmpresa + '"');
+    Editor.Lines.Add('A818,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
+    Editor.Lines.Add('A818,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
+    Editor.Lines.Add('B796,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('B794,110,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('A820,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7,
-      L] + '"');
-    Editor.Lines.Add('A818,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-      19)) + '"');
+    Editor.Lines.Add('A820,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
     Editor.Lines.Add('A818,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('A262,302,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-      20)) + '"');
-    Editor.Lines.Add('A544,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-      20)) + '"');
-    Editor.Lines.Add('A818,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-      20)) + '"');
+    Editor.Lines.Add('');
+
     // Cálculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
       vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
         div 3) + 1;
-    Editor.Lines.Add('P1,' + FloatToStr(vqtd));
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
