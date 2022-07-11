@@ -620,6 +620,7 @@ type
     procedure ImprimeEtiquetaEmporioJardins_Pequeno;
     procedure ImprimeEtiquetas_ZeroGrauDepositoMercearia; // Elgin L42 DT
     procedure ImprimeEtiquetas_MerceariaDandan; // Elgin L42 Pro
+    procedure ImprimeEtiquetas_EldoradoCasaDaArte;
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11480,7 +11481,9 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'MAISRACOES' then // ELGIN
     ImprimeEtiquetas_MaisRacoes
   else if UpperCase(vFlagEtiqueta) = 'DANDAN' then // ELGIN L42 Pro
-    ImprimeEtiquetas_MerceariaDandan;
+    ImprimeEtiquetas_MerceariaDandan
+  else if UpperCase(vFlagEtiqueta) = 'ELDORADO' then // ARGOX OS 214 Plus
+    ImprimeEtiquetas_EldoradoCasaDaArte;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -29393,6 +29396,104 @@ begin
       Editor.Lines.Add('');
       vqtd := StrToFloat(SgDados.Cells[2, L]);
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_EldoradoCasaDaArte;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      Editor.Lines.Add('n');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('M0500');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O0220');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('V0');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('f318');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('L');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D11');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A2');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('111100000800019ELDORADO CASA DA ARTE');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102400000590004 R$ ' +FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L])));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102200000450004' +copy(SgDados.Cells[1, L],1,20));
+      Editor.Lines.Add('102200000340004' +copy(SgDados.Cells[1, L],21,20));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('1e4201700130002C' +copy(SgDados.Cells[0, L],1,Length(SgDados.Cells[0, L])-1) +'&E' +copy(SgDados.Cells[0, L],Length(SgDados.Cells[0, L]),1));
+      Editor.Lines.Add('111100000030034' +SgDados.Cells[0, L]);
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('111100000800160ELDORADO CASA DA ARTE');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102400000590145 R$ ' +FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L])));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102200000450145' +copy(SgDados.Cells[1, L],1,20));
+      Editor.Lines.Add('102200000340145' +copy(SgDados.Cells[1, L],21,20));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('1e4201700130143C' +copy(SgDados.Cells[0, L],1,Length(SgDados.Cells[0, L])-1) +'&E' +copy(SgDados.Cells[0, L],Length(SgDados.Cells[0, L]),1));
+      Editor.Lines.Add('111100000030175' +SgDados.Cells[0, L]);
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('111100000800299ELDORADO CASA DA ARTE');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102400000590284 R$ ' +FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L])));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('102200000450284' +copy(SgDados.Cells[1, L],1,20));
+      Editor.Lines.Add('102200000340284' +copy(SgDados.Cells[1, L],21,20));
+      Editor.Lines.Add('');
+      Editor.Lines.Add('1e4201700130282C' +copy(SgDados.Cells[0, L],1,Length(SgDados.Cells[0, L])-1) +'&E' +copy(SgDados.Cells[0, L],Length(SgDados.Cells[0, L]),1));
+      Editor.Lines.Add('111100000030314' +SgDados.Cells[0, L]);
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
+      Editor.Lines.Add('E');
       FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
