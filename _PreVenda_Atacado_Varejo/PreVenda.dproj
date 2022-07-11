@@ -87,10 +87,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <DCC_Define>PREVENDA;$(DCC_Define)</DCC_Define>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
-        <VerInfo_Keys>CompanyName=;FileVersion=2.0.2.323;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=2.0.2.324;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Release>2</VerInfo_Release>
-        <VerInfo_Build>323</VerInfo_Build>
+        <VerInfo_Build>324</VerInfo_Build>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -190,7 +190,7 @@
         <DCCReference Include="ListaPedidos.pas">
             <Form>FrmListaPedidos</Form>
         </DCCReference>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\Thread_Atualizacao.pas"/>
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\Thread_Atualizacao.pas"/>
         <DCCReference Include="HD.pas">
             <Form>frmChave</Form>
         </DCCReference>
@@ -209,10 +209,10 @@
         <DCCReference Include="cdConsultaEstoque.pas">
             <Form>FrmCdEstoque</Form>
         </DCCReference>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\FormRelListaRestante.pas">
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\FormRelListaRestante.pas">
             <Form>FrmRelListaRestante</Form>
         </DCCReference>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\FormRelAlunosLivros.pas">
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\FormRelAlunosLivros.pas">
             <Form>FrmRelAlunosLivros</Form>
         </DCCReference>
         <DCCReference Include="UFrmcadEscola.pas">
@@ -221,13 +221,13 @@
         <DCCReference Include="frmComprouJunto.pas">
             <Form>formComprouJunto</Form>
         </DCCReference>
-        <DCCReference Include="..\..\DOM\DOMProdutoVendidoJunto.pas"/>
-        <DCCReference Include="..\..\DOM\DOMCliente.pas"/>
+        <DCCReference Include="..\..\support\DOM\DOMProdutoVendidoJunto.pas"/>
+        <DCCReference Include="..\..\support\DOM\DOMCliente.pas"/>
         <DCCReference Include="formUltimasVendasDoProdutoAoCliente.pas">
             <Form>frmUltimasVendasDoProdutoAoCliente</Form>
         </DCCReference>
-        <DCCReference Include="..\..\DOM\DOMVendaDeProduto.pas"/>
-        <DCCReference Include="..\..\NEG\NEGItemPrevenda.pas"/>
+        <DCCReference Include="..\..\support\DOM\DOMVendaDeProduto.pas"/>
+        <DCCReference Include="..\..\support\NEG\NEGItemPrevenda.pas"/>
         <DCCReference Include="RelOrcamentoLista.pas">
             <Form>frmRelOrcamentoLista</Form>
         </DCCReference>
@@ -240,7 +240,7 @@
         <DCCReference Include="FormConsultaEscolas.pas">
             <Form>FrmConsultaEscolas</Form>
         </DCCReference>
-        <DCCReference Include="..\..\DAO\DAOGrupo.pas"/>
+        <DCCReference Include="..\..\support\DAO\DAOGrupo.pas"/>
         <DCCReference Include="PedeSenh.pas">
             <Form>FrmPedeSenha</Form>
             <FormType>dfm</FormType>
@@ -293,20 +293,19 @@
             <Form>frmRelOrcamentos40</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\FormRegistroSistema.pas">
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\FormRegistroSistema.pas">
             <Form>FrmRegistroSistema</Form>
         </DCCReference>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\uThreadBlockChave.pas"/>
-        <DCCReference Include="..\..\_Atacado_Varejo_2\uThreadChaveAcesso.pas"/>
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\uThreadBlockChave.pas"/>
+        <DCCReference Include="..\..\support\_Atacado_Varejo_2\uThreadChaveAcesso.pas"/>
         <DCCReference Include="LucroVenda.pas">
             <Form>frmLucroVenda</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\FORMS\FrmConfImpresNFCe.pas">
+        <DCCReference Include="..\..\support\FORMS\FrmConfImpresNFCe.pas">
             <Form>FormConfImpresNFCe</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\NEG\NEGACBrPosPrint.pas"/>
+        <DCCReference Include="..\..\support\NEG\NEGACBrPosPrint.pas"/>
         <DCCReference Include="unitLogoMaker.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

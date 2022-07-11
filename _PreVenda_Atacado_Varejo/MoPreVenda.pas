@@ -458,6 +458,7 @@ type
     procedure SalvaTransferencia; // somente p proauto
     Procedure AtualizaCombProduto;
     Procedure AtualizaQryConsulta;
+    Procedure FiltraConsulta;
     Procedure ConsultaGarantia;
     Procedure LimpaGrid; overload;
     Procedure LimpaGrid(var prevenda: TPrevenda;
@@ -533,6 +534,7 @@ type
     procedure ImprimeEtiquetas_AquiAcha;
     procedure ImprimeEtiquetas_SAOMARCOS;
     procedure ImprimeEtiquetas_TokaDasGrifes;
+    procedure ImprimeEtiquetas_Cardoso;
     procedure ImprimeEtiquetas_Geovana;
     procedure ImprimeEtiquetas_NegroMonte_3_Colunas;
     procedure ImprimeEtiquetas_ConstruFort_3_Colunas;
@@ -2513,6 +2515,20 @@ begin
   // end;
 end;
 
+procedure TFrmPrincipalPreVenda.FiltraConsulta;
+begin
+  ADOSPConsulta.Filtered := False;
+  if EdtConsulta.Text = '' then exit;
+  case RadioGroup1.ItemIndex of
+    0 : ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(EdtConsulta.Text+'%');
+    1 : ADOSPConsulta.Filter := 'DESCRIÇÃO LIKE '+QuotedStr(EdtConsulta.Text+'%');
+    2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(EdtConsulta.Text+'%');
+    3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(EdtConsulta.Text+'%');
+    4 : ADOSPConsulta.Filter := 'CÓDIGO_BARRAS LIKE '+QuotedStr(EdtConsulta.Text+'%');
+  end;
+  ADOSPConsulta.Filtered := True;
+end;
+
 procedure TFrmPrincipalPreVenda.FormActivate(Sender: TObject);
 begin
   Application.OnMessage := ProcessaMsg;
@@ -2768,6 +2784,7 @@ var
   tipoCompos : TTipoComposicaoProduto;
   qtdDisponivel : Real;
   precoTotal : Currency;
+  textoConsultaTemp : String;
 begin
   precoTotal := StrToCurrDef(FormatFloatQ(vCasasQtd, StrToFloatDef(EdtQtd.Text, 0)), 0) * StrToFloatDef(FormatFloatQ(vCasasPreco, StrToFloatDef(EdtPreco.Text, 0)), 0);
   if precoTotal < 0.01 then
@@ -2825,8 +2842,13 @@ begin
       (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES') and
       ((UpperCase(vEmpresa) <> 'LLPARAFUSOS') and
       (UpperCase(vEmpresa) <> 'NACIONAL'))) and
-      (chkbxEtiqueta.Checked = false) then
-      AtualizaQryConsulta;
+      (chkbxEtiqueta.Checked = false) then  begin
+        textoConsultaTemp := EdtConsulta.Text;
+        EdtConsulta.Text := '';
+        AtualizaQryConsulta;
+        EdtConsulta.Text := textoConsultaTemp;
+        EdtConsulta.SelectAll;
+      end;
   end else
   begin
     Application.OnMessage := NaoProcessaMsg;
@@ -7296,6 +7318,9 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
+  if RadioGroup1.ItemIndex IN [0,1,2,3] then
+    FiltraConsulta
+  else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
     AtualizaQryConsulta;
   if DBGrid1.Color = clBtnHighlight then;
@@ -11043,6 +11068,8 @@ begin
     ImprimeEtiquetas_SAOMARCOS;
   if UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES' then // ZEBRA GC 420t
     ImprimeEtiquetas_TokaDasGrifes;
+  if UpperCase(vFlagEtiqueta) = 'CARDOSO' then // ELGIN L42PRO
+    ImprimeEtiquetas_Cardoso;
   if UpperCase(vFlagEtiqueta) = 'GIOVANNA' then // ELGIN
     ImprimeEtiquetas_Geovana;
   if UpperCase(vFlagEtiqueta) = 'JMCOMERCIO' then // ELGIN
@@ -14624,6 +14651,96 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Cardoso;
+var
+  L, y: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 3) = 0.00 then
+    vqtd := cont / 3
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 3) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q120,24');
+    Editor.Lines.Add('q699');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZT');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A672,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A672,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('A592,65,2,1,1,2,N,"REF."');
+    Editor.Lines.Add('A647,37,2,1,1,2,N,'+SgDados.Cells[7, L]+'"');
+    Editor.Lines.Add('');
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Editor.Lines.Add('A428,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
+      Editor.Lines.Add('A428,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('A348,61,2,1,1,2,N,"REF."');
+      Editor.Lines.Add('A403,37,2,1,1,2,N,"'+SgDados.Cells[7, L+1]+'"');
+      Editor.Lines.Add('');
+    end;
+    if SgDados.Cells[0,L+2] <> '' then begin
+      Editor.Lines.Add('A185,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
+      Editor.Lines.Add('A185,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('A101,61,2,1,1,2,N,"REF."');
+      Editor.Lines.Add('A160,37,2,1,1,2,N,"'+SgDados.Cells[7, L+2]+'"');
+    end;
+    Editor.Lines.Add('P1');
+    L := L + 3;
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TokaDasGrifes;
 var
   L, y: Integer;
@@ -15870,7 +15987,8 @@ end;
 
 function TFrmPrincipalPreVenda.Empresas_UmaEtiqueta_porColuna: Boolean;
 begin
-  if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS') or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') then
+  if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
+   or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') then
     Result := True
   else
     Result := False;
