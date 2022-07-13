@@ -168,7 +168,6 @@ type
     DsDeposito: TDataSource;
     Especificao1: TMenuItem;
     Relatriodecontagem1: TMenuItem;
-    ADOSPConsultaCDIGO: TIntegerField;
     ADOSPConsultaCDIGO_BARRAS: TStringField;
     ADOSPConsultaREFERNCIA: TStringField;
     ADOSPConsultaDESCRIO: TStringField;
@@ -296,6 +295,7 @@ type
     imgTransparente: TImage;
     ACBrPosPrinter: TACBrPosPrinter;
     chkbxEtiqueta: TCheckBox;
+    ADOSPConsultaCÓDIGO: TStringField;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -460,6 +460,7 @@ type
     Procedure AtualizaQryConsulta;
     Procedure FiltraConsulta;
     Procedure ConsultaGarantia;
+    Procedure AjustarAposConsultaProduto;
     Procedure LimpaGrid; overload;
     Procedure LimpaGrid(var prevenda: TPrevenda;
       deletarSomenteItens: Boolean = false); overload;
@@ -2520,17 +2521,26 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.FiltraConsulta;
+var
+  texto : string;
 begin
-  ADOSPConsulta.Filtered := False;
-  if EdtConsulta.Text = '' then exit;
-  case RadioGroup1.ItemIndex of
-    0 : ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(EdtConsulta.Text+'%');
-    1 : ADOSPConsulta.Filter := 'DESCRIÇÃO LIKE '+QuotedStr(EdtConsulta.Text+'%');
-    2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(EdtConsulta.Text+'%');
-    3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(EdtConsulta.Text+'%');
-    4 : ADOSPConsulta.Filter := 'CÓDIGO_BARRAS LIKE '+QuotedStr(EdtConsulta.Text+'%');
+  try
+    ADOSPConsulta.Filtered := False;
+    if EdtConsulta.Text <> '' then begin
+      texto := StringReplace(EdtConsulta.Text,'%','*',[]);
+      case RadioGroup1.ItemIndex of
+        0 : ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(texto+'%');
+        1 : ADOSPConsulta.Filter := 'DESCRIÇÃO LIKE '+QuotedStr(texto+'%');
+        2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(texto+'%');
+        3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(texto+'%');
+        4 : ADOSPConsulta.Filter := 'CÓDIGO_BARRAS LIKE '+QuotedStr(texto+'%');
+      end;
+      ADOSPConsulta.Filtered := True;
+    end;
+    AjustarAposConsultaProduto;
+  except
+
   end;
-  ADOSPConsulta.Filtered := True;
 end;
 
 procedure TFrmPrincipalPreVenda.FormActivate(Sender: TObject);
@@ -7244,41 +7254,7 @@ begin
     if (vAutoPecas = 'A') and (UpperCase(vEmpresa) <> 'TRATORMEC') then
       DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'CÓDIGO_BARRAS')].Visible := false;
     open; // mostra os dados no dbgrid
-    if (SoNumeros(dsCGC) = '11411925000141') then
-    // lojão acricola do joao alves
-    begin
-      ADOSPConsultavlComissao.Visible := True;
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].width := 70;
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := True;
-      ADOSPConsultavlComissao.DisplayFormat := '#0.00';
-    end
-    else
-    begin
-      ADOSPConsultavlComissao.Visible := false;
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := false;
-    end;
-    if (UpperCase(vEmpresa) <> 'MOTOBOX') then
-    begin
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'GRUPO')].Visible := false;
-    end;
-    if (RecordCount > 0) and (RadioGroup1.ItemIndex = 4) and
-      (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balança
-    begin
-      if vTipoCodigoBalanca = 1 then // calcula pelo preço
-        EdtQtd.Text := FormatFloat('0.000',
-          (StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
-          Copy(EdtConsulta.Text, 10, 3)) / FieldByName('Valor').AsFloat) * 10)
-      else // calcula pelo peso
-        EdtQtd.Text := FormatFloat('0.000',
-          StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
-          Copy(EdtConsulta.Text, 10, 3)));
-    end;
-    LblListados.caption := 'Listados--> ' + intToStr(RecordCount);
-    EdtPreco.Text := FormatFloatQ(vCasasPreco, FieldByName('Valor').AsFloat);
-    if EdtCFOP.Visible = True then
-      EdtCFOP.Text := SugereCFOP;
-    Label11.Text := '0,00';
-    Label13.Text := '__/__/____';
+    AjustarAposConsultaProduto;
   end;
 end;
 
@@ -7300,6 +7276,7 @@ procedure TFrmPrincipalPreVenda.RadioGroup1Click(Sender: TObject);
 var
   vIdent: String[20];
   i: Integer;
+  textoConsulta_temp : string;
 begin
   CmbConsulta.ItemIndex := RadioGroup1.ItemIndex;
   if RadioGroup1.ItemIndex = 5 then
@@ -7315,7 +7292,12 @@ begin
   else
     LblEspecificacao.Visible := false;
   // EdtConsulta.Clear;
-  EdtConsultaChange(self);
+//  EdtConsultaChange(self);
+  textoConsulta_temp := EdtConsulta.Text;
+  EdtConsulta.Text := '';
+  if (RadioGroup1.ItemIndex <> 4) then
+    AtualizaQryConsulta;
+  EdtConsulta.Text := textoConsulta_temp;
   EdtConsulta.SelectAll;
   EdtConsulta.Setfocus;
 end;
@@ -8969,6 +8951,45 @@ procedure TFrmPrincipalPreVenda.Consultadecrditodocliente1Click
 begin
   vFlag := '5';
   LiberaVanda;
+end;
+
+procedure TFrmPrincipalPreVenda.AjustarAposConsultaProduto;
+begin
+  if (SoNumeros(dsCGC) = '11411925000141') then
+  // lojão acricola do joao alves
+  begin
+    ADOSPConsultavlComissao.Visible := True;
+    DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].width := 70;
+    DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := True;
+    ADOSPConsultavlComissao.DisplayFormat := '#0.00';
+  end
+  else
+  begin
+    ADOSPConsultavlComissao.Visible := false;
+    DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := false;
+  end;
+  if (UpperCase(vEmpresa) <> 'MOTOBOX') then
+  begin
+    DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'GRUPO')].Visible := false;
+  end;
+  if (ADOSPConsulta.RecordCount > 0) and (RadioGroup1.ItemIndex = 4) and
+    (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balança
+  begin
+    if vTipoCodigoBalanca = 1 then // calcula pelo preço
+      EdtQtd.Text := FormatFloat('0.000',
+        (StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
+        Copy(EdtConsulta.Text, 10, 3)) / ADOSPConsulta.FieldByName('Valor').AsFloat) * 10)
+    else // calcula pelo peso
+      EdtQtd.Text := FormatFloat('0.000',
+        StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
+        Copy(EdtConsulta.Text, 10, 3)));
+  end;
+  LblListados.caption := 'Listados--> ' + intToStr(ADOSPConsulta.RecordCount);
+  EdtPreco.Text := FormatFloatQ(vCasasPreco, ADOSPConsulta.FieldByName('Valor').AsFloat);
+  if EdtCFOP.Visible = True then
+    EdtCFOP.Text := SugereCFOP;
+  Label11.Text := '0,00';
+  Label13.Text := '__/__/____';
 end;
 
 procedure TFrmPrincipalPreVenda.Alteraquantidade1Click(Sender: TObject);

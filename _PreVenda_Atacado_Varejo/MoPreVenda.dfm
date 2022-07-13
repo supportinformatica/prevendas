@@ -4687,9 +4687,6 @@
       end>
     Left = 159
     Top = 214
-    object ADOSPConsultaCDIGO: TIntegerField
-      FieldName = 'C'#211'DIGO'
-    end
     object ADOSPConsultaCDIGO_BARRAS: TStringField
       FieldName = 'C'#211'DIGO_BARRAS'
     end
@@ -4778,6 +4775,10 @@
     object ADOSPConsultavlComissao: TFloatField
       FieldName = 'vlComissao'
       Visible = False
+    end
+    object ADOSPConsultaCÓDIGO: TStringField
+      FieldName = 'C'#211'DIGO'
+      Size = 10
     end
   end
   object ADOQryProcura: TADOQuery
