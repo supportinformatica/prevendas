@@ -2859,7 +2859,9 @@ begin
       (UpperCase(vEmpresa) <> 'NACIONAL'))) and
       (chkbxEtiqueta.Checked = false) then  begin
         textoConsultaTemp := EdtConsulta.Text;
-        EdtConsulta.Text := '';
+        if RadioGroup1.ItemIndex <> 4 then begin
+          EdtConsulta.Text := '';
+        end;
         AtualizaQryConsulta;
         EdtConsulta.Text := textoConsultaTemp;
         EdtConsulta.SelectAll;
