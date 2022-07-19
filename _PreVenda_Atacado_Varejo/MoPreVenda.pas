@@ -688,7 +688,6 @@ type
   public
     prevenda: TPrevenda;
     { Public declarations }
-
     listaLiberacoes : Tlist<TLiveracao>;
     modeloImpressora : string;
     driveSpooler : integer;
@@ -2857,12 +2856,13 @@ begin
       ((UpperCase(vEmpresa) <> 'LLPARAFUSOS') and
       (UpperCase(vEmpresa) <> 'NACIONAL'))) and
       (chkbxEtiqueta.Checked = false) then  begin
-        textoConsultaTemp := EdtConsulta.Text;
-        if RadioGroup1.ItemIndex <> 4 then begin
-          EdtConsulta.Text := '';
-        end;
-        AtualizaQryConsulta;
-        EdtConsulta.Text := textoConsultaTemp;
+        if (RadioGroup1.ItemIndex <> 4) and ((Pos('%',EdtConsulta.Text)=0)) then begin
+          textoConsultaTemp := EdtConsulta.Text;
+          EdtConsulta.Text := '';  //atualizarqryconsulta ja esta immplpicito aqui no OnChange
+          EdtConsulta.Text := textoConsultaTemp;
+        end
+        else
+          AtualizaQryConsulta;
         EdtConsulta.SelectAll;
       end;
   end else
@@ -7306,7 +7306,9 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
-  if RadioGroup1.ItemIndex IN [0,1,2,3] then
+  if ADOSPConsulta.Active = True then
+    ADOSPConsulta.Filtered := False;
+  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (EdtConsulta.Text <> '')) then
     FiltraConsulta
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
