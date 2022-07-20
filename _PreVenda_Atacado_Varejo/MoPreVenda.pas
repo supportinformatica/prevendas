@@ -14750,23 +14750,24 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A672,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A672,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
-    Editor.Lines.Add('A592,65,2,1,1,2,N,"REF."');
-    Editor.Lines.Add('A647,37,2,1,1,2,N,'+SgDados.Cells[7, L]+'"');
+    Editor.Lines.Add('A664,110,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A664,84,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('A664,40,2,1,1,2,N,"REF."');
+    Editor.Lines.Add('A620,40,2,1,1,2,N,"'+SgDados.Cells[7, L]+'"');
     Editor.Lines.Add('');
     if SgDados.Cells[0,L+1] <> '' then begin
-      Editor.Lines.Add('A428,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
-      Editor.Lines.Add('A428,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
-      Editor.Lines.Add('A348,61,2,1,1,2,N,"REF."');
-      Editor.Lines.Add('A403,37,2,1,1,2,N,"'+SgDados.Cells[7, L+1]+'"');
+      Editor.Lines.Add('A420,110,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
+      Editor.Lines.Add('A420,84,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('A420,40,2,1,1,2,N,"REF."');
+      Editor.Lines.Add('A376,40,2,1,1,2,N,"'+SgDados.Cells[7, L+1]+'"');
       Editor.Lines.Add('');
     end;
     if SgDados.Cells[0,L+2] <> '' then begin
-      Editor.Lines.Add('A185,118,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
-      Editor.Lines.Add('A185,92,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
-      Editor.Lines.Add('A101,61,2,1,1,2,N,"REF."');
-      Editor.Lines.Add('A160,37,2,1,1,2,N,"'+SgDados.Cells[7, L+2]+'"');
+      Editor.Lines.Add('A176,110,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
+      Editor.Lines.Add('A176,84,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('A176,40,2,1,1,2,N,"REF."');
+      Editor.Lines.Add('A132,40,2,1,1,2,N,"'+SgDados.Cells[7, L+2]+'"');
+      Editor.Lines.Add('');
     end;
     Editor.Lines.Add('P1');
     L := L + 3;
