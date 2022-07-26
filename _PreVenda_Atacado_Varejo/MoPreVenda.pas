@@ -7671,13 +7671,6 @@ begin
     case RgOpcoes.ItemIndex of
       1:
       begin
-        // não precisa fazer a pergunta já q vai subir a tela de senha
-//          if MessageDlg('Deseja alterar uma Pré-Venda/Orçamento?',
-//            mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-//          begin
-//            RgOpcoes.ItemIndex := intemIndexRgOpcoesOLD;
-//            exit;
-//          end;
         if (UpperCase(vEmpresa) = 'TREVO') and (edtLogin.Text = '') then
         begin
           EdtLancto.Enabled := True;
@@ -7687,56 +7680,22 @@ begin
             exit;
           end;
         end;
-        // if (vSenha_Alteracao = 'X') then
-        // begin
-        // // vTexto := InputBox('Liberação para alteração', 'Digite senha que permite alterar as pré-vendas', '#');
-        // CbxCliente.Enabled := False;
-        // vFlag := '1';
-        // LiberaVanda;
-        // LimpaGrid;
-        // end
-        // else
-        // begin
-
-        { A PEDIDO DA MEGA O TRECHO ABAIXO QUE SOLICITAVA PERMISSAO PARA ALTERAR ORCAMENTO FOI COMENTADO }
-        if FrmCancelamentoVenda.Possui_Permissao('820','A',cbxUsuario.Text,EdtUsuario.Text) then
-           possuiPermissaoParaAlterarPrevenda := True
-        else begin
-          try
-            if FrmCancelamentoVenda <> nil then
-              FreeAndNil(FrmCancelamentoVenda);
-            FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-            FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Alteração de pré-venda    >>>>';
-            FrmCancelamentoVenda.showmodal;
-            FreeAndNil(FrmCancelamentoVenda);
-          except
-            FreeAndNil(FrmCancelamentoVenda);
-          end;
-        end;
-
-        { if FrmCancelamentoVenda.Possui_Permissao('831', 'V', cbxUsuario.Text,
-          EdtUsuario.Text) then
-          possuiPermissaoParaTransformarOrcamento := True
-        else
-        begin
-          FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '831',
-            'V', possuiPermissaoParaTransformarOrcamento);
-          FrmCancelamentoVenda.Copyright.caption :=
-            '<<<<   Transformar orçamento em pré-venda    >>>>';
-          FrmCancelamentoVenda.ShowModal;
-        end;
-        if (not possuiPermissaoParaTransformarOrcamento) then
-        begin
-          Application.OnMessage := NaoProcessaMsg;
-          Application.MessageBox
-            ('Necessário permissão para executar esta ação.', 'Atenção',
-            mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
-          EdtLancto.Clear;
-          EdtLancto.Setfocus;
-          EdtLancto.SelectAll;
-          Application.OnMessage := ProcessaMsg;
-          exit;
-        end;}
+//        if FrmCancelamentoVenda.Possui_Permissao('820','A',cbxUsuario.Text,EdtUsuario.Text) then
+//           possuiPermissaoParaAlterarPrevenda := True
+//        else
+//        begin
+//          try
+//            if FrmCancelamentoVenda <> nil then
+//              FreeAndNil(FrmCancelamentoVenda);
+//            FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
+//            FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Alteração de pré-venda    >>>>';
+//            FrmCancelamentoVenda.showmodal;
+//            FreeAndNil(FrmCancelamentoVenda);
+//          except
+//            FreeAndNil(FrmCancelamentoVenda);
+//          end;
+//        end;
+        possuiPermissaoParaAlterarPrevenda := True;
         if not possuiPermissaoParaAlterarPrevenda and (UpperCase(vEmpresa) <> 'SANTANA') then
         begin
           RgOpcoes.ItemIndex := 0;
@@ -7771,9 +7730,6 @@ begin
         else
           CbxCliente.Setfocus;
         CbxCliente.SelectAll;
-        // if UpperCase( vEmpresa ) = 'DISCABOS' then
-        // Limpar_Tela;
-        // LimpaGrid(prevenda);
       end;
       3:
       begin
@@ -8017,38 +7973,12 @@ begin
     AtualizaCombProduto; // pega o nome do produto
     verificarDispEmEstoque := false;
     transformarOrcamentoPrevenda := false;
-
     if (vOrcamento = 'O') then
     begin // se for orcamento preguntar se ele vai transormar em pre-venda
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      if MessageDlg('Este orçamento será transformado em Pre Venda?',
+      if MessageDlg('Deseja transformar esse orçamento em Pre Venda?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
-        { A PEDIDO DA MEGA O TRECHO ABAIXO QUE SOLICITAVA PERMISSAO PARA ALTERAR ORCAMENTO FOI COMENTADO }
-{          if FrmCancelamentoVenda.Possui_Permissao('831', 'V', cbxUsuario.Text,
-            EdtUsuario.Text) then
-            possuiPermissaoParaTransformarOrcamento := True
-          else
-          begin
-            FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '820', 'V', possuiPermissaoParaTransformarOrcamento);
-            FrmCancelamentoVenda.Copyright.caption :=
-              '<<<<   Transformar orçamento em pré-venda    >>>>';
-            FrmCancelamentoVenda.ShowModal;
-          end;
-          if (not possuiPermissaoParaTransformarOrcamento) then
-          begin
-            Application.OnMessage := NaoProcessaMsg;
-            Application.MessageBox
-              ('Necessário permissão para executar esta ação.', 'Atenção',
-              mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
-            EdtLancto.Clear;
-            EdtLancto.Setfocus;
-            EdtLancto.SelectAll;
-            Application.OnMessage := ProcessaMsg;
-            exit;
-          end;}
-          // CbxClienteExit(Self);
-
         vOrcamento := 'N';
         transformarOrcamentoPrevenda := True;
         if (vEstqNegativo <> 'S') then
@@ -8062,29 +7992,10 @@ begin
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     end else if (vOrcamento = 'N') then
     begin
-{      if FrmCancelamentoVenda.Possui_Permissao('820', 'A', cbxUsuario.Text, EdtUsuario.Text) then
-        possuiPermissaoParaAlterarPrevenda := True
-      else
-      begin
-//       esses comentados abaixo é porq estava pedindo a senha de liberação duas vezes
-        FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '820', 'A',
-          possuiPermissaoParaAlterarPrevenda);
-        FrmCancelamentoVenda.Copyright.caption := '<<<<   Alteração de pré-venda    >>>>';
-        FrmCancelamentoVenda.ShowModal;
-        if FrmCancelamentoVenda <> nil then
-          FreeAndNil(FrmCancelamentoVenda);
-      end;
-      if not possuiPermissaoParaAlterarPrevenda then
-      begin
-        if (UpperCase(vEmpresa) = 'SANTANA') then
-          RgOpcoes.ItemIndex := 2
-        else
-          RgOpcoes.ItemIndex := 1;
-        exit;
-      end;}
       if (vEstqNegativo <> 'S') then
         verificarDispEmEstoque := True;
     end;
+
     i := 0;
     while i <= prevenda.itens.Count - 1 do
     begin
@@ -8122,9 +8033,50 @@ begin
     // EdtDescontoExit(Self);
     CbxCliente.Enabled := True;
     CbxCliente.Setfocus;
-    if not liberaDigitacaoLancamento then
-      EdtLancto.ReadOnly := True;
-    CbxClienteExit(self);
+    if prevenda.isOrcamento then
+    begin
+      if (transformarOrcamentoPrevenda = False) or (FrmCancelamentoVenda.Possui_Permissao('831','V',cbxUsuario.Text,EdtUsuario.Text)) then
+        possuiPermissaoParaAlterarPrevenda := True
+      else
+      begin
+        try
+          if FrmCancelamentoVenda <> nil then
+            FreeAndNil(FrmCancelamentoVenda);
+          FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
+          FrmCancelamentoVenda.Copyright.Caption :=  ' <<< Transformar Orçamento em Pré-venda >>>';
+          FrmCancelamentoVenda.showmodal;
+          FreeAndNil(FrmCancelamentoVenda);
+        except
+          FreeAndNil(FrmCancelamentoVenda);
+        end;
+      end;
+    end else if prevenda.isOrcamento = False then
+    begin
+      if FrmCancelamentoVenda.Possui_Permissao('820','A',cbxUsuario.Text,EdtUsuario.Text) then
+        possuiPermissaoParaAlterarPrevenda := True
+      else
+      begin
+        try
+          if FrmCancelamentoVenda <> nil then
+            FreeAndNil(FrmCancelamentoVenda);
+          FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
+          FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Alteração de pré-venda    >>>>';
+          FrmCancelamentoVenda.showmodal;
+          FreeAndNil(FrmCancelamentoVenda);
+        except
+          FreeAndNil(FrmCancelamentoVenda);
+        end;
+      end;
+    end;
+    if not possuiPermissaoParaAlterarPrevenda then
+    begin
+      Cancelar;
+    end else
+    begin
+      if not liberaDigitacaoLancamento then
+        EdtLancto.ReadOnly := True;
+      CbxClienteExit(self);
+    end;
   end else if RgOpcoes.ItemIndex = 3 then // AMBIENTAR NOTA DE ENTRADA
   begin
     With ADOQryProcura do

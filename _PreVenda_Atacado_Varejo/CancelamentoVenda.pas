@@ -720,12 +720,13 @@ begin
     Parameters.ParamByName('dsSenha').Value := vSenha;
     Parameters.ParamByName('tag').Value := vTag;
     Open;
-    if (qry.RecordCount = 0)or
+    if (qry.RecordCount = 0) or
        ((letraDaOperacao = 'N')and(trim(FieldByName('dsIncluir').asString) = ''))or // criar Novo
        ((letraDaOperacao = 'A')and(trim(FieldByName('dsAlterar').asString) = ''))or // Alterar
        ((letraDaOperacao = 'E')and(trim(FieldByName('dsExcluir').asString) = ''))or // Excluir
        ((letraDaOperacao = 'I')and(trim(FieldByName('dsImprimir').asString) = ''))or // Imprimir
-       ((letraDaOperacao = 'B')and(trim(FieldByName('dsBaixa').asString) = ''))   // dar Baixa
+       ((letraDaOperacao = 'B')and(trim(FieldByName('dsBaixa').asString) = ''))or   // dar Baixa
+       ((letraDaOperacao = 'V')and(trim(FieldByName('dsVisualizar').asString) = ''))   // visualizar
     then
     begin
       if exibirMensagem = true then
