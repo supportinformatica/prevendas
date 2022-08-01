@@ -458,7 +458,7 @@ type
     procedure SalvaTransferencia; // somente p proauto
     Procedure AtualizaCombProduto;
     Procedure AtualizaQryConsulta;
-    Procedure FiltraConsulta;
+    Procedure FiltraConsulta(texto : string);
     Procedure ConsultaGarantia;
     Procedure AjustarAposConsultaProduto;
     Procedure LimpaGrid; overload;
@@ -2252,17 +2252,14 @@ begin
     BtnAprazo.Enabled   := false;
     BtnAprazo.Visible   := false;
     end; }
-
-  if ( (UPPERCASE(vEmpresa) = 'MOTOBOX') or
+  if (UPPERCASE(vEmpresa) = 'MOTOBOX') or
      (UPPERCASE(vEmpresa) = 'MOTOPECAS') or
-     (dsCGC = '13951392000388') or
-     (dsCGC = '07067845000143') or
-     (dsCGC = '32879272000108') or
-     (dsCGC = '32879272000361') or
-     (dsCGC = '03334531000109') or
-     (dsCGC = '15555876000171') or
-     (dsCGC = '07328830000191') or
-     (dsCGC = '11594965000176') ) then
+     (dsCGC = '13951392000388') or (dsCGC = '07067845000143') or
+     (dsCGC = '32879272000108') or (dsCGC = '32879272000361') or
+     (dsCGC = '03334531000109') or (dsCGC = '15555876000171') or
+     (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
+     (dsCGC = '21597412000120')
+  then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
     ADOSPConsultaDESCRIO.DisplayWidth := 100;
@@ -2520,16 +2517,26 @@ begin
   // end;
 end;
 
-procedure TFrmPrincipalPreVenda.FiltraConsulta;
-var
-  texto : string;
+procedure TFrmPrincipalPreVenda.FiltraConsulta(texto : string);
 begin
   try
     ADOSPConsulta.Filtered := False;
-    if EdtConsulta.Text <> '' then begin
-      texto := StringReplace(EdtConsulta.Text,'%','*',[]);
+    if texto <> '' then
+    begin
+      texto := StringReplace(texto,'%','*',[]);
       case RadioGroup1.ItemIndex of
-        0 : ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(texto+'%');
+        0 :
+        begin
+          if (UpperCase(vEmpresa) = 'CHALOC') then
+          begin
+            if (dsCGC <> '01655446000117') and
+               (dsCGC <> '10237494000186') and (dsCGC <> '01655446000389') then
+              ADOSPConsulta.Filter := 'CÓDIGO_BARRAS = '+QuotedStr(texto)
+            else
+              ADOSPConsulta.Filter := 'CÓDIGO = '+QuotedStr(texto);
+          end else
+            ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(texto+'%');
+        end;
         1 : ADOSPConsulta.Filter := 'DESCRIÇÃO LIKE '+QuotedStr(texto+'%');
         2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(texto+'%');
         3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(texto+'%');
@@ -7256,8 +7263,18 @@ begin
     end;
     if (vAutoPecas = 'A') and (UpperCase(vEmpresa) <> 'TRATORMEC') then
       DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'CÓDIGO_BARRAS')].Visible := false;
-    open; // mostra os dados no dbgrid
-    AjustarAposConsultaProduto;
+
+    if (UpperCase(vEmpresa) = 'CHALOC') and (EdtConsulta.Text = '') then
+    begin
+      Parameters.ParamByName('@PESQUISA').Value := '%';
+      open; // mostra os dados no dbgrid
+      FiltraConsulta('**********');  //adicionado para startar a consulta sem exibir itens na tela
+    end
+    else
+    begin
+      open; // mostra os dados no dbgrid
+      AjustarAposConsultaProduto;
+    end;
   end;
 end;
 
@@ -7310,7 +7327,7 @@ begin
   if ADOSPConsulta.Active = True then
     ADOSPConsulta.Filtered := False;
   if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (EdtConsulta.Text <> '')) then
-    FiltraConsulta
+    FiltraConsulta(EdtConsulta.Text)
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
     AtualizaQryConsulta;
@@ -8537,6 +8554,7 @@ begin
   With ADOSPConsulta do
   begin
     cod := ADOSPConsulta.FieldByName('código').AsString;
+    ADOSPConsulta.Filtered := False;
     Close;
     Parameters.ParamByName('@DSATIVO').Value := 'S';
     if CheckBox1.Checked = false then
