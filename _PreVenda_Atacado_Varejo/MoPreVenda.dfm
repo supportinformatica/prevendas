@@ -855,7 +855,7 @@
         184)
       object SgDados: TStringGrid
         Left = 0
-        Top = 11
+        Top = 2
         Width = 792
         Height = 173
         Hint = 'Itens da pr'#233' venda'
@@ -881,8 +881,6 @@
         OnGetEditText = SgDadosGetEditText
         OnKeyPress = SgDadosKeyPress
         OnKeyUp = SgDadosKeyUp
-        OnSelectCell = SgDadosSelectCell
-        OnSetEditText = SgDadosSetEditText
         ColWidths = (
           66
           303
@@ -950,6 +948,34 @@
         TabOrder = 1
         Visible = False
         OnClick = btnMensagemClick
+      end
+      object cbxEntrega: TComboBox
+        Left = 742
+        Top = 26
+        Width = 154
+        Height = 21
+        Hint = 'Selecione o local de entrega'
+        Style = csDropDownList
+        Anchors = [akTop, akRight, akBottom]
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        Sorted = True
+        TabOrder = 2
+        TabStop = False
+        Visible = False
+        OnChange = cbxEntregaChange
+        Items.Strings = (
+          '01 | 18 | 00'
+          '02 | 25 | 00'
+          'FF | 00 | 00'
+          'II | 00 | 00'
+          'NN | 00 | 00')
       end
     end
     object Panel4: TPanel

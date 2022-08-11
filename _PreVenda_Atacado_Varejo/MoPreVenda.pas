@@ -296,6 +296,7 @@ type
     ACBrPosPrinter: TACBrPosPrinter;
     chkbxEtiqueta: TCheckBox;
     ADOSPConsultaCÓDIGO: TStringField;
+    cbxEntrega: TComboBox;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -353,8 +354,6 @@ type
     procedure Consultadecrditodocliente1Click(Sender: TObject);
     procedure Alteraquantidade1Click(Sender: TObject);
     procedure SgDadosExit(Sender: TObject);
-    procedure SgDadosSelectCell(Sender: TObject; ACol, ARow: Integer;
-      var CanSelect: Boolean);
     procedure CbxClienteExit(Sender: TObject);
     procedure Consultapedidodecompra1Click(Sender: TObject);
     procedure Excluiritens1Click(Sender: TObject);
@@ -407,8 +406,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure SgDadosGetEditText(Sender: TObject; ACol, ARow: Integer;
       var Value: string);
-    procedure SgDadosSetEditText(Sender: TObject; ACol, ARow: Integer;
-      const Value: string);
     procedure SgDadosKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SgDadosKeyPress(Sender: TObject; var Key: Char);
     procedure CbxClienteEnter(Sender: TObject);
@@ -435,7 +432,10 @@ type
     procedure LucronaVenda1Click(Sender: TObject);
     procedure chkbxEtiquetaClick(Sender: TObject);
     procedure EdtConsultaEnter(Sender: TObject);
+    procedure cbxEntregaChange(Sender: TObject);
+
   private
+
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
     qtdAnteriorNaGrid: Real;
@@ -449,6 +449,10 @@ type
     // indica se a quantidade setada diretamente na grid é maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
 
+    function entregaSelecionadaGrid : Boolean;
+    procedure adicionarLocalEntrega;
+    procedure adicionarLocalEntregaNaGrid;
+    procedure montarComboEntrega;
     function possuiItensLançados: Boolean;
     Procedure AuxiliarLancto(i: Integer);
     Procedure RemontaSgDados(i: Integer);
@@ -1669,6 +1673,26 @@ end;
 
 { ...Esta procedure redimensiona o form de acordo com a resolução do monitor,
   ... }
+procedure TFrmPrincipalPreVenda.adicionarLocalEntrega;
+var
+  i : Integer;
+begin
+  for i := 0 to prevenda.itens.Count - 1 do
+  begin
+    if SgDados.Cells[1, i + 1] <> '' then
+      prevenda.itens[i].localEntrega := SgDados.Cells[14, i + 1];
+  end;
+end;
+
+procedure TFrmPrincipalPreVenda.adicionarLocalEntregaNaGrid;
+var
+  i : integer;
+begin
+  for i := 0 to prevenda.itens.Count -1 do
+    SgDados.Cells[14, i + 1] := prevenda.itens[i].localEntrega;
+  SgDados.Refresh;
+end;
+
 procedure TFrmPrincipalPreVenda.AjustaForm;
 var
   i, w: Integer;
@@ -2322,7 +2346,9 @@ begin
       ColWidths[13] := -1;
       ColWidths[16] := -1;
     end;
-    ColWidths[14] := -1; // cdAmbiente
+//    ColWidths[14] := -1; // cdAmbiente
+    Cells[14, 0] := 'Entrega';
+    ColWidths[14] := 180;
     if (UpperCase(vEmpresa) = 'AMBIENTE') then
     begin
       Cells[15, 0] := 'Ambiente';
@@ -2349,6 +2375,10 @@ begin
   // else
   // SgDados.ColCount := 12;
   Monta_Combo;
+  if cbxEntrega.Items.Count > 0 then
+    SgDados.FixedCols := 2
+  else
+    cbxEntrega.Visible := False;
   if vCasasPreco > vLimiteCasasPreco then
     EdtDesconto.Text := '0,00000'
   else
@@ -2424,6 +2454,7 @@ begin
   self.caption := self.caption + '  Compilação ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
+
   // if UPPERCASE(vEmpresa) = '' then begin
   // end;
   // self.Caption :=  Self.Caption + '  Data da última atualização: ' + DateTimeToStr(PegaDataDoExecutavel(ExtractFileName(Application.ExeName)))+ '  Compilação ' + GetVersaoArq;
@@ -4436,6 +4467,7 @@ begin
     BtnConfirmar.Enabled := false;
     if RequisitosAtendidos then
     begin // conjuntos de validacoes feitas antes de confirmar a prevenda/orcamento
+      adicionarLocalEntrega;
       if (RgOpcoes.ItemIndex = 3) and (UpperCase(vEmpresa) <> 'AMBIENTAR') and
         (UpperCase(vEmpresa) <> 'PBFARMA') then
       begin // somente p proauto
@@ -4454,6 +4486,10 @@ begin
       if (UpperCase(vEmpresa) = 'COPYART') then
       // se for copy art sempre pergunta o tipo da forração dos livros
         Verifica_Livro_Forracao;
+
+      if (entregaSelecionadaGrid = False) then
+        Exit;
+
       if (vSelecionaForma = 'S') and (RgOpcoes.ItemIndex <> 3) then
       begin
         // if FrmFormaPag = nil then
@@ -4514,42 +4550,6 @@ begin
   end;
   if vPAFECF then
     cancelar_item(SgDados.Row); // cancela o item da lista
-  // else begin // exclui o item da lista
-  // With SgDados do
-  // begin
-  // if Row = RowCount -1 then // limpa quando a grid tem só uma linha
-  // begin
-  // for C := 0 to ColCount do
-  // Cells[C,Row] := '';
-  // end else
-  // begin
-  // for C := 1 to ColCount do
-  // Cells[C,Row] := '';
-  // Lauxi := Row;
-  // for L := Lauxi to RowCount -1 do
-  // begin
-  // for C := 0 to ColCount do
-  // Cells[C,Row] := Cells[C,Row + 1];
-  // if Row < Rowcount -1 then
-  // Row := Row + 1;
-  // end;
-  // end;
-  // Row := 1;
-  // for L:= Row to RowCount -1 do
-  // begin
-  // if Cells[0,L] = '' then
-  // begin
-  // Row := L;
-  // Break;
-  // end;
-  // end;
-  // if RowCount > 1 then
-  // RowCount := RowCount-1;
-  // end;
-  // end;
-  // SgDados.Refresh;
-  // // Recalcula o valor da venda com o desconto
-  // EdtDescontoExit(Self);
   CarregarItensGrid(prevenda, intToStr(SgDados.Row));
   if SgDados.Cells[0, 1] = '' then
     vProdutoPromocao := ''; // Se só tiver uma linha, limpa o flag da promocao
@@ -4562,6 +4562,10 @@ begin
   EdtDesconto.Text := '0,00';
   EdtDescontoExit(self);
   SgDados.Repaint;
+  adicionarLocalEntregaNaGrid;
+  cbxEntrega.ItemIndex := -1;
+  cbxEntrega.Text := '';
+  cbxEntrega.Visible := False;
   EdtConsulta.Setfocus;
   setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
     .AsInteger));
@@ -9050,7 +9054,8 @@ begin
       begin
         Cells[14, i + 1] := intToStr(prevenda.itens[i].ambiente.codigo);
         Cells[15, i + 1] := prevenda.itens[i].ambiente.descricao;
-      end;
+      end else
+        Cells[14, i + 1] := prevenda.itens[i].localEntrega;
       if prevenda.itens[i].Promocao_desconto_Item then
         Cells[17, i + 1] := '1'
       else
@@ -9123,7 +9128,7 @@ begin
         indexGridAux] + '].', mtWarning, [mbOK], 0);
       SgDados.Row := indexGridAux;
       SgDados.Col := 2;
-      SgDadosSelectCell(self, indexGridAux, 2, cansel);
+//      SgDadosSelectCell(self, indexGridAux, 2, cansel);
       SgDados.Setfocus;
       exit;
     end;
@@ -9194,70 +9199,15 @@ begin
     EdtConsulta.Setfocus;
     Application.OnMessage := ProcessaMsg;
   end;
-
-  // if (UpperCase(vEmpresa) = 'DISCABOS') OR (UpperCase(vEmpresa) = 'SANTANA') then
-  // begin
-  // EdtSubTotal.Text:= '0,00';
-  // EdtTotal.Text:= '0,00';
-  // edtValorBruto.text:= '0,00';
-  // EdtDesconto.Text:= LimpaEdtDesconto;
-  // if Label15.Visible= true then
-  // label15.Text:= '0,00';
-  // for I := 1 to SgDados.RowCount - 1 do begin
-  // if (SgDados.Cells[1,I] = '') then Break;
-  // SgDados.Cells[2,i]:= FormatFloatQ(vCasasQtd, StrToFloat(SgDados.Cells[2,i])); // quantidade
-  // SgDados.Cells[3,i]:= FormatFloatQ(vCasasPreco, StrToFloat(SgDados.Cells[3,i])); // preco de venda
-  // SgDados.Cells[4,i]:= FormatFloatQ(vCasasPreco,StrToFloat(SgDados.Cells[2,i]) * StrToFloat(SgDados.Cells[3,i]));  // total
-  // if not item_cancelado(i) then
-  // begin       // atualiza o valor total da venda
-  // EdtTotal.Text:= FormatFloat('0.00',StrtoFloat(EdtTotal.Text) +  StrToFloat(SgDados.Cells[4,i]));
-  // edtValorBruto.Text := FormatFloat('0.00',StrtoFloat(edtValorBruto.Text) + (StrToFloat(SgDados.Cells[9,i])*StrToFloat(SgDados.Cells[2,i])));
-  // EdtSubTotal.Text := EdtTotal.Text;
-  // end;
-  // end;
-  // SgDados.Refresh;
-  // Application.OnMessage:= NaoProcessaMsg;
-  // EdtConsulta.SetFocus;
-  // Application.OnMessage:= ProcessaMsg;
-  // end;
 end;
 
 procedure TFrmPrincipalPreVenda.SgDadosGetEditText(Sender: TObject;
   ACol, ARow: Integer; var Value: string);
 begin
   if (SgDados.Cells[0, SgDados.Row] <> '') and (SgDados.Col = 2) then
-    qtdAnteriorNaGrid := StrToFloat(Value);
-end;
-
-procedure TFrmPrincipalPreVenda.SgDadosSelectCell(Sender: TObject;
-  ACol, ARow: Integer; var CanSelect: Boolean);
-begin
-  if ACol >= 3 then
-    EdtConsulta.Setfocus;
-end;
-
-procedure TFrmPrincipalPreVenda.SgDadosSetEditText(Sender: TObject;
-  ACol, ARow: Integer; const Value: string);
-var
-  cdProduto: Integer;
-  quantidade: Real;
-begin
-  // if (Value <> '') and (SgDados.Cells[0, sgdados.Row] <> '') then
-  // begin
-  //
-  // { se a quantidade insertada na grid for positiva, recalculo. Senão, coloco o valor anterior }
-  // if QuantidadeGridMaiorQueZero then
-  // begin
-  // quantidade:= StrToFloatDef(Value, 0);
-  // cdproduto:= StrToInt(SgDados.Cells[0, sgdados.Row]);
-  // atualizarQuantidadeNaGrid(cdproduto, quantidade, qtdAnteriorNaGrid);
-  // end
-  // else
-  // begin
-  // SgDados.Cells[2, SgDados.Row]:= FormatFloatQ(vCasasQtd, qtdAnteriorNaGrid);
-  // sgDados.Repaint;
-  // end;
-  // end;
+    qtdAnteriorNaGrid := StrToFloat(Value)
+  else if (SgDados.Col = 14) then
+    cbxEntrega.Visible := True;
 end;
 
 procedure TFrmPrincipalPreVenda.atualizarQuantidadeNaGrid(cdProduto: Integer;
@@ -10123,6 +10073,19 @@ begin
     BtnCancelar.Click;
 end;
 
+procedure TFrmPrincipalPreVenda.cbxEntregaChange(Sender: TObject);
+begin
+  with SgDados do
+  begin
+    if cbxEntrega.ItemIndex <> -1 then
+    begin
+      prevenda.itens[Row -1].localEntrega := cbxEntrega.Text;
+      Cells[14, Row] := cbxEntrega.Text;
+      SgDados.Refresh;
+    end;
+  end;
+end;
+
 procedure TFrmPrincipalPreVenda.CbxNomeKeyPress(Sender: TObject; var Key: Char);
 begin
   if (Key = Char(27)) then
@@ -10203,7 +10166,8 @@ begin
       // atualizarQuantidadeNaGrid(cdproduto, StrToFloatDef(SgDados.Cells[2, sgdados.Row],0), quantidade);
       // sgDados.Repaint;
     end;
-  end;
+  end else if (SgDados.Col = 14) and (SgDados.Cells[0, SgDados.Row] <> '') then
+    cbxEntrega.Visible := True;
 end;
 
 procedure TFrmPrincipalPreVenda.DBGrid1KeyPress(Sender: TObject; var Key: Char);
@@ -10362,6 +10326,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.Cancelar;
 begin
+  cbxEntrega.Visible := False;
   DtLancto.Date := Date;
   EdtConsulta.Clear;
   vProdutoPromocao := '';
@@ -16011,11 +15976,32 @@ begin
     Result := False;
 end;
 
+function TFrmPrincipalPreVenda.entregaSelecionadaGrid: Boolean;
+var
+  i : Integer;
+begin
+  Result := True;
+  if (vOrcamento <> 'O') and (cbxEntrega.Items.Count > 0) then
+  begin
+    for i := 1 to SgDados.RowCount -1 do
+    begin
+      if (SgDados.Cells[0, i] <> '') and (SgDados.Cells[14, i] = '') then
+      begin
+        Result := False;
+        Application.MessageBox('É necessário selecionar o local de entrega de todos os produtos.',
+          'Atenção', mb_Ok + MB_ICONWARNING);
+        Break;
+      end;
+    end;
+  end;
+end;
+
 procedure TFrmPrincipalPreVenda.SgDadosClick(Sender: TObject);
 var
   Produto: TDOMProduto;
 begin
-  if chkbxEtiqueta.Checked = true then exit;
+  if chkbxEtiqueta.Checked = true then
+    exit;
 
   if (SgDados.Row > SgDados.RowCount - 1) or (SgDados.Row = 0) then
   begin
@@ -16043,8 +16029,7 @@ begin
     else
       ocultarExclamacao;
   end;
-  if SgDados.Col >= 3 then
-    EdtConsulta.Setfocus;
+//  cbxEntrega.Visible := True;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDisCabos;
@@ -16903,6 +16888,23 @@ begin
   setLabel23(QuantidadeDispEmLotes(StrToIntDef(cdProduto, -1)));
 end;
 
+procedure TFrmPrincipalPreVenda.montarComboEntrega;
+var
+  qry : TADOQuery;
+begin
+  qry := TADOQuery.Create(nil);
+  with qry do
+  begin
+    Connection := DModulo.Conexao;
+    SQL.Text := 'Select descricao + '' | ''+ CAST(id as varchar(2)) Entrega '+
+                'From localEntrega with (nolock) '+
+                'Where dsAtivo = ''S''           '+
+                'Order by descricao              ';
+    MontaComboListBoolADO(qry, cbxEntrega);
+//    cbxEntrega.Items.Add('');
+  end;
+end;
+
 function TFrmPrincipalPreVenda.QuantidadeDispEmLotes(cdProduto: Integer): Real;
 var
   query: TADOQuery;
@@ -16989,7 +16991,7 @@ begin
     sql.Add('Order By P.nmPessoa ');
     MontaComboListComposto(ADOQryCliente, CbxCliente, 2);
   end;
-
+  montarComboEntrega;
   // claudio 10-09-2015
   // With ADOQryNome do begin     // monta a combo dos funcionarios
   // Sql.Text := 'Select UPPER(P.nmPessoa) AS nmPessoa,P.cdPessoa,F.vlDesconto From Pessoa '+
@@ -17086,45 +17088,52 @@ end;
 
 procedure TFrmPrincipalPreVenda.SgDadosDrawCell(Sender: TObject;
   ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+var
+  Re: TRect;
 begin
-  // if not (gdSelected in state) then
-  // begin
-
-  if (ARow <> 0) and (SgDados.Cells[2, ARow] <> '') and
-    (SgDados.Cells[8, ARow] <> '') then
+  if (ARow <> 0) then
   begin
-    // if (SgDados.Cells[0,SgDados.Row]<>'')and(vEstqNegativo <> 'S') and (qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0,SgDados.Row]), strToFloatDef(SgDados.Cells[2,SgDados.Row],0)) > 0) then BEGIN
-    if ArraylinhasDestacadas[ARow] then
+    if (SgDados.Cells[2, ARow] <> '') and
+       (SgDados.Cells[8, ARow] <> '') then
     begin
-      SgDados.Canvas.Brush.Color := clYellow;
-      SgDados.Canvas.Font.Color := clBlack;
-      SgDados.Canvas.FillRect(Rect);
-      SgDados.Canvas.TextOut(Rect.Left, Rect.Top, SgDados.Cells[ACol, ARow]);
-    end
-    else
-    begin
-      SgDados.Canvas.Brush.Color := clWhite;
-      SgDados.Canvas.Font.Color := clBlack;
-      SgDados.Canvas.FillRect(Rect);
-      SgDados.Canvas.TextOut(Rect.Left, Rect.Top, SgDados.Cells[ACol, ARow]);
-    end;
-    // END;
-
-    // comentei para não pintar mais de vermelho quando o estoque estiver menor q a quantidade lançada
-    { if (StrToFloat(SgDados.Cells[2,ARow]) > StrToFloat(SgDados.Cells[8,ARow])) then
+      if ArraylinhasDestacadas[ARow] then
       begin
-      SgDados.Canvas.Font.Color := clRed;
-      DrawText(SgDados.Canvas.Handle,PAnsichar(SgDados.Cells[ACol,ARow]), - 1, Rect, DT_VCENTER or DT_LEFT or DT_SINGLELINE);
+        SgDados.Canvas.Brush.Color := clYellow;
+        SgDados.Canvas.Font.Color := clBlack;
+        SgDados.Canvas.FillRect(Rect);
+        SgDados.Canvas.TextOut(Rect.Left, Rect.Top, SgDados.Cells[ACol, ARow]);
       end
       else
-      if (StrToFloat(SgDados.Cells[2,ARow]) > StrToFloat(SgDados.Cells[8,ARow])) then
       begin
-      SgDados.Canvas.Font.Color := clBlack;
-      DrawText(SgDados.Canvas.Handle,PAnsichar(SgDados.Cells[ACol,ARow]), - 1, Rect, DT_VCENTER or DT_LEFT or DT_SINGLELINE);
+        SgDados.Canvas.Brush.Color := clWhite;
+        SgDados.Canvas.Font.Color := clBlack;
+        SgDados.Canvas.FillRect(Rect);
+        SgDados.Canvas.TextOut(Rect.Left, Rect.Top, SgDados.Cells[ACol, ARow]);
       end;
-    }
+    end;
+    if (ACol = 14) and (cbxEntrega.Items.Count > 0) and (gdFocused in State) then
+    begin
+      cbxEntrega.Visible := True;
+      // pega o retângulo da célula
+      Re := SgDados.CellRect(ACol, ARow);
+      // posiciona em relação à Form
+      Re.Left  := Re.Left + SgDados.Left;
+      Re.Right := Re.Right + SgDados.Left;
+      Re.Top   := Re.Top + SgDados.Top;
+      Re.Bottom := Re.Bottom + SgDados.Top;
+      cbxEntrega.SetBounds(Re.Left + 1,Re.Top + 1, (Re.Right + 1) - Re.Left,(Re.Bottom + 1) - Re.Top);
+      // posiciona a combobox no valor da célula
+      cbxEntrega.ItemIndex := cbxEntrega.Items.IndexOf(SgDados.Cells[ACol,ARow]);
+      cbxEntrega.Visible   := True;
+      cbxEntrega.BringToFront;
+      Re := SgDados.CellRect(ACol +1, ARow);
+      // posiciona em relação à Form
+      Re.Left  := Re.Left + SgDados.Left;
+      Re.Right := Re.Right + SgDados.Left;
+      Re.Top   := Re.Top + SgDados.Top;
+      Re.Bottom := Re.Bottom + SgDados.Top;
+    end;
   end;
-  // end;
 end;
 
 procedure TFrmPrincipalPreVenda.SalvarPreVenda(prevenda: TPrevenda;
