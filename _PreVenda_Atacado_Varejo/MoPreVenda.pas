@@ -4681,6 +4681,8 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.SBF5Click(Sender: TObject);
+var
+  textoConsulta_temp : string;
 begin
   // listarUsuariosNaCombo;
   Monta_Combo;
@@ -4695,7 +4697,10 @@ begin
   Label13.Text := '__/__/____';
   Label15.Text := '0,00';
   LblReserva.Text := '0,00';
+  textoConsulta_temp := EdtConsulta.Text;
+  EdtConsulta.Text := '';
   AtualizaQryConsulta;
+  EdtConsulta.Text := textoConsulta_temp;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoExit(Sender: TObject);
@@ -7262,11 +7267,16 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.CheckBox1Click(Sender: TObject);
+var
+  textoConsulta_temp : string;
 begin
   vFlag := '0';
+  textoConsulta_temp := EdtConsulta.Text;
+  EdtConsulta.Text := '';
+  AtualizaQryConsulta;
+  EdtConsulta.Text := textoConsulta_temp;
   EdtConsulta.SelectAll;
   EdtConsulta.Setfocus;
-  AtualizaQryConsulta;
 end;
 
 procedure TFrmPrincipalPreVenda.CheckBox1Enter(Sender: TObject);
@@ -8537,6 +8547,7 @@ begin
   With ADOSPConsulta do
   begin
     cod := ADOSPConsulta.FieldByName('código').AsString;
+    ADOSPConsulta.Filtered := False;
     Close;
     Parameters.ParamByName('@DSATIVO').Value := 'S';
     if CheckBox1.Checked = false then
@@ -9341,9 +9352,14 @@ end;
 
 procedure TFrmPrincipalPreVenda.chkOcultarProdutosSemEstoqueClick
   (Sender: TObject);
+var
+  textoConsulta_temp : string;
 begin
   persistirFormulario;
+  textoConsulta_temp := EdtConsulta.Text;
+  EdtConsulta.Text := '';
   AtualizaQryConsulta;
+  EdtConsulta.Text := textoConsulta_temp;
 end;
 
 function TFrmPrincipalPreVenda.clienteComRestricaoFinanceira
@@ -9595,7 +9611,7 @@ var
   Cliente: TCliente;
   totalPontos: Integer;
   existeItemLancadoNaGrid, possuiPermissaoParaAlterarCliente: Boolean;
-  codigoClienteNovo: string;
+  codigoClienteNovo, textoConsulta_temp: string;
 begin
 
   // so testa a restrição se estiver incluindo ou alterando uma prevenda
@@ -9795,7 +9811,10 @@ begin
     ProautoPreencherVDescontoCliente(EdtCdCliente.Text);
 //  if UpperCase(vEmpresa) <> 'GIRORAPIDO' then
     preencherVariaveisCliente(EdtCdCliente.Text);
+  textoConsulta_temp := EdtConsulta.Text;
+  EdtConsulta.Text := '';
   AtualizaQryConsulta;
+  EdtConsulta.Text := textoConsulta_temp;
   if UpperCase(vEmpresa) = 'GIRORAPIDO' then
     EdtConsulta.Setfocus;
   // prevenda.Cliente:= TNEGCliente.getCliente(StrToIntDef(codigoClienteAtual, -1));
@@ -10932,6 +10951,8 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.PegaClienteAtacadoVarejo;
+var
+  textoConsulta_temp : string;
 begin
   with AdoQryLocaliza do
   begin
@@ -10949,7 +10970,10 @@ begin
       vAtacadoVarejo := 'V';
       Label30.caption := 'Cliente -> Varejo';
     end;
+    textoConsulta_temp := EdtConsulta.Text;
+    EdtConsulta.Text := '';
     AtualizaQryConsulta;
+    EdtConsulta.Text := textoConsulta_temp;
   end;
 end;
 
