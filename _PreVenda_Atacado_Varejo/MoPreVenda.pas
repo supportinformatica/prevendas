@@ -521,6 +521,7 @@ type
     procedure ImprimeEtiquetas_CAMPOS_2Col_4SubGrupo;
     procedure ImprimeEtiquetas_CAMPOS_2Col_Gaveta;
     procedure ImprimeEtiquetas_CAMPOS_2Col_AtacadoVarejo;
+    procedure ImprimeEtiquetas_MARCIAMODAS;
     procedure ImprimeEtiquetas_EmporioVerdeBrasil;
     procedure ImprimeEtiquetas_JAKIDS_Gondola_Varejo_Atacado;
     procedure ImprimeEtiquetas_JAKIDS_Gondola_Varejo;
@@ -11084,6 +11085,8 @@ begin
     ImprimeEtiquetas_AMORBEBE;
   if UpperCase(vFlagEtiqueta) = 'EMPORIOVERDEBRASIL' then // ELGIN L42 DT
     ImprimeEtiquetas_EmporioVerdeBrasil;
+  if UpperCase(vFlagEtiqueta) = 'MARCIAMODAS' then // ELGIN L42 DT
+    ImprimeEtiquetas_MARCIAMODAS;
   if UpperCase(vFlagEtiqueta) = 'PANDORO' then // ELGIN
     ImprimeEtiquetas_Pandoro_Pequena;
   if UpperCase(vFlagEtiqueta) = 'AQUIACHA' then // ELGIN
@@ -13246,6 +13249,67 @@ begin
     Editor.Lines.Add('A438,71,0,4,1,2,N,"COD '+SgDados.Cells[0, L]+'"');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MARCIAMODAS;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('SIZE 80 mm, 40 mm');
+    Editor.Lines.Add('SET RIBBON OFF');
+    Editor.Lines.Add('DIRECTION 0,0');
+    Editor.Lines.Add('REFERENCE 0,0');
+    Editor.Lines.Add('OFFSET 0 mm');
+    Editor.Lines.Add('SET PEEL OFF');
+    Editor.Lines.Add('SET CUTTER OFF');
+    Editor.Lines.Add('SET TEAR ON');
+    Editor.Lines.Add('CLS');
+    Editor.Lines.Add('CODEPAGE 1252');
+    Editor.Lines.Add('TEXT 616,205,"3",180,1,2,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+    Editor.Lines.Add('TEXT 636,262,"2",180,1,2,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('BARCODE 594,137,"128M",75,0,180,3,6,"!105'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('TEXT 584,50,"3",180,1,1,"Cod. '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('TEXT 636,306,"2",180,1,2,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('TEXT 278,205,"3",180,1,2,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+    Editor.Lines.Add('TEXT 298,262,"2",180,1,2,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('BARCODE 256,137,"128M",75,0,180,3,6,"!105'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('TEXT 246,50,"3",180,1,1,"Cod. '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('TEXT 298,306,"2",180,1,2,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+//    Editor.Lines.Add('PRINT 1,1');
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('PRINT 1,' + FormatFloat('0', vqtd));
     FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
