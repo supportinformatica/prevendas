@@ -2377,9 +2377,7 @@ begin
   // else
   // SgDados.ColCount := 12;
   Monta_Combo;
-  if cbxEntrega.Items.Count > 0 then
-    SgDados.FixedCols := 2
-  else
+  if cbxEntrega.Items.Count = 0 then
     cbxEntrega.Visible := False;
   if vCasasPreco > vLimiteCasasPreco then
     EdtDesconto.Text := '0,00000'
@@ -5534,7 +5532,6 @@ begin
   // FrmRelOrcamentos.QreQtd.DisplayMask      := TNEGLoja.displayFormat(vCasasQtd);
   // //FrmRelOrcamentos.RLDBResult1.DisplayMask := TNEGLoja.displayFormat(vCasasPreco);
   // FrmRelOrcamentos.QrePreco.DisplayMask    := TNEGLoja.displayFormat(vCasasPreco);
-
   if dsCGC = '10305634000106' then      // d rios
   begin
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
@@ -9221,11 +9218,26 @@ end;
 
 procedure TFrmPrincipalPreVenda.SgDadosGetEditText(Sender: TObject;
   ACol, ARow: Integer; var Value: string);
+var
+  Re: TRect;
 begin
   if (SgDados.Cells[0, SgDados.Row] <> '') and (SgDados.Col = 2) then
     qtdAnteriorNaGrid := StrToFloat(Value)
   else if (SgDados.Col = 14) then
+  begin
+    Re := SgDados.CellRect(ACol, ARow);
+    // posiciona em relação à Form
+    Re.Left  := Re.Left + SgDados.Left;
+    Re.Right := Re.Right + SgDados.Left;
+    Re.Top   := Re.Top + SgDados.Top;
+    Re.Bottom := Re.Bottom + SgDados.Top;
+    cbxEntrega.SetBounds(Re.Left + 1,Re.Top + 1, (Re.Right + 1) - Re.Left,(Re.Bottom + 1) - Re.Top);
     cbxEntrega.Visible := True;
+    cbxEntrega.ItemIndex := cbxEntrega.Items.IndexOf(SgDados.Cells[ACol,ARow]);
+    cbxEntrega.Visible   := True;
+    cbxEntrega.BringToFront;
+    Re := SgDados.CellRect(ACol +1, ARow);
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.atualizarQuantidadeNaGrid(cdProduto: Integer;
@@ -10101,13 +10113,20 @@ end;
 
 procedure TFrmPrincipalPreVenda.cbxEntregaChange(Sender: TObject);
 begin
-  with SgDados do
+  if SgDados.Cells[1, SgDados.Row] = '' then
   begin
-    if cbxEntrega.ItemIndex <> -1 then
+    cbxEntrega.ItemIndex := -1;
+    cbxEntrega.Text := '';
+  end else
+  begin
+    with SgDados do
     begin
-      prevenda.itens[Row -1].localEntrega := cbxEntrega.Text;
-      Cells[14, Row] := cbxEntrega.Text;
-      SgDados.Refresh;
+      if (cbxEntrega.ItemIndex <> -1) then
+      begin
+        prevenda.itens[Row -1].localEntrega := cbxEntrega.Text;
+        Cells[14, Row] := cbxEntrega.Text;
+        SgDados.Refresh;
+      end;
     end;
   end;
 end;

@@ -1089,7 +1089,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       Left = 38
       Top = 369
       Width = 718
-      Height = 103
+      Height = 119
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1112,7 +1112,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRLblEmpresa2: TRLLabel
         Left = 327
-        Top = 62
+        Top = 78
         Width = 174
         Height = 15
         Alignment = taCenter
@@ -1145,7 +1145,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRLblPrevisao: TRLLabel
         Left = 327
-        Top = 32
+        Top = 48
         Width = 106
         Height = 14
         Caption = 'Previs'#227'o de Entrega: '
@@ -1172,7 +1172,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRLabel18: TRLLabel
         Left = 540
-        Top = 62
+        Top = 78
         Width = 164
         Height = 15
         Alignment = taCenter
@@ -1191,16 +1191,17 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRExpr3: TRLDBText
-        Left = 585
+        Left = 1
         Top = 17
-        Width = 124
-        Height = 16
-        Alignment = taRightJustify
+        Width = 715
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
         DataField = 'dsMenPromocional'
         DataSource = DSConfig
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold, fsItalic]
         ParentFont = False
@@ -1221,8 +1222,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Transparent = False
       end
       object RlblFormaPgto: TRLLabel
-        Left = 4
-        Top = 16
+        Left = 1
+        Top = 32
         Width = 66
         Height = 14
         Caption = '                     '
@@ -1235,7 +1236,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLabel21: TRLLabel
         Left = 331
-        Top = 80
+        Top = 96
         Width = 369
         Height = 13
         Caption = 
@@ -1249,8 +1250,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel22: TRLLabel
-        Left = 4
-        Top = 31
+        Left = 1
+        Top = 47
         Width = 31
         Height = 14
         Caption = 'OBS: '
@@ -1262,9 +1263,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLMemo1: TRLMemo
-        Left = 39
-        Top = 31
-        Width = 282
+        Left = 33
+        Top = 47
+        Width = 288
         Height = 71
         Alignment = taJustify
         AutoSize = False
@@ -1763,7 +1764,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
     Top = 8
     object ADOQryConfigdsMenPromocional: TStringField
       FieldName = 'dsMenPromocional'
-      Size = 50
+      Size = 150
     end
     object ADOQryConfignmEmpresa: TStringField
       FieldName = 'nmEmpresa'
@@ -1861,7 +1862,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       'From Pessoa P,Endereco E,Telefone T '
       'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = T.cdPessoa '
       'Order By P.nmPessoa')
-    Left = 504
+    Left = 736
     Top = 8
   end
   object Qualidade_Dos: TRLDraftFilter
@@ -1903,7 +1904,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end>
     SQL.Strings = (
       'select hrHora from Orcamento where nrOrcamento = :nrOrcamento')
-    Left = 664
+    Left = 800
     Top = 8
   end
   object adoQryCabecalho: TADOQuery
