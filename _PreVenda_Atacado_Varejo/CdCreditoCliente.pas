@@ -75,6 +75,7 @@ type
     procedure ImprimeRecibodaParcelaSelecionada1Click(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure EdtCdClienteEnter(Sender: TObject);
   private
     vcheque,vtotal : Real;
     { Private declarations }
@@ -93,7 +94,7 @@ var
 implementation
 
 uses MoPreVenda, uFuncoesPadrao, RelEntSai, DataModulo, CdTelefone,
-  RelReceber, RelRecibo2;
+  RelReceber, RelRecibo2, System.DateUtils;
 
 {$R *.DFM}
 
@@ -402,62 +403,71 @@ begin
   LimpaCampos;
   // calculo das compras do cliente
   ProgressBar1.Position := 10;
-  with ADOQryExistir do begin
-    SQL.Text := 'Select Count(L.dslancamento) as lancamentos ,Sum(L.vlvalor + L.vlacrescimo - L.vlDesconto)  ' +
-                'AS Valor FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null ' +
-                'and L.cdPessoa = :CODIGO and CONVERT(CHAR(07),L.DTEMISSAO,126) <= :DATA1                    ' +
-                'and CONVERT(CHAR(07),L.DTEMISSAO,126) >= :DATA2                                             ';
-//    Prepared;
+  with ADOQryExistir do
+  begin
+    SQL.Text :=
+      'Select Count(L.dslancamento) as lancamentos,              '+
+      'Max(L.dtEmissao) Emissao,                                 '+
+      'Max(L.vlvalor + L.vlacrescimo - L.vlDesconto) MaiorCompra,'+
+      'Sum(L.vlvalor + L.vlacrescimo - L.vlDesconto) Valor       '+
+      'FROM Lancto AS L WITH (nolock)                            '+
+      'Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null  '+
+      'and L.cdPessoa = :CODIGO and L.DTEMISSAO between :DATA2 and :DATA1 ';
+//    'Select Count(L.dslancamento) as lancamentos ,Sum(L.vlvalor + L.vlacrescimo - L.vlDesconto)  ' +
+//                'AS Valor FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null ' +
+//                'and L.cdPessoa = :CODIGO and CONVERT(CHAR(07),L.DTEMISSAO,126) <= :DATA1                    ' +
+//                'and CONVERT(CHAR(07),L.DTEMISSAO,126) >= :DATA2                                             ';
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
-    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
+    Parameters.ParamByName('DATA1').Value  := dateOf(Now);
     case RadioGroup1.ItemIndex of
-      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
-      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
-      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
+      0: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-3));
+      1: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-6));
+      2: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-12));
     end;
     Open;
     ProgressBar1.Position := 20;
-    if ADOQryExistir.recordcount > 0 then begin
+    if ADOQryExistir.recordcount > 0 then
+    begin
       EdtValorCompras.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
       EdtQtdCompras.Text   := IntToStr( FieldByName('lancamentos').AsInteger );
       if EdtQtdCompras.Text <> '0' then
         EdtTicketMedio.Text :=  FormatFloat('#,##0.00',FieldByName('Valor').AsFloat / FieldByName('lancamentos').AsInteger)
       else
         EdtTicketMedio.Text := '0,00';
+      EdtMaiorCompra.Text := FormatFloat('#,##0.00', FieldByName('MaiorCompra').AsFloat);
     end;
     // Maior Compra
-    SQL.Text := 'Select Top 1 (L.vlvalor + L.vlacrescimo - L.vlDesconto)                                     '+
-                'AS Valor FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null '+
-                'and L.cdPessoa = :CODIGO and CONVERT(CHAR(07),L.DTEMISSAO,126) <= :DATA1                    '+
-                'and CONVERT(CHAR(07),L.DTEMISSAO,126) >= :DATA2 order by 1 desc                             ';
-//    Prepared;
-    Parameters.ParamByName('CODIGO').Value := vCdPessoa;
-    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
-    case RadioGroup1.ItemIndex of
-      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
-      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
-      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
-    end;
-    Open;
-    ProgressBar1.Position := 30;
-    if ADOQryExistir.recordcount > 0 then
-      edtMaiorCompra.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
+//    SQL.Text := 'Select Top 1 (L.vlvalor + L.vlacrescimo - L.vlDesconto)                                     '+
+//                'AS Valor FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null '+
+//                'and L.cdPessoa = :CODIGO and CONVERT(CHAR(07),L.DTEMISSAO,126) <= :DATA1                    '+
+//                'and CONVERT(CHAR(07),L.DTEMISSAO,126) >= :DATA2 order by 1 desc                             ';
+//    Parameters.ParamByName('CODIGO').Value := vCdPessoa;
+//    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
+//    case RadioGroup1.ItemIndex of
+//      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
+//      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
+//      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
+//    end;
+//    Open;
+//    ProgressBar1.Position := 30;
+//    if ADOQryExistir.recordcount > 0 then
+//      edtMaiorCompra.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
     // Última Compra
-    SQL.Text := 'Select Top 1 L.dtemissao,(L.vlvalor + L.vlacrescimo - L.vlDesconto)                         '+
-                'AS Valor FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null '+
-                'and L.cdPessoa = :CODIGO and CONVERT(CHAR(07),L.DTEMISSAO,126) <= :DATA1                    '+
-                'and CONVERT(CHAR(07),L.DTEMISSAO,126) >= :DATA2 order by 1 desc                             ';
-//    Prepared;
+    SQL.Text := 'Select Top 1 L.dtemissao,(L.vlvalor + L.vlacrescimo - L.vlDesconto) Valor '+
+                'FROM Lancto AS L WITH (nolock) Where L.dsStatus IN (''E'',''X'',''F'') and L.dsCancelado is null '+
+                'and L.cdPessoa = :CODIGO and L.DTEMISSAO between :DATA2 and :DATA1        '+
+                'Order by 1 desc';
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
-    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
+    Parameters.ParamByName('DATA1').Value  := dateOf(Now);
     case RadioGroup1.ItemIndex of
-      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
-      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
-      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
+      0: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-3));
+      1: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-6));
+      2: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-12));
     end;
     Open;
-    ProgressBar1.Position := 40;
-    if ADOQryExistir.recordcount > 0 then begin
+    ProgressBar1.Position := 35;
+    if ADOQryExistir.recordcount > 0 then
+    begin
       edtUltimaCompra.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
       Label15.caption      := 'Última compra: ' + FieldByName('dtemissao').AsString;
     end;
@@ -470,13 +480,15 @@ begin
                 'Where P.cdPessoa = :CODIGO and L.cdconvenio is null and      '+
                 'P.dtVencimento < getdate() and L.dsStatus                    '+
                 'in (''E'',''X'',''F'',''B'') and L.dsCancelado is null       '+
-                'Order By P.dtVencimento                                      ';
+                'and L.cdConvenio is null Order By P.dtVencimento             ';
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
     Open;
     ProgressBar1.Position := 50;
     vDiasAtraso           := 0;
-    if ADOQryExistir.recordcount > 0 then begin
-       for i := 1 to ADOQryExistir.recordcount do begin
+    if ADOQryExistir.recordcount > 0 then
+    begin
+       for i := 1 to ADOQryExistir.recordcount do
+       begin
          IF FieldByName('Dias_PagoAtraso').AsInteger > 0 THEN
            //vDiasAtraso := vDiasAtraso + FieldByName('Dias_Atraso').AsInteger
            vDiasAtraso := vDiasAtraso + FieldByName('Dias_PagoAtraso').AsInteger; //ELSE 
@@ -495,58 +507,64 @@ begin
     Parameters.ParamByName('CODIGO1').Value := vCdPessoa;
     open;
     ProgressBar1.Position := 60;
-    for i := 1 to ADOQryExistir.RecordCount do begin
+    for i := 1 to ADOQryExistir.RecordCount do
+    begin
       EdtChCompensar.Text := FormatFloat('0.00',StrToFloat(EdtChCompensar.Text) + FieldByName('Valor').AsFloat);
       next;
     end;
     EdtChCompensar.Text := FormatFloat('#,##0.00',StrToFloat(EdtChCompensar.Text));
     // cheques compensados
-    SQL.Text := 'Select Sum(vlCheque) as Valor From Cheque WITH (nolock) '+
+    SQL.Text := 'Select Sum(vlCheque) Valor From Cheque WITH (nolock) '+
                 'Where dsStatus = ''P'' and cdPessoa = :CODIGO '+
-                'and CONVERT(CHAR(07),DTBomPara,126) <= :DATA1 '+
-                'and CONVERT(CHAR(07),DTBomPara,126) >= :DATA2 ';
+                'and DTBomPara between :DATA2 and :DATA1       ';
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
-    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
+    Parameters.ParamByName('DATA1').Value  := dateOf(Now);
     case RadioGroup1.ItemIndex of
-      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
-      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
-      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
+      0: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-3));
+      1: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-6));
+      2: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-12));
     end;
     open;
     ProgressBar1.Position := 70;
     EdtChCompensados.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
     // CONTAS A PAGAR
-    SQL.Text := 'SELECT SUM((VLVALOR + VLACRESCIMO)-(VLDESCONTO + VLAMORTIZADO))  '+
-                'AS Valor FROM PARCELA WITH (nolock) WHERE cdPessoa = :CODIGO and '+
-                '((VLVALOR + VLACRESCIMO)-(VLDESCONTO + VLAMORTIZADO)) > 0        '+
-                'and dsStatus <> ''Y''                                            ';
-//    Prepared;
+    SQL.Text :=
+      'SELECT SUM((P.VLVALOR + P.VLACRESCIMO)-(P.VLDESCONTO + P.VLAMORTIZADO)) '+
+      'AS Valor FROM PARCELA P WITH (nolock)                                   '+
+      'Inner Join Lancto L with (nolock)                                       '+
+      'ON L.cdPessoa = P.cdPessoa and L.dsstatus = P.dsStatus and L.dslancamento = P.dslancamento '+
+      'WHERE P.cdPessoa = :CODIGO and                                          '+
+      '((P.VLVALOR + P.VLACRESCIMO)-(P.VLDESCONTO + P.VLAMORTIZADO)) > 0       '+
+      'and L.dsStatus <> ''Y'' and L.cdConvenio is null                        ';
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
     open;
     ProgressBar1.Position := 80;
     EdtReceber.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
     // DUPLICATAS EM ATRASO
-    Sql.Text := 'Select SUM(((VLVALOR + VLACRESCIMO) - (VLDESCONTO + VLAMORTIZADO))) '+
-                'AS Valor From Parcela WITH (nolock) Where cdPessoa = :CODIGO and                  '+
-                '((vlValor + vlAcrescimo) - (vlDesconto + vlAmortizado)) > 0         '+
-                'and dtVencimento <= :DATA1 and dsStatus <> ''Y''                    ';
-//    Prepared;
+    Sql.Text :=
+      'Select SUM(((P.VLVALOR + P.VLACRESCIMO) - (P.VLDESCONTO + P.VLAMORTIZADO)))  '+
+      'AS Valor From Parcela P WITH (nolock)                                        '+
+      'Inner Join Lancto L with (nolock)                                            '+
+      'ON L.cdPessoa = P.cdPessoa and L.dsstatus = P.dsStatus and L.dslancamento = P.dslancamento '+
+      'Where L.cdPessoa = :CODIGO and                                               '+
+      '((P.vlValor + P.vlAcrescimo) - (P.vlDesconto + P.vlAmortizado)) > 0          '+
+      'and P.dtVencimento <= :DATA1 and L.dsStatus <> ''Y'' and L.cdConvenio is null';
     Parameters.ParamByName('DATA1').Value  := (Date - vDtBloqueio);
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
     open;
     ProgressBar1.Position := 90;
     EdtAtraso.Text := FormatFloat('#,##0.00',FieldByName('Valor').AsFloat);
     // Recebimentos
-    Sql.Text := 'SELECT Sum(I.vlpagamento) as Valor                                             '+
-                'FROM Recibo AS R WITH (nolock) INNER JOIN IteRecibo AS I WITH (nolock) ON R.nrRecibo = I.nrRecibo '+
-                'Where R.dtEmissao >= :DATA2 and R.dtEmissao <= :DATA1 and R.cdPessoa = :CODIGO ';
+    Sql.Text := 'SELECT Sum(I.vlpagamento) Valor                                      '+
+                'FROM Recibo R WITH (nolock) INNER JOIN IteRecibo I WITH (nolock) ON R.nrRecibo = I.nrRecibo '+
+                'Where R.dtEmissao between :DATA2 and :DATA1 and R.cdPessoa = :CODIGO ';
 //    Prepared;
     Parameters.ParamByName('CODIGO').Value := vCdPessoa;
-    Parameters.ParamByName('DATA1').Value  := FormatDateTime('yyyy-mm',Date);
+    Parameters.ParamByName('DATA1').Value  := dateOf(Now);
     case RadioGroup1.ItemIndex of
-      0: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-3));
-      1: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-6));
-      2: Parameters.ParamByName('DATA2').Value := FormatDateTime('yyyy-mm',Incmonth(Date,-12));
+      0: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-3));
+      1: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-6));
+      2: Parameters.ParamByName('DATA2').Value := dateOf(Incmonth(Date,-12));
     end;
     open;
     ProgressBar1.Position := 110;
@@ -584,17 +602,27 @@ begin
   LimpaCampos;
 end;
 
+procedure TFrmCreditoCliente.EdtCdClienteEnter(Sender: TObject);
+begin
+  inherited;
+  Application.OnMessage := FrmprincipalPreVenda.ProcessaMsg;
+end;
+
 procedure TFrmCreditoCliente.EdtCdClienteExit(Sender: TObject);
 var i : Integer;
 begin
   inherited;
-  if (Length(EdtCdCliente.Text) > 0) then begin
+  if (Length(EdtCdCliente.Text) > 0) then
+  begin
     AdoQryExcluir.Open;
-    if (AdoQryExcluir.Locate('cdPessoa',EdtCdCliente.Text,[]))  then begin
+    if (AdoQryExcluir.Locate('cdPessoa',EdtCdCliente.Text,[]))  then
+    begin
       CmbConsulta.Text := AdoQryExcluir.FieldByName('Devedor').AsString;
       LimpaCampos;
-      for i := 0 to CmbConsulta.Items.Count do begin   // coloca o nome do grupo na combo
-        if CmbConsulta.Items[i] = AdoQryExcluir.FieldByName('Devedor').AsString then begin
+      for i := 0 to CmbConsulta.Items.Count do
+      begin   // coloca o nome do grupo na combo
+        if CmbConsulta.Items[i] = AdoQryExcluir.FieldByName('Devedor').AsString then
+        begin
           CmbConsulta.ItemIndex := i;
           break;
         end;
