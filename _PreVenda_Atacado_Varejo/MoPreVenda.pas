@@ -9026,6 +9026,7 @@ var
   i: Integer;
   temp, tempBruto: Currency;
   acrescimoCartao : Boolean;
+  produto_temp : TDOMPRoduto;
 begin
   EdtSubTotal.Text   := '0,00';
   edtValorBruto.Text := '0,00';
@@ -9036,6 +9037,9 @@ begin
   begin
     with SgDados do
     begin
+      if (UpperCase(vEmpresa) = 'MOTOBOX') or (chkbxEtiqueta.Checked = false) then
+        produto_temp := TNEGProduto.buscarProduto(prevenda.itens[i].cdProduto);
+
       Cells[0, i + 1] := intToStr(prevenda.itens[i].cdProduto); // codigo
       Cells[1, i + 1] := prevenda.itens[i].descricao;
       Cells[10, i + 1] := prevenda.itens[i].unidade.unidade; // unidade
@@ -9070,25 +9074,27 @@ begin
       else
         Cells[17, i + 1] := '0'; // produto em promoção
       if (UpperCase(vEmpresa) = 'MOTOBOX') then
-        Cells[18, i + 1] := TNEGProduto.buscarProduto
-          (prevenda.itens[i].cdProduto).Grupo.nome;
+        Cells[18, i + 1] := produto_temp.Grupo.nome;
       // ArraylinhasDestacadas[I+1] := prevenda.itens[I].itemLinhaDestacada;
       if chkbxEtiqueta.Checked = false then
       begin
         if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
-          (RgOpcoes.ItemIndex = 1))) then
-          if ((vEstqNegativo <> 'S') and
-            (qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0, i + 1]),
-            StrToFloatDef(SgDados.Cells[2, i + 1], 0)) > 0) and
-            (TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, i + 1]))
-            .tipoComposicao <> composto)) or
-            ((TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, i + 1]))
-            .tipoComposicao = composto) and
-            (TNEGProduto.getEstoquePossivelProdutoComposto(StrToInt(SgDados.Cells
-            [0, i + 1]), 1) <= 0)) then
-            ArraylinhasDestacadas[i + 1] := True
+          (RgOpcoes.ItemIndex = 1))) then begin
+
+          if vEstqNegativo <> 'S' then begin
+            if produto_temp.tipoComposicao = composto then begin
+              if TNEGProduto.getEstoquePossivelProdutoComposto(StrToInt(SgDados.Cells[0, i + 1]), 1) <= 0 then
+                ArraylinhasDestacadas[i + 1] := True;
+            end
+            else begin
+              if qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0, i + 1]),
+                 StrToFloatDef(SgDados.Cells[2, i + 1], 0)) > 0 then
+                ArraylinhasDestacadas[i + 1] := True;
+            end;
+          end
           else
             ArraylinhasDestacadas[i + 1] := false;
+        end;
       end;
     end;
 
