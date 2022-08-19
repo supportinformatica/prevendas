@@ -770,7 +770,7 @@ type
     procedure ImprimeEtiquetasSafiraArgox;
     procedure LancaProdutos(quantidade: Real; lote: string = '';
       cdFabricanteLote: string = '');
-    procedure CarregarItensGrid(prevenda: TPrevenda; ponteiro: string = '');
+    procedure CarregarItensGrid(prevenda: TPrevenda; loadInicial : boolean; ponteiro: string = '');
     procedure ImprimeOrcamentoPBFARMA(indexRadioGroupFormaPgto_: Integer;
       observacao: string = '');
     procedure ImprimeOrcamentoAmbiente(valor: Integer);
@@ -3328,14 +3328,14 @@ begin
 
     if (UpperCase(vFlagEtiqueta) <> 'KARIB') and ((Empresas_UmaEtiqueta_porColuna = False)or(chkbxEtiqueta.Checked = false)) and (UpperCase(vFlagEtiqueta) <> 'DIJU') and (UpperCase(vFlagEtiqueta) <> 'DONASANTA') and (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES') then
     begin
-      CarregarItensGrid(prevenda);
+      CarregarItensGrid(prevenda, false);
       EdtConsulta.Setfocus;
       exit; // EVITA REPETIR O ITENS NA GRID SE NAO FOR KARIB
     end;
   end;
 
   if (UpperCase(vFlagEtiqueta) = 'KARIB') or ((Empresas_UmaEtiqueta_porColuna = True)and(chkbxEtiqueta.Checked = true)) or (UpperCase(vFlagEtiqueta) = 'DIJU') or (UpperCase(vFlagEtiqueta) = 'DONASANTA') or (UpperCase(vFlagEtiqueta) = 'JOALHERIAFONTES') then
-    CarregarItensGrid(prevenda);
+    CarregarItensGrid(prevenda, false);
 end;
 
 // Procedure TFrmPrincipalPreVenda.EnviaProdutosHospitalar;
@@ -4550,7 +4550,7 @@ begin
   end;
   if vPAFECF then
     cancelar_item(SgDados.Row); // cancela o item da lista
-  CarregarItensGrid(prevenda, intToStr(SgDados.Row));
+  CarregarItensGrid(prevenda, false, intToStr(SgDados.Row));
   if SgDados.Cells[0, 1] = '' then
     vProdutoPromocao := ''; // Se só tiver uma linha, limpa o flag da promocao
   existeItemLancadoNaGrid := (SgDados.Cells[0, 1] <> '');
@@ -8058,7 +8058,7 @@ begin
       // ADOQryProcura.Next;
       i := i + 1;
     end;
-    CarregarItensGrid(prevenda);
+    CarregarItensGrid(prevenda, true);
     // tiraLinhasVazias(SgDados);
     // EdtDescontoExit(Self);
     CbxCliente.Enabled := True;
@@ -9020,20 +9020,26 @@ begin
   SgDados.Cells[1, linha] := '<CANC>' + SgDados.Cells[1, linha];
 end;
 
-procedure TFrmPrincipalPreVenda.CarregarItensGrid(prevenda: TPrevenda;
+procedure TFrmPrincipalPreVenda.CarregarItensGrid(prevenda: TPrevenda; loadInicial : Boolean;
   ponteiro: string = '');
 var
   i: Integer;
   temp, tempBruto: Currency;
   acrescimoCartao : Boolean;
   produto_temp : TDOMPRoduto;
+  contInicial : Integer;
 begin
-  EdtSubTotal.Text   := '0,00';
-  edtValorBruto.Text := '0,00';
-  EdtTotal.Text      := '0,00';
-  LimpaGrid;
+  if loadInicial = true then begin
+    EdtSubTotal.Text   := '0,00';
+    edtValorBruto.Text := '0,00';
+    EdtTotal.Text      := '0,00';
+    LimpaGrid;
+    contInicial := 0;
+  end
+  else
+    contInicial := prevenda.itens.Count-1;
   edtQtdItens.Text := intToStr(prevenda.itens.Count);
-  for i := 0 to prevenda.itens.Count - 1 do
+  for i := contInicial to prevenda.itens.Count-1 do
   begin
     with SgDados do
     begin
@@ -9095,7 +9101,9 @@ begin
           else
             ArraylinhasDestacadas[i + 1] := false;
         end;
-      end;
+      end
+      else
+        ArraylinhasDestacadas[i + 1] := false;
     end;
 
     temp := (prevenda.itens[i].precoBruto * prevenda.itens[i].quantidade);

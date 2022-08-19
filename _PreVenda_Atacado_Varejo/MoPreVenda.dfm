@@ -1761,8 +1761,8 @@
     end
   end
   object EdtLancto: TEdit
-    Left = 298
-    Top = 15
+    Left = 299
+    Top = 20
     Width = 78
     Height = 21
     Hint = 'N'#250'mero do or'#231'amento'
