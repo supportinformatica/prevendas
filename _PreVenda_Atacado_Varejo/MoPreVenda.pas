@@ -3334,8 +3334,11 @@ begin
     end;
   end;
 
-  if (UpperCase(vFlagEtiqueta) = 'KARIB') or ((Empresas_UmaEtiqueta_porColuna = True)and(chkbxEtiqueta.Checked = true)) or (UpperCase(vFlagEtiqueta) = 'DIJU') or (UpperCase(vFlagEtiqueta) = 'DONASANTA') or (UpperCase(vFlagEtiqueta) = 'JOALHERIAFONTES') then
-    CarregarItensGrid(prevenda, false);
+  if (UpperCase(vFlagEtiqueta) = 'KARIB') or
+   ((Empresas_UmaEtiqueta_porColuna = True)and(chkbxEtiqueta.Checked = true)) or
+   (UpperCase(vFlagEtiqueta) = 'DIJU') or (UpperCase(vFlagEtiqueta) = 'DONASANTA') or
+   (UpperCase(vFlagEtiqueta) = 'JOALHERIAFONTES') then
+    CarregarItensGrid(prevenda, true);
 end;
 
 // Procedure TFrmPrincipalPreVenda.EnviaProdutosHospitalar;
