@@ -982,7 +982,7 @@ uses uFuncoesPadrao, DataModulo, FrmPrincipal, relOrcamentosPBFARMA,
   NEGPremio,DOMPessoa, NEGPessoa,unitLogoMaker,
   BuscaObjetos, FrmTresEtiquetasRural,
   uThreadChaveAcesso, FormRegistroSistema, uThreadBlockChave, RelOrcamentos40,
-  comobj, LucroVenda, NEGACBrPosPrint;
+  comobj, LucroVenda, NEGACBrPosPrint, CdCreditoCliente;
 
 {$R *.DFM}
 
@@ -4550,7 +4550,7 @@ begin
   end;
   if vPAFECF then
     cancelar_item(SgDados.Row); // cancela o item da lista
-  CarregarItensGrid(prevenda, false, intToStr(SgDados.Row));
+  CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
   if SgDados.Cells[0, 1] = '' then
     vProdutoPromocao := ''; // Se só tiver uma linha, limpa o flag da promocao
   existeItemLancadoNaGrid := (SgDados.Cells[0, 1] <> '');
@@ -8937,8 +8937,21 @@ end;
 procedure TFrmPrincipalPreVenda.Consultadecrditodocliente1Click
   (Sender: TObject);
 begin
-  vFlag := '5';
-  LiberaVanda;
+  if (PERMISSAO('34', 'V') = 'N') then
+  begin
+    vFlag := '5';
+    LiberaVanda;
+  end else
+  begin
+    FrmCreditoCliente := TFrmCreditoCliente.Create(Application);
+    try
+      FrmprincipalPreVenda.Enabled := False;
+      FrmCreditoCliente.Show;
+    except
+      FrmCreditoCliente.Free;
+      FrmprincipalPreVenda.Enabled := True;
+    end;
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.AjustarAposConsultaProduto;
@@ -9029,14 +9042,14 @@ var
   produto_temp : TDOMPRoduto;
   contInicial : Integer;
 begin
-  if loadInicial = true then begin
+  if loadInicial = true then
+  begin
     EdtSubTotal.Text   := '0,00';
     edtValorBruto.Text := '0,00';
     EdtTotal.Text      := '0,00';
     LimpaGrid;
     contInicial := 0;
-  end
-  else
+  end else
     contInicial := prevenda.itens.Count-1;
   edtQtdItens.Text := intToStr(prevenda.itens.Count);
   for i := contInicial to prevenda.itens.Count-1 do
@@ -9177,6 +9190,7 @@ begin
         if (vDestacarItensOcupados) and
           ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True)
           and (RgOpcoes.ItemIndex = 1))) then
+        begin
           if ((vEstqNegativo <> 'S') and
             (qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0, i]),
             StrToFloatDef(SgDados.Cells[2, i], 0)) > 0) and
@@ -9189,7 +9203,7 @@ begin
             ArraylinhasDestacadas[i] := True
           else
             ArraylinhasDestacadas[i] := false;
-
+        end;
         if (ArraylinhasDestacadas[i]) or
           (StrToFloatDef(SgDados.Cells[2, i], 0) >
           StrToFloatDef(SgDados.Cells[8, i], 0)) then

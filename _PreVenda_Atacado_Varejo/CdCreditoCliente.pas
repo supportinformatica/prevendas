@@ -282,7 +282,8 @@ begin
                 'ON (P.cdPessoa = W.cdPessoa) AND                                                                       '+
                 '(P.cdPessoa = E.cdPessoa)) INNER JOIN Cliente C WITH (nolock) ON P.cdPessoa = C.cdPessoa               '+
                 'Where P.ser in (''C'',''U'') Order by 1                                                                ';
-    MontaComboListBoolAdo(AdoQryExcluir,CmbConsulta);
+//    MontaComboListBoolAdo(AdoQryExcluir,CmbConsulta);
+    MontaComboListComposto(AdoQryExcluir, CmbConsulta, 2); // tbsDados
   end;
   CmbConsulta.ItemIndex := -1;
   EdtCdCliente.Clear;
@@ -290,13 +291,18 @@ end;
 
 procedure TFrmCreditoCliente.CmbConsultaChange(Sender: TObject);
 begin
-  if CmbConsulta.ItemIndex <> -1 then begin
-    AdoQryExcluir.Open;
-    if AdoQryExcluir.Locate('Devedor',CmbConsulta.Text,[]) then
-      EdtCdCliente.Text := AdoQryExcluir.FieldByName('cdPessoa').AsString
-    else
-      EdtCdCliente.Clear;
-  end;
+//  if CmbConsulta.ItemIndex <> -1 then
+//  begin
+//    AdoQryExcluir.Open;
+//    if AdoQryExcluir.Locate('Devedor',CmbConsulta.Text,[]) then
+//      EdtCdCliente.Text := AdoQryExcluir.FieldByName('cdPessoa').AsString
+//    else
+//      EdtCdCliente.Clear;
+//  end;
+  if CmbConsulta.ItemIndex <> -1 then
+    EdtCdCliente.Text := copy_campo(CmbConsulta.Text,'|',2)
+  else
+    EdtCdCliente.Clear;
   LimpaCampos;
   CarregarValores;
 end;
@@ -307,7 +313,8 @@ begin
   if CmbConsulta.ItemIndex <> -1 then AtualizaQryConsulta;
   if (rgconsulta.ItemIndex = 2) or (rgconsulta.ItemIndex = 3) then
     BtnMdImprimir.Enabled := true
-    else BtnMdImprimir.Enabled := False;
+  else
+    BtnMdImprimir.Enabled := False;
 end;
 
 procedure TFrmCreditoCliente.Relaodeitens1Click(Sender: TObject);
@@ -316,22 +323,26 @@ var  List_Lancamentos : TStringList;
      vLancamentos: String;
 begin
   inherited;
-  if RgConsulta.ItemIndex <> 0 then begin
+  if RgConsulta.ItemIndex <> 0 then
+  begin
     List_Lancamentos := TStringList.Create;
     vLancamentos := '';
     ADOQryConsulta.First;
-    For i := 1 to ADOQryConsulta.RecordCount do begin
+    For i := 1 to ADOQryConsulta.RecordCount do
+    begin
        List_Lancamentos.Add(ADOQryConsulta.FieldByName('Lançamento').AsString);
        ADOQryConsulta.Next;
     end;
-    for i := 0 to List_Lancamentos.Count - 1 do begin //adiciono os codigos na variavel tipo string
+    for i := 0 to List_Lancamentos.Count - 1 do
+    begin //adiciono os codigos na variavel tipo string
       if i = 0 then
         vLancamentos := '''' + List_Lancamentos[i] + ''''
       else
         vLancamentos := vLancamentos + ',''' + List_Lancamentos[i] + '''';
     end;
     FrmRelEntSai := TFrmRelEntSai.Create(Self);
-    With FrmRelEntSai.ADOQryRelDados do begin
+    With FrmRelEntSai.ADOQryRelDados do
+    begin
      Sql.Text := 'Select L.dsLancamento,L.cdpessoa cdCliente, L.dtEmissao,L.Dt_Efefiva_E_S,L.dsCFOP,       '+
                  'L.cdComissao,L.dsCancelado,L.vlValor,L.vlDesconto,                 '+
                  'P.cdFabricante,P.nmProduto,P.dsReferencia,I.nrQtd,I.vlUnitario,    '+
@@ -651,7 +662,8 @@ end;
 procedure TFrmCreditoCliente.BtnMdImprimirClick(Sender: TObject);
 begin
   inherited;
-  if (length(EdtCdCliente.Text) <= 0) then begin
+  if (length(EdtCdCliente.Text) <= 0) then
+  begin
     ShowMessage('Selecione o cliente corretamente!');
     exit;
   end;
@@ -660,7 +672,8 @@ begin
   FrmRelReceber.QRLblTitulo.Caption    := ' Relatório contas a receber';
   FrmRelReceber.QrLblDtInicial.Enabled := False;
   FrmRelReceber.QrLblDtFinal.Enabled   := False;
-  With FrmRelReceber.AdoQryRelDados do begin
+  With FrmRelReceber.AdoQryRelDados do
+  begin
     Sql.Text := 'Select P.cdPessoa as Código,P.nmPessoa as Nome,T.cdTipo,T.dsCusto,       '+
                 'A.dsLancamento as Lançamento,A.dsDocumento as Documento,                 '+
                 'CONVERT(char(02),A.nrParcelas) +''/''+ CONVERT(char(02),L.nrParcelas)    '+
@@ -672,10 +685,12 @@ begin
                 'From Pessoa P WITH (nolock),Lancto L WITH (nolock),Parcela A WITH (nolock),TpLancto T WITH (nolock),Cliente C WITH (nolock) ';
     // Filtro de Pessoa, Cartão ou Centro de Custo
     Sql.Add('Where T.dsStatus = ''C'' and L.dsCancelado is null and P.cdPessoa = L.cdPessoa and L.dsStatus = A.dsStatus ');     //
-    if RgConsulta.ItemIndex = 2 then begin// mostra as contas em aberto ou os creditos dos clientes
+    if RgConsulta.ItemIndex = 2 then
+    begin// mostra as contas em aberto ou os creditos dos clientes
        FrmRelReceber.QRLblTitulo.Caption := 'Relatório de Contas a Receber';
        Sql.Add('and L.dsStatus <> ''Y''');
-    end else begin
+    end else
+    begin
        Sql.Add('and L.dsStatus = ''Y''');
        FrmRelReceber.QRLblTitulo.Caption := 'Relatório de Créditos';
     end;
@@ -707,8 +722,9 @@ begin
     Parameters.ParamByName('Dt_Final').Value   := DateToStr(Date + 6000);
     Open;
   end;
-  FrmRelReceber.QRMdRel.Preview;
-  FrmRelReceber.Free;
+  FrmRelReceber.QRMdRel.PreviewModal;
+  FreeAndNil(FrmRelReceber);
+  BtnMdImprimir.Enabled := True;
 end;
 
 procedure TFrmCreditoCliente.EdtCdClienteKeyPress(Sender: TObject;
