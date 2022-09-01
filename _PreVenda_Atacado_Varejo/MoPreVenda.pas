@@ -14919,7 +14919,7 @@ begin
     Editor.Lines.Add('A19,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
     Editor.Lines.Add('A19,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B8,64,0,1,2,4,39,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('B-4,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L]+'"');
     Editor.Lines.Add('A54,109,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('A19,126,0,1,1,1,N,"'+SgDados.Cells[7, L]+'"');
@@ -14931,7 +14931,7 @@ begin
       Editor.Lines.Add('A299,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
       Editor.Lines.Add('A299,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B296,64,0,1,2,4,39,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('B288,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+1]+'"');
       Editor.Lines.Add('A342,109,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A307,126,0,1,1,1,N,"'+SgDados.Cells[7, L+1]+'"');
@@ -14944,7 +14944,7 @@ begin
       Editor.Lines.Add('A585,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
       Editor.Lines.Add('A585,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B576,64,0,1,2,4,39,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('B568,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+2]+'"');
       Editor.Lines.Add('A621,109,0,1,1,1,N,"'+SgDados.Cells[6, L+2]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A585,126,0,1,1,1,N,"'+SgDados.Cells[7, L+2]+'"');
