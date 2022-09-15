@@ -2561,7 +2561,7 @@ begin
         begin
           if (UpperCase(vEmpresa) = 'CHALOC') then
           begin
-            if (dsCGC <> '01655446000117') and
+            if (dsCGC <> '01655446000117') and (dsCGC <> '01956284000157') and
                (dsCGC <> '10237494000186') and (dsCGC <> '01655446000389') then
               ADOSPConsulta.Filter := 'CÓDIGO_BARRAS = '+QuotedStr(texto)
             else
