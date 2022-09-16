@@ -607,7 +607,7 @@ type
     procedure ImprimeEtiquetasGoncalves;
     procedure ImprimeEtiquetasJALVES_Pequena;
     procedure ImprimeEtiquetasMIXTUDO;
-    procedure ImprimeEtiquetasBOXXE;
+    procedure ImprimeEtiquetasWINBOX;
     procedure ImprimeEtiquetasDeluc;
     Procedure ImprimeEtiquetasDisCabos;
     procedure ImprimeEtiquetaSantoAntonio;
@@ -11490,8 +11490,8 @@ begin
     ImprimeEtiquetasJABUTIANA
   else if (UpperCase(vFlagEtiqueta) = 'MIXTUDO') then // ARGOX OS-2140
     ImprimeEtiquetasMIXTUDO
-  else if (UpperCase(vFlagEtiqueta) = 'BOXXE') then // ARGOX OS-2140
-    ImprimeEtiquetasBOXXE
+  else if (UpperCase(vFlagEtiqueta) = 'BOXXE') then // ELGIN L42 DT
+    ImprimeEtiquetasWINBOX
   else if (UpperCase(vFlagEtiqueta) = 'PRECOBOM') then // ARGOX OS-214plus A
     ImprimeEtiquetaPrecoBom
   else if (UpperCase(vFlagEtiqueta) = 'DONASANTA') then // ARGOX OS-214plus A
@@ -21374,7 +21374,7 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBOXXE;
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetasWINBOX;
 var
   L: Integer;
   Arq: TextFile;
@@ -21410,7 +21410,7 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A90,15,0,3,1,2,N,"BOXXE JEANS"');
+    Editor.Lines.Add('A90,15,0,3,1,2,N,"ORIGINAL"');
     Editor.Lines.Add('');
     Editor.Lines.Add('A48,66,0,2,1,1,N,"'+trim(Copy(SgDados.Cells[1, L], 1, 20))+'"');
     Editor.Lines.Add('A48,88,0,2,1,1,N,"'+trim(Copy(SgDados.Cells[1, L], 21, 20))+'"');
