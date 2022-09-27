@@ -380,7 +380,8 @@ begin
       RlDescricao.Caption := FieldByName('dsProdutoNota').asstring;
     end;
   end else
-  if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+  if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
+  (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     with AdoQuery1 do
     begin

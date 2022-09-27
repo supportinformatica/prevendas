@@ -3059,8 +3059,9 @@ begin
   end;
   if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
     CbxAmbiente.Text := InputBox('Digite a data de validade','Data de Validade','');
-  if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or (UpperCase(vEmpresa) = 'GAMA') or
-    (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+  if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or
+     (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '30105285000196') or
+     (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
     FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName
@@ -3074,17 +3075,16 @@ begin
     FrmDescricao.EdtQtdSai.Text := FormatFloat('0.00000',
       StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtFator.Text := '1,00000';
-    if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
+    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') then
     begin
       FrmDescricao.Panel2.Visible := false;
       FrmDescricao.height := 112;
-      // FrmDescricao.AutoSize := True;
     end;
     FrmDescricao.ShowModal;
     FreeAndNil(FrmDescricao);
     if vDescricaoGama = '' then
       exit;
-  end else if ((UpperCase(vEmpresa) = 'JNUNES') AND
+  end else if ((UpperCase(vEmpresa) = 'JNUNES') and
     (ADOSPConsulta.FieldByName('Código').AsInteger <> 20479)) then
     FrmPrincipalPreVenda.vDescricaoGama := ADOSPConsulta.FieldByName
       ('DESCRIÇÃO').AsString;
@@ -3207,7 +3207,8 @@ begin
 //    Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
 //  end;
   if (trim(EdtDescUnit.Text) <> '') and (StrToFloat(EdtDescUnit.Text) > 0) and
-    ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO')) then
+    ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and
+    (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO')) then
   begin
     // and (UPPERCASE(vEmpresa) <> 'LLPARAFUSOS') then
     BtnAprazo.Enabled := false;
@@ -3222,14 +3223,15 @@ begin
   for L := T to Round(quantidade) do
   begin
     itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('Código').AsInteger);
-
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
-      (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI')
+       (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
+       (dsCGC = '30105285000196')
     then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
 
-    if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+    if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
+       (UpperCase(vEmpresa) = 'ANADRI') then
     begin
       und := TNEGUnidade.getUnidade(vUndGama);
       if und = nil then
@@ -4155,7 +4157,8 @@ begin
   SgDados.Cells[0, i] := ADOQryProcura.FieldByName('cdProduto').AsString;
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
-  else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+  else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
+    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -4228,7 +4231,8 @@ begin
   SgDados.Cells[0, i] := ADOQryProcura.FieldByName('cdProduto').AsString;
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
-  else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+  else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
+  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -5533,9 +5537,6 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible   := False;
     end;
   end;
-  // FrmRelOrcamentos.QreQtd.DisplayMask      := TNEGLoja.displayFormat(vCasasQtd);
-  // //FrmRelOrcamentos.RLDBResult1.DisplayMask := TNEGLoja.displayFormat(vCasasPreco);
-  // FrmRelOrcamentos.QrePreco.DisplayMask    := TNEGLoja.displayFormat(vCasasPreco);
   if dsCGC = '10305634000106' then      // d rios
   begin
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
@@ -5588,7 +5589,7 @@ begin
     FrmRelOrcamentos.RlDescricao.width := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') then
+  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
@@ -5652,8 +5653,7 @@ begin
     Pchar(ExtractFilePath(Application.ExeName) +
     FrmRelOrcamentos.ADOSPRelDados.FieldByName('nrOrcamento').AsString
     + '.pdf');
-  if (UpperCase(vEmpresa) = 'CARIOCA') or (UpperCase(vEmpresa) = 'ANADRI') or (UpperCase(vEmpresa) = 'GAMA') or
-    ((UpperCase(vEmpresa) = 'MEGA') and (vOrcamento = 'O')) then
+  if (UpperCase(vEmpresa) = 'ANADRI') or (UpperCase(vEmpresa) = 'GAMA') then
   begin
     FrmRelOrcamentos.RlDescricao.Visible := True;
     FrmRelOrcamentos.RlDescricao.Transparent := False;
@@ -5844,46 +5844,8 @@ begin
   else
     FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: a vista';
   end;
-  // case vCasasQtd of   // preco de venda
-  // 0: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0';
-  // 1: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0.0';
-  // 2: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0.00';
-  // 3: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0.000';
-  // 4: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0.0000';
-  // 5: frmRelOrcamentos.QREQtd.DisplayMask := '#,##0.00000';
-  // end; // case
-  // case vCasasPreco of   // preco de venda
-  // 1:
-  // begin
-  // frmRelOrcamentos.QREPreco.DisplayMask := '#,##0.0';
-  // frmRelOrcamentos.RLDBResult3.DisplayMask := '#,##0.0';
-  // end;
-  // 2:
-  // begin
-  // frmRelOrcamentos.QREPreco.DisplayMask := '#,##0.00';
-  // frmRelOrcamentos.RLDBResult3.DisplayMask := '#,##0.00';
-  // end;
-  // 3:
-  // begin
-  // frmRelOrcamentos.QREPreco.DisplayMask := '#,##0.000';
-  // frmRelOrcamentos.RLDBResult3.DisplayMask := '#,##0.000';
-  // end;
-  // 4:
-  // begin
-  // frmRelOrcamentos.QREPreco.DisplayMask := '#,##0.0000';
-  // frmRelOrcamentos.RLDBResult3.DisplayMask := '#,##0.0000';
-  // end;
-  // 5:
-  // begin
-  // frmRelOrcamentos.QREPreco.DisplayMask := '#,##0.00000';
-  // frmRelOrcamentos.RLDBResult3.DisplayMask := '#,##0.00000';
-  // end;
-  // end; //case
-  // if valor <> 10 then  //só imprime o campo memo se vir a impressão a partir do formulário q solicita forma de pagamento
   if (vMemo <> nil) then
     FrmRelOrcamentos.RLMemo1.Lines := vMemo.Lines;
-//  if Label10.Caption = 'Observação' then
-//    FrmRelOrcamentos.RLMemo1.Lines.Add(EdtApelido.Text);
   with FrmRelOrcamentos.ADOQryCliente do
   begin
     sql.Text :=
