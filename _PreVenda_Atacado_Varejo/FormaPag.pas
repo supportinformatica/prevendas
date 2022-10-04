@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   NEGCliente, DOMPrevenda,
   Dialogs, StdCtrls, Buttons, ExtCtrls, Menus, Db, ADODB, Vcl.Grids,
-  System.Math, System.DateUtils;
+  System.Math, System.DateUtils, System.ImageList, Vcl.ImgList;
 
 type
   TFrmFormaPag = class(TForm)
@@ -40,6 +40,7 @@ type
     Label6: TLabel;
     chkbxEnviarCopiaEmail: TCheckBox;
     pnlAguardaEnvioEmail: TPanel;
+    ImageList1: TImageList;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnConfirmarKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -62,6 +63,10 @@ type
     procedure edtParcelasKeyPress(Sender: TObject; var Key: Char);
     procedure RadioGroup1Click(Sender: TObject);
     procedure gridParcelasDblClick(Sender: TObject);
+    procedure gridParcelasDrawCell(Sender: TObject; ACol, ARow: Integer;
+      Rect: TRect; State: TGridDrawState);
+    procedure gridParcelasMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
     vSalvar: integer;
@@ -270,6 +275,7 @@ end;
 
 procedure TFrmFormaPag.BtnCancelarClick(Sender: TObject);
 begin
+  FrmPrincipalPreVenda.EdtConsulta.SetFocus;
   Close;
 end;
 
@@ -451,7 +457,7 @@ begin
   if obrigarProfissional(FrmPrincipalPreVenda.dsCGC) then
     CBXSelecionaProfissionais.Checked := True;
   preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
-  if (FrmPrincipalPreVenda.dsCGC = '17111138000160') or (FrmPrincipalPreVenda.dsCGC = '03821965000133') then
+  if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     RadioGroup1.ItemIndex := 0;
     edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
@@ -534,8 +540,23 @@ end;
 
 procedure TFrmFormaPag.gridParcelasDblClick(Sender: TObject);
 begin
-  edtParcelas.Text := gridParcelas.Cells[0, gridParcelas.Row];
-  edtAcresCartao.Text    := gridParcelas.Cells[1, gridParcelas.Row];
+  edtParcelas.Text    := gridParcelas.Cells[0, gridParcelas.Row];
+  edtAcresCartao.Text := gridParcelas.Cells[1, gridParcelas.Row];
+  gridParcelas.Cells[3, gridParcelas.Row] := '1';
+end;
+
+procedure TFrmFormaPag.gridParcelasDrawCell(Sender: TObject; ACol,
+  ARow: Integer; Rect: TRect; State: TGridDrawState);
+var
+  Re: TRect;
+begin
+  if (Acol = 3) and (ARow > 0) then
+  begin
+    if gridParcelas.Cells[3,ARow] = '1' then
+      ImageList1.Draw(gridParcelas.Canvas, Rect.Left + 1 , Rect.Top +2 , 0)
+    else if gridParcelas.Cells[3,ARow] = ' ' then
+      ImageList1.Draw(gridParcelas.Canvas, Rect.Left + 1 , Rect.Top +2 , 1);
+  end;
 end;
 
 procedure TFrmFormaPag.gridParcelasExit(Sender: TObject);
@@ -550,6 +571,30 @@ begin
 //    Key := #0
 //  else
 //    ValidarInteiro(Key);
+end;
+
+procedure TFrmFormaPag.gridParcelasMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  linha, i : integer;
+begin
+  if gridParcelas.Cells[3, gridParcelas.row] = '1' then
+  begin
+    gridParcelas.Cells[3, gridParcelas.row] := ' ';
+    edtParcelas.Text    := '1x';
+    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
+  end else if gridParcelas.Cells[3, gridParcelas.row] = ' ' then
+  begin
+    gridParcelas.Cells[3, gridParcelas.row] := '1';
+    edtParcelas.Text    := gridParcelas.Cells[0, gridParcelas.Row];
+    edtAcresCartao.Text := gridParcelas.Cells[1, gridParcelas.Row];
+    linha := gridParcelas.Row;
+    for i := 1 to gridParcelas.RowCount -1 do // desmarca o checked das demais linhas
+    begin
+      if i <> linha then
+        gridParcelas.Cells[3, i] := ' ';
+    end;
+  end;
 end;
 
 procedure TFrmFormaPag.Memo1Enter(Sender: TObject);
@@ -697,7 +742,7 @@ begin
       RowCount := 2;
       Cells[1, 0] := 'Valor';
       Cells[2, 0] := 'Valor Parcela';
-      Cells[0, 1] := '1v';
+      Cells[0, 1] := '1x';
       if (vAtacadoVarejo = 'A') then
       begin
         Cells[1, 1] := FormatFloatQ(2, valor * (1 + parc1));
@@ -735,6 +780,7 @@ begin
       begin
         with gridParcelas do
         begin
+          Cells[3, i] := ' ';
           case i of
             1 :  // 1v
             begin
@@ -804,33 +850,16 @@ begin
         begin
           Cells[1, i] := FormatFloatQ(2, valor );
           Cells[2, i] := FormatFloatQ(2, (valor / i));
+          Cells[3, i] := ' ';
         end;
       end;
     end;
   end;
-//  Limpa_Grid(gridParcelas);
-//  gridParcelas.RowCount := 13;
-//  valorParcela := RoundTo(valor / numParcelas, -2);
-//  resto := valor - (valorParcela * numParcelas);
-
-//  gridParcelas.RowCount := numParcelas + 1;
-//  valorParcela := RoundTo(valor / numParcelas, -2);
-//  resto := valor - (valorParcela * numParcelas);
-//  for i := 1 to numParcelas do
-//  begin
-//    gridParcelas.Cells[0, i] := IntToStr(15 * i);
-//    gridParcelas.Cells[1, i] := IntToStr(i);
-//    if i = numParcelas then
-//      gridParcelas.Cells[2, i] := FloatToStr(valorParcela + resto)
-//    else
-//      gridParcelas.Cells[2, i] := FloatToStr(valorParcela);
-//    gridParcelas.Cells[3, i] := DateToStr(incDay(Now, (15 * i)));
-//  end;
 end;
 
 procedure TFrmFormaPag.RadioGroup1Click(Sender: TObject);
 begin
-  if (FrmPrincipalPreVenda.dsCGC = '17111138000160') or (FrmPrincipalPreVenda.dsCGC = '03821965000133') then
+  if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     case RadioGroup1.ItemIndex of
       0,1,4,5,7,8,10,11 :
@@ -840,6 +869,8 @@ begin
     else
       preencherGridParcelas(12, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'CARTAO');
     end;
+    edtParcelas.Text    := '1x';
+    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
   end;
 end;
 

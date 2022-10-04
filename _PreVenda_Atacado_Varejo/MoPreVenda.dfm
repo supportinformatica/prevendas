@@ -1761,8 +1761,8 @@
     end
   end
   object EdtLancto: TEdit
-    Left = 299
-    Top = 20
+    Left = 298
+    Top = 15
     Width = 78
     Height = 21
     Hint = 'N'#250'mero do or'#231'amento'
@@ -2660,7 +2660,7 @@
     Top = 421
     Width = 77
     Height = 43
-    Hint = 'Atualizar os produtos'
+    Hint = 'Atualizar produtos e os clientes.'
     Anchors = [akRight, akBottom]
     Caption = 'Atualizar'
     Font.Charset = ANSI_CHARSET

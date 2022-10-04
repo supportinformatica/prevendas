@@ -763,6 +763,7 @@ type
     formaPagamentoImp: string;
     // LblMensagem: Tletreiro;
     // procedure EnviaProdutosHospitalar;
+    function selecionarParcelasCartao : Boolean;
     function getValorVendaProduto: Real;
     procedure LimparPesquisa;
     procedure BloqueiaAlteracaoPreVenda(nrOrcamento: Integer);
@@ -4702,13 +4703,15 @@ end;
 procedure TFrmPrincipalPreVenda.SBF5Click(Sender: TObject);
 var
   textoConsulta_temp : string;
+  textoCombo : string;
+  i : Integer;
 begin
-  // listarUsuariosNaCombo;
+  textoCombo := CbxCliente.Text;
   Monta_Combo;
   if (RgOpcoes.ItemIndex in [0, 2, 4]) then
     CbxCliente.Setfocus
   else
-    EdtLancto.Setfocus;
+    EdtConsulta.SetFocus;
   ADOQryCliente.open;
   ListBox1.Clear;
   ListBox1.Visible := false;
@@ -4720,6 +4723,15 @@ begin
   EdtConsulta.Text := '';
   AtualizaQryConsulta;
   EdtConsulta.Text := textoConsulta_temp;
+end;
+
+function TFrmPrincipalPreVenda.selecionarParcelasCartao: Boolean;
+begin
+  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
+     (dsCGC = '40484448000142') then
+    Result := True
+  else
+    Result := False;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoExit(Sender: TObject);
@@ -5824,13 +5836,21 @@ begin
     2:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: cartao a vista';
     3:
+    begin
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: cartao parcelado';
+      if selecionarParcelasCartao then
+        FrmRelOrcamentos.RlblFormaPgto.caption := FrmRelOrcamentos.RlblFormaPgto.caption + ' ' + FrmFormaPag.edtParcelas.Text;
+    end;
     4:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: cheque pré';
     5:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: entrada + prazo';
     6:
+    begin
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: entrada + cartao';
+      if selecionarParcelasCartao then
+        FrmRelOrcamentos.RlblFormaPgto.caption := FrmRelOrcamentos.RlblFormaPgto.caption + ' ' + FrmFormaPag.edtParcelas.Text;
+    end;
     7:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: entrada + ch pré';
     12:
@@ -9004,7 +9024,7 @@ procedure TFrmPrincipalPreVenda.CarregarItensGrid(prevenda: TPrevenda; loadInici
 var
   i: Integer;
   temp, tempBruto: Currency;
-  acrescimoCartao : Boolean;
+  acrescimoCartao  : Boolean;
   produto_temp : TDOMPRoduto;
   contInicial : Integer;
 begin
@@ -9092,7 +9112,7 @@ begin
     EdtTotal.Text := edtValorBruto.Text;
     temp := (prevenda.itens[i].precoVenda * prevenda.itens[i].quantidade);
     temp := SimpleRoundTo(temp, -2);
-    if (temp > tempBruto) and ((UpperCase(vEmpresa) = 'NACIONAL') or (dsCGC = '03821965000133') or (dsCGC = '17111138000160')) then
+    if (temp > tempBruto) and ((UpperCase(vEmpresa) = 'NACIONAL') or FrmPrincipalPreVenda.selecionarParcelasCartao) then
       acrescimoCartao := True
     else
       EdtSubTotal.Text := FloatToStr(StrToFloat(EdtSubTotal.Text) + temp);
@@ -9635,31 +9655,11 @@ begin
               mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
             Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
           end;
-          // else
-          // if TNegPremio.VerificaSeClienteFoiContempladoFidelidade(cliente) = false then
-          // Application.MessageBox('Com essa pontuação o cliente ainda não tem direito a prêmios!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
         end;
       end;
       premio := TBuscaObjeto.BuscaPremios(Cliente);
     end;
   end;
-
-//  if UpperCase(vEmpresa) = 'GIRORAPIDO' then
-//  begin
-//    Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-//    if MessageDlgDef2('Qual o tipo deste Cliente?', 'Confirmação',
-//      mtConfirmation, [mbYes, mbOK], mrYes, 0) = mrYes then
-//    begin // Yes - varejo, Ok - atacado
-//      vAtacadoVarejo := 'V';
-//      Label30.caption := 'Cliente -> Varejo';
-//    end
-//    else
-//    begin
-//      vAtacadoVarejo := 'A';
-//      Label30.caption := 'Cliente -> Atacado';
-//    end;
-//    Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
-//  end;
   if mudouClienteAlterandoPrevenda and (PERMISSAO('821', 'V', false) = 'N') then
   begin
     if FrmCancelamentoVenda.Possui_Permissao('821', 'V', cbxUsuario.Text,
@@ -9685,17 +9685,6 @@ begin
 
       // VOLTA PARA O CLIENTE ORIGINAL DA PRÉ-VENDA
       SetarClienteNaCombo(codigoClienteAtual);
-//      if UpperCase(vEmpresa) = 'GIRORAPIDO' then
-//        if (tipoClienteAtual = 'A') then
-//        begin // Yes - varejo, Ok - atacado
-//          vAtacadoVarejo := 'A';
-//          Label30.caption := 'Cliente -> Atacado';
-//        end
-//        else
-//        begin
-//          vAtacadoVarejo := 'V';
-//          Label30.caption := 'Cliente -> Varejo';
-//        end;
     end;
   end;
   if (existeItemLancadoNaGrid) and (mudouTipoClienteAtacadoVarejo or
@@ -9716,31 +9705,16 @@ begin
       EdtDesconto.Text := LimpaEdtDesconto;
       codigoClienteAtual := copy_campo(CbxCliente.Text, '|', 2);
       BtnAprazo.Enabled := True;
-//      if UpperCase(vEmpresa) = 'GIRORAPIDO' then
-//        tipoClienteAtual := vAtacadoVarejo;
       EdtConsulta.Setfocus;
     end
     else
     begin
       SetarClienteNaCombo(codigoClienteAtual);
-//      if UpperCase(vEmpresa) = 'GIRORAPIDO' then
-//        if (tipoClienteAtual = 'A') then
-//        begin // Yes - varejo, Ok - atacado
-//          vAtacadoVarejo := 'A';
-//          Label30.caption := 'Cliente -> Atacado';
-//        end
-//        else
-//        begin
-//          vAtacadoVarejo := 'V';
-//          Label30.caption := 'Cliente -> Varejo';
-//        end;
     end;
   end
   else
   begin
     codigoClienteAtual := copy_campo(CbxCliente.Text, '|', 2);
-//    if UpperCase(vEmpresa) = 'GIRORAPIDO' then
-//      tipoClienteAtual := vAtacadoVarejo;
   end;
   if TestaRestricao then { 6T9Q-QBN8-6JAH }
     exit;
@@ -10510,6 +10484,7 @@ var
   numeroLancamento: Integer;
   isPrevendaOuOrcamento, isReimpressao: Boolean;
   szTexto : AnsiString;
+  parcelasCartao : string;
 begin
   Editor.Clear;
   if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARIOCA')
@@ -10549,16 +10524,29 @@ begin
       end;
       if (UpperCase(vEmpresa) = 'LLPARAFUSOS') then
         vPergunta_Apos_Comprovante := '2';
+      parcelasCartao := '';
       // não pergunta se quer imprimir a pre-venda
       case StrToInt(prevenda.codigoFormaPagamento) of
-        0 : vformapag := 'Forma Pgto: A vista';
-        1 : vformapag := 'Forma Pgto: A prazo';
-        2 : vformapag := 'Forma Pgto: Cartao a Vista';
-        3 : vformapag := 'Forma Pgto: Cartao Parcelado';
-        4 : vformapag := 'Forma Pgto: Cheque Pre';
-        5 : vformapag := 'Forma Pgto: Entrada + Prazo';
-        6 : vformapag := 'Forma Pgto: Entrada + Cartao';
-        7 : vformapag := 'Forma Pgto: Entrada + Cheque Pre';
+        0 : vformapag  := 'Forma Pgto: A vista';
+        1 : vformapag  := 'Forma Pgto: A prazo';
+        2 : vformapag  := 'Forma Pgto: Cartao a Vista';
+        3 :
+        begin
+          vformapag  := 'Forma Pgto: Cartao Parcelado';
+          if selecionarParcelasCartao then
+            parcelasCartao := ' ' + FrmFormaPag.edtParcelas.Text;
+          vformapag := vformapag + parcelasCartao;
+        end;
+        4 : vformapag  := 'Forma Pgto: Cheque Pre';
+        5 : vformapag  := 'Forma Pgto: Entrada + Prazo';
+        6 :
+        begin
+          vformapag  := 'Forma Pgto: Entrada + Cartao';
+          if selecionarParcelasCartao then
+            parcelasCartao := ' ' + FrmFormaPag.edtParcelas.Text;
+          vformapag := vformapag + parcelasCartao;
+        end;
+        7 : vformapag  := 'Forma Pgto: Entrada + Cheque Pre';
         12 : vformapag := 'Forma Pgto: Cheque a Vista';
         13 : vformapag := 'Forma Pgto: Cartao Debito';
         14 : vformapag := 'Forma Pgto: Deposito/Transferencia/Pix';
@@ -10583,8 +10571,8 @@ begin
           TimeToStr(Time));
         Editor.Lines.Add('Valor:       ' + EdtSubTotal.Text);
         if (StrToInt(prevenda.codigoFormaPagamento) in [3,6]) and
-           ((dsCGC = '03821965000133') or (dsCGC = '17111138000160')) then
-          Editor.Lines.Add(vformapag + ' ' + FrmFormaPag.edtParcelas.Text )
+           (FrmPrincipalPreVenda.selecionarParcelasCartao) then
+          Editor.Lines.Add(vformapag)
         else if (UpperCase(vEmpresa) <> 'NACIONAL') then
           Editor.Lines.Add(vformapag);
         if (vMemo <> nil) then
@@ -10674,10 +10662,10 @@ begin
         if (modeloImpressora = 'ELGINI9') then
         begin
           Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora));
+            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora, parcelasCartao));
         end else
           Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento));
+            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, parcelasCartao));
         try
           if (TNEGLoja.CortarPapel40ColunasPreVenda) and (modeloImpressora <> 'ELGINI9') then
             Editor.Lines.Add(CHR(27) + 'm');
@@ -17068,7 +17056,11 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.Monta_Combo;
+var
+  textoCombo : string;
+  i : Integer;
 begin
+  textoCombo := CbxCliente.Text;
   With ADOQryCliente do
   begin // monta a combo dos clientes
     { Sql.Text := 'SELECT P.nmPessoa,P.cdPessoa,E.nmLogradouro,E.dsUF,T.dsNaturalidade as Apelido,C.dsPreVenda,       '+
@@ -17087,6 +17079,7 @@ begin
       if (UpperCase(vEmpresa) = 'CAMARATUBA')or(UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
       SQL.Add('and C.cdCodigo <> 2 ');
       SQL.Add('Order By P.nmPessoa '); }
+
     sql.Text :=
     'SELECT P.nmPessoa,P.cdPessoa,E.nmLogradouro,E.dsUF,C.dsPreVenda,  ' +
     'C.vlDescVista,C.vlDescPrazo,C.dsVista,C.DSLIMCREDITO,             ' +
@@ -17104,6 +17097,14 @@ begin
       sql.Add('and C.cdCodigo <> 2 ');
     sql.Add('Order By P.nmPessoa ');
     MontaComboListComposto(ADOQryCliente, CbxCliente, 2);
+    for i := 0 to CbxCliente.Items.Count -1 do
+    begin
+      if textoCombo = CbxCliente.Items[i] then
+      begin
+        CbxCliente.ItemIndex := i;
+        Break;
+      end;
+    end;
   end;
   montarComboEntrega;
   // claudio 10-09-2015
