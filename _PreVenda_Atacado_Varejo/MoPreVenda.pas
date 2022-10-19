@@ -633,6 +633,7 @@ type
     procedure ImprimeEtiquetas_LayEVictorI; //Elgin L42 Pro
     procedure ImprimeEtiquetas_FacaBiju; //Elgin L42 Pro
     procedure ImprimeEtiquetas_RajuConstrucoes; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_PandorDelicatesen_Atalaia; //Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11512,7 +11513,9 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'FACABIJU' then // ARGOX OS 214 Plus
     ImprimeEtiquetas_FacaBiju
   else if UpperCase(vFlagEtiqueta) = 'RAJUCONSTRUCOES' then // ARGOX OS 214 Plus
-    ImprimeEtiquetas_RajuConstrucoes;
+    ImprimeEtiquetas_RajuConstrucoes
+    else if UpperCase(vFlagEtiqueta) = 'PANDORODELIATALAIA' then // ARGOX OS 214 Plus
+    ImprimeEtiquetas_PandorDelicatesen_Atalaia;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -30092,6 +30095,74 @@ begin
       Editor.Lines.Add('A120,184,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
       Editor.Lines.Add('A450,144,0,1,2,3,N,"R$"');
       Editor.Lines.Add('A498,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PandorDelicatesen_Atalaia;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      Editor.Lines.Add('I8,1,001');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q240,25');
+      Editor.Lines.Add('q460');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D11');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A90,4,0,4,1,1,N,"' +Copy(SgDados.Cells[1, L],1,22)+ '"');
+      Editor.Lines.Add('A90,36,0,4,1,1,N,"' +Copy(SgDados.Cells[1, L],23,18)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A108,100,0,3,1,2,N,"R$"');
+      Editor.Lines.Add('A144,72,0,3,2,4,N,"' +FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A208,148,0,4,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A144,180,0,4,1,1,N,"' +SgDados.Cells[6, L]+ '"');
+      Editor.Lines.Add('');
       vqtd := StrToFloat(SgDados.Cells[2, L]);
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       FreeAndNil(Produto);
