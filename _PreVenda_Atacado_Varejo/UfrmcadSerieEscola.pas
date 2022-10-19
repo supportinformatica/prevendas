@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, FrmCadEstados, DB, ADODB, ImgList, ExtCtrls, StdCtrls, Grids,
-  DBGrids, ComCtrls, Buttons, Vcl.Menus;
+  DBGrids, ComCtrls, Buttons, Vcl.Menus, System.ImageList;
 
 type
   TFrmCadSerieEscola = class(TFrmMdCadastro)

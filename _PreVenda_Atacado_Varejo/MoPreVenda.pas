@@ -2286,7 +2286,7 @@ begin
      (dsCGC = '32879272000108') or (dsCGC = '32879272000361') or
      (dsCGC = '03334531000109') or (dsCGC = '15555876000171') or
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
-     (dsCGC = '21597412000120')
+     (dsCGC = '21597412000120') or (dsCGC = '36056673000100')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -17312,6 +17312,10 @@ begin
         // prevenda:= TPrevenda.Create();
         prevenda.dsReferencia := edtReferencia.Text;
         prevenda.isDescontoOculto := vOcultaDesconto;
+        if selecionarParcelasCartao and (StrToIntDef(prevenda.codigoFormaPagamento, 0) in [3,6]) then
+          prevenda.parcelasCartao := FrmFormaPag.edtParcelas.Text
+        else
+          prevenda.parcelasCartao := '';
         if vOrcamento = 'O' then
           prevenda.isOrcamento := True
         else

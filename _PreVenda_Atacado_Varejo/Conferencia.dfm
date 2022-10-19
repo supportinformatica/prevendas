@@ -144,7 +144,7 @@ object frmConferencia: TfrmConferencia
       Height = 22
       Caption = 'Conferido'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
+      Font.Color = clNavy
       Font.Height = -9
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -168,7 +168,7 @@ object frmConferencia: TfrmConferencia
       Caption = 'F9 Salvar'
       Enabled = False
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
+      Font.Color = clNavy
       Font.Height = -9
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -185,7 +185,7 @@ object frmConferencia: TfrmConferencia
       Cancel = True
       Caption = 'ESC-Sair'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
+      Font.Color = clNavy
       Font.Height = -9
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -201,7 +201,7 @@ object frmConferencia: TfrmConferencia
       Height = 39
       Caption = 'Cancelar'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
+      Font.Color = clNavy
       Font.Height = -9
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]

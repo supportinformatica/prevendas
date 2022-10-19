@@ -8,7 +8,7 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
   Visible = False
   OnShow = FormShow
   ExplicitWidth = 393
-  ExplicitHeight = 358
+  ExplicitHeight = 359
   PixelsPerInch = 96
   TextHeight = 13
   inherited PnlMoBotoes: TPanel
@@ -130,6 +130,8 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
       end
     end
     inherited TBSheetMdCadastroDados: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 280
       ExplicitHeight = 302
       inherited Bevel1: TBevel
@@ -189,6 +191,8 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
     end
     inherited TBSheetMdCdRelatorio: TTabSheet
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 280
       ExplicitHeight = 302
     end
@@ -197,7 +201,7 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
     Left = 184
     Top = 168
     Bitmap = {
-      494C010103000400140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000FFFFFF00FFFFFF00000000000000000000000000000000000000
