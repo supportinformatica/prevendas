@@ -30156,12 +30156,9 @@ begin
       Editor.Lines.Add('A90,4,0,4,1,1,N,"' +Copy(SgDados.Cells[1, L],1,22)+ '"');
       Editor.Lines.Add('A90,36,0,4,1,1,N,"' +Copy(SgDados.Cells[1, L],23,18)+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A108,100,0,3,1,2,N,"R$"');
       Editor.Lines.Add('A144,72,0,3,2,4,N,"' +FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A208,148,0,4,1,1,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A144,180,0,4,1,1,N,"' +SgDados.Cells[6, L]+ '"');
+      Editor.Lines.Add('A144,156,0,4,1,1,N,"' +SgDados.Cells[6, L]+ '"');
       Editor.Lines.Add('');
       vqtd := StrToFloat(SgDados.Cells[2, L]);
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
