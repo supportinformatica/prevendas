@@ -7264,7 +7264,7 @@ begin
     begin
       Parameters.ParamByName('@PESQUISA').Value := '%';
       open; // mostra os dados no dbgrid
-      FiltraConsulta('**********');  //adicionado para startar a consulta sem exibir itens na tela
+      FiltraConsulta('++-');  //adicionado para startar a consulta sem exibir itens na tela
     end
     else
     begin
@@ -7327,7 +7327,7 @@ procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
   if ADOSPConsulta.Active = True then
     ADOSPConsulta.Filtered := False;
-  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>1) and (EdtConsulta.Text <> '')) then
+  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
     FiltraConsulta(EdtConsulta.Text)
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
