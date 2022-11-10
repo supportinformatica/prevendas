@@ -7264,7 +7264,7 @@ begin
     begin
       Parameters.ParamByName('@PESQUISA').Value := '%';
       open; // mostra os dados no dbgrid
-      FiltraConsulta('**********');  //adicionado para startar a consulta sem exibir itens na tela
+      FiltraConsulta('++-');  //adicionado para startar a consulta sem exibir itens na tela
     end
     else
     begin
@@ -7327,7 +7327,7 @@ procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
   if ADOSPConsulta.Active = True then
     ADOSPConsulta.Filtered := False;
-  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>1) and (EdtConsulta.Text <> '')) then
+  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
     FiltraConsulta(EdtConsulta.Text)
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
@@ -14639,10 +14639,10 @@ begin
       Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
-    Editor.Lines.Add('N');
-    Editor.Lines.Add('');
     Editor.Lines.Add('Q240,12');
-    Editor.Lines.Add('q832');
+    Editor.Lines.Add('q420');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
     Editor.Lines.Add('');
     Editor.Lines.Add('O');
     Editor.Lines.Add('');
@@ -14652,11 +14652,18 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('ZB');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A20,0,0,3,1,2,N,"'+Copy(SgDados.Cells[1, L],1,26)+'"');
-    Editor.Lines.Add('A20,40,0,3,1,2,N,"'+Copy(SgDados.Cells[1, L],27,14)+'"');
-    Editor.Lines.Add('A20,82,0,2,1,2,N,"'+SgDados.Cells[10, L]+'"');
-    Editor.Lines.Add('A290,165,0,2,1,2,N,"COD: '+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('A55,104,0,3,2,3,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A10,16,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L],1,28)+ '"');
+    Editor.Lines.Add('A10,56,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L],28,12)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A342,132,0,1,1,2,N,"' +SgDados.Cells[10, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A77,130,0,1,1,2,N,"R$"');
+    Editor.Lines.Add('A107,120,0,1,3,3,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A11,176,0,1,1,2,N,"COD: ' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
   end;
@@ -29997,33 +30004,33 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A32,0,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A32,17,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('A24,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,22)+'"');
+    Editor.Lines.Add('A24,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],23,18)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B28,36,0,1,2,4,56,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A67,99,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('B20,56,0,1,2,4,40,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A59,99,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A42,118,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('A34,118,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
-      Editor.Lines.Add('A320,0,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
-      Editor.Lines.Add('A320,17,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('A312,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,22)+'"');
+      Editor.Lines.Add('A312,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],23,18)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B316,36,0,1,2,4,56,N,"'+SgDados.Cells[6, L+1]+'"');
-      Editor.Lines.Add('A355,99,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('B308,56,0,1,2,4,40,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('A347,99,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A330,118,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
+      Editor.Lines.Add('A322,118,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('');
     end;
 
     if SgDados.Cells[0,L+2] <> '' then begin
-      Editor.Lines.Add('A607,0,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
-      Editor.Lines.Add('A607,17,0,1,1,1,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('A607,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,22)+'"');
+      Editor.Lines.Add('A607,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],23,18)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B603,36,0,1,2,4,56,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('B603,56,0,1,2,4,40,N,"'+SgDados.Cells[6, L+2]+'"');
       Editor.Lines.Add('A642,99,0,1,1,1,N,"'+SgDados.Cells[6, L+2]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A617,118,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
