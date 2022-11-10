@@ -1089,7 +1089,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       Left = 38
       Top = 369
       Width = 718
-      Height = 119
+      Height = 120
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1111,7 +1111,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLblEmpresa2: TRLLabel
-        Left = 327
+        Left = 339
         Top = 78
         Width = 174
         Height = 15
@@ -1144,7 +1144,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLblPrevisao: TRLLabel
-        Left = 327
+        Left = 339
         Top = 48
         Width = 106
         Height = 14
@@ -1171,7 +1171,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel18: TRLLabel
-        Left = 540
+        Left = 552
         Top = 78
         Width = 164
         Height = 15
@@ -1235,7 +1235,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel21: TRLLabel
-        Left = 331
+        Left = 343
         Top = 96
         Width = 369
         Height = 13
@@ -1265,8 +1265,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       object RLMemo1: TRLMemo
         Left = 33
         Top = 47
-        Width = 288
-        Height = 71
+        Width = 301
+        Height = 68
         Alignment = taJustify
         AutoSize = False
         Behavior = [beSiteExpander]

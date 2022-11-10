@@ -5624,7 +5624,7 @@ begin
   end;
   FrmRelOrcamentos.RLBand1.height := 185;
   FrmRelOrcamentos.RLBPAF.height := 0;
-  FrmRelOrcamentos.RLBand3.height := 92;
+  FrmRelOrcamentos.RLBand3.height := 120; //110
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
 
   if (usarLoteValidade = True) then // and (UpperCase(vEmpresa) <> 'ATIVAOLD')
