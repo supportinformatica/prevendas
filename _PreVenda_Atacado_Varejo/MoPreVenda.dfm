@@ -2,7 +2,7 @@
   Left = 100
   Top = 100
   Anchors = []
-  Caption = 'Pr'#233' Venda 2.0    <<<  Support Inform'#225'tica  79  3302-5707  >>>'
+  Caption = 'Pr'#233' Venda 2.0'
   ClientHeight = 640
   ClientWidth = 885
   Color = clBtnFace
@@ -112,7 +112,7 @@
   end
   object Label30: TLabel
     Left = 298
-    Top = 37
+    Top = 39
     Width = 89
     Height = 13
     Caption = 'Cliente | c'#243'digo'
@@ -126,7 +126,7 @@
   end
   object Label32: TLabel
     Left = 170
-    Top = 37
+    Top = 39
     Width = 27
     Height = 13
     Caption = 'Data'
@@ -183,7 +183,7 @@
   end
   object Label9: TLabel
     Left = 661
-    Top = 37
+    Top = 39
     Width = 52
     Height = 13
     Anchors = [akTop, akRight]
@@ -195,7 +195,6 @@
     Font.Style = [fsBold]
     ParentFont = False
     PopupMenu = PopupMenu1
-    ExplicitLeft = 603
   end
   object Label10: TLabel
     Left = 661
@@ -215,7 +214,7 @@
   end
   object SpeedButton1: TSpeedButton
     Left = 266
-    Top = 49
+    Top = 51
     Width = 27
     Height = 23
     Hint = 'Localiza cliente por CNPJ ou CPF'
@@ -324,7 +323,7 @@
   end
   object Label18: TLabel
     Left = 394
-    Top = 37
+    Top = 39
     Width = 47
     Height = 13
     Caption = 'A Vista %:'
@@ -338,7 +337,7 @@
   end
   object LblVista: TLabel
     Left = 454
-    Top = 37
+    Top = 39
     Width = 21
     Height = 13
     Caption = '0,00'
@@ -352,7 +351,7 @@
   end
   object Label19: TLabel
     Left = 479
-    Top = 37
+    Top = 39
     Width = 51
     Height = 13
     Caption = 'A Prazo %:'
@@ -366,7 +365,7 @@
   end
   object LblPrazo: TLabel
     Left = 542
-    Top = 37
+    Top = 39
     Width = 21
     Height = 13
     Caption = '0,00'
@@ -757,7 +756,7 @@
   end
   object BtnMdAnterior: TBitBtn
     Left = 707
-    Top = 239
+    Top = 245
     Width = 2
     Height = 42
     Hint = 'Registro antrerior'
@@ -795,7 +794,7 @@
   end
   object Memo1: TMemo
     Left = 416
-    Top = 188
+    Top = 194
     Width = 185
     Height = 89
     TabOrder = 34
@@ -803,7 +802,7 @@
   end
   object Editor: TRichEdit
     Left = 197
-    Top = 199
+    Top = 205
     Width = 183
     Height = 72
     Hint = 'Visualiza'#231#227'o dos items selecionados'
@@ -826,7 +825,7 @@
   end
   object Panel2: TPanel
     Left = 8
-    Top = 174
+    Top = 180
     Width = 792
     Height = 416
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -1274,14 +1273,14 @@
   end
   object GroupBox1: TGroupBox
     Left = 170
-    Top = 76
+    Top = 79
     Width = 630
-    Height = 93
+    Height = 99
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 11
     DesignSize = (
       630
-      93)
+      99)
     object LblMdConsulta: TLabel
       Left = 27
       Top = 30
@@ -1298,7 +1297,7 @@
     end
     object LblListados: TLabel
       Left = 6
-      Top = 72
+      Top = 74
       Width = 69
       Height = 13
       Caption = 'Listados--> '
@@ -1573,7 +1572,7 @@
     end
     object CbPrevisao: TCheckBox
       Left = 406
-      Top = 70
+      Top = 72
       Width = 126
       Height = 17
       Hint = 'Imprimir prazo de entrega?'
@@ -1704,7 +1703,7 @@
     end
     object chkbxBaixarEstoque: TCheckBox
       Left = 526
-      Top = 70
+      Top = 72
       Width = 126
       Height = 17
       Hint = 'Imprimir prazo de entrega?'
@@ -1723,7 +1722,7 @@
     end
     object chkbxOrcamentoExterno: TCheckBox
       Left = 277
-      Top = 70
+      Top = 72
       Width = 126
       Height = 17
       Hint = 'Imprimir prazo de entrega?'
@@ -1786,7 +1785,7 @@
   end
   object EdtCdCliente: TEdit
     Left = 560
-    Top = 51
+    Top = 53
     Width = 39
     Height = 21
     Anchors = [akTop, akRight]
@@ -1798,7 +1797,7 @@
   end
   object DtLancto: TDateTimePicker
     Left = 170
-    Top = 51
+    Top = 53
     Width = 90
     Height = 21
     Hint = 'Previsao de entrega dos produtos deste or'#231'amento'
@@ -2060,7 +2059,7 @@
   end
   object EdtOperador: TEdit
     Left = 577
-    Top = 200
+    Top = 206
     Width = 54
     Height = 21
     Enabled = False
@@ -2093,7 +2092,7 @@
     Left = 0
     Top = 57
     Width = 164
-    Height = 112
+    Height = 122
     Caption = 'Pesquisar por'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
@@ -2108,7 +2107,8 @@
       'Ref Interna - F6'
       'C'#243'digo de Barras  - F7'
       'Especific/Aplica'#231' - Crtl + F1'
-      'C'#243'digo Adicional - Crtl + G')
+      'C'#243'digo Adicional - Crtl + G'
+      'Fam'#237'lia do Produto')
     ParentFont = False
     PopupMenu = PopupMenu1
     TabOrder = 12
@@ -2271,7 +2271,7 @@
   end
   object EdtEndereco: TEdit
     Left = 661
-    Top = 51
+    Top = 53
     Width = 220
     Height = 21
     Hint = 'Endere'#231'o do clietne'
@@ -2305,7 +2305,7 @@
   end
   object ListBox1: TListBox
     Left = 266
-    Top = 465
+    Top = 471
     Width = 296
     Height = 85
     Hint = 
@@ -2349,7 +2349,7 @@
   end
   object CbxCliente: TComboBox
     Left = 298
-    Top = 51
+    Top = 53
     Width = 356
     Height = 21
     Hint = 'Nome do cliente para esta pr'#233'-venda'
@@ -2428,7 +2428,7 @@
   end
   object cbxUsuario: TComboBox
     Left = 270
-    Top = 328
+    Top = 334
     Width = 90
     Height = 21
     BevelInner = bvNone
@@ -2444,7 +2444,7 @@
   object EdtUsuario: TEdit
     Tag = 1
     Left = 366
-    Top = 328
+    Top = 334
     Width = 52
     Height = 21
     Hint = 'Digite a senha e press. ENTER, ou press. ESC para retornar'
@@ -4337,11 +4337,11 @@
   object DsConsulta: TDataSource
     DataSet = ADOSPConsulta
     Left = 294
-    Top = 262
+    Top = 268
   end
   object PopupMenu1: TPopupMenu
     Left = 25
-    Top = 232
+    Top = 238
     object elaPrincipal1: TMenuItem
       Caption = 'Tela Principal'
       object Help1: TMenuItem
@@ -4524,6 +4524,15 @@
     object N1: TMenuItem
       Caption = '-'
     end
+    object miProdutosEtiqueta: TMenuItem
+      Caption = 'Selecionar produtos para emitir etiqueta'
+      Enabled = False
+      Hint = 
+        'Selecionartodos os produtos da(s) familia (as) selecionadas para' +
+        ' emitir etiqueta.'
+      ShortCut = 16501
+      OnClick = miProdutosEtiquetaClick
+    end
     object Imprimiretiquetas1: TMenuItem
       Caption = 'Imprimir etiquetas...'
       ShortCut = 16500
@@ -4676,7 +4685,7 @@
         Value = Null
       end>
     Left = 159
-    Top = 214
+    Top = 220
     object ADOSPConsultaCDIGO_BARRAS: TStringField
       FieldName = 'C'#211'DIGO_BARRAS'
     end
@@ -4770,55 +4779,59 @@
       FieldName = 'C'#211'DIGO'
       Size = 10
     end
+    object ADOSPConsultanmFamilia: TStringField
+      FieldName = 'nmFamilia'
+      Size = 100
+    end
   end
   object ADOQryProcura: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 616
-    Top = 304
+    Top = 310
   end
   object ADOQryEspecificacao: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 662
-    Top = 304
+    Top = 310
   end
   object ADOQryProduto: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 236
-    Top = 304
+    Top = 310
   end
   object ADOQryNome: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 274
-    Top = 304
+    Top = 310
   end
   object ADOQryCliente: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 312
-    Top = 304
+    Top = 310
   end
   object ADOQryUltimo: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 351
-    Top = 304
+    Top = 310
   end
   object ADOQrySalvar: TADOQuery
     Connection = DModulo.Conexao
     CommandTimeout = 60
     Parameters = <>
     Left = 391
-    Top = 304
+    Top = 310
   end
   object AdoQrySimilar: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 432
-    Top = 304
+    Top = 310
   end
   object ADOSPQryCliente: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4840,13 +4853,13 @@
         Value = Null
       end>
     Left = 115
-    Top = 262
+    Top = 268
   end
   object AdoQryLocaliza: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 472
-    Top = 304
+    Top = 310
   end
   object ADOSPLiberacao1: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4867,7 +4880,7 @@
         Value = Null
       end>
     Left = 203
-    Top = 261
+    Top = 267
   end
   object ADOSPLiberacao2: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4894,7 +4907,7 @@
         Value = Null
       end>
     Left = 249
-    Top = 261
+    Top = 267
   end
   object ADOSPLiberacao4: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4915,7 +4928,7 @@
         Value = Null
       end>
     Left = 379
-    Top = 264
+    Top = 270
   end
   object ADOSPLiberacao3: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4936,7 +4949,7 @@
         Value = Null
       end>
     Left = 430
-    Top = 270
+    Top = 276
   end
   object ADOSP_PEDIDO_GARANTIA: TADOStoredProc
     Connection = DModulo.Conexao
@@ -4965,7 +4978,7 @@
         Value = Null
       end>
     Left = 336
-    Top = 262
+    Top = 268
     object IntegerField1: TIntegerField
       FieldName = 'C'#243'digo'
     end
@@ -5020,25 +5033,25 @@
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 200
-    Top = 304
+    Top = 310
   end
   object TTimer
     Interval = 200
   end
   object Timer1: TTimer
     Left = 24
-    Top = 338
+    Top = 344
   end
   object ADOQryUltimoCodigo: TADOQuery
     Connection = DModulo.ADODeposito
     Parameters = <>
     Left = 160
-    Top = 304
+    Top = 310
   end
   object DsDeposito: TDataSource
     DataSet = ADOQryUltimoCodigo
     Left = 660
-    Top = 260
+    Top = 266
   end
   object ADOVarejo: TADOQuery
     Connection = DModulo.Conexao
@@ -5051,25 +5064,25 @@
     SQL.Strings = (
       'select vlAtacado from produto where cdproduto = :cdproduto')
     Left = 83
-    Top = 302
+    Top = 308
   end
   object ADOQryProcura1: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 568
-    Top = 304
+    Top = 310
   end
   object adoEntrada: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 120
-    Top = 304
+    Top = 310
   end
   object Timer2: TTimer
     Interval = 1
     OnTimer = Timer2Timer
     Left = 24
-    Top = 280
+    Top = 286
   end
   object AdoAmbiente: TADOQuery
     Connection = DModulo.Conexao
@@ -5080,7 +5093,7 @@
       'select '#39#39' as dsAmbiente, null as cdAmbiente from ambiente'
       'order by 1')
     Left = 520
-    Top = 304
+    Top = 310
   end
   object SMTP: TIdSMTP
     IOHandler = SSLSocket
@@ -5088,7 +5101,7 @@
     SASLMechanisms = <>
     UseTLS = utUseImplicitTLS
     Left = 313
-    Top = 431
+    Top = 437
   end
   object SSLSocket: TIdSSLIOHandlerSocketOpenSSL
     Destination = ':465'
@@ -5099,7 +5112,7 @@
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
     Left = 313
-    Top = 527
+    Top = 533
   end
   object MSG_XML: TIdMessage
     AttachmentEncoding = 'UUE'
@@ -5113,7 +5126,7 @@
     ReplyTo = <>
     ConvertPreamble = True
     Left = 311
-    Top = 479
+    Top = 485
   end
   object ACBrPosPrinter: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False

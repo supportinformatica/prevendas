@@ -297,6 +297,8 @@ type
     chkbxEtiqueta: TCheckBox;
     ADOSPConsultaCÓDIGO: TStringField;
     cbxEntrega: TComboBox;
+    ADOSPConsultanmFamilia: TStringField;
+    miProdutosEtiqueta: TMenuItem;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -433,6 +435,7 @@ type
     procedure chkbxEtiquetaClick(Sender: TObject);
     procedure EdtConsultaEnter(Sender: TObject);
     procedure cbxEntregaChange(Sender: TObject);
+    procedure miProdutosEtiquetaClick(Sender: TObject);
 
   private
 
@@ -449,6 +452,7 @@ type
     // indica se a quantidade setada diretamente na grid é maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
 
+    procedure gerarEtiquetasProdutosSelecionados;
     function entregaSelecionadaGrid : Boolean;
     procedure adicionarLocalEntrega;
     procedure adicionarLocalEntregaNaGrid;
@@ -2449,19 +2453,15 @@ begin
     EdtDescUnit.Left := EdtDescUnit.Left - 190;
     EdtPreco.Left := EdtPreco.Left - 190;
   end;
-  if (UpperCase(vEmpresa) = 'DELUC') then
-  begin
-    CbPrevisao.Visible := false;
-    EdtQtd.ReadOnly := True;
-    EdtQtd.Text := '1,00';
-  end;
-  self.caption := self.caption + '  Compilação ' + GetVersaoArq;
+//  if (UpperCase(vEmpresa) = 'DELUC') then
+//  begin
+//    CbPrevisao.Visible := false;
+//    EdtQtd.ReadOnly := True;
+//    EdtQtd.Text := '1,00';
+//  end;
+  self.caption := self.caption + '     Compilação: ' + GetVersaoArq + '     Support Informática  79 3302-5707';
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
-
-  // if UPPERCASE(vEmpresa) = '' then begin
-  // end;
-  // self.Caption :=  Self.Caption + '  Data da última atualização: ' + DateTimeToStr(PegaDataDoExecutavel(ExtractFileName(Application.ExeName)))+ '  Compilação ' + GetVersaoArq;
 end;
 
 procedure TFrmPrincipalPreVenda.FormShow(Sender: TObject);
@@ -2552,6 +2552,27 @@ begin
   // end;
 end;
 
+procedure TFrmPrincipalPreVenda.gerarEtiquetasProdutosSelecionados;
+var
+  i : Integer;
+  qtdEtiquetas : Integer;
+begin
+  qtdEtiquetas := StrToIntDef(InputBox('Quantidade de etiquetas',
+    'Digite quantidade de etiquetas de cada item.', ''), 0);
+  if qtdEtiquetas <= 0 then
+    Exit;
+  ADOSPConsulta.First;
+  for i := 1 to ADOSPConsulta.RecordCount do
+  begin
+    EdtQtd.Text := IntToStr(qtdEtiquetas);
+    EdtPreco.Text := ADOSPConsulta.FieldByName('Preco').AsString;
+    EdtDescUnit.Text := '0,00';
+//    if ADOSPConsulta.FieldByName('Pedido').AsCurrency > 0 then
+      EnviaProdutos;
+    ADOSPConsulta.RecNo := i+1;
+  end;
+end;
+
 procedure TFrmPrincipalPreVenda.FiltraConsulta(texto : string);
 begin
   try
@@ -2576,6 +2597,7 @@ begin
         2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(texto+'%');
         3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(texto+'%');
         4 : ADOSPConsulta.Filter := 'CÓDIGO_BARRAS LIKE '+QuotedStr(texto+'%');
+        7 : ADOSPConsulta.Filter := 'nmFamilia LIKE '+QuotedStr(texto+'%');
       end;
       ADOSPConsulta.Filtered := True;
     end;
@@ -2754,7 +2776,7 @@ begin
       + 'W WITH (NOLOCK) ON P.cdPessoa_1 = W.cdPessoa Order By P.nmProduto      ';
     open;
   end;
-  if (UpperCase(vEmpresa) <> 'DELUC') then
+//  if (UpperCase(vEmpresa) <> 'DELUC') then
     EdtQtd.Text := '0,000';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, 0.0);
   EdtDescUnit.Text := '0,00';
@@ -2822,7 +2844,7 @@ Procedure TFrmPrincipalPreVenda.LimparPesquisa;
 begin
   EdtConsulta.Setfocus;
   EdtConsulta.Clear;
-  if (UpperCase(vEmpresa) <> 'DELUC') then
+//  if (UpperCase(vEmpresa) <> 'DELUC') then
     EdtQtd.Text := '0,000';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, 0.0);
   EdtDescUnit.Text := '0,00';
@@ -2880,7 +2902,7 @@ begin
     else
       LancaProdutos(StrToFloatDef(EdtQtd.Text, 0));
     atualizaEditQtdItens;
-    if (UpperCase(vEmpresa) <> 'DELUC') then
+//    if (UpperCase(vEmpresa) <> 'DELUC') then
       EdtQtd.Text := '0,000';
     EdtPreco.Text := FormatFloatQ(vCasasPreco, 0.0);
     EdtDescUnit.Text := '0,00';
@@ -2918,7 +2940,7 @@ begin
     // MessageDlg('Quantidade disponível no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(ADOSPConsulta.FieldByName('Código').AsInteger)) + ' ', mtWarning,[mbOk],0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-    if (UpperCase(vEmpresa) <> 'DELUC') then
+//    if (UpperCase(vEmpresa) <> 'DELUC') then
       EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
@@ -3052,7 +3074,7 @@ begin
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-    if (UpperCase(vEmpresa) <> 'DELUC') then
+//    if (UpperCase(vEmpresa) <> 'DELUC') then
       EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
@@ -3104,8 +3126,7 @@ begin
   begin
     for L := 0 to prevenda.itens.Count - 1 do
     begin
-      if (prevenda.itens[L].cdProduto = ADOSPConsulta.FieldByName('Código')
-        .AsInteger) and (not item_cancelado(L)) then
+      if (prevenda.itens[L].cdProduto = ADOSPConsulta.FieldByName('Código').AsInteger) and (not item_cancelado(L)) then
       begin
         if (usarLoteValidade = True) then
         // "hospitalar" permite lançar o produto mais de uma vez, por causa dos lotes
@@ -3121,7 +3142,7 @@ begin
           Application.OnMessage := NaoProcessaMsg;
           MessageDlg('Esse produto já está incluso nessa pré-venda!', mtWarning,
             [mbOK], 0);
-          if (UpperCase(vEmpresa) <> 'DELUC') then
+//          if (UpperCase(vEmpresa) <> 'DELUC') then
             EdtQtd.Text := '0,00';
           EdtDescUnit.Text := '0,00';
           setLabel23(0);
@@ -3137,7 +3158,7 @@ begin
   begin
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-    if (UpperCase(vEmpresa) <> 'DELUC') then
+//    if (UpperCase(vEmpresa) <> 'DELUC') then
       EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
@@ -3194,7 +3215,7 @@ begin
       end;
       if (not possuiPermissaoVenderAbaixoDoCusto) then
       begin
-        if (UpperCase(vEmpresa) <> 'DELUC') then
+//        if (UpperCase(vEmpresa) <> 'DELUC') then
           EdtQtd.Text := '0,00';
         EdtDescUnit.Text := '0,00';
         setLabel23(0);
@@ -7242,6 +7263,8 @@ begin
         Parameters.ParamByName('@OPCAO').Value := '5'; // ESPECIFICAÇÃO
       6:
         Parameters.ParamByName('@OPCAO').Value := '4'; // CODIGO ADICIONAL
+      7:
+        Parameters.ParamByName('@OPCAO').Value := '8'; // familia
     end;
     ADOSPConsultaPRECO.DisplayFormat := '#0.00'; // ADD POR CLAUDIO
     ADOSPConsultaVALOR.DisplayFormat := '#0.00';
@@ -7318,6 +7341,10 @@ begin
   EdtConsulta.Text := '';
   if (RadioGroup1.ItemIndex <> 4) then
     AtualizaQryConsulta;
+  if RadioGroup1.ItemIndex = 7 then
+    miProdutosEtiqueta.Enabled := True
+  else
+    miProdutosEtiqueta.Enabled := False;
   EdtConsulta.Text := textoConsulta_temp;
   EdtConsulta.SelectAll;
   EdtConsulta.Setfocus;
@@ -7327,7 +7354,7 @@ procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
   if ADOSPConsulta.Active = True then
     ADOSPConsulta.Filtered := False;
-  if ((RadioGroup1.ItemIndex IN [0,1,2,3]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
+  if ((RadioGroup1.ItemIndex IN [0,1,2,3,7]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
     FiltraConsulta(EdtConsulta.Text)
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
@@ -9267,7 +9294,7 @@ begin
     // MessageDlg('Quantidade disponível no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(cdProduto)-vQtd) + ' ', mtWarning,[mbOk],0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-    if (UpperCase(vEmpresa) <> 'DELUC') then
+//    if (UpperCase(vEmpresa) <> 'DELUC') then
       EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
@@ -17395,10 +17422,10 @@ begin
               [mbOK], 0);
             if (chkbxOrcamentoExterno.Checked = True) then
               ImprimeOrcamentoExterno(enviar_email)
-            else if (UpperCase(vEmpresa) = 'DELUC') then
-              Application.MessageBox(PWideChar('Prevenda: ' + EdtLancto.Text +
-                #13#10 + 'Valor: R$ ' + EdtSubTotal.Text), 'Atenção',
-                mb_Ok + MB_ICONWARNING + MB_APPLMODAL)
+//            else if (UpperCase(vEmpresa) = 'DELUC') then
+//              Application.MessageBox(PWideChar('Prevenda: ' + EdtLancto.Text +
+//                #13#10 + 'Valor: R$ ' + EdtSubTotal.Text), 'Atenção',
+//                mb_Ok + MB_ICONWARNING + MB_APPLMODAL)
             else if (UpperCase(vEmpresa) = 'COPYART') then
             begin
               if nrOrcamentoDia > 0 then
@@ -17854,6 +17881,11 @@ end;
 procedure TFrmPrincipalPreVenda.Especificao1Click(Sender: TObject);
 begin
   RadioGroup1.ItemIndex := 5;
+end;
+
+procedure TFrmPrincipalPreVenda.miProdutosEtiquetaClick(Sender: TObject);
+begin
+  gerarEtiquetasProdutosSelecionados;
 end;
 
 procedure TFrmPrincipalPreVenda.Relatriodecontagem1Click(Sender: TObject);
