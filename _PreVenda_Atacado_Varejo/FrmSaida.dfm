@@ -196,11 +196,11 @@ object FrmRelSaida: TFrmRelSaida
       ExplicitTop = 12
     end
     object Label7: TLabel
-      Left = 171
+      Left = 157
       Top = 22
-      Width = 268
+      Width = 281
       Height = 24
-      Caption = 'Relat'#243'rio de Sa'#237'das Anal'#237'tico'
+      Caption = 'Relat'#243'rio de Vendas Anal'#237'tico'
     end
   end
   object RadioGroup1: TRadioGroup

@@ -69,7 +69,6 @@ procedure TFrmDescricao.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
-//  FreeAndNil(FrmDescricao);
 end;
 
 procedure TFrmDescricao.Button1Click(Sender: TObject);
@@ -80,7 +79,6 @@ begin
      FrmPrincipalPreVenda.vFatorGama := strToFloat(EdtFator.Text)
   else
      FrmPrincipalPreVenda.vFatorGama := 1 / strToFloat(EdtFator.Text);
-  //FrmPrincipalPreVenda.EnviaProdutos;
   close;
 end;
 
@@ -103,9 +101,9 @@ begin
   EdtFator.Text := FormatFloat('0.00000', fator);
   FrmPrincipalPreVenda.EdtQtd.Text := EdtQtd.Text;
   if btnMult.Down then
-     quantidade_saida := quantidade * fator
+    quantidade_saida := quantidade * fator
   else
-     quantidade_saida := quantidade / fator;
+    quantidade_saida := quantidade / fator;
   EdtQtdSai.Text := FormatFloat('0.00000', quantidade_saida);
 end;
 
@@ -115,8 +113,6 @@ begin
   EdtQtdSai.Text := EdtQtd.Text;
   EdtFator.Text := '1,00000';
 end;
-
-
 
 procedure TFrmDescricao.Button2Click(Sender: TObject);
 begin

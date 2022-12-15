@@ -220,8 +220,6 @@ begin
     FrmPrincipalPreVenda.prevenda.observacao := Memo1.text;
     FrmPrincipalPreVenda.SalvarPreVenda(FrmPrincipalPreVenda.prevenda,
       chkbxEnviarCopiaEmail.Checked);
-    // if FrmPrincipalPreVenda.EdtUsuario.Enabled = true then
-    // FrmPrincipalPreVenda.EdtConsulta.SetFocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   finally
     BtnConfirmar.Enabled := true;

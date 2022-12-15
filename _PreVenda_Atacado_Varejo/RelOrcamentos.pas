@@ -274,10 +274,6 @@ procedure TfrmRelOrcamentos.lblTotalBeforePrint(Sender: TObject;
 begin
   if ((StrToFloat(StringReplace(lblSubTotal.Caption,'.','',[])) <= StrtoFloat(StringReplace(AText,'.','',[])))) then
     lblSubTotal.Caption := AText;
-//  else begin //exibi acrescimo
-//    RLLabel3.Caption := 'Acréscimo %:';
-//    QRLD.Caption := 'Acréscimo R$:'
-//  end;
 end;
 
 procedure TfrmRelOrcamentos.lblValorDescontoBeforePrint(Sender: TObject;
@@ -354,20 +350,6 @@ begin
       RlDescricao.Caption := ADOSPRelDados.FieldByName('nmProduto').AsString;
       if (not TNEGProduto.possuiEstoqueReal(ADOSPRelDados.fieldbyname('cdProduto').asInteger)) then
         RlDescricao.Caption:=  Chr(187) + ' ' + RlDescricao.Caption;
-
-//      Sql.Text := 'SELECT tipoComposicao, nrQtdReal estoqueReal, dbo.getEstoqueProdutoComposto(cdProduto) estoquePossivel FROM produto WITH (NOLOCK) WHERE cdproduto = :CD';
-//      parameters.parambyname('CD').Value := ADOSPRelDados.fieldbyname('cdProduto').asString;
-//      Open;
-//
-//      // SE FOR PRODUTO COMPOSTO TESTA SE EXISTE ESTOQUE POSSÍVEL
-//      if (FieldByName('tipoComposicao').AsInteger = 2) then
-//      begin
-//        if (FieldByName('estoquePossivel').AsFloat <= 0) then
-//            RlDescricao.Caption:=  Chr(187) + ' ' + RlDescricao.Caption;
-//      end
-//      else
-//        if (FieldByName('estoqueReal').AsFloat <= 0) then
-//            RlDescricao.Caption:=  Chr(187) + ' ' + RlDescricao.Caption;
     end
   end else
   if UPPERCASE(vEmpresa) = 'CARIOCA' then
@@ -381,7 +363,8 @@ begin
     end;
   end else
   if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-  (UpperCase(vEmpresa) = 'ANADRI') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
+    (FrmPrincipalPreVenda.dsCGC = '33185213000194') then
   begin
     with AdoQuery1 do
     begin

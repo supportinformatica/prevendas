@@ -156,7 +156,7 @@ object FrmFormaPag: TFrmFormaPag
       'Cheque Pr'#233
       'Entrada + Prazo'
       'Entrada + Cartao'
-      'Entrada + Cheque Pr'#233
+      'Cr'#233'dito do Cliente'
       'Cheque a Vista'
       'Cart'#227'o D'#233'bito'
       'Dep'#243'sito / Transferencia / Pix'
@@ -402,8 +402,8 @@ object FrmFormaPag: TFrmFormaPag
     Visible = False
   end
   object pnlAguardaEnvioEmail: TPanel
-    Left = 25
-    Top = 6
+    Left = 364
+    Top = 161
     Width = 304
     Height = 141
     Caption = 'Enviando email. Por favor aguarde...'

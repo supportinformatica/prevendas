@@ -3085,7 +3085,7 @@ begin
   if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
     CbxAmbiente.Text := InputBox('Digite a data de validade','Data de Validade','');
   if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or
-     (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '30105285000196') or
+     (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or
      (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
@@ -3100,7 +3100,7 @@ begin
     FrmDescricao.EdtQtdSai.Text := FormatFloat('0.00000',
       StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtFator.Text := '1,00000';
-    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') then
+    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
     begin
       FrmDescricao.Panel2.Visible := false;
       FrmDescricao.height := 112;
@@ -3249,7 +3249,7 @@ begin
     itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('Código').AsInteger);
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
-       (dsCGC = '30105285000196')
+       (dsCGC = '30105285000196') or (dsCGC = '33185213000194')
     then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
@@ -4182,7 +4182,7 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -4256,7 +4256,7 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') then
+  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -5624,7 +5624,7 @@ begin
     FrmRelOrcamentos.RlDescricao.width := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') then
+  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
@@ -5632,11 +5632,6 @@ begin
     FrmRelOrcamentos.QRLblEmpresa2.caption := 'Cliente';
     FrmRelOrcamentos.QRLabel18.caption := 'Empresa';
   end;
-  // if (UpperCase(vEmpresa) = 'BELAVISTA') then  // esse cliente quer q saia o desconto em porcentagem
-  // begin
-  // FrmRelOrcamentos.RLLabel3.Visible := True;
-  // FrmRelOrcamentos.lblPorcDesconto.Visible := True;
-  // end;
   if (vOcultaDesconto = 'S') then
   begin
     FrmRelOrcamentos.RLDBResult3.DataField := '';
@@ -5875,7 +5870,7 @@ begin
         FrmRelOrcamentos.RlblFormaPgto.caption := FrmRelOrcamentos.RlblFormaPgto.caption + ' ' + FrmFormaPag.edtParcelas.Text;
     end;
     7:
-      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: entrada + ch pré';
+      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Credito do cliente';
     12:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Cheque a Vista';
     13:
@@ -6145,7 +6140,7 @@ begin
         'Forma Pgto: entrada + cartao';
     7:
       frmRelOrcamentos40.RlblFormaPgto.caption :=
-        'Forma Pgto: entrada + ch pré';
+        'Forma Pgto: Credito do cliente';
     12:
       frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Cheque a Vista';
     13:
@@ -10471,29 +10466,6 @@ begin
       if usarLoteValidade = True then
         montaComboLote;
     end;
-    // With AdoSPConsulta do begin
-    // Close;
-    // if CheckBox1.Checked = false then
-    // Parameters.ParamByName('@DSATIVO').Value := Null
-    // else
-    // Parameters.ParamByName('@DSATIVO').Value := 'S';
-    // Parameters.ParamByName('@ATACADOVAREJO').Value := vAtacadoVarejo;
-    // if (Copy(EdtConsulta.Text,1,1) = '2') then  // codigo da balança
-    // Parameters.ParamByName('@PESQUISA').Value := Copy(EdtConsulta.Text,1,7)
-    // else
-    // Parameters.ParamByName('@PESQUISA').Value      := EdtConsulta.Text;
-    // Parameters.ParamByName('@OPCAO').Value        := '7'; // pesqisa CODIGO DE BARRAS
-    // ADOSPConsultaValor.DisplayFormat   := '#0.00';
-    // ADOSPConsultaEstoque.DisplayFormat := '#0.00';
-    // ADOSPConsultaPedido.DisplayFormat  := '#0.00';
-    // Open; // mostra os dados no dbgrid
-    // EdtPreco.Text := FormatFloat('0.000',FieldByName('Valor').AsFloat);
-    // montaComboLote;
-    // setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código').AsInteger));
-    // if UpperCase(vEmpresa) = 'ODONTO' then
-    // label15.Text     := FormatFloat('0.00',PegaValorAtacado(AdoSpConsulta.FieldByName('código').asInteger));
-    // LblListados.Caption := 'Listados --> ' + IntToStr(RecordCount);
-    // end;
   end;
   if (Key = Char(27)) then
     BtnCancelar.Click;
@@ -10508,7 +10480,6 @@ var
   vtitulo, vformapag, vvencimento: String;
   i: Integer;
   vnumero_invertido: string[10];
-  // usado p inverter o numero da prevenda na impressão da via do estoquista
   impressoraSelecionada: Boolean;
   numeroLancamento: Integer;
   isPrevendaOuOrcamento, isReimpressao: Boolean;
@@ -10575,7 +10546,7 @@ begin
             parcelasCartao := ' ' + FrmFormaPag.edtParcelas.Text;
           vformapag := vformapag + parcelasCartao;
         end;
-        7 : vformapag  := 'Forma Pgto: Entrada + Cheque Pre';
+        7 : vformapag  := 'Forma Pgto: Credito do cliente';
         12 : vformapag := 'Forma Pgto: Cheque a Vista';
         13 : vformapag := 'Forma Pgto: Cartao Debito';
         14 : vformapag := 'Forma Pgto: Deposito/Transferencia/Pix';
@@ -10622,7 +10593,6 @@ begin
         end;
         if ((dsCGC = '03821965000133') or (dsCGC = '17111138000160')) and (modeloImpressora = 'ELGINI9') then  // eletronica Campos
         begin
-//          szTexto := TNEGPrevenda.retornarCabecalhoEmitente +#10;
           for i := 0 to editor.Lines.Count -1 do
           begin
             szTexto := Concat(szTexto, Editor.Lines[i] +#10);
@@ -10832,7 +10802,6 @@ begin
         else
           WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
             'print3.bat')), sw_ShowNormal);
-        // a trevo solicitou que imprima também uma cópia dessa mesma impressão do estoquista, mas com algumas modificações
       end;
     end;
   end;
@@ -17360,9 +17329,6 @@ begin
           prevenda.isOrcamento := True
         else
           prevenda.isOrcamento := false;
-//        if (SoNumeros(dsCGC) = '03643774000129') then // TORRONE
-//          prevenda.dataEmissao := DtLancto.DateTime
-//        else
         prevenda.dataEmissao := strtodate(TNEGLoja.vData_Banco);
         prevenda.conferida := false;
         // prevenda.numeroPrevenda := StrtoInt(EdtLancto.Text);
