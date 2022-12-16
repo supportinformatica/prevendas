@@ -638,7 +638,8 @@ type
     procedure ImprimeEtiquetas_FacaBiju; //Elgin L42 Pro
     procedure ImprimeEtiquetas_RajuConstrucoes; //Elgin L42 Pro
     procedure ImprimeEtiquetas_PandorDelicatesen_Atalaia; //Elgin L42 Pro
-    procedure ImprimeEtiquetas_ItaCentralPescados; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_ItaCentralPescados_Gondola; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_ItaCentralPescados_AdesivaDetalhada; //Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11513,8 +11514,16 @@ begin
     ImprimeEtiquetas_RajuConstrucoes
   else if UpperCase(vFlagEtiqueta) = 'PANDORODELIATALAIA' then // ARGOX OS 214 Plus
     ImprimeEtiquetas_PandorDelicatesen_Atalaia
-  else if UpperCase(vFlagEtiqueta) = 'CENTRALDEPESCADOS' then
-    ImprimeEtiquetas_ItaCentralPescados;
+  else if UpperCase(vFlagEtiqueta) = 'CENTRALDEPESCADOS' then begin
+    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Gôndola';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'Grande Detalhada';
+    escolha := FrmDuasEtiquetas.ShowModal;
+    if escolha = mrOk then
+      ImprimeEtiquetas_ItaCentralPescados_Gondola
+    else if escolha = mrCancel then
+      ImprimeEtiquetas_ItaCentralPescados_AdesivaDetalhada;
+  end
 
 end;
 
@@ -30187,7 +30196,7 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados;
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados_Gondola;
 var
   L: Integer;
   Arq: TextFile;
@@ -30244,6 +30253,116 @@ begin
 
 
       vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados_AdesivaDetalhada;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('I8,1,001');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q400,25');
+      Editor.Lines.Add('q832');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D8');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+
+      Editor.Lines.Add('A32,20,0,1,2,2,N,"' +Copy(Produto.descricao, 1, 25)+ '"');
+      Editor.Lines.Add('A32,52,0,1,2,2,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A32,98,0,2,1,1,N,"Produzido: 16/12/2022"');
+      Editor.Lines.Add('A32,122,0,2,1,1,N,"Validade : 16/12/2023"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('LO16,167,314,31');
+      Editor.Lines.Add('A32,171,0,3,1,1,R,"Conservacao Domestica"');
+      Editor.Lines.Add('A32,202,0,2,1,1,N,"Congelado  -18  90 Dias"');
+      Editor.Lines.Add('A32,227,0,2,1,1,N,"Geladeira    4  24 Horas"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('LO16,270,450,31');
+      Editor.Lines.Add('A136,274,0,3,1,1,R,"Fracionado por"');
+      Editor.Lines.Add('A128,305,0,2,1,1,N,"GK HIPER CENTRAL"');
+      Editor.Lines.Add('A128,329,0,2,1,1,N,"13.238.210/001-64"');
+      Editor.Lines.Add('A32,353,0,2,1,1,N,"ARACAJU/SE-SALGADO FILHO - 49020-230"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('LO629,18,160,56');
+      Editor.Lines.Add('A712,30,0,2,2,2,R,"' +Produto.unidade.unidade+ '"');
+      Editor.Lines.Add('A639,30,0,2,2,2,R,"1"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A660,84,0,2,1,1,N,"COD: ' +Produto.cdProduto.ToString+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B522,110,0,1,2,4,48,N,"' +Produto.codigoBarras+ '"');
+      Editor.Lines.Add('A596,166,0,1,1,1,N,"' +Produto.codigoBarras+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A596,200,0,2,1,1,N,"Valor"');
+      Editor.Lines.Add('A560,238,0,2,1,1,N,"R$"');
+      Editor.Lines.Add('A620,236,0,1,2,3,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A615,280,0,2,1,1,N,"PESO BRUTO"');
+      Editor.Lines.Add('A647,308,0,3,1,1,N,"1 KG"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A575,330,0,1,1,1,N,"Ao descongelar perda"');
+      Editor.Lines.Add('A570,347,0,1,1,1,N,"de aproximadament 20%"');
+      Editor.Lines.Add('A640,364,0,1,1,1,N,"no peso"');
+      Editor.Lines.Add('');
+
+
+
+//      Editor.Lines.Add('LO144,53,532,73');
+//      Editor.Lines.Add('A181,67,0,1,2,4,R,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+//      Editor.Lines.Add('');
+//      Editor.Lines.Add('A599,75,0,2,1,2,R,"'+Produto.unidade.unidade+'"');
+//      Editor.Lines.Add('');
+//      Editor.Lines.Add('B243,126,0,1,3,6,47,N,"'+SgDados.Cells[6, L]+'"');
+//      Editor.Lines.Add('A355,175,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
+//      Editor.Lines.Add('');
+
+
+
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       FreeAndNil(Produto);
   end;
