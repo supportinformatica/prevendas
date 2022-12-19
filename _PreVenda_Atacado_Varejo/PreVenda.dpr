@@ -77,7 +77,8 @@ uses
   LucroVenda in 'LucroVenda.pas' {frmLucroVenda},
   FrmConfImpresNFCe in '..\..\support\FORMS\FrmConfImpresNFCe.pas' {FormConfImpresNFCe},
   NEGACBrPosPrint in '..\..\support\NEG\NEGACBrPosPrint.pas',
-  unitLogoMaker in 'unitLogoMaker.pas';
+  unitLogoMaker in 'unitLogoMaker.pas',
+  FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade};
 
 {$R *.RES}
 var
@@ -92,6 +93,7 @@ begin
     Application.HelpFile := 'C:\Arquivos de programas\Saef\Bin\HELP_PREVENDA.HLP';
     Application.CreateForm(TDModulo, DModulo);
   Application.CreateForm(TFrmPrincipalPreVenda, FrmPrincipalPreVenda);
+  Application.CreateForm(TFrmDataProduzidoValidade, FrmDataProduzidoValidade);
   TBuscaObjeto.AbreLauncher;
     if FrmPrincipalPreVenda.GetFlagEmpresa <> 'TREVO' then
     begin
