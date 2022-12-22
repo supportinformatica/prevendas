@@ -438,13 +438,10 @@ type
     procedure EdtConsultaEnter(Sender: TObject);
     procedure cbxEntregaChange(Sender: TObject);
     procedure miProdutosEtiquetaClick(Sender: TObject);
-<<<<<<< HEAD
     procedure lblLinkSiteClick(Sender: TObject);
     procedure lblLinkSiteMouseEnter(Sender: TObject);
     procedure lblLinkSiteMouseLeave(Sender: TObject);
-=======
     procedure FormDestroy(Sender: TObject);
->>>>>>> ce7bc5ebad27738bb5908133cb2b678505b56731
 
   private
     Etiqueta: TEtiquetaDmCasaDecor;
