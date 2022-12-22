@@ -17,7 +17,8 @@ uses
   IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
-  ACBrBase, ACBrPosPrinter;
+  ACBrBase, ACBrPosPrinter,
+  Prevenda.EtiquetasEspeciais.DmCasaDecor;
 
 type
   VetorPermissao = Array [1 .. 900, 1 .. 7] of String;
@@ -436,9 +437,10 @@ type
     procedure EdtConsultaEnter(Sender: TObject);
     procedure cbxEntregaChange(Sender: TObject);
     procedure miProdutosEtiquetaClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
-
+    Etiqueta: TEtiquetaDmCasaDecor;
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
     qtdAnteriorNaGrid: Real;
@@ -1941,6 +1943,7 @@ var
   ThreadConexao3: TConexao3;
   nomePc: string;
 begin
+  Etiqueta :=  TEtiquetaDmCasaDecor.Create;
   Application.HintHidePause := 30000;
   lblMensagem.Left := -(lblMensagem.width);
   carregarPosicaoColunasDbGrid1;
@@ -2467,6 +2470,11 @@ begin
   self.caption := self.caption + '     Compilação: ' + GetVersaoArq + '     Support Informática  79 3302-5707';
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
+end;
+
+procedure TFrmPrincipalPreVenda.FormDestroy(Sender: TObject);
+begin
+  Etiqueta.Free;
 end;
 
 procedure TFrmPrincipalPreVenda.FormShow(Sender: TObject);
@@ -11545,6 +11553,8 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetas_MiniMercadoAcougueItabaiana_Gondola2Colunas;
   end
+  else if UpperCase(vFlagEtiqueta) = 'DMCASADECOR' then // ARGOX OS 214 Plus
+    Etiqueta.ImprimeEtiqueta(SgDados);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -16115,7 +16125,7 @@ function TFrmPrincipalPreVenda.Empresas_UmaEtiqueta_porColuna: Boolean;
 begin
   if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
-   or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') then
+   or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') then
     Result := True
   else
     Result := False;
