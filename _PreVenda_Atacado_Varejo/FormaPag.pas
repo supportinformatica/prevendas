@@ -919,7 +919,7 @@ begin
       mtWarning, [mbOk], 0); // KENNETH
     exit;
   end;
-  if (not(RadioGroup1.ItemIndex in [0, 2, 3, 6, 9, 10])) and
+  if (not(RadioGroup1.ItemIndex in [0, 2, 3, 6, 7, 9, 10])) and
     (FrmPrincipalPreVenda.ADOQryCliente.FieldByName('dsVista').AsString = 'S')
   then
   begin

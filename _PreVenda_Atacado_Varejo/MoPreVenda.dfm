@@ -754,6 +754,28 @@
       454E44AE426082}
     Visible = False
   end
+  object lblLinkSite: TLabel
+    Left = 671
+    Top = 616
+    Width = 129
+    Height = 16
+    Hint = 'Clique aqui para ir ao nosso site.'
+    Anchors = [akRight, akBottom]
+    Caption = 'supportinformatica.net'
+    DragCursor = crHandPoint
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    Transparent = True
+    OnClick = lblLinkSiteClick
+    OnMouseEnter = lblLinkSiteMouseEnter
+    OnMouseLeave = lblLinkSiteMouseLeave
+  end
   object BtnMdAnterior: TBitBtn
     Left = 707
     Top = 245

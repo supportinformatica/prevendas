@@ -299,6 +299,7 @@ type
     cbxEntrega: TComboBox;
     ADOSPConsultanmFamilia: TStringField;
     miProdutosEtiqueta: TMenuItem;
+    lblLinkSite: TLabel;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -436,6 +437,9 @@ type
     procedure EdtConsultaEnter(Sender: TObject);
     procedure cbxEntregaChange(Sender: TObject);
     procedure miProdutosEtiquetaClick(Sender: TObject);
+    procedure lblLinkSiteClick(Sender: TObject);
+    procedure lblLinkSiteMouseEnter(Sender: TObject);
+    procedure lblLinkSiteMouseLeave(Sender: TObject);
 
   private
 
@@ -2464,7 +2468,7 @@ begin
 //    EdtQtd.ReadOnly := True;
 //    EdtQtd.Text := '1,00';
 //  end;
-  self.caption := self.caption + '     Compilação: ' + GetVersaoArq + '     Support Informática  79 3302-5707';
+  self.caption := 'Pré Venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
 end;
@@ -3033,6 +3037,23 @@ begin
     LancaProdutos(quantidade);
 end;
 
+procedure TFrmPrincipalPreVenda.lblLinkSiteClick(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, nil, PChar('https://supportinformatica.net/'), nil, nil, sw_hide);
+end;
+
+procedure TFrmPrincipalPreVenda.lblLinkSiteMouseEnter(Sender: TObject);
+begin
+  lbllinksite.Font.Style := [fsUnderline];
+  lbllinksite.Cursor := crHandPoint;
+end;
+
+procedure TFrmPrincipalPreVenda.lblLinkSiteMouseLeave(Sender: TObject);
+begin
+  lbllinksite.Font.Style := [];
+  lbllinksite.Cursor := crDefault;
+end;
+
 procedure TFrmPrincipalPreVenda.lblLogoffClick(Sender: TObject);
 begin
   Cancelar;
@@ -3052,18 +3073,26 @@ var
   valorItemBruto : real;
 begin
   // TESTA LIMITE DE ITENS
-  if (StrToFloat(edtQtdItens.Text) >= 135) and
-    ((UpperCase(vFlagEtiqueta) <> 'KARIB') and ((Empresas_UmaEtiqueta_porColuna = False)or(chkbxEtiqueta.Checked = false)) and (UpperCase(vFlagEtiqueta) <> 'DIJU') and (UpperCase(vFlagEtiqueta) <> 'DONASANTA')
-     and (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES')) then
+//  if (StrToFloat(edtQtdItens.Text) >= 135) and
+//    ((UpperCase(vFlagEtiqueta) <> 'KARIB') and ((Empresas_UmaEtiqueta_porColuna = False)or(chkbxEtiqueta.Checked = false)) and (UpperCase(vFlagEtiqueta) <> 'DIJU') and (UpperCase(vFlagEtiqueta) <> 'DONASANTA')
+//     and (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES')) then
+//  begin
+//    Application.OnMessage := NaoProcessaMsg;
+//    MessageDlg('Esta pré-venda alcançou o limite máximo de 135 itens!',
+//      mtWarning, [mbOK], 0);
+//    Application.OnMessage := ProcessaMsg;
+//    EdtConsulta.Setfocus;
+//    exit;
+//  end;
+  if (StrToFloat(edtQtdItens.Text) > 500) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Esta pré-venda alcançou o limite máximo de 135 itens!',
+    MessageDlg('Esta pré-venda alcançou o limite máximo de 500 itens!',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     EdtConsulta.Setfocus;
     exit;
   end;
-
   // TESTA SE QUANTIDADE ZERADA
   if quantidade <= 0 then
   begin
