@@ -78,7 +78,8 @@ uses
   FrmConfImpresNFCe in '..\..\support\FORMS\FrmConfImpresNFCe.pas' {FormConfImpresNFCe},
   NEGACBrPosPrint in '..\..\support\NEG\NEGACBrPosPrint.pas',
   unitLogoMaker in 'unitLogoMaker.pas',
-  FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade};
+  FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
+  Prevenda.EtiquetasEspeciais.DmCasaDecor in 'etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas';
 
 {$R *.RES}
 var
