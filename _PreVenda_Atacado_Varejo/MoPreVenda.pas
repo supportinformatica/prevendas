@@ -457,6 +457,7 @@ type
     QuantidadeGridMaiorQueZero: Boolean;
     // indica se a quantidade setada diretamente na grid é maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
+    colocouPorcentagem : boolean;
 
     procedure gerarEtiquetasProdutosSelecionados;
     function entregaSelecionadaGrid : Boolean;
@@ -7259,8 +7260,12 @@ begin
         Copy(LblEspecificacao.caption, 35, Length(LblEspecificacao.caption));
       Parameters.ParamByName('@PESQUISA2').Value := EdtConsulta.Text;
     end
-    else if RadioGroup1.ItemIndex <> 4 then // diferente de codigo de barras
-      Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
+    else if RadioGroup1.ItemIndex <> 4 then begin // diferente de codigo de barras
+      if ((colocouPorcentagem = True) and (Pos('%',EdtConsulta.Text)=0)) then
+        Parameters.ParamByName('@PESQUISA').Value := '%'
+      else
+        Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
+    end;
     Case RadioGroup1.ItemIndex of
       0:
         Parameters.ParamByName('@OPCAO').Value := '0';
@@ -7390,10 +7395,18 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
+  if Pos('%',EdtConsulta.Text)>0 then
+    colocouPorcentagem := True;
   if ADOSPConsulta.Active = True then
     ADOSPConsulta.Filtered := False;
   if ((RadioGroup1.ItemIndex IN [0,1,2,3,7]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
-    FiltraConsulta(EdtConsulta.Text)
+    if colocouPorcentagem = True then begin
+      AtualizaQryConsulta;
+      FiltraConsulta(EdtConsulta.Text);
+      colocouPorcentagem := False;
+    end
+    else
+      FiltraConsulta(EdtConsulta.Text)
   else
   if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
     AtualizaQryConsulta;
