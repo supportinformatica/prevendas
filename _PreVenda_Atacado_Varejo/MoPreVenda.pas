@@ -30324,7 +30324,7 @@ begin
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
 
-      Editor.Lines.Add('A90,5,0,4,1,2,N,"'+SgDados.Cells[1, L]+'"');
+      Editor.Lines.Add('A42,5,0,4,1,2,N,"' +SgDados.Cells[0, L]+ '-' +SgDados.Cells[1, L]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('LO144,53,532,73');
       Editor.Lines.Add('A181,67,0,1,2,4,R,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
@@ -30399,7 +30399,7 @@ begin
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
 
-      Editor.Lines.Add('A90,32,0,4,1,2,N,"'+SgDados.Cells[1, L]+'"');
+      Editor.Lines.Add('A42,32,0,4,1,2,N,"' +SgDados.Cells[0, L]+ '-' +SgDados.Cells[1, L]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('LO144,86,532,73');
       Editor.Lines.Add('A181,99,0,1,2,4,R,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
