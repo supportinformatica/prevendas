@@ -649,6 +649,7 @@ type
     procedure ImprimeEtiquetas_MiniMercadoAcougueItabaiana_Gondola2Colunas; //Elgin L42 Pro
     procedure ImprimeEtiquetas_DmCasaDecor;
     procedure ImprimeEtiquetas_FenixSuperMercados; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_SenhorCoco; //Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11610,7 +11611,9 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'DMCASADECOR' then // ARGOX OS 214 Plus
     ImprimeEtiquetas_DmCasaDecor
   else if UpperCase(vFlagEtiqueta) = 'FENIXSUPER' then
-    ImprimeEtiquetas_FenixSuperMercados;
+    ImprimeEtiquetas_FenixSuperMercados
+  else if UpperCase(vFlagEtiqueta) = 'SENHORCOCO' then
+    ImprimeEtiquetas_SenhorCoco;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -30861,6 +30864,74 @@ begin
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
   GetAndAddLogomarca('ONE');
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_SenhorCoco;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('I8,1,001');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q240,25');
+      Editor.Lines.Add('q460');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D11');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A22,9,0,4,1,1,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A22,41,0,4,1,1,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A150,133,0,4,1,1,N,"R$"');
+      Editor.Lines.Add('A194,93,0,3,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A22,92,0,4,1,1,N,"' +Produto.unidade.unidade+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      Editor.Lines.Add('');
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
