@@ -30917,13 +30917,13 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A22,9,0,4,1,1,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
-      Editor.Lines.Add('A22,41,0,4,1,1,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('A22,13,0,4,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A22,64,0,4,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A150,133,0,4,1,1,N,"R$"');
-      Editor.Lines.Add('A194,93,0,3,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A150,165,0,4,1,1,N,"R$"');
+      Editor.Lines.Add('A194,125,0,3,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A22,92,0,4,1,1,N,"' +Produto.unidade.unidade+ '"');
+      Editor.Lines.Add('A22,124,0,4,1,1,N,"' +Produto.unidade.unidade+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       Editor.Lines.Add('');
