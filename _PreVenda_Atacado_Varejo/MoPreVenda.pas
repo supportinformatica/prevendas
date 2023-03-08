@@ -650,6 +650,7 @@ type
     procedure ImprimeEtiquetas_DmCasaDecor;
     procedure ImprimeEtiquetas_FenixSuperMercados; //Elgin L42 Pro
     procedure ImprimeEtiquetas_SenhorCoco; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11613,7 +11614,17 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'FENIXSUPER' then
     ImprimeEtiquetas_FenixSuperMercados
   else if UpperCase(vFlagEtiqueta) = 'SENHORCOCO' then
-    ImprimeEtiquetas_SenhorCoco;
+    ImprimeEtiquetas_SenhorCoco
+  else if UpperCase(vFlagEtiqueta) = 'LITORAL655NEW' then begin // ELGIN
+    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Laranjeiras';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'Geru';
+    escolha := FrmDuasEtiquetas.ShowModal;
+    if escolha = mrOk then
+      ImprimeEtiquetas_Litoral655_New('Rua Laranjeiras')
+    else if escolha = mrCancel then
+      ImprimeEtiquetas_Litoral655_New('Rua Geru');
+  end
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -30924,6 +30935,101 @@ begin
       Editor.Lines.Add('A194,125,0,3,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A22,124,0,4,1,1,N,"' +Produto.unidade.unidade+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      Editor.Lines.Add('');
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_New(street: string);
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('I8,A');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q560,25');
+      Editor.Lines.Add('q644');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D13');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,14,0,3,2,2,N,"LITORAL 655"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A6,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B54,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A62,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B54,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A62,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A183,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,14,0,3,2,2,N,"LITORAL 655"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A330,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B378,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A386,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B378,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A386,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A507,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       Editor.Lines.Add('');
