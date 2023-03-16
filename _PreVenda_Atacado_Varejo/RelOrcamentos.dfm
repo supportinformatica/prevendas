@@ -17,7 +17,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
+  PixelsPerInch = 120
   TextHeight = 13
   object QRMdRel: TRLReport
     Left = 40
