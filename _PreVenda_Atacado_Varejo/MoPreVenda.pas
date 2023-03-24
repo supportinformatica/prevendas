@@ -30942,6 +30942,7 @@ begin
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       Editor.Lines.Add('');
       FreeAndNil(Produto);
+
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
