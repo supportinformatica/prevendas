@@ -3481,7 +3481,8 @@ begin
     Parameters.ParamByName('NRORCAMENTO').Value := EdtLancto.Text;
     open;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') then begin
+  if (UpperCase(vEmpresa) = 'JNUNES') then
+  begin
     FrmRel_Orcamento_Novo.QRExpr8.Expression := 'ADOqryreldados.cdCodigoDIC';
     FrmRel_Orcamento_Novo.QRExpr19.Expression := 'ADOqryreldados.nmEmpresa';
     FrmRel_Orcamento_Novo.QRExpr23.Visible := false;
