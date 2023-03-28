@@ -579,7 +579,7 @@ type
     procedure ImprimeEtiquetaQUIVER;
     procedure ImprimeEtiquetaYZLU;
     procedure ImprimeEtiquetaYZLUCENTRO;
-    procedure ImprimeEtiquetaYZLUPEIXOTO;
+    procedure ImprimeEtiquetaYZLUSANTANA;
     procedure ImprimeEtiquetaYZLUCALCADOS;
     procedure ImprimeEtiquetaIMA;
     procedure ImprimeEtiquetaDOFF;
@@ -11217,7 +11217,7 @@ begin
   (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
-  (UpperCase(vFlagEtiqueta) = 'YZLUPEIXOTO') then // ELGIN L42
+  (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then // ELGIN L42
     case ChamaInputBoxEtiquetaZanquy('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
       0 : ImprimeEtiquetaZANQUY;
@@ -11229,7 +11229,7 @@ begin
       6 : ImprimeEtiquetaYZLUCALCADOS;//ImprimeEtiquetaIMA;
       7 : ImprimeEtiquetaDOFF;
       8 : ImprimeEtiquetaQUIVER;
-      9 : ImprimeEtiquetaYZLUPEIXOTO;
+      9 : ImprimeEtiquetaYZLUSANTANA;
     end
   else if (UpperCase(vFlagEtiqueta) = 'CAMPOS')  then // ELGIN L42
     case ChamaInputBoxEtiquetaCAMPOS('Seleção de modelo',
@@ -23599,7 +23599,7 @@ begin
         cbxFornecedor.Items.Add('YZLU CALCADOS');
         cbxFornecedor.Items.Add('ZANQUY LARANJEIRAS');
         cbxFornecedor.Items.Add('QUIVER');
-        cbxFornecedor.Items.Add('YZLU PEIXOTO');
+        cbxFornecedor.Items.Add('YZLU SANTANA');
       end;
       ButtonTop := MulDiv(41, DialogUnits.y, 8);
       ButtonWidth := MulDiv(50, DialogUnits.x, 4);
@@ -26570,7 +26570,7 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLUPEIXOTO;
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLUSANTANA;
 var
   L: Integer;
   Arq: TextFile;
@@ -26604,7 +26604,7 @@ begin
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
 
-    Editor.Lines.Add('A64,2,0,4,1,1,N,"YZLU PEIXOTO"');
+    Editor.Lines.Add('A64,2,0,4,1,1,N,"YZLU SANTANA"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
@@ -26619,7 +26619,7 @@ begin
       StrToFloat(SgDados.Cells[3, L])) + '"'); // valor
     Editor.Lines.Add('JF');
 
-    Editor.Lines.Add('A480,2,0,4,1,1,N,"YZLU PEIXOTO"');
+    Editor.Lines.Add('A480,2,0,4,1,1,N,"YZLU SANTANA"');
     Editor.Lines.Add('A451,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
