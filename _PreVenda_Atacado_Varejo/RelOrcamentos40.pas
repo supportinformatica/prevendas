@@ -91,6 +91,8 @@ type
     RLLabel7: TRLLabel;
     RLDBText1: TRLDBText;
     RLDBText2: TRLDBText;
+    QRLabel11: TRLLabel;
+    QreValidade: TRLDBText;
     procedure QREQtdBeforePrint(Sender: TObject; var AText: string;
       var PrintIt: Boolean);
     procedure RLDBResult3BeforePrint(Sender: TObject; var AText: string;
