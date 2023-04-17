@@ -157,7 +157,6 @@ type
     CadastrodeLista1: TMenuItem;
     ConsultarListas1: TMenuItem;
     ListBox1: TListBox;
-    Timer1: TTimer;
     ConsultarCrdito1: TMenuItem;
     ransferncia1: TMenuItem;
     Label18: TLabel;
@@ -300,6 +299,7 @@ type
     ADOSPConsultanmFamilia: TStringField;
     miProdutosEtiqueta: TMenuItem;
     lblLinkSite: TLabel;
+    TimerRealizarPesquisa: TTimer;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -440,6 +440,9 @@ type
     procedure lblLinkSiteClick(Sender: TObject);
     procedure lblLinkSiteMouseEnter(Sender: TObject);
     procedure lblLinkSiteMouseLeave(Sender: TObject);
+    procedure TimerRealizarPesquisaTimer(Sender: TObject);
+    procedure EdtConsultaKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     valorAjustar: Real;
@@ -454,7 +457,6 @@ type
     QuantidadeGridMaiorQueZero: Boolean;
     // indica se a quantidade setada diretamente na grid é maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
-    colocouPorcentagem : boolean;
 
     procedure gerarEtiquetasProdutosSelecionados;
     function entregaSelecionadaGrid : Boolean;
@@ -470,7 +472,6 @@ type
     procedure SalvaTransferencia; // somente p proauto
     Procedure AtualizaCombProduto;
     Procedure AtualizaQryConsulta;
-    Procedure FiltraConsulta(texto : string);
     Procedure ConsultaGarantia;
     Procedure AjustarAposConsultaProduto;
     Procedure LimpaGrid; overload;
@@ -2587,40 +2588,6 @@ begin
 //    if ADOSPConsulta.FieldByName('Pedido').AsCurrency > 0 then
       EnviaProdutos;
     ADOSPConsulta.RecNo := i+1;
-  end;
-end;
-
-procedure TFrmPrincipalPreVenda.FiltraConsulta(texto : string);
-begin
-  try
-    ADOSPConsulta.Filtered := False;
-    if texto <> '' then
-    begin
-      texto := StringReplace(texto,'%','*',[]);
-      case RadioGroup1.ItemIndex of
-        0 :
-        begin
-          if (UpperCase(vEmpresa) = 'CHALOC') then
-          begin
-            if (dsCGC <> '01655446000117') and (dsCGC <> '01956284000157') and
-               (dsCGC <> '10237494000186') and (dsCGC <> '01655446000389') then
-              ADOSPConsulta.Filter := 'CÓDIGO_BARRAS = '+QuotedStr(texto)
-            else
-              ADOSPConsulta.Filter := 'CÓDIGO = '+QuotedStr(texto);
-          end else
-            ADOSPConsulta.Filter := 'CÓDIGO LIKE '+QuotedStr(texto+'%');
-        end;
-        1 : ADOSPConsulta.Filter := 'DESCRIÇÃO LIKE '+QuotedStr(texto+'%');
-        2 : ADOSPConsulta.Filter := 'REFERÊNCIA LIKE '+QuotedStr(texto+'%');
-        3 : ADOSPConsulta.Filter := 'CDCODIGODIC LIKE '+QuotedStr(texto+'%');
-        4 : ADOSPConsulta.Filter := 'CÓDIGO_BARRAS LIKE '+QuotedStr(texto+'%');
-        7 : ADOSPConsulta.Filter := 'nmFamilia LIKE '+QuotedStr(texto+'%');
-      end;
-      ADOSPConsulta.Filtered := True;
-    end;
-    AjustarAposConsultaProduto;
-  except
-
   end;
 end;
 
@@ -7260,10 +7227,7 @@ begin
       Parameters.ParamByName('@PESQUISA2').Value := EdtConsulta.Text;
     end
     else if RadioGroup1.ItemIndex <> 4 then begin // diferente de codigo de barras
-      if ((colocouPorcentagem = True) and (Pos('%',EdtConsulta.Text)=0)) then
-        Parameters.ParamByName('@PESQUISA').Value := '%'
-      else
-        Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
+      Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
     end;
     Case RadioGroup1.ItemIndex of
       0:
@@ -7327,15 +7291,10 @@ begin
 
     if (UpperCase(vEmpresa) = 'CHALOC') and (EdtConsulta.Text = '') then
     begin
-      Parameters.ParamByName('@PESQUISA').Value := '%';
-      open; // mostra os dados no dbgrid
-      FiltraConsulta('++-');  //adicionado para startar a consulta sem exibir itens na tela
-    end
-    else
-    begin
-      open; // mostra os dados no dbgrid
-      AjustarAposConsultaProduto;
+      Parameters.ParamByName('@PESQUISA').Value := 'nao exibir nada';
     end;
+    open; // mostra os dados no dbgrid
+    AjustarAposConsultaProduto;
   end;
 end;
 
@@ -7394,38 +7353,9 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
-  if Pos('%',EdtConsulta.Text)>0 then
-    colocouPorcentagem := True;
-  if ADOSPConsulta.Active = True then
-    ADOSPConsulta.Filtered := False;
-  if ((RadioGroup1.ItemIndex IN [0,1,2,3,7]) and (Pos('%',EdtConsulta.Text)=0) and (Length(EdtConsulta.Text)>0) and (EdtConsulta.Text <> '')) then
-    if colocouPorcentagem = True then begin
-      AtualizaQryConsulta;
-      FiltraConsulta(EdtConsulta.Text);
-      colocouPorcentagem := False;
-    end
-    else
-      FiltraConsulta(EdtConsulta.Text)
-  else
-  if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
-    AtualizaQryConsulta;
-  if DBGrid1.Color = clBtnHighlight then;
-  DBGrid1.Color := clInfoBk;
-  if ADOSPConsulta.RecordCount > 0 then
-  begin
-    ConsultaReserva;
-    if usarLoteValidade = True then
-      montaComboLote;
-    if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
-      or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
-      OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
-    then
-      Consulta_Deposito
-    else if Label12.Visible = True then
-      Consultapedidodecompra1.Click;
-    if (UpperCase(vEmpresa) = 'PTINTAS') then
-      Consultapedidodecompra1.Click;
-  end;
+  TimerRealizarPesquisa.Enabled := false;
+//  if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
+//    AtualizaQryConsulta;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaEnter(Sender: TObject);
@@ -9949,6 +9879,30 @@ begin
     lblMensagem.Left := lblMensagem.Left + 1;
 end;
 
+procedure TFrmPrincipalPreVenda.TimerRealizarPesquisaTimer(Sender: TObject);
+begin
+  AtualizaQryConsulta;
+  Screen.Cursor := crDefault;
+  TimerRealizarPesquisa.Enabled := false;
+  if DBGrid1.Color = clBtnHighlight then;
+  DBGrid1.Color := clInfoBk;
+  if ADOSPConsulta.RecordCount > 0 then
+  begin
+    ConsultaReserva;
+    if usarLoteValidade = True then
+      montaComboLote;
+    if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
+      or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
+      OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
+    then
+      Consulta_Deposito
+    else if Label12.Visible = True then
+      Consultapedidodecompra1.Click;
+    if (UpperCase(vEmpresa) = 'PTINTAS') then
+      Consultapedidodecompra1.Click;
+  end;
+end;
+
 procedure TFrmPrincipalPreVenda.Consultapedidodecompra1Click(Sender: TObject);
 begin
   // if (UpperCase(vEmpresa) = 'LAMARAO') or (UpperCase(vEmpresa) = 'AUTOCAR')or(UpperCase(vEmpresa) = 'TOPLINE') or (UpperCase(vEmpresa) = 'TREVO')  then  // nao fazer p autocar
@@ -10524,6 +10478,16 @@ begin
   end;
   if (Key = Char(27)) then
     BtnCancelar.Click;
+end;
+
+procedure TFrmPrincipalPreVenda.EdtConsultaKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (Key <> VK_Down) and (Key <> VK_Up)
+    and (Key <> VK_Left) and (Key <> VK_Right)then begin
+    Screen.Cursor := crHourGlass;
+    TimerRealizarPesquisa.Enabled := true;
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeComprovante(valor: Integer);

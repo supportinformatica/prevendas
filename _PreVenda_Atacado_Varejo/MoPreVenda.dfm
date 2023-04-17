@@ -1545,6 +1545,7 @@
       OnEnter = EdtConsultaEnter
       OnKeyDown = EdtConsultaKeyDown
       OnKeyPress = EdtConsultaKeyPress
+      OnKeyUp = EdtConsultaKeyUp
     end
     object CheckBox1: TCheckBox
       Left = 6
@@ -5060,10 +5061,6 @@
   object TTimer
     Interval = 200
   end
-  object Timer1: TTimer
-    Left = 24
-    Top = 344
-  end
   object ADOQryUltimoCodigo: TADOQuery
     Connection = DModulo.ADODeposito
     Parameters = <>
@@ -5162,5 +5159,11 @@
     ControlePorta = True
     Left = 827
     Top = 79
+  end
+  object TimerRealizarPesquisa: TTimer
+    Interval = 1500
+    OnTimer = TimerRealizarPesquisaTimer
+    Left = 127
+    Top = 471
   end
 end
