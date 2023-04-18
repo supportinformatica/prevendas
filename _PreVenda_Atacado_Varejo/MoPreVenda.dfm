@@ -5161,7 +5161,7 @@
     Top = 79
   end
   object TimerRealizarPesquisa: TTimer
-    Interval = 1500
+    Interval = 500
     OnTimer = TimerRealizarPesquisaTimer
     Left = 127
     Top = 471
