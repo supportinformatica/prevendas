@@ -10491,7 +10491,7 @@ end;
 procedure TFrmPrincipalPreVenda.EdtConsultaKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-if (Key <> VK_Down) and (Key <> VK_Up)
+if (Key <> 13) and (Key <> VK_Down) and (Key <> VK_Up)
     and (Key <> VK_Left) and (Key <> VK_Right)then begin
     Screen.Cursor := crHourGlass;
     TimerRealizarPesquisa.Enabled := true;
