@@ -31384,7 +31384,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 // procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSafiraArgox;
 // var L : integer;
 // Arq : TextFile;
