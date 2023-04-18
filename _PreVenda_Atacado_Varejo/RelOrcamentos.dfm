@@ -926,16 +926,16 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           BeforePrint = QREPrecoBeforePrint
         end
         object QREQtd: TRLDBResult
-          Left = 418
+          Left = 399
           Top = 0
-          Width = 99
-          Height = 13
+          Width = 118
+          Height = 14
           Alignment = taRightJustify
           DataFormula = 'NrQtd * 1'
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -12
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -962,18 +962,18 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           BeforePrint = RLDBResult3BeforePrint
         end
         object RLDBText2: TRLDBText
-          Left = 381
-          Top = 1
+          Left = 379
+          Top = 0
           Width = 55
           Height = 13
           Alignment = taRightJustify
           AutoSize = False
           DataField = 'dsPrateleira'
           DataSource = DS
-          Font.Charset = DEFAULT_CHARSET
+          Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -12
+          Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
           Text = ''
@@ -1038,7 +1038,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLblUnitario: TRLLabel
         Left = 527
-        Top = 3
+        Top = 4
         Width = 59
         Height = 17
         Alignment = taRightJustify
@@ -1046,7 +1046,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1054,7 +1054,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLblDesconto: TRLLabel
         Left = 589
-        Top = 3
+        Top = 4
         Width = 59
         Height = 17
         Alignment = taRightJustify
@@ -1062,7 +1062,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1070,7 +1070,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLblTotal: TRLLabel
         Left = 652
-        Top = 3
+        Top = 4
         Width = 63
         Height = 17
         Alignment = taRightJustify
@@ -1078,7 +1078,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1605,7 +1605,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Visible = False
       end
       object RLLabel13: TRLLabel
-        Left = 354
+        Left = 352
         Top = 115
         Width = 82
         Height = 14
@@ -1849,8 +1849,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Precision = 10
         Value = Null
       end>
-    Left = 336
-    Top = 8
+    Left = 504
   end
   object ADOQuery1: TADOQuery
     Connection = DModulo.Conexao

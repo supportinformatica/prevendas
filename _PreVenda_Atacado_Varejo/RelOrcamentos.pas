@@ -272,7 +272,7 @@ end;
 procedure TfrmRelOrcamentos.lblTotalBeforePrint(Sender: TObject;
   var AText: string; var PrintIt: Boolean);
 begin
-  if ((StrToFloat(StringReplace(lblSubTotal.Caption,'.','',[])) <= StrtoFloat(StringReplace(AText,'.','',[])))) then
+  if ((StrToFloat(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) <= StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])))) then
     lblSubTotal.Caption := AText;
 end;
 
@@ -304,7 +304,7 @@ begin
   vCasasPreco := MoPreVenda.vCasasPreco;
   if vCasasPreco > 5 then
     vCasasPreco := 5;
-  AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[])),vCasasPreco*-1));
+  AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])),vCasasPreco*-1));
   case vCasasPreco of
     2 : RLLblDesconto.Caption := FormatFloat('###,##0.00',strtofloat(AText));
     3 : RLLblDesconto.Caption := FormatFloat('###,##0.000',strtofloat(AText));
@@ -322,7 +322,7 @@ end;
 procedure TfrmRelOrcamentos.QRETotalBeforePrint(Sender: TObject;
   var AText: string; var PrintIt: Boolean);
 begin
-  AText := FormatFloatQ(2,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[])),-2));
+  AText := FormatFloatQ(2,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])),-2));
   RLLblTotal.Caption := FormatFloat('###,##0.00',strtofloat(AText));
 end;
 
@@ -343,6 +343,10 @@ procedure TfrmRelOrcamentos.RLBand2BeforePrint(Sender: TObject;
 var
   estoque:Real;
 begin
+  if (ADOSPRelDados.FieldByName('nrQtd').asFloat * ADOSPRelDados.FieldByName('vlPreco').AsFloat) > 999999 then
+    RLBand2.Font.Size := 6
+  else
+    RLBand2.Font.Size := 7;
   if (UPPERCASE(vEmpresa) = 'MEGA')and(vOrcamento = 'O') then
   begin
     with AdoQuery1 do
@@ -404,7 +408,7 @@ procedure TfrmRelOrcamentos.RLBand3BeforePrint(Sender: TObject;
 begin
   lblSubTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalLiquido,-2));
-  lblValorDesconto.Caption := FloatToStr(StrtoFloat(StringReplace(lblSubTotal.Caption,'.','',[])) - StrtoFloat(StringReplace(lblTotal.Caption,'.','',[])));
+  lblValorDesconto.Caption := FloatToStr(StrtoFloat(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) - StrtoFloat(StringReplace(lblTotal.Caption,'.','',[rfReplaceAll])));
 //  if StrtoFloat(lblValorDesconto.Caption) < 0 then
 //      lblValorDesconto.Caption := FloatToStr(StrtoFloat(lblValorDesconto.Caption) * -1);
   if (lblPorcDesconto.Visible = True) and ((StrToFloatDef(lblValorDesconto.Caption, 0) > 0)) then
@@ -430,10 +434,10 @@ begin
   vCasasPreco := MoPreVenda.vCasasPreco;
   if vCasasPreco > 5 then
     vCasasPreco := 5;
-  if (StrToFloat(VarToStr(QREPreco.Value)) > SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[])),vCasasPreco*-1)) then
+  if (StrToFloat(VarToStr(QREPreco.Value)) > SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])),vCasasPreco*-1)) then
     AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(VarToStr(QREPreco.Value)),vCasasPreco*-1))
   else
-    AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[])),vCasasPreco*-1));
+    AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])),vCasasPreco*-1));
   case vCasasPreco of
     2 : RLLblUnitario.Caption := FormatFloat('###,##0.00',strtofloat(AText));
     3 : RLLblUnitario.Caption := FormatFloat('###,##0.000',strtofloat(AText));

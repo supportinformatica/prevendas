@@ -5909,6 +5909,12 @@ begin
           FieldByName('NOME').AsString);
     Close;
   end;
+  if StrToFloat(EdtSubTotal.Text) > 999999 then begin
+    FrmRelOrcamentos.RLLblTotal.Font.Size := 6;
+    FrmRelOrcamentos.RLLblDesconto.Font.Size := 6;
+    FrmRelOrcamentos.RLLblUnitario.Font.Size := 6;
+    FrmRelOrcamentos.QREQtd.Font.Size := 6;
+  end;
   if (vTipoImp = '1') then // or (RgOpcoes.ItemIndex = 2) then // ou orcamento
   begin
     FrmRelOrcamentos.QrMdRel.PreviewModal;
