@@ -2900,22 +2900,22 @@ begin
     vDescricaoGama := '';
     vUndGama := '';
     vFatorGama := 0;
-    if ((UpperCase(vFlagEtiqueta) <> 'KARIB') and
-      (UpperCase(vFlagEtiqueta) <> 'DONASANTA') and
-      (UpperCase(vFlagEtiqueta) <> 'DIJU') and
-      (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES') and
-      ((UpperCase(vEmpresa) <> 'LLPARAFUSOS') and
-      (UpperCase(vEmpresa) <> 'NACIONAL'))) and
-      (chkbxEtiqueta.Checked = false) then  begin
-        if (RadioGroup1.ItemIndex <> 4) and ((Pos('%',EdtConsulta.Text)=0)) then begin
-          textoConsultaTemp := EdtConsulta.Text;
-          EdtConsulta.Text := '';  //atualizarqryconsulta ja esta immplpicito aqui no OnChange
-          EdtConsulta.Text := textoConsultaTemp;
-        end
-        else
-          AtualizaQryConsulta;
-        EdtConsulta.SelectAll;
-      end;
+//    if ((UpperCase(vFlagEtiqueta) <> 'KARIB') and
+//      (UpperCase(vFlagEtiqueta) <> 'DONASANTA') and
+//      (UpperCase(vFlagEtiqueta) <> 'DIJU') and
+//      (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES') and
+//      ((UpperCase(vEmpresa) <> 'LLPARAFUSOS') and
+//      (UpperCase(vEmpresa) <> 'NACIONAL'))) and
+//      (chkbxEtiqueta.Checked = false) then  begin
+//        if (RadioGroup1.ItemIndex <> 4) and ((Pos('%',EdtConsulta.Text)=0)) then begin
+//          textoConsultaTemp := EdtConsulta.Text;
+//          EdtConsulta.Text := '';  //atualizarqryconsulta ja esta immplpicito aqui no OnChange
+//          EdtConsulta.Text := textoConsultaTemp;
+//        end
+//        else
+//          AtualizaQryConsulta;
+    EdtConsulta.SelectAll;
+//      end;
   end else
   begin
     Application.OnMessage := NaoProcessaMsg;
