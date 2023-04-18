@@ -1,4 +1,4 @@
-unit MoPreVenda;
+Ôªøunit MoPreVenda;
 
 interface
 
@@ -242,7 +242,7 @@ type
     ADOSPConsultadspromocaovarejo: TStringField;
     ADOSPConsultanrqtdpromocao: TFloatField;
     miProdutosVendidosJunto: TMenuItem;
-    mi⁄ltimasVendasDoProdutoAoCliente: TMenuItem;
+    mi√öltimasVendasDoProdutoAoCliente: TMenuItem;
     cbxUsuario: TComboBox;
     Label8: TLabel;
     chkOcultarProdutosSemEstoque: TCheckBox;
@@ -294,7 +294,7 @@ type
     imgTransparente: TImage;
     ACBrPosPrinter: TACBrPosPrinter;
     chkbxEtiqueta: TCheckBox;
-    ADOSPConsultaC”DIGO: TStringField;
+    ADOSPConsultaC√ìDIGO: TStringField;
     cbxEntrega: TComboBox;
     ADOSPConsultanmFamilia: TStringField;
     miProdutosEtiqueta: TMenuItem;
@@ -414,7 +414,7 @@ type
     procedure CbxClienteEnter(Sender: TObject);
     procedure ConsultarporCdigoAdicional1Click(Sender: TObject);
     procedure miProdutosVendidosJuntoClick(Sender: TObject);
-    procedure mi⁄ltimasVendasDoProdutoAoClienteClick(Sender: TObject);
+    procedure mi√öltimasVendasDoProdutoAoClienteClick(Sender: TObject);
     procedure EdtUsuarioChange(Sender: TObject);
     procedure cbxUsuarioChange(Sender: TObject);
     procedure chkOcultarProdutosSemEstoqueClick(Sender: TObject);
@@ -448,14 +448,14 @@ type
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
     qtdAnteriorNaGrid: Real;
-    // quantidade do produto antes da alteraÁ„o direta na grid, usada para corrigir os totais apÛs a alteraÁ„o
+    // quantidade do produto antes da altera√ß√£o direta na grid, usada para corrigir os totais ap√≥s a altera√ß√£o
     intemIndexRgOpcoesOLD: Integer;
     // controla o itenindex do radiogroup RGOpcoes
     vQtdPrint: string[1];
     vPrintSetup: string[01];
     // define se sobe o print setup na impressao da pre-venda 80 colunas
     QuantidadeGridMaiorQueZero: Boolean;
-    // indica se a quantidade setada diretamente na grid È maior quer zero
+    // indica se a quantidade setada diretamente na grid √© maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
 
     procedure gerarEtiquetasProdutosSelecionados;
@@ -463,7 +463,7 @@ type
     procedure adicionarLocalEntrega;
     procedure adicionarLocalEntregaNaGrid;
     procedure montarComboEntrega;
-    function possuiItensLanÁados: Boolean;
+    function possuiItensLan√ßados: Boolean;
     Procedure AuxiliarLancto(i: Integer);
     Procedure RemontaSgDados(i: Integer);
     Procedure ImprimirRequisicao(vCliente: String; vRequisicao: Integer);
@@ -653,7 +653,9 @@ type
     procedure ImprimeEtiquetas_SenhorCoco; //Elgin L42 Pro
     procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
     procedure ImprimeEtiquetas_MiniMercadoItabaiana; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_MiniMercadoItabaiana_Pequena; //Elgin L42 Pro
     procedure ImprimeEtiquetas_ResMercadinhoAcaua; //Argox OS 214 Plus
+    procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -732,9 +734,9 @@ type
     // Desconto do cliente definico no campo motivo da restricao do cadstro do cliente
     vLimiteCredito: Real;
     valorLimiteDisponivel: Real;
-    // pega o limite de credito disponÌvel antes da confirmaÁ„o da pre-venda p ser utilizada no formulario de forma de pagamento p teste do limite ha hora da confirmaÁ„o
+    // pega o limite de credito dispon√≠vel antes da confirma√ß√£o da pre-venda p ser utilizada no formulario de forma de pagamento p teste do limite ha hora da confirma√ß√£o
     vUltimo_USUARIO: string[10];
-    // pega o nome do ultimo usu·rio a fazer alguma liberaÁ„o no sistema
+    // pega o nome do ultimo usu√°rio a fazer alguma libera√ß√£o no sistema
     vMensagem_Promoc: string[40];
     vLimCredito: String[01];
     vCheqDev: String[01];
@@ -752,25 +754,25 @@ type
     vLimitarDescontoFornecedor: Boolean;
     Acao: Integer; // 0 - atualizacao, 1 - backup
     vCorrige_Desconto: string[01];
-    // 'S' ou 'N', indica se È pra corrigir o desconto da prevenda
+    // 'S' ou 'N', indica se √© pra corrigir o desconto da prevenda
     vPergunta_Apos_Comprovante: String[01];
     vAutoPecas: String[01]; // define o ramo de atividade do cliente
     vProdutoPromocao: string[01];
     vTeste_do_Financeiro: string[01];
     // 0 --> testa no caixa 1 --> testa na pre-venda
     usarLoteValidade: Boolean;
-    // define se o cliente ir· selecionar lote e validade p os produtos
+    // define se o cliente ir√° selecionar lote e validade p os produtos
     vConferencia: Boolean;
     vAtacarejo: Boolean;
     vTipoCodigoBalanca: Integer;
-    // define se o codigo de barras est· com o preÁo ou peso do produto
+    // define se o codigo de barras est√° com o pre√ßo ou peso do produto
     liberaDigitacaoLancamento: Boolean;
     vLancamento: string; // usada na nota de transferencia da PBFARMA
     quantidade: Real;
     codigoClienteAtual: string;
-    // cÛdigo do cliente selecionado para a prevenda ou orÁamento
+    // c√≥digo do cliente selecionado para a prevenda ou or√ßamento
     tipoClienteAtual: string;
-    // tipo do cliente selecionado para a prevenda ou orÁamento
+    // tipo do cliente selecionado para a prevenda ou or√ßamento
     vqtd: Integer;
     vcdVendedor, vnmVendedor: string;
     nrOrcamentoDia: Integer;
@@ -830,7 +832,7 @@ type
     Procedure UltimoLancamento;
     function UltimoLancamentoBloqueandoTabela(qry: TADOQuery): string;
     Function SystemDateTime(tDate: TDateTime; tTime: TDateTime): Boolean;
-    // atualizar a data do sistema com o banco de dados, para as m·quinas que perdem a hora
+    // atualizar a data do sistema com o banco de dados, para as m√°quinas que perdem a hora
     Function TestaRestricao: Boolean;
     function LimpaEdtDesconto: string;
     Procedure ImprimeComprovante(valor: Integer);
@@ -927,29 +929,29 @@ var
   vSalvar: Integer;
   vdtBloqueio: Integer;
   TestaFinanceiroNaConfirmacao: Boolean;
-  // Indica se o teste do financeiro do cliente È feito na confirmaÁ„o ou na escolha do cliente
+  // Indica se o teste do financeiro do cliente √© feito na confirma√ß√£o ou na escolha do cliente
   // vData_Banco         : String[10];
   vTime: String[10];
   vEscolheProduto: String[01];
-  // verifica se abilita a combo da descriÁ„o dos produtos
+  // verifica se abilita a combo da descri√ß√£o dos produtos
   vEstqNegativo: String[01]; // vender com estoque negativo ?
   vSelecionaForma: String[01]; // Selciona forma de pagamento.
   vSelecionaCFOP: String[01]; // Selciona CFOP por item
   vJurosCobrado: Real;
   // porcentagem padrao de juros cobrado & pega a porcentagem padrao de desconto
   vMudaPreco, vTipoImp: String[01];
-  // saso seja S o preÁo de venda È liberado para alteraÁ„o no ato da venda
+  // saso seja S o pre√ßo de venda √© liberado para altera√ß√£o no ato da venda
   vcdOperador: String[04]; // codigo na tabela de pessoa do funcionario que loga
   vFlag: String[02];
   Ativa: Char;
   DTipoImp: TIniFile;
-  // Vari·veis que ir„o cahamar o support.ini para achar o tipo de impress„o
+  // Vari√°veis que ir√£o cahamar o support.ini para achar o tipo de impress√£o
   vOpcoes: String[01];
   vTesteFinanceiro: String[01];
-  // vari·vel para testar se j· foi testado o financeiro
+  // vari√°vel para testar se j√° foi testado o financeiro
   vAtacadoVarejo: String[01];
   cdTabelaPreco : integer;
-  // vari·vel para saber se o cliente È de atacado ou varejo
+  // vari√°vel para saber se o cliente √© de atacado ou varejo
   vMemo: TMemo;
   vTipoDescontoNF: string[1];
   vPAFECF: Boolean;
@@ -966,13 +968,13 @@ var
   vOcultaDesconto: string[1];
   // nao mostra valor com desconto na impressao da pre-venda
   vendereco: String[100]; // Pega o nome da empresa do Support.ini
-  vOrcamento: String[01]; // indica se È uma prevenda ou orcamento
+  vOrcamento: String[01]; // indica se √© uma prevenda ou orcamento
   vConferencia: Boolean;
   vMatrizFilial: String[50];
   duasVias40Colunas: String[1];
   // indica se limpa ou nao limpa a grid ao trocar de cliente
-  vLimiteCasasPreco: Integer; // diz a partir de quantas casas decimais do preÁo
-  // ser· usada a m·scara antiga do edtdesconto "com cinco casas decimais"
+  vLimiteCasasPreco: Integer; // diz a partir de quantas casas decimais do pre√ßo
+  // ser√° usada a m√°scara antiga do edtdesconto "com cinco casas decimais"
   vlTotalAnterior: Real;
   vExibir: Boolean;
   vOcultaReferenciaNaImpressao: Boolean;
@@ -981,12 +983,12 @@ var
   vBloquearDescontoAtacado: Boolean;
   vBloqueiaDesconto: Boolean;
   vDestacarItensOcupados: Boolean;
-  // indica se os itens que s„o insuficientes para atender todas as prevendas em aberto
+  // indica se os itens que s√£o insuficientes para atender todas as prevendas em aberto
   // devem ficar destacados em amarelo...
   vUsuarioProxy: string; // usuario usado na dll se tiver
   vSenhaProxy: string; // senha usado na dll se tiver
   restricaoFinanceira: TListaRestricao;
-  indiceClienteAtual: Integer; // Ìndice do cliente atual
+  indiceClienteAtual: Integer; // √≠ndice do cliente atual
   vLogoMarca: TStream;
   vIpFTP, vDsUsuarioFTP, vDsSenhaFTP: String;
 
@@ -1028,7 +1030,7 @@ begin
     temCOD_FTP := RecordCount > 0;
     Close;
 
-    // agora verifico se o codigo do cliente do ftp est· vazio
+    // agora verifico se o codigo do cliente do ftp est√° vazio
     sql.Text := 'select cdCodFTP from configuracao';
     open;
     campoCodFTPPreenchido := FieldByName('cdCodFTP').AsString <> '';
@@ -1046,7 +1048,7 @@ begin
     temCampoCriptografado := RecordCount > 0;
     Close;
     if not temCampoCriptografado then
-    begin // crio a o campo do registro e flag de emergÍncia nas configuraÁıes
+    begin // crio a o campo do registro e flag de emerg√™ncia nas configura√ß√µes
       sql.Text :=
         'ALTER TABLE CONFIGURACAO ADD dsRegistro varchar(50), Emergencia bit, EmTolerancia bit ';
       ExecSQL;
@@ -1075,7 +1077,7 @@ begin
   chaveInvalida := false;
   with qry do
   begin
-    // valido a chave que foi registrada que est· no campo dsRegistro com o cnpj do banco
+    // valido a chave que foi registrada que est√° no campo dsRegistro com o cnpj do banco
     sql.Text := 'select dsRegistro, dsCGC from configuracao';
     open;
     if FieldByName('dsRegistro').AsString <> '' then
@@ -1120,9 +1122,9 @@ begin
   with qry do
   begin
 
-    // funcao que retorna a data de expriraÁ„o
+    // funcao que retorna a data de exprira√ß√£o
     DtExpiracao := DateToStr(RetornaDtExpira);
-    // se a data de expiraÁ„o faltar menos de 5 dias coloco o flag para sim - true = 1
+    // se a data de expira√ß√£o faltar menos de 5 dias coloco o flag para sim - true = 1
     if ((strtodate(DtExpiracao) - strtodate(vData_Banco)) < 5) then
     begin
       sql.Text := 'update configuracao set EmTolerancia = 1';
@@ -1174,7 +1176,7 @@ var
   diaDaSemana: String;
 begin
   diaDaSemana := RetirarAcento(UpperCase(NomeDoDia(strtodate(vData_Banco))));
-  // n„o solicita a chave no fim de semana
+  // n√£o solicita a chave no fim de semana
   if ((diaDaSemana = 'SABADO') or (diaDaSemana = 'DOMINGO') or
     (isFeriadoNacional(strtodate(vData_Banco)))) then
     exit;
@@ -1184,7 +1186,7 @@ begin
   // testa se a data do sistema esta de acordo com a de brasilia
   // testa se o cliente esta registrado
   // testa se o cliente esta no periodo de tolerancia
-  // libera quado o cliente n„o for registrado e a data for correta e tiver prazo de uso do sistema
+  // libera quado o cliente n√£o for registrado e a data for correta e tiver prazo de uso do sistema
 
   // verifico nessa thread se possui o arquivo de bloqueio, se existir entra na thread pra pegar a chave nova
   threadBloqueio := threadBlockChave.Create(false);
@@ -1195,10 +1197,10 @@ begin
     Sleep(500);
   end;
 
-  // esse caso È para os clientes que tinha a chave antiga.
+  // esse caso √© para os clientes que tinha a chave antiga.
   // if (bloquearChave = false) then begin
-  // if (DataSequencial_Maior_DataBrasilia) then //qd colocar a chave nos outros mÛdulos, tirar essa linha
-  // exit;                                     //e tirar todas as comparaÁıes do nrVlAvulso e comparar sÛ com a data da chave
+  // if (DataSequencial_Maior_DataBrasilia) then //qd colocar a chave nos outros m√≥dulos, tirar essa linha
+  // exit;                                     //e tirar todas as compara√ß√µes do nrVlAvulso e comparar s√≥ com a data da chave
   // end;
 
   // se o cliente for novo ou a chave for invalida abro form de registro
@@ -1209,15 +1211,15 @@ begin
     FrmRegistroSistema.ShowModal;
   end
   else
-  begin // o cliente possui todos os requisitos e j· foi registrado, ent„o busco a chave via internet
-    // verifico se est· no prazo para baixar o arquivo do ftp para n„o fazer isso toda vez q entrar no sistema
+  begin // o cliente possui todos os requisitos e j√° foi registrado, ent√£o busco a chave via internet
+    // verifico se est√° no prazo para baixar o arquivo do ftp para n√£o fazer isso toda vez q entrar no sistema
     if (EmTolerancia) or (FrmPrincipal.bloquearChave) then
     begin
       qry := TADOQuery.Create(nil);
       qry.Connection := DModulo.Conexao;
       qry.sql.Text := 'select top 1 cdCodFtp from configuracao';
       qry.open;
-      // crio a thread pra baixar o arquivo e executar as validaÁıes
+      // crio a thread pra baixar o arquivo e executar as valida√ß√µes
       threadChave := ThreadChaveAcesso.Create(True);
       threadChave.FreeOnTerminate := True;
       threadChave.vCodFtp := qry.FieldByName('cdCodFtp').AsString;
@@ -1231,13 +1233,13 @@ function TFrmPrincipalPreVenda.PERMISSAO(vTag: String; vColuna: String;
   exibirMsgAcessoNegado: Boolean = True): String;
 var
   i: Integer;
-  vOpcao: Integer; // Opc„o passada como par‚metro convertida para forma integer
-  vPermissao: String[1]; // vari·vel de permiss„o S ou N
+  vOpcao: Integer; // Opc√£o passada como par√¢metro convertida para forma integer
+  vPermissao: String[1]; // vari√°vel de permiss√£o S ou N
 begin
-  // N„o realiza montagem de vetor com opÁıes de acesso de super usu·rio
+  // N√£o realiza montagem de vetor com op√ß√µes de acesso de super usu√°rio
   // Coluna 0 = Acesso Total; 2 = Novo; 3 = Altera; 4 = Exclui; 5 = Visualiza; 6 = Imprime
   // 7 = Baixa
-  // Atribui a OpÁ„o a uma vari·vel integer
+  // Atribui a Op√ß√£o a uma vari√°vel integer
   vPermissao := '';
   if vColuna = '0' then
     vOpcao := 0;
@@ -1253,10 +1255,10 @@ begin
     vOpcao := 5;
   if vColuna = 'B' then
     vOpcao := 6;
-  // Localiza opÁ„o no vetor
+  // Localiza op√ß√£o no vetor
   for i := 1 to 900 do
-  begin // 60 n˙mero m·ximo de opÁıes do menu
-    // Acesso Total na opÁ„o
+  begin // 60 n√∫mero m√°ximo de op√ß√µes do menu
+    // Acesso Total na op√ß√£o
     case vOpcao of
       0:
         if vVetor[i, 1] = vTag then
@@ -1287,17 +1289,17 @@ begin
     if exibirMsgAcessoNegado then
     begin
       // Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      Application.MessageBox('Necess·rio permiss„o para executar esta aÁ„o.',
+      Application.MessageBox('Necess√°rio permiss√£o para executar esta a√ß√£o.',
         'Aviso', mb_Ok + mb_IconExclamation);
-      // MessageDlg ('Necess·rio permiss„o para executar esta aÁ„o.', mtInformation, [mbOk],0);
+      // MessageDlg ('Necess√°rio permiss√£o para executar esta a√ß√£o.', mtInformation, [mbOk],0);
     end;
   end; // else
   PERMISSAO := vPermissao;
 end;
 
-{ ConfiguraÁ„o que pede senha para liberar desconto para cliente atacado }
+{ Configura√ß√£o que pede senha para liberar desconto para cliente atacado }
 function bloquearDescontoAtacado: Boolean;
-// indica se È permitido dar desconto a cliente Atacado
+// indica se √© permitido dar desconto a cliente Atacado
 var
   query: TADOQuery;
   resultado: Boolean;
@@ -1361,7 +1363,7 @@ begin
     temCOD_FTP := RecordCount > 0;
     Close;
 
-    // agora verifico se o codigo do cliente do ftp est· vazio
+    // agora verifico se o codigo do cliente do ftp est√° vazio
     sql.Text := 'select cdCodFTP from configuracao WITH (NOLOCK)';
     open;
     campoCodFTPPreenchido := FieldByName('cdCodFTP').AsString <> '';
@@ -1379,7 +1381,7 @@ begin
     temCampoCriptografado := RecordCount > 0;
     Close;
     if not temCampoCriptografado then
-    begin // crio a o campo do registro e flag de emergÍncia nas configuraÁıes
+    begin // crio a o campo do registro e flag de emerg√™ncia nas configura√ß√µes
       sql.Text :=
         'ALTER TABLE CONFIGURACAO ADD dsRegistro varchar(50), Emergencia bit, EmTolerancia bit ';
       ExecSQL;
@@ -1400,9 +1402,9 @@ function LiberadoUso: Boolean;
 var
   DtExpiracao: string;
 begin
-  // funcao que retorna a data de expriraÁ„o
+  // funcao que retorna a data de exprira√ß√£o
   DtExpiracao := DateToStr(RetornaDtExpira);
-  // se a data de expiraÁ„o faltar menos de 10 dias coloco o flag para sim - true = 1
+  // se a data de expira√ß√£o faltar menos de 10 dias coloco o flag para sim - true = 1
   if ((strtodate(DtExpiracao) - strtodate(vData_Banco)) >= 0) then
     LiberadoUso := True
   else
@@ -1421,19 +1423,19 @@ begin
   if (clienteRegistrado = false) then
   begin
     Application.MessageBox('Acesse o sistema saef para atualizar a chave.',
-      'AtenÁ„o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+      'Aten√ß√£o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
   end
   else if (LiberadoUso = false) then
   begin
-    // n„o solicita a chave no fim de semana
+    // n√£o solicita a chave no fim de semana
     if ((diaDaSemana = 'SABADO') or (diaDaSemana = 'DOMINGO') or
       (isFeriadoNacional(strtodate(vData_Banco)))) then
       podeUsar := True
     else
     begin
       Application.MessageBox
-        (Pchar('A chave de acesso ao sistema est· expirada. ' + #13#10 +
-        'Acesse o sistema saef para atualizar sua chave'), 'AtenÁ„o',
+        (Pchar('A chave de acesso ao sistema est√° expirada. ' + #13#10 +
+        'Acesse o sistema saef para atualizar sua chave'), 'Aten√ß√£o',
         mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       podeUsar := false;
     end;
@@ -1443,7 +1445,7 @@ begin
   result := podeUsar;
 end;
 
-{ Retorna o Ìndice da coluna na dbGrid que tem o fieldName }
+{ Retorna o √≠ndice da coluna na dbGrid que tem o fieldName }
 function IndexOfDbGrid(dbGrid: TDBGrid; fieldName: string): Integer;
 var
   i: Integer;
@@ -1461,7 +1463,7 @@ begin
   result := resultado;
 end;
 
-{ Troca as colunas de lugar, a coluna de Ìndice "fromIndex" troca de lugar com a coluna de Ìndice "toIndex" }
+{ Troca as colunas de lugar, a coluna de √≠ndice "fromIndex" troca de lugar com a coluna de √≠ndice "toIndex" }
 procedure trocarColunaDbGrid(dbGrid: TDBGrid;
   FromIndex, ToIndex, cwidth: Integer);
 var
@@ -1698,7 +1700,7 @@ end;
 // end;
 // end;
 
-{ ...Esta procedure redimensiona o form de acordo com a resoluÁ„o do monitor,
+{ ...Esta procedure redimensiona o form de acordo com a resolu√ß√£o do monitor,
   ... }
 procedure TFrmPrincipalPreVenda.adicionarLocalEntrega;
 var
@@ -1847,7 +1849,7 @@ begin
       DescItemAtual := StrToFloatDef(EdtDesconto.Text, 0);
       if DescItemAtual > DescMax then
       begin
-        MessageDlg('Desconto M·x definido pelo fornecedor È de ' +
+        MessageDlg('Desconto M√°x definido pelo fornecedor √© de ' +
           FormatFloat('0.00', DescMax) + '% no produto: ' + prevenda.itens[i]
           .descricao, mtWarning, [mbOK], 0);
         resultado := True;
@@ -1864,7 +1866,7 @@ begin
   if prevenda.itens.Count = 0 then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('N„o foi lanÁado nenhum item para essa prÈ venda \ orÁamento!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para essa pr√© venda \ or√ßamento!',
       mtWarning, [mbOK], 0);
     EdtDesconto.Text := '0,00000';
     EdtSubTotal.Text := '0,00';
@@ -1901,7 +1903,7 @@ begin
   { if (ValidaComputadorSupport = false) then begin
     nomePC := pubNomeComputador;
     diaDaSemana := UpperCase(NomeDoDia(StrToDate(vData_Banco)));
-    //n„o solicita a chave no fim de semana
+    //n√£o solicita a chave no fim de semana
     if ((diaDaSemana = 'SABADO') or (diaDaSemana = 'DOMINGO') or (isFeriadoNacional(StrToDate(vData_Banco)))) then exit;
     if ((nomePC <> 'DESENV01') and (nomePC <> 'DESENV02') and (nomePC <> 'DESENV03') and (nomePC <> 'KENN-PC') and
     (nomePC <> 'DESENV04') and (nomePC <> 'NOTEANDRE') and (nomePC <> 'ADM01')  and (nomePC <> 'DESENV05')  and
@@ -1947,7 +1949,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.FormCreate(Sender: TObject);
 var
-  DIniQtd: TIniFile; // Vari·veis que ir„o cahamar o support.ini
+  DIniQtd: TIniFile; // Vari√°veis que ir√£o cahamar o support.ini
   wndHandle: THandle;
   wndClass: array [0 .. 50] of Char;
   ThreadConexao3: TConexao3;
@@ -1962,7 +1964,7 @@ begin
   if GetLastError = ERROR_ALREADY_EXISTS then
   begin
     if MessageDlg
-      ('Este programa j· est· sendo executado neste computador! Deseja abrir outra pre-venda mesmo assim?',
+      ('Este programa j√° est√° sendo executado neste computador! Deseja abrir outra pre-venda mesmo assim?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     begin
       Application.Terminate; // TESTE
@@ -2038,7 +2040,7 @@ begin
     vGerarSintegra := FieldByName('campo_54').AsString = 'S';
     // campo booleano que recebe TRUE se o campo_39 = '1'
     vPAFECF := false;
-    // n„o existe mais essa configuraÁ„o   FieldByName('Campo_39').AsString = '1';
+    // n√£o existe mais essa configura√ß√£o   FieldByName('Campo_39').AsString = '1';
     vDestacarItensOcupados := FieldByName('pv_destaque').AsString = 'S';
     vEmpresa := FieldByName('CAMPO_19').AsString;
     lblMensagem.caption := FieldByName('Campo_20').AsString; // letreiro
@@ -2047,7 +2049,7 @@ begin
     vImpressao_40 := FieldByName('CAMPO_23').AsString;
     // define se o cliente imprime prevenda no formularo pequeno de 40 colunas
     vTipoImpressora := FieldByName('CAMPO_24').AsString;
-    // define se È para imprimir na porta lpt1 ou USB
+    // define se √© para imprimir na porta lpt1 ou USB
     vPreVisualizarPrevenda := FieldByName('PreVisualizarPrevenda').AsString;
     vTeste_do_Financeiro := FieldByName('CAMPO_16').AsString;
     // 0 --> testa no caixa 1 --> testa na pre-venda
@@ -2081,7 +2083,7 @@ begin
     Close;
     if Length(SubstituiTexto(lblMensagem.caption, ' ')) = 0 then
       lblMensagem.caption :=
-        'Digite uma mensagem para os vendedores no SAEF.  Menu UTILITARIOS>GERENCIAIS>CONFIGURA«√O DO SISTEMA';
+        'Digite uma mensagem para os vendedores no SAEF.  Menu UTILITARIOS>GERENCIAIS>CONFIGURA√á√ÉO DO SISTEMA';
   end;
   { abaixo se nao for do grupo LITORAL eu oculto a referencia da prevenda }
   if (FrmPrincipalPreVenda.dsCGC <> '11334892000183') and
@@ -2101,7 +2103,7 @@ begin
   listarUsuariosNaCombo;
   LiberaCopia;
   if UpperCase(vEmpresa) = 'MEGA' then
-  // Mega mÛveis pediu para n„o permitir desmarcar o checkBox1. Protocolo 33228
+  // Mega m√≥veis pediu para n√£o permitir desmarcar o checkBox1. Protocolo 33228
     CheckBox1.Visible := false;
   if (UpperCase(vEmpresa) = 'LIBEL') then
   begin
@@ -2170,8 +2172,8 @@ begin
     (UpperCase(vEmpresa) = 'PROAUTO') then
   begin
     CriarIniSQLDeposito;
-    Label12.caption := 'DEP”SITO';
-    Label14.caption := 'DISPONÕVEL';
+    Label12.caption := 'DEP√ìSITO';
+    Label14.caption := 'DISPON√çVEL';
     Label16.caption := 'OFICINA';
     Label11.Visible := True;
     Shape1.Visible := True;
@@ -2186,7 +2188,7 @@ begin
   then
   begin
     CriarIniSQLDeposito;
-    Label12.caption := 'DEP”SITO';
+    Label12.caption := 'DEP√ìSITO';
     Label14.caption := 'LOJA';
     Label16.caption := 'OFICINA';
     Label11.Visible := True;
@@ -2198,7 +2200,7 @@ begin
     Shape2.Visible := True;
     Shape3.Visible := True;
     Relatriodecontagem1.Visible := True;
-    // exibe a opÁ„o de relatorio de contagem de estoque
+    // exibe a op√ß√£o de relatorio de contagem de estoque
   end;
   // if (UpperCase(vEmpresa) = 'AUTOCAR') or (UpperCase(vEmpresa) = 'REIDOFIAT') or
   // (UpperCase(vEmpresa) = 'TOPLINE') or (UpperCase(vEmpresa) = 'TREVO') or
@@ -2206,23 +2208,23 @@ begin
   // then
   if TNEGLoja.getExibirQuantidadesReservadasPreVenda then
   begin
-    Label14.caption := 'PR…-VENDA';
+    Label14.caption := 'PR√â-VENDA';
     Label14.Visible := True;
     Shape3.Visible := True;
     Label15.Visible := True;
     Label15.Hint :=
-      'Quantidades do item selecionado que est„o em outras prÈ-vendas';
+      'Quantidades do item selecionado que est√£o em outras pr√©-vendas';
     LblReserva.Hint :=
-      'Quantidades do item selecionado que est„o em Ordens de ServiÁo';
+      'Quantidades do item selecionado que est√£o em Ordens de Servi√ßo';
     Shape2.Visible := True;
     Label16.caption := 'RESERVA';
     if (UpperCase(vEmpresa) = 'PTINTAS_') then
     begin
       Shape1.height := Shape3.height;
       Label11.Top := Label13.Top;
-      Label12.caption := 'DISPONÕVEL';
+      Label12.caption := 'DISPON√çVEL';
       Label13.Visible := false;
-      Label11.Hint := 'Quantidade disponÌvel';
+      Label11.Hint := 'Quantidade dispon√≠vel';
       Label12.Hint := '';
     end
     else
@@ -2237,16 +2239,16 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') then
   begin
     CriarIniSQLDeposito;
-    Label16.caption := 'DEP”SITO';
-    LblReserva.Hint := 'Quantidades do item selecionado no estoque do depÛsito';
+    Label16.caption := 'DEP√ìSITO';
+    LblReserva.Hint := 'Quantidades do item selecionado no estoque do dep√≥sito';
     // LblReserva.Visible    := True;
     // Label16.Visible    := True;
     // shape2.visible := True;
     // shape3.visible := True;
   end;
-  Label11.Hint := 'InformaÁıes do pedido de compra do item selecionado';
+  Label11.Hint := 'Informa√ß√µes do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
-    'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de prÈ-vendas';
+    'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de pr√©-vendas';
   if (UpperCase(vEmpresa) = 'LLPARAFUSOS') or
     (UpperCase(vEmpresa) = 'BIJOUARTS') or
     (UpperCase(vEmpresa) = 'BIJOUARTSOS214') or
@@ -2288,7 +2290,7 @@ begin
   then
   begin
     FrmPrincipalPreVenda.caption :=
-      'Impress„o de etiquetas             <<<  Support Inform·tica  79  3214-5161  >>>';
+      'Impress√£o de etiquetas             <<<  Support Inform√°tica  79  3214-5161  >>>';
     Label29.caption := 'Operador';
     Label2.Visible := false;
     Label3.Visible := false;
@@ -2337,30 +2339,30 @@ begin
   end;
   CmbConsulta.Items := RadioGroup1.Items;
   { With CmbConsulta do begin // adiciona itens a combo de consulta
-    Items.Add('CÛdigo');
-    Items.Add('DescriÁ„o');
-    Items.Add('CÛdigo de Barras');
-    Items.Add('ReferÍncia');
+    Items.Add('C√≥digo');
+    Items.Add('Descri√ß√£o');
+    Items.Add('C√≥digo de Barras');
+    Items.Add('Refer√™ncia');
     Items.Add('Grupo');
-    Items.Add('DescriÁ„o Contendo');
+    Items.Add('Descri√ß√£o Contendo');
     ItemIndex := 1;
     end; }
   With SgDados do
   begin
-    Cells[0, 0] := 'CÛdigo';
-    Cells[1, 0] := 'DescriÁ„o';
+    Cells[0, 0] := 'C√≥digo';
+    Cells[1, 0] := 'Descri√ß√£o';
     Cells[2, 0] := 'Quantidade';
     Cells[3, 0] := 'P.Venda';
     Cells[4, 0] := 'Total';
     Cells[5, 0] := 'Prateleira';
-    Cells[6, 0] := 'CÛd. Barras';
-    Cells[7, 0] := 'ReferÍncia';
+    Cells[6, 0] := 'C√≥d. Barras';
+    Cells[7, 0] := 'Refer√™ncia';
     Cells[8, 0] := 'Estoque';
     Cells[9, 0] := 'Valor';
     Cells[10,0] := 'Und';
     Cells[11,0] := 'CFOP';
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
-      Cells[12, 0] := 'Fator de Convers„o'
+      Cells[12, 0] := 'Fator de Convers√£o'
     else
       ColWidths[12] := -1;
     if usarLoteValidade = True then
@@ -2412,7 +2414,7 @@ begin
   EdtSubTotal.ReadOnly := True;
   Application.OnMessage := ProcessaMsg;
   UltimoLancamento;
-  vAtacadoVarejo := 'V'; // j· comeÁa recebendo o valor de varejo
+  vAtacadoVarejo := 'V'; // j√° come√ßa recebendo o valor de varejo
   cdTabelaPreco := 0;
   vDescontoCliente := 0;
   // EdtCdCliente.Text := '1';
@@ -2438,7 +2440,7 @@ begin
     // ThreadConexao3.Resume;
   end;
 
-  { if  screen.width = 1360  then // Testa se for 1360 essa resoluÁ„o È usada para monitor wide screen
+  { if  screen.width = 1360  then // Testa se for 1360 essa resolu√ß√£o √© usada para monitor wide screen
     AjustaForm
     else begin
     scaled := true;
@@ -2476,7 +2478,7 @@ begin
 //    EdtQtd.ReadOnly := True;
 //    EdtQtd.Text := '1,00';
 //  end;
-  self.caption := 'PrÈ Venda - Support Inform·tica  79 3302-5707  supportinformatica.net  CompilaÁ„o: ' + GetVersaoArq;
+  self.caption := 'Pr√© Venda - Support Inform√°tica  79 3302-5707  supportinformatica.net  Compila√ß√£o: ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
 end;
@@ -2484,7 +2486,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.FormShow(Sender: TObject);
 begin
-  { Oculta a opcao de Orcamento das opÁıes }
+  { Oculta a opcao de Orcamento das op√ß√µes }
   if OcultarOrcamentoNaPreVenda then
   begin
     RgOpcoes.Controls[2].Visible := false;
@@ -2686,8 +2688,8 @@ begin
     begin
       if Existe_Numero_Orcamento(EdtLancto.Text) then
       begin
-        Application.MessageBox('J· existe um lanÁamento com esse n˙mero!',
-          'AtenÁ„o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+        Application.MessageBox('J√° existe um lan√ßamento com esse n√∫mero!',
+          'Aten√ß√£o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         BtnConfirmar.Enabled := True;
         Alteraquantidade1.Enabled := True;
         result := false;
@@ -2702,7 +2704,7 @@ begin
   if EdtUsuario.Text = '' then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Informe o usu·rio e senha do vendedor!', mtWarning, [mbOK], 0);
+    MessageDlg('Informe o usu√°rio e senha do vendedor!', mtWarning, [mbOK], 0);
     cbxUsuario.Setfocus;
     Application.OnMessage := ProcessaMsg;
     BtnConfirmar.Enabled := True;
@@ -2720,7 +2722,7 @@ procedure TFrmPrincipalPreVenda.LucronaVenda1Click(Sender: TObject);
 begin
   if (PERMISSAO('856', 'V',true) = 'N') then exit;
   if StrToFloat(EdtSubTotal.Text) <= 0 then begin
-    MessageDlg('Esta prÈ-venda n„o possui itens lanÁados.', mtWarning, [mbOK], 0);
+    MessageDlg('Esta pr√©-venda n√£o possui itens lan√ßados.', mtWarning, [mbOK], 0);
     exit;
   end;
   frmLucroVenda := TfrmLucroVenda.Create(nil);
@@ -2777,13 +2779,13 @@ begin
     if (UpperCase(vEmpresa) = 'GAMA') and (trim(EdtCFOP.Text) = '') and EdtCFOP.Visible then
     begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      ShowMessage('O campo CFOP È obrigatÛrio!');
+      ShowMessage('O campo CFOP √© obrigat√≥rio!');
       EdtCFOP.SelectAll;
       EdtCFOP.Setfocus;
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       exit;
     end;
-    // na mega moveis e na bela vista, eles n„o querem q os vendedores vendam "Meio" produto, ou 0,5 sof·. kenneth
+    // na mega moveis e na bela vista, eles n√£o querem q os vendedores vendam "Meio" produto, ou 0,5 sof√°. kenneth
     if ((UpperCase(vEmpresa) = 'MEGA') or (UpperCase(vEmpresa) = 'BELAVISTA'))
     then
     begin
@@ -2805,18 +2807,18 @@ begin
     else
     begin
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
-      // … obrigatÛrio escolher o cliente antes de lanÁar produtos
+      // √â obrigat√≥rio escolher o cliente antes de lan√ßar produtos
       if (CbxCliente.ItemIndex < 0) then
       // and (UPPERCASE(vEmpresa) <> 'CAMARATUBA')
       begin
-        Application.MessageBox('Informe o cliente', 'AtenÁ„o',
+        Application.MessageBox('Informe o cliente', 'Aten√ß√£o',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         LimparPesquisa;
         CbxCliente.Setfocus;
         exit;
       end
       else if not EdtPreco.Enabled then
-      // caso o usuario n„o possa alterar o preÁo dos produtos, lanÁa na grid agora
+      // caso o usuario n√£o possa alterar o pre√ßo dos produtos, lan√ßa na grid agora
         EnviaProdutos;
     end;
   except
@@ -2851,25 +2853,25 @@ begin
   precoTotal := StrToCurrDef(FormatFloatQ(vCasasQtd, StrToFloatDef(EdtQtd.Text, 0)), 0) * StrToFloatDef(FormatFloatQ(vCasasPreco, StrToFloatDef(EdtPreco.Text, 0)), 0);
   if precoTotal < 0.01 then
   begin
-    Application.MessageBox(Pchar('Quantidade multiplicada pelo preÁo de venda È menor que 0,01 (um centavo).'),
-      'AtenÁ„o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+    Application.MessageBox(Pchar('Quantidade multiplicada pelo pre√ßo de venda √© menor que 0,01 (um centavo).'),
+      'Aten√ß√£o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     Application.OnMessage := ProcessaMsg;
     EdtQtd.SelectAll;
     EdtQtd.Setfocus;
     exit;
   end;
   if (DisponivelNoEstoque(StrToFloatDef(EdtQtd.Text, 0),
-    ADOSPConsulta.FieldByName('CÛdigo').AsInteger, false, tipoCompos,
+    ADOSPConsulta.FieldByName('C√≥digo').AsInteger, false, tipoCompos,
     qtdDisponivel)) or (chkbxEtiqueta.Checked = True) then
   begin
     if Frac(StrToFloatDef(EdtQtd.Text, 1)) <> 0 then
-    begin // a quantidade est· fracionada, logo, termos que testar se o produto esta definido como fracionado
+    begin // a quantidade est√° fracionada, logo, termos que testar se o produto esta definido como fracionado
       if not validarQuantidadeItemFracionado
         (ADOSPConsulta.FieldByName('UNIDADE').AsString) then
       begin
         Application.OnMessage := NaoProcessaMsg;
         ShowMessage
-          ('Incompatibilidade na quantidade digitada.  Este Ìtem n„o pode ser vendido fracionado!');
+          ('Incompatibilidade na quantidade digitada.  Este √≠tem n√£o pode ser vendido fracionado!');
         Application.OnMessage := ProcessaMsg;
         EdtQtd.SelectAll;
         EdtQtd.Setfocus;
@@ -2880,7 +2882,7 @@ begin
     if usarLoteValidade = True then
     begin
       LancaProdutosHospitalar;
-      setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+      setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
         .AsInteger));
     end
     else
@@ -2892,7 +2894,7 @@ begin
     EdtDescUnit.Text := '0,00';
     CbLote.ItemIndex := -1;
     // EdtConsulta.Clear;
-    if (RadioGroup1.ItemIndex = 4) and (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balanÁa
+    if (RadioGroup1.ItemIndex = 4) and (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balan√ßa
       edtconsulta.clear;
     EdtConsulta.Setfocus;
     vDescricaoGama := '';
@@ -2918,10 +2920,10 @@ begin
   begin
     Application.OnMessage := NaoProcessaMsg;
     // if tipoCompos <> composto then
-    MessageDlg('Quantidade disponÌvel no estoque --> ' + FormatFloat('0.00',
+    MessageDlg('Quantidade dispon√≠vel no estoque --> ' + FormatFloat('0.00',
       qtdDisponivel) + ' ', mtWarning, [mbOK], 0);
     // else
-    // MessageDlg('Quantidade disponÌvel no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(ADOSPConsulta.FieldByName('CÛdigo').AsInteger)) + ' ', mtWarning,[mbOk],0);
+    // MessageDlg('Quantidade dispon√≠vel no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(ADOSPConsulta.FieldByName('C√≥digo').AsInteger)) + ' ', mtWarning,[mbOk],0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
 //    if (UpperCase(vEmpresa) <> 'DELUC') then
@@ -2940,17 +2942,17 @@ var
   lote, cdFabricanteLote: string;
 begin
   quantidade := StrToFloatDef(EdtQtd.Text, 0);
-  cdProduto := ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+  cdProduto := ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
   if CbLote.Items.Count > 0 then // SE TIVER LOTE
   begin
     if CbLote.ItemIndex = -1 then
-    // SE O USU¡RIO N√O ESCOLHER UM LOTE, LAN«AMOS AUTOMATICAMENTE OS MAIS ANTIGOS
+    // SE O USU√ÅRIO N√ÉO ESCOLHER UM LOTE, LAN√áAMOS AUTOMATICAMENTE OS MAIS ANTIGOS
     begin
       qtdTotalLote := QuantidadeDispEmLotes(cdProduto);
       if quantidade > qtdTotalLote then
-      // SE N√O HOUVER QUANTIDADE SUFICIENTE CANCELO O LAN«AMENTO
+      // SE N√ÉO HOUVER QUANTIDADE SUFICIENTE CANCELO O LAN√áAMENTO
       begin
-        MessageDlg('Quantidade disponÌvel em lotes: ' + FormatFloat('0.000',
+        MessageDlg('Quantidade dispon√≠vel em lotes: ' + FormatFloat('0.000',
           qtdTotalLote) + ' ', mtWarning, [mbOK], 0);
         EdtConsulta.Setfocus;
         EdtConsulta.Clear;
@@ -2964,20 +2966,20 @@ begin
       begin
         sequencialLote := 0;
         while quantidade > 0 do
-        // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE J¡ EST√O ORDENADOS PELA VALIDADE;
+        // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE J√Å EST√ÉO ORDENADOS PELA VALIDADE;
         begin
           lote := copy_campo(CbLote.Items[sequencialLote], '|', 1);
           cdFabricanteLote := copy_campo(CbLote.Items[sequencialLote], '|', 4);
           qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
             StrToInt(cdFabricanteLote));
 
-          { Se a quantidade de produtos que resta para ser lanÁada for maior que a quantidade disponÌvel no lote lanÁo apenas a quantidade disponÌvel no lote. }
+          { Se a quantidade de produtos que resta para ser lan√ßada for maior que a quantidade dispon√≠vel no lote lan√ßo apenas a quantidade dispon√≠vel no lote. }
           if (quantidade > qtdLoteAtual) then
             qtdLancada := qtdLoteAtual
           else
             qtdLancada := quantidade;
           if qtdLancada > 0 then
-          begin // Se a quantidade a ser lanÁada for maior que zero eu mando pra grid
+          begin // Se a quantidade a ser lan√ßada for maior que zero eu mando pra grid
             LancaProdutos(qtdLancada, lote, cdFabricanteLote);
             quantidade := quantidade - qtdLancada;
           end;
@@ -2985,16 +2987,16 @@ begin
         end;
       end;
     end
-    else // SE O USU¡RIO ESCOLHER UM LOTE, VEJO SE TEM QUANTIDADE SUFICIENTE
+    else // SE O USU√ÅRIO ESCOLHER UM LOTE, VEJO SE TEM QUANTIDADE SUFICIENTE
     begin
       lote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 1);
       cdFabricanteLote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 4);
       qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
         StrToInt(cdFabricanteLote));
       if quantidade > qtdLoteAtual then
-      // SE N√O HOUVER QUANTIDADE SUFICIENTE CANCELO O LAN«AMENTO
+      // SE N√ÉO HOUVER QUANTIDADE SUFICIENTE CANCELO O LAN√áAMENTO
       begin
-        MessageDlg('Quantidade disponÌvel no lote selecionado: ' +
+        MessageDlg('Quantidade dispon√≠vel no lote selecionado: ' +
           FormatFloat('0.000', qtdLoteAtual) + ' ', mtWarning, [mbOK], 0);
         EdtConsulta.Setfocus;
         EdtConsulta.Clear;
@@ -3053,7 +3055,7 @@ begin
 //     and (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES')) then
 //  begin
 //    Application.OnMessage := NaoProcessaMsg;
-//    MessageDlg('Esta prÈ-venda alcanÁou o limite m·ximo de 135 itens!',
+//    MessageDlg('Esta pr√©-venda alcan√ßou o limite m√°ximo de 135 itens!',
 //      mtWarning, [mbOK], 0);
 //    Application.OnMessage := ProcessaMsg;
 //    EdtConsulta.Setfocus;
@@ -3062,7 +3064,7 @@ begin
   if (StrToFloat(edtQtdItens.Text) > 500) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Esta prÈ-venda alcanÁou o limite m·ximo de 500 itens!',
+    MessageDlg('Esta pr√©-venda alcan√ßou o limite m√°ximo de 500 itens!',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     EdtConsulta.Setfocus;
@@ -3079,7 +3081,7 @@ begin
   if ADOSPConsulta.FieldByName('dsAtivo').AsString <> 'S' then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Este produto est· definido no cadastro como inativo!',
+    MessageDlg('Este produto est√° definido no cadastro como inativo!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
@@ -3093,13 +3095,13 @@ begin
   end;
   if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
     CbxAmbiente.Text := InputBox('Digite a data de validade','Data de Validade','');
-  if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('CÛdigo').AsInteger = 20479)) or
+  if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('C√≥digo').AsInteger = 20479)) or
      (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or
      (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
     FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName
-      ('DESCRI«√O').AsString;
+      ('DESCRI√á√ÉO').AsString;
     FrmDescricao.EdtUndCad.Text := ADOSPConsulta.FieldByName('UNIDADE')
       .AsString;
     FrmDescricao.EdtUnidade.Text := ADOSPConsulta.FieldByName
@@ -3119,11 +3121,11 @@ begin
     if vDescricaoGama = '' then
       exit;
   end else if ((UpperCase(vEmpresa) = 'JNUNES') and
-    (ADOSPConsulta.FieldByName('CÛdigo').AsInteger <> 20479)) then
+    (ADOSPConsulta.FieldByName('C√≥digo').AsInteger <> 20479)) then
     FrmPrincipalPreVenda.vDescricaoGama := ADOSPConsulta.FieldByName
-      ('DESCRI«√O').AsString;
+      ('DESCRI√á√ÉO').AsString;
 
-  { TODO -oclaudioo -c : VALIDAR AS QTDS DISPONIVEIS NOS LOTES NA CONFIRMA«√O DA PREVENDA 07/05/2013 11:22:38 }
+  { TODO -oclaudioo -c : VALIDAR AS QTDS DISPONIVEIS NOS LOTES NA CONFIRMA√á√ÉO DA PREVENDA 07/05/2013 11:22:38 }
   if ADOSPConsulta.FieldByName('Preco').AsFloat > ADOSPConsulta.FieldByName
     ('Valor').AsFloat then
     vProdutoPromocao := 'S';
@@ -3135,13 +3137,13 @@ begin
   begin
     for L := 0 to prevenda.itens.Count - 1 do
     begin
-      if (prevenda.itens[L].cdProduto = ADOSPConsulta.FieldByName('CÛdigo').AsInteger) and (not item_cancelado(L)) then
+      if (prevenda.itens[L].cdProduto = ADOSPConsulta.FieldByName('C√≥digo').AsInteger) and (not item_cancelado(L)) then
       begin
         if (usarLoteValidade = True) then
-        // "hospitalar" permite lanÁar o produto mais de uma vez, por causa dos lotes
+        // "hospitalar" permite lan√ßar o produto mais de uma vez, por causa dos lotes
         begin
           Application.OnMessage := NaoProcessaMsg;
-          MessageDlg('Aviso: Esse produto j· est· incluso nessa prÈ-venda!',
+          MessageDlg('Aviso: Esse produto j√° est√° incluso nessa pr√©-venda!',
             mtInformation, [mbOK], 0);
           Application.OnMessage := ProcessaMsg;
           Break;
@@ -3149,7 +3151,7 @@ begin
         else
         begin
           Application.OnMessage := NaoProcessaMsg;
-          MessageDlg('Esse produto j· est· incluso nessa prÈ-venda!', mtWarning,
+          MessageDlg('Esse produto j√° est√° incluso nessa pr√©-venda!', mtWarning,
             [mbOK], 0);
 //          if (UpperCase(vEmpresa) <> 'DELUC') then
             EdtQtd.Text := '0,00';
@@ -3177,7 +3179,7 @@ begin
 
   if chkbxEtiqueta.Checked = false then
   begin
-    produtoLancado := TNEGProduto.buscarProduto(ADOSPConsulta.FieldByName('CÛdigo').AsInteger);
+    produtoLancado := TNEGProduto.buscarProduto(ADOSPConsulta.FieldByName('C√≥digo').AsInteger);
     if vDescontoClienteAuto then
     begin
       valorItemBruto := (StrToCurr(EdtPreco.Text)*100)/(100-(TNEGCliente.getDescontoPercentual(StrToIntDef(EdtCdCliente.Text, 0))));
@@ -3199,14 +3201,14 @@ begin
     produtoLancado.destruir;
   end;
 
-//  if TNEGLoja.getBloquearVendaAbaixoDoCustoFinal then  // o q importa È a senha
+//  if TNEGLoja.getBloquearVendaAbaixoDoCustoFinal then  // o q importa √© a senha
 //  begin
     if abaixoDoCustoFinal and (StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsCurrency)) =
-       StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsCurrency))) then  // produto em promoÁ„o n„o È p analisar o preÁo de venda abaixo do preÁo de custo
+       StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsCurrency))) then  // produto em promo√ß√£o n√£o √© p analisar o pre√ßo de venda abaixo do pre√ßo de custo
     begin
       if (possuiPermissaoVenderAbaixoDoCusto = True) or FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text, EdtUsuario.Text, False) then
       begin
-        Application.MessageBox(Pchar('O custo final desse item È R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+        Application.MessageBox(Pchar('O custo final desse item √© R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
         possuiPermissaoVenderAbaixoDoCusto := True;
       end else
       begin
@@ -3214,8 +3216,8 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
-          FrmCancelamentoVenda.Caption := 'AtenÁ„o: Venda abaixo do custo final';
-          FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item È R$ '+ custoFinal;
+          FrmCancelamentoVenda.Caption := 'Aten√ß√£o: Venda abaixo do custo final';
+          FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item √© R$ '+ custoFinal;
           FrmCancelamentoVenda.ShowModal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -3237,7 +3239,7 @@ begin
     end;
 //  end else if abaixoDoCustoFinal then
 //  begin
-//    Application.MessageBox(Pchar('O custo final desse item È R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+//    Application.MessageBox(Pchar('O custo final desse item √© R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
 //  end;
   if (trim(EdtDescUnit.Text) <> '') and (StrToFloat(EdtDescUnit.Text) > 0) and
     ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and
@@ -3255,13 +3257,13 @@ begin
     T := Round(quantidade);
   for L := T to Round(quantidade) do
   begin
-    itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('CÛdigo').AsInteger);
+    itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('C√≥digo').AsInteger);
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
        (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194')
     then
       itemPrevenda.descricao := vDescricaoGama;
-    // n„o coloquei no "sen„o" porque a descriÁ„o original j· vem na criaÁ„o do objeto.
+    // n√£o coloquei no "sen√£o" porque a descri√ß√£o original j√° vem na cria√ß√£o do objeto.
 
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
        (UpperCase(vEmpresa) = 'ANADRI') then
@@ -3298,7 +3300,7 @@ begin
     if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
       itemprevenda.prateleira := CbxAmbiente.Text;
     itemPrevenda.codigoBarras := ADOSPConsulta.FieldByName
-      ('C”DIGO_BARRAS').AsString;
+      ('C√ìDIGO_BARRAS').AsString;
     if vSelecionaCFOP = 'S' then
       itemPrevenda.cfop := EdtCFOP.Text;
     if (((StrToFloat(FormatFloatQ(vCasasPreco, StrToFloat(EdtPreco.Text))) >
@@ -3308,7 +3310,7 @@ begin
       ((UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS')) then
     // nao mostrar desconto na venda
     begin
-      // Se houver aumento no preÁo, esse ser· o novo preÁo bruto (claudio 18-09-2015)
+      // Se houver aumento no pre√ßo, esse ser√° o novo pre√ßo bruto (claudio 18-09-2015)
       itemPrevenda.vlPreco := StrToFloat(EdtPreco.Text);
       itemPrevenda.vlAtacado := StrToFloat(EdtPreco.Text);
       itemPrevenda.precoBruto := StrToFloat(EdtPreco.Text);
@@ -3339,7 +3341,7 @@ begin
       end;
     end;
 
-    // INDICO NO ARRAY SE ESSA LINHA FICAR¡ DESTACADA OU N√O
+    // INDICO NO ARRAY SE ESSA LINHA FICAR√Å DESTACADA OU N√ÉO
     if (vDestacarItensOcupados) and
       ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
       (RgOpcoes.ItemIndex = 1))) then
@@ -3387,7 +3389,7 @@ end;
 // qtdTotalLote:= strToFloatDef(copy_campo(Label23.Caption,':',2),0);
 // if quantidade > qtdTotalLote then
 // begin
-// MessageDlg('Quantidade disponÌvel em lotes --> ' + formatFloat('0.000',qtdTotalLote) + ' ',mtWarning,[mbOk],0);
+// MessageDlg('Quantidade dispon√≠vel em lotes --> ' + formatFloat('0.000',qtdTotalLote) + ' ',mtWarning,[mbOk],0);
 // EdtConsulta.SetFocus;
 // EdtConsulta.Clear;
 // EdtQtd.Text           := '0,000';
@@ -3398,13 +3400,13 @@ end;
 // exit;
 // end;
 // sequencialLote:= 0;
-// while quantidade > 0 do // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE J¡ EST√O ORDENADOS PELA VALIDADE;
+// while quantidade > 0 do // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE J√Å EST√ÉO ORDENADOS PELA VALIDADE;
 // begin
 // lote:= copy_campo(cbLote.Items[sequencialLote],'|',1);
-// cdproduto:= ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+// cdproduto:= ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
 // qtdLoteAtual:= QuantidadeDispNoLote(lote, cdproduto);
-// if (quantidade > qtdLoteAtual) then  // SE A QUANTIDADE DE PRODUTOS QUE RESTA PARA SER LAN«ADA FOR MAIOR QUE A QUANTIDADE DISPONÕVEL NO LOTE
-// qtdLancada:= qtdLoteAtual        // EU LAN«O APENAS A QUANTIDADE DISPONÕVEL NO LOTE
+// if (quantidade > qtdLoteAtual) then  // SE A QUANTIDADE DE PRODUTOS QUE RESTA PARA SER LAN√áADA FOR MAIOR QUE A QUANTIDADE DISPON√çVEL NO LOTE
+// qtdLancada:= qtdLoteAtual        // EU LAN√áO APENAS A QUANTIDADE DISPON√çVEL NO LOTE
 // else
 // qtdLancada:= quantidade;
 // LancaProdutos(qtdLancada, lote);
@@ -3421,10 +3423,10 @@ var
   email: string;
   envioOK: Boolean;
 begin
-  // Imprime o OrÁamento
-  // vIdent := InputBox('Aos Cuidados de','Digite o nome da pessoa respons·vel pelo orÁamento!', '');
+  // Imprime o Or√ßamento
+  // vIdent := InputBox('Aos Cuidados de','Digite o nome da pessoa respons√°vel pelo or√ßamento!', '');
   FrmRel_Orcamento_Novo := TFrmRel_Orcamento_Novo.Create(self);
-  // Cria o formul·rio
+  // Cria o formul√°rio
   With FrmRel_Orcamento_Novo.ADOqryreldados do
   begin
     sql.Text :=
@@ -3474,7 +3476,7 @@ begin
     FrmRel_Orcamento_Novo.QRMemo1.Lines.Add
       (FrmRel_Orcamento_Novo.ADOqryreldados.FieldByName('Observacao').AsString)
   else
-    FrmRel_Orcamento_Novo.QRMemo1.Lines.Add('(Nenhuma observaÁ„o informada)');
+    FrmRel_Orcamento_Novo.QRMemo1.Lines.Add('(Nenhuma observa√ß√£o informada)');
   // FrmRel_Orcamento.RLImage1.Picture.LoadFromFile('Logo_Cupom.jpg');
   // FrmRelOrcamentos.QryCliente.Active := True;
 
@@ -3489,7 +3491,7 @@ begin
     Repeat
       FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
       email := InputBox('Envio por e-mail',
-        'Digite o e-mail do destinat·rio', '');
+        'Digite o e-mail do destinat√°rio', '');
       if trim(email) <> '' then
       begin
         FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
@@ -3525,7 +3527,7 @@ var
 begin
   resultado := True;
   if (vEstqNegativo <> 'S') or (UpperCase(vEmpresa) = 'ODONTO') then
-  begin // n„o vende com estoque negativo
+  begin // n√£o vende com estoque negativo
     Produto := TNEGProduto.buscarProduto(cdProduto);
     if Produto.dsTIPO_ITEM = '09' then begin
       result := resultado;
@@ -3539,7 +3541,7 @@ begin
     end;
     estoqueFisico := getNrQtdReal(DModulo.Conexao.ConnectionString, cdProduto);
 
-    { nesse caso, a nova quantidade j· est· em [vqtd] }
+    { nesse caso, a nova quantidade j√° est√° em [vqtd] }
     if alterandoQuantidadeNaGrid then
     begin
       estoqueNecessario := vqtd;
@@ -3552,7 +3554,7 @@ begin
     end;
     // produto:= TNEGProduto.buscarProduto(cdproduto);
     tipoComposicao := Produto.tipoComposicao;
-    // claudio, quanddo for orÁamento n„o importa o estoque
+    // claudio, quanddo for or√ßamento n√£o importa o estoque
     if (RgOpcoes.ItemIndex <> 2) and (vOrcamento <> 'O') and
       (((estoqueFisico < estoqueNecessario) and (Produto.tipoComposicao <>
       composto)) or ((Produto.tipoComposicao = composto) and
@@ -3584,7 +3586,7 @@ end;
 // begin
 // if StrToFloat(edtQtdItens.text) >= 135 then begin
 // Application.OnMessage := NaoProcessaMsg;
-// MessageDlg('Esta prÈ-venda alcanÁou o limite m·ximo de 135 itens!',mtWarning,[mbOk],0);
+// MessageDlg('Esta pr√©-venda alcan√ßou o limite m√°ximo de 135 itens!',mtWarning,[mbOk],0);
 // Application.OnMessage := ProcessaMsg;
 // EdtConsulta.SetFocus;
 // Exit;
@@ -3595,7 +3597,7 @@ end;
 // end;
 // if ADOSPConsulta.FieldByName('dsAtivo').AsString <> 'S' then begin
 // Application.OnMessage := NaoProcessaMsg;
-// MessageDlg('Este produto est· definido no cadastro como inativo!',mtWarning,[mbOk],0);
+// MessageDlg('Este produto est√° definido no cadastro como inativo!',mtWarning,[mbOk],0);
 // EdtConsulta.SetFocus;
 // EdtConsulta.Clear;
 // EdtQtd.Text           := '0,000';
@@ -3607,7 +3609,7 @@ end;
 // end;
 // if (UpperCase(vEmpresa) = 'GAMA') then begin
 // FrmDescricao := TFrmDescricao.create(FrmDescricao);
-// FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName('DESCRI«√O').AsString;
+// FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName('DESCRI√á√ÉO').AsString;
 // FrmDescricao.EdtUndCad.Text := ADOSPConsulta.FieldByName('UNIDADE').AsString;
 // FrmDescricao.EdtUnidade.Text := ADOSPConsulta.FieldByName('UNIDADE').AsString;
 // FrmDescricao.EdtQtd.Text := FormatFloat('0.00000', StrToFloatDef(EdtQtd.Text,0));
@@ -3630,14 +3632,14 @@ end;
 /// /    else
 /// /      lote:= copy_campo(cblote.Text,'|',1);
 /// /  end;
-// // ESSA VALIDA«√O AGORA SER¡ FEITA NA HORA DE CONFIRMAR
+// // ESSA VALIDA√á√ÉO AGORA SER√Å FEITA NA HORA DE CONFIRMAR
 // // VERIFICA QUANTIDADE DO PRODUTO NO LOTE
 /// /  if (Trim(lote)<>'') and (RgOpcoes.ItemIndex <> 2) then begin
-/// /    QtdLote:= QuantidadeDispNoLote(lote, ADOSPConsulta.FieldByName('CÛdigo').AsInteger);
+/// /    QtdLote:= QuantidadeDispNoLote(lote, ADOSPConsulta.FieldByName('C√≥digo').AsInteger);
 /// /    if quantidade > QtdLote then
 /// /    begin
 /// /      Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-/// /      MessageDlg('Quantidade disponÌvel no lote --> ' + formatFloat('0.000',QtdLote) + ' ',mtWarning,[mbOk],0)
+/// /      MessageDlg('Quantidade dispon√≠vel no lote --> ' + formatFloat('0.000',QtdLote) + ' ',mtWarning,[mbOk],0)
 /// /      EdtConsulta.SetFocus;
 /// /      EdtConsulta.Clear;
 /// /      EdtQtd.Text           := '0,000';
@@ -3648,19 +3650,19 @@ end;
 /// /      exit;
 /// /    end;
 /// /  end;
-// { TODO -oclaudioo -c : VALIDAR AS QTDS DISPONIVEIS NOS LOTES NA CONFIRMA«√O DA PREVENDA 07/05/2013 11:22:38 }
+// { TODO -oclaudioo -c : VALIDAR AS QTDS DISPONIVEIS NOS LOTES NA CONFIRMA√á√ÉO DA PREVENDA 07/05/2013 11:22:38 }
 // if ADOSPConsulta.FieldByName('Preco').AsFloat > ADOSPConsulta.FieldByName('Valor').AsFloat then
 // vProdutoPromocao := 'S';
-// if (vAutoPecas <> 'H') then // "hospitalar" permite lanÁar o produto mais de uma vez, por causa dos lotes
+// if (vAutoPecas <> 'H') then // "hospitalar" permite lan√ßar o produto mais de uma vez, por causa dos lotes
 // for L := 1 to SgDados.RowCount - 1 do begin
-// if (SgDados.Cells[0,l] = ADOSPConsulta.FieldByName('CÛdigo').AsString)
+// if (SgDados.Cells[0,l] = ADOSPConsulta.FieldByName('C√≥digo').AsString)
 // and (UpperCase(vEmpresa) <> 'DISCABOS')
 // and (UpperCase(vEmpresa) <> 'FRANGOPRENSADO')
 // and (not item_cancelado(L))
 // then
 // begin
 // Application.OnMessage := NaoProcessaMsg;
-// MessageDlg('Esse produto j· est· incluso nessa prÈ-venda!',mtWarning,[mbOk],0);
+// MessageDlg('Esse produto j√° est√° incluso nessa pr√©-venda!',mtWarning,[mbOk],0);
 // EdtQtd.Text      := '0,00';
 // EdtDescUnit.Text := '0,00';
 // setLabel23(0);
@@ -3689,7 +3691,7 @@ end;
 // qtd := Trunc(StrToFloat(EdtQtd.Text));
 // if qtd = 0 then
 // qtd := 1;
-// for t:=1 to qtd do begin //ESSE LACO DE REPETICAO … UTILIZADO SOMENTE PELA KARIB
+// for t:=1 to qtd do begin //ESSE LACO DE REPETICAO √â UTILIZADO SOMENTE PELA KARIB
 // With SgDados do begin
 // if RowCount >= 2 then
 // RowCount := RowCount + 1;
@@ -3700,11 +3702,11 @@ end;
 // Break;
 // end;
 // end;
-// Cells[0,Row] := ADOSPConsulta.FieldByName('CÛdigo').AsString;     // codigo
+// Cells[0,Row] := ADOSPConsulta.FieldByName('C√≥digo').AsString;     // codigo
 // if (UpperCase(vEmpresa) = 'GAMA') then
 // Cells[1,Row] := vDescricaoGama
 // else
-// Cells[1,Row] := ADOSPConsulta.FieldByName('DescriÁ„o').AsString;    // descriÁ„o
+// Cells[1,Row] := ADOSPConsulta.FieldByName('Descri√ß√£o').AsString;    // descri√ß√£o
 // if (UpperCase(vEmpresa) = 'GAMA') then
 // Cells[10,Row] := vUndGama
 // else
@@ -3742,8 +3744,8 @@ end;
 // * StrToFloat(Cells[3,Row]));
 // end; // case
 // Cells[5,Row]  := ADOSPConsulta.FieldByName('Prateleira').AsString;
-// Cells[6,Row]  := ADOSPConsulta.FieldByName('C”DIGO_BARRAS').AsString;
-// Cells[7,Row]  := ADOSPConsulta.FieldByName('ReferÍncia').AsString;
+// Cells[6,Row]  := ADOSPConsulta.FieldByName('C√ìDIGO_BARRAS').AsString;
+// Cells[7,Row]  := ADOSPConsulta.FieldByName('Refer√™ncia').AsString;
 // Cells[8,Row]  := ADOSPConsulta.FieldByName('Estoque').AsString;
 // if vSelecionaCFOP = 'S' then
 // Cells[11,Row]  := EdtCFOP.Text;   // cfop por item thiago
@@ -3841,10 +3843,10 @@ begin
     not(EdtSubTotal.Focused) then
     DesativarCamposDescontoTotal;
   if vCasasPreco > vLimiteCasasPreco then
-  // Se a quantidade de casas do preÁo for maior que dois,
+  // Se a quantidade de casas do pre√ßo for maior que dois,
     EdtDesconto.Text := FormatFloat('0.000000', StrToFloatDef(EdtDesconto.Text,
-      0)) // o Edtdesconto fica com a formataÁ„o antiga.
-  else // sen„o fica com duas casas decimais
+      0)) // o Edtdesconto fica com a formata√ß√£o antiga.
+  else // sen√£o fica com duas casas decimais
     EdtDesconto.Text := FormatFloat('0.00', StrToFloatDef(EdtDesconto.Text, 0));
   if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and (vAtacadoVarejo = 'A') then
   // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
@@ -3852,7 +3854,7 @@ begin
     if vBloquearDescontoAtacado = True then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto para clientes atacado est· bloqueado.', mtWarning,
+      MessageDlg('Desconto para clientes atacado est√° bloqueado.', mtWarning,
         [mbOK], 0);
       EdtDesconto.Text := '0,00';
       EdtDesconto.SelectAll;
@@ -3868,7 +3870,7 @@ begin
     if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto j· È autom·tico para clientes de credi·rio.',
+      MessageDlg('Desconto j√° √© autom√°tico para clientes de credi√°rio.',
         mtWarning, [mbOK], 0);
       EdtDesconto.Text := '0,00';
       EdtDesconto.SelectAll;
@@ -3883,7 +3885,7 @@ begin
   // (UpperCase(vEmpresa) = 'CAMARATUBA')or
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Desconto j· È autom·tico para este cliente.', mtWarning,
+    MessageDlg('Desconto j√° √© autom√°tico para este cliente.', mtWarning,
       [mbOK], 0);
     EdtDesconto.Text := '0,00';
     EdtDesconto.SelectAll;
@@ -3929,7 +3931,7 @@ begin
       ((StrtoFloat(FormatFloat('0.00',StrToFloatDef(EdtDesconto.Text, 0))) - vPorcDesconto) > 0.01)) and
       (PERMISSAO('615', 'V',false) = 'N')) OR ((StrToFloat(EdtDesconto.Text) > 0) and
       (bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')) OR
-      (((StrToFloat(EdtDesconto.Text)) > 0) and (PERMISSAO('613', 'V',false) = 'N')) then // usu·rio n„o tem permiss„o para dar desconto atÈ o limite
+      (((StrToFloat(EdtDesconto.Text)) > 0) and (PERMISSAO('613', 'V',false) = 'N')) then // usu√°rio n√£o tem permiss√£o para dar desconto at√© o limite
     begin
       if (StrToCurrDef(EdtDesconto.Text, 0) > 0) and (liberouVenda = False) and
          (StrToCurrDef(EdtDesconto.Text, 0) <= vPorcDesconto) and
@@ -3946,7 +3948,7 @@ begin
           EdtUsuario.Text, False)) then
         begin
           Application.MessageBox(Pchar('Vendendo abaixo do custo final'),
-            'AtenÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+            'Aten√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
           possuiPermissaoVenderAbaixoDoCusto := False;
         end
         else
@@ -3987,7 +3989,7 @@ begin
       if (possuiPermissaoVenderAbaixoDoCusto = True) or (FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text,
         EdtUsuario.Text, False)) then
       begin
-        Application.MessageBox(Pchar('Vendendo abaixo do custo final'), 'AtenÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+        Application.MessageBox(Pchar('Vendendo abaixo do custo final'), 'Aten√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
       end else
       begin
         try
@@ -4012,7 +4014,7 @@ begin
     end
   end;
 
-  // sÛ È permitido aplicar desconto nos itens que n„o est„o em promoÁ„o
+  // s√≥ √© permitido aplicar desconto nos itens que n√£o est√£o em promo√ß√£o
   vlBruto := 0;
   vlLiquido := 0;
   vlLiquidoItemReal := 0;
@@ -4156,7 +4158,7 @@ procedure TFrmPrincipalPreVenda.BtnCancelarClick(Sender: TObject);
 var
   query: TADOQuery;
 begin
-  if MessageDlg('Cancelar esta prÈ-venda?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg('Cancelar esta pr√©-venda?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
     // Limpar_Tela;
     Cancelar;
@@ -4169,14 +4171,14 @@ begin
   end;
   query := TADOQuery.Create(self);
   query.Connection := DModulo.Conexao;
-  With query do // Pegar a obs da prÈ-venda
+  With query do // Pegar a obs da pr√©-venda
   begin
     sql.Text := 'Select campo_20 From Configuracao WITH (NOLOCK)';
     open;
     lblMensagem.caption := FieldByName('Campo_20').AsString;
     if Length(SubstituiTexto(lblMensagem.caption, ' ')) = 0 then
       lblMensagem.caption :=
-        'Digite uma mensagem para os vendedores no SAEF. Menu UTILITARIOS>GERENCIAIS>CONFIGURA«√O DO SISTEMA';
+        'Digite uma mensagem para os vendedores no SAEF. Menu UTILITARIOS>GERENCIAIS>CONFIGURA√á√ÉO DO SISTEMA';
     Close;
   end;
   FreeAndNil(query);
@@ -4243,7 +4245,7 @@ begin
     SgDados.Cells[14, i] := ADOQryProcura.FieldByName('cdAmbiente').AsString;
     SgDados.Cells[15, i] := ADOQryProcura.FieldByName('dsAmbiente').AsString;
   end;
-  // INDICO NO ARRAY SE ESSA LINHA FICAR¡ DESTACADA OU N√O
+  // INDICO NO ARRAY SE ESSA LINHA FICAR√Å DESTACADA OU N√ÉO
   if (vDestacarItensOcupados) and
     ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
     (RgOpcoes.ItemIndex = 1))) then
@@ -4367,15 +4369,15 @@ begin
         if (vOrcamento = 'N') and (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1)
         then
         begin
-          MessageDlg('O Produto de cÛdigo ' + ADOQryProduto.FieldByName
-            ('cdProduto').AsString + ' est· com a quantidade ' +
+          MessageDlg('O Produto de c√≥digo ' + ADOQryProduto.FieldByName
+            ('cdProduto').AsString + ' est√° com a quantidade ' +
             FormatFloat('0.00', ADOQryProduto.FieldByName('nrqtdreal').AsFloat)
-            + ' disponÌvel em estoque.' + #13 + #13 +
-            'Portanto, ser· excluÌdo deste orÁamento!', mtWarning, [mbOK], 0);
+            + ' dispon√≠vel em estoque.' + #13 + #13 +
+            'Portanto, ser√° exclu√≠do deste or√ßamento!', mtWarning, [mbOK], 0);
           edtQtdItens.Text :=
             FormatFloat('0', StrToFloat(edtQtdItens.Text) - 1);
-          { if Messagedlg('O Produto de cÛdigo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est· com '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
-            ' em estoque, portanto, n„o est· com quantidade suficiente para venda!' + #13 +
+          { if Messagedlg('O Produto de c√≥digo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est√° com '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
+            ' em estoque, portanto, n√£o est√° com quantidade suficiente para venda!' + #13 +
             'Deseja adiciona-lo mesmo com a quantidade insuficiente em estoque?'
             ,mtInformation, [mbYes, mbNo], 0) = mrYes then
             AuxiliarLancto(i); }
@@ -4389,13 +4391,13 @@ begin
         (ADOQryProduto.FieldByName('dsTIPO_ITEM').AsString <> '09') then
       begin
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-        MessageDlg('AtenÁ„o! ' + #13 + 'O Produto de cÛdigo ' +
+        MessageDlg('Aten√ß√£o! ' + #13 + 'O Produto de c√≥digo ' +
           ADOQryProduto.FieldByName('cdProduto').AsString +
-          ' est· com a quantidade ' + FormatFloat('0.00',
+          ' est√° com a quantidade ' + FormatFloat('0.00',
           ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
-          ' disponÌvel em estoque.' + #13 + 'Foi Solicitado ' +
+          ' dispon√≠vel em estoque.' + #13 + 'Foi Solicitado ' +
           FormatFloat('0.00', (ADOQryProcura.FieldByName('nrQtd').AsFloat)) +
-          ' item(s) ' + #13 + 'Ser· adicionado na prÈ-venda/orÁamento somente '
+          ' item(s) ' + #13 + 'Ser√° adicionado na pr√©-venda/or√ßamento somente '
           + FormatFloat('0.00', (ADOQryProduto.FieldByName('nrqtdreal').AsFloat)
           ) + ' unidades do produto.', mtWarning, [mbOK], 0);
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -4426,12 +4428,12 @@ end;
 // if (ADOQryProduto.FieldByName('nrqtdreal').AsFloat <= 0) and (vEstqNegativo <> 'S') and (vOrcamento<>'O') then begin
 // Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
 // if (vOrcamento = 'N') and (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1) then begin
-// Messagedlg('O Produto de cÛdigo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est· com a quantidade '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
-// ' disponÌvel em estoque.' + #13 + #13 +
-// 'Portanto, ser· excluÌdo deste orÁamento!',mtWarning, [mbOk], 0);
+// Messagedlg('O Produto de c√≥digo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est√° com a quantidade '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
+// ' dispon√≠vel em estoque.' + #13 + #13 +
+// 'Portanto, ser√° exclu√≠do deste or√ßamento!',mtWarning, [mbOk], 0);
 // edtQtdItens.Text := FormatFloat('0',StrToFloat(edtQtdItens.Text) - 1);
-// {            if Messagedlg('O Produto de cÛdigo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est· com '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
-// ' em estoque, portanto, n„o est· com quantidade suficiente para venda!' + #13 +
+// {            if Messagedlg('O Produto de c√≥digo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est√° com '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
+// ' em estoque, portanto, n√£o est√° com quantidade suficiente para venda!' + #13 +
 // 'Deseja adiciona-lo mesmo com a quantidade insuficiente em estoque?'
 // ,mtInformation, [mbYes, mbNo], 0) = mrYes then
 // AuxiliarLancto(i); }
@@ -4441,11 +4443,11 @@ end;
 // if (ADOQryProcura.FieldByName('nrQtd').AsFloat > ADOQryProduto.FieldByName('nrqtdreal').AsFloat) and (ADOQryProduto.FieldByName('nrqtdreal').AsFloat > 0)
 // and (vEstqNegativo <> 'S') then begin
 // Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-// Messagedlg('AtenÁ„o! '+#13+
-// 'O Produto de cÛdigo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est· com a quantidade '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
-// ' disponÌvel em estoque.' + #13 +
+// Messagedlg('Aten√ß√£o! '+#13+
+// 'O Produto de c√≥digo '+ ADOQryProduto.FieldByName('cdProduto').AsString+' est√° com a quantidade '+ FormatFloat('0.00',ADOQryProduto.FieldByName('nrqtdreal').AsFloat) +
+// ' dispon√≠vel em estoque.' + #13 +
 // 'Foi Solicitado '+ formatFloat('0.00',(ADOQryProcura.FieldByName('nrQtd').AsFloat))+' item(s) '+#13+
-// 'Ser· adicionado na prÈ-venda/orÁamento somente '+ formatFloat('0.00',(ADOQryProduto.FieldByName('nrqtdreal').AsFloat)) +' unidades do produto.' ,mtWarning, [mbOk], 0);
+// 'Ser√° adicionado na pr√©-venda/or√ßamento somente '+ formatFloat('0.00',(ADOQryProduto.FieldByName('nrqtdreal').AsFloat)) +' unidades do produto.' ,mtWarning, [mbOk], 0);
 // Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
 // RemontaSgDados(i);
 // SgDados.RowCount := SgDados.RowCount + 1;
@@ -4503,7 +4505,7 @@ begin
   try
     if chkbxEtiqueta.Checked = True then
     begin
-      MessageDlg('Desmarque a opÁ„o de imprimir etiquetas antes de confirmar.', mtInformation, [mbOK], 0);
+      MessageDlg('Desmarque a op√ß√£o de imprimir etiquetas antes de confirmar.', mtInformation, [mbOK], 0);
       exit;
     end;
     BtnConfirmar.Enabled := false;
@@ -4520,13 +4522,13 @@ begin
       end;
       if ((vOrcamento = 'O') and (RgOpcoes.ItemIndex = 1)) then
         if transformarOrcamentoPrevenda then
-        // Indica que o orcamento agora ir· se tornar uma prevenda
+        // Indica que o orcamento agora ir√° se tornar uma prevenda
           vOrcamento := 'N';
       vTime := getHoraServidor;
       if EdtLancto.Text <> '' then
         DesbloqueiaAlteracaoPreVenda(StrToInt(EdtLancto.Text));
       if (UpperCase(vEmpresa) = 'COPYART') then
-      // se for copy art sempre pergunta o tipo da forraÁ„o dos livros
+      // se for copy art sempre pergunta o tipo da forra√ß√£o dos livros
         Verifica_Livro_Forracao;
 
       if (entregaSelecionadaGrid = False) then
@@ -4535,7 +4537,7 @@ begin
       if (vSelecionaForma = 'S') and (RgOpcoes.ItemIndex <> 3) then
       begin
         // if FrmFormaPag = nil then
-        FrmFormaPag := TFrmFormaPag.Create(self); // Cria o formul·rio
+        FrmFormaPag := TFrmFormaPag.Create(self); // Cria o formul√°rio
         FrmFormaPag.Position := poMainFormCenter;
         if (UpperCase(vEmpresa) = 'JNUNES') and (RgOpcoes.ItemIndex <> 1) then
         begin
@@ -4594,7 +4596,7 @@ begin
     cancelar_item(SgDados.Row); // cancela o item da lista
   CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
   if SgDados.Cells[0, 1] = '' then
-    vProdutoPromocao := ''; // Se sÛ tiver uma linha, limpa o flag da promocao
+    vProdutoPromocao := ''; // Se s√≥ tiver uma linha, limpa o flag da promocao
   existeItemLancadoNaGrid := (SgDados.Cells[0, 1] <> '');
   if (not existeItemLancadoNaGrid) then
     BtnAprazo.Enabled := True;
@@ -4609,7 +4611,7 @@ begin
   cbxEntrega.Text := '';
   cbxEntrega.Visible := False;
   EdtConsulta.Setfocus;
-  setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+  setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
     .AsInteger));
 end;
 
@@ -4643,7 +4645,7 @@ begin
     EdtCdAmbiente.Clear;
 end;
 {
-  Preenche os edits relacionados apÛs o usu·rio alterar o cliente na cbxCliente.
+  Preenche os edits relacionados ap√≥s o usu√°rio alterar o cliente na cbxCliente.
 }
 procedure TFrmPrincipalPreVenda.PreencherCamposDoClienteSetadoNaCombo;
 begin
@@ -4652,7 +4654,7 @@ begin
     ADOQryCliente.open;
     if ADOQryCliente.Locate('cdPessoa', copy_campo(CbxCliente.Text, '|', 2), []) then
     begin
-      Label10.Caption := 'ObservaÁ„o';
+      Label10.Caption := 'Observa√ß√£o';
       EdtCdCliente.Text := ADOQryCliente.FieldByName('cdPessoa').AsString;
       cdTabelaPreco := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
       EdtEndereco.Text := ADOQryCliente.FieldByName('nmLogradouro').AsString;
@@ -4678,10 +4680,10 @@ end;
 
 procedure TFrmPrincipalPreVenda.CbxClienteChange(Sender: TObject);
 begin
-  // if possuiItensLanÁados then
+  // if possuiItensLan√ßados then
   // begin
-  // if Application.MessageBox('Alterar o cliente implica na perda dos produtos lanÁados na prevenda, deseja continuar',
-  // 'ConfirmaÁ„o',MB_ICONEXCLAMATION + Mb_YesNo) = IdYes
+  // if Application.MessageBox('Alterar o cliente implica na perda dos produtos lan√ßados na prevenda, deseja continuar',
+  // 'Confirma√ß√£o',MB_ICONEXCLAMATION + Mb_YesNo) = IdYes
   // then
   // begin
   // limparArrayBoolean(arrayLinhasDestacadas,0,299,False);
@@ -4713,7 +4715,7 @@ begin
     // LblVista.caption  := FormatFloat('0.00',ADOQryCliente.Fieldbyname('vldescVista').AsFloat);
     // LblPrazo.caption  := FormatFloat('0.00',ADOQryCliente.Fieldbyname('vldescPrazo').AsFloat);
     // if rgOpcoes.ItemIndex <> 1 then
-    // if (vAlteraCliente <> 'S') and (RgOpcoes.ItemIndex = 1) then // N IMPORTA O PRE«O DE ATACADO OU VAREJO ENT√O N PRECISA LIMPAR A TELA DOS PRODUTOS    thiago
+    // if (vAlteraCliente <> 'S') and (RgOpcoes.ItemIndex = 1) then // N IMPORTA O PRE√áO DE ATACADO OU VAREJO ENT√ÉO N PRECISA LIMPAR A TELA DOS PRODUTOS    thiago
     // begin
     // LimpaGrid;
     // EdtTotal.Text    := '0,00';
@@ -4779,13 +4781,13 @@ begin
     exit;
   if (UpperCase(vEmpresa) = 'RURALPET') and (CbLote.Items.Count > 0) and (CbLote.ItemIndex = -1) then
   begin
-    MessageDlg('ObrigatÛrio selecionar um lote para esse item.', mtWarning, [mbOK], 0);
+    MessageDlg('Obrigat√≥rio selecionar um lote para esse item.', mtWarning, [mbOK], 0);
     exit;
   end;
   if (CbxCliente.ItemIndex < 0) then
   // and (UPPERCASE(vEmpresa) <> 'CAMARATUBA')
   begin
-    Application.MessageBox('Informe o cliente', 'AtenÁ„o',
+    Application.MessageBox('Informe o cliente', 'Aten√ß√£o',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     LimparPesquisa;
     CbxCliente.Setfocus;
@@ -4837,7 +4839,7 @@ begin
     if vBloquearDescontoAtacado = True then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto para clientes atacado est· bloqueado.', mtWarning,
+      MessageDlg('Desconto para clientes atacado est√° bloqueado.', mtWarning,
         [mbOK], 0);
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
       // ADOSPConsulta.FieldByName('Valor').AsFloat);
@@ -4855,7 +4857,7 @@ begin
     if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto j· È autom·tico para clientes de credi·rio.',
+      MessageDlg('Desconto j√° √© autom√°tico para clientes de credi√°rio.',
         mtWarning, [mbOK], 0);
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
       // ADOSPConsulta.FieldByName('Valor').AsFloat);
@@ -4871,7 +4873,7 @@ begin
     (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Desconto j· È autom·tico para este cliente.', mtWarning, [mbOK], 0);
+    MessageDlg('Desconto j√° √© autom√°tico para este cliente.', mtWarning, [mbOK], 0);
     EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
     // ADOSPConsulta.FieldByName('Valor').AsFloat);
     EdtDescUnit.Text := '0,00';
@@ -4883,12 +4885,12 @@ begin
   if vLimitarDescontoFornecedor then
   begin
     if StrToFloatDef(EdtDescUnit.Text, 0) > GetLimiteDescontoFornecedor
-      (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('CÛdigo').AsInteger) then
+      (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('C√≥digo').AsInteger) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto M·x definido pelo fornecedor È de ' +
+      MessageDlg('Desconto M√°x definido pelo fornecedor √© de ' +
         FormatFloat('0.00', GetLimiteDescontoFornecedor
-        (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('CÛdigo')
+        (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('C√≥digo')
         .AsInteger)) + '%', mtWarning, [mbOK], 0);
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
       // ADOSPConsulta.FieldByName('Valor').AsFloat);
@@ -4900,7 +4902,7 @@ begin
     end else
     begin
       if GetLimiteDescontoFornecedor(StrToInt(EdtCdCliente.Text),
-        ADOSPConsulta.FieldByName('CÛdigo').AsInteger) <> 100 then
+        ADOSPConsulta.FieldByName('C√≥digo').AsInteger) <> 100 then
       begin
         EdtPreco.Text := FormatFloatQ(vCasasPreco, StrToFloat(EdtPreco.Text));
         EnviaProdutos;
@@ -4908,7 +4910,7 @@ begin
       end;
     end;
   end;
-  // N„o pode da desconto num produto em promoÁ„o
+  // N√£o pode da desconto num produto em promo√ß√£o
   // if (UpperCase(vEmpresa) = 'REZENDE') and
   // if (StrToFloat(EdtPreco.Text) < ADOSPConsulta.FieldByName('Valor').AsFloat - 0.1) and ((UPPERCASE(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or (UPPERCASE(vEmpresa) = 'PROAUTO')) then
   if (StrToFloat(EdtPreco.Text) < getValorVendaProduto - 0.1) and
@@ -4918,9 +4920,9 @@ begin
     // if (StrToFloat(EdtDescUnit.text) > 0.1) and ((ADOSPConsulta.FieldByName('dsPromocao').AsString = 'S') or
     // (ADOSPConsulta.FieldByName('dsPromocaoVarejo').AsString = 'S')) then begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    // ShowMessage('Este item encontra-se em promoÁ„o. Portanto n„o È liberado nenhum desconto para o mesmo!');
+    // ShowMessage('Este item encontra-se em promo√ß√£o. Portanto n√£o √© liberado nenhum desconto para o mesmo!');
     ShowMessage
-      ('N„o È possÌvel vender este produto com preÁo menor do que o cadastro!');
+      ('N√£o √© poss√≠vel vender este produto com pre√ßo menor do que o cadastro!');
     EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
     // ADOSPConsulta.FieldByName('Valor').AsFloat);
     EdtDescUnit.Text := '0,00';
@@ -4933,8 +4935,8 @@ begin
   // //if (StrToFloat(EdtDescUnit.text) > 0.1) and ((ADOSPConsulta.FieldByName('dsPromocao').AsString = 'S') or
   // //                                             (ADOSPConsulta.FieldByName('dsPromocaoVarejo').AsString = 'S')) then begin
   // Application.OnMessage :=  FrmPrincipalPreVenda.NaoProcessaMsg;
-  // //ShowMessage('Este item encontra-se em promoÁ„o. Portanto n„o È liberado nenhum desconto para o mesmo!');
-  // Application.messagebox('Desconto n„o permitido: cliente atacado!','AtenÁ„o', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+  // //ShowMessage('Este item encontra-se em promo√ß√£o. Portanto n√£o √© liberado nenhum desconto para o mesmo!');
+  // Application.messagebox('Desconto n√£o permitido: cliente atacado!','Aten√ß√£o', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
   // EdtPreco.Text:= FormatFloat('0.00',ADOSPConsulta.FieldByName('Valor').AsFloat);
   // EdtDescUnit.Text:= '0,00';
   // EdtPreco.SelectAll;
@@ -4942,13 +4944,13 @@ begin
   // Application.OnMessage:=  FrmPrincipalPreVenda.ProcessaMsg;
   // exit;
   // end;
-  // se o produto estiver em promoÁ„o, n„o pode dar desconto por item
+  // se o produto estiver em promo√ß√£o, n√£o pode dar desconto por item
   if ((ADOSPConsultaPRECO.AsCurrency <> ADOSPConsultaVALOR.AsCurrency) and
     (StrToFloat(EdtDescUnit.Text) > 0)) and (UpperCase(vEmpresa) <> 'KADU') then
   begin
     Application.MessageBox
-      (Pchar('N„o È possÌvel dar desconto para um produto que est· em promoÁ„o!'),
-      'AtenÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+      (Pchar('N√£o √© poss√≠vel dar desconto para um produto que est√° em promo√ß√£o!'),
+      'Aten√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
     // ADOSPConsulta.FieldByName('Valor').AsFloat);
     EdtDescUnit.Text := '0,00';
@@ -4966,7 +4968,7 @@ begin
       LiberaVanda;
     end;
   end else
-  begin // existe o desconto no cadastro do cliente E est· configurado para dar o desconto autom·tico E o usu·rio est· tentando dar mais desconto SEM permiss„o
+  begin // existe o desconto no cadastro do cliente E est√° configurado para dar o desconto autom√°tico E o usu√°rio est√° tentando dar mais desconto SEM permiss√£o
 //    if StrToCurrDef(EdtDescUnit.Text, 0) > 0 then
 //      permissao615 := PERMISSAO('615', 'V');
     descontoAcimaLimite :=
@@ -4977,7 +4979,7 @@ begin
       vPorcDesconto))) and (PERMISSAO('615', 'V') = 'N'));
       descontoSemPermissao := (((StrToFloat(EdtDescUnit.Text)) > 0) and
         (PERMISSAO('613', 'V') = 'N'));
-    // usu·rio n„o tem permiss„o para dar desconto atÈ o limite
+    // usu√°rio n√£o tem permiss√£o para dar desconto at√© o limite
     descontoEmClienteAtacado := ((StrToFloat(EdtDescUnit.Text) > 0) and
       (bloquearDescontoAtacado) and (vAtacadoVarejo = 'A') and
       (PERMISSAO('615', 'V') = 'N'));
@@ -5013,7 +5015,7 @@ begin
         (StrToFloat(EdtDescUnit.Text) > 0)) OR
         ((StrToFloat(EdtDescUnit.Text)) > StrToFloat(FormatFloat('0.00',
         vPorcDesconto))) then
-        Application.MessageBox(Pchar('Desconto acima do limite'), 'AtenÁ„o',
+        Application.MessageBox(Pchar('Desconto acima do limite'), 'Aten√ß√£o',
           mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     end;
   end;
@@ -5033,7 +5035,7 @@ var
 begin
   if prevenda = nil then
     exit;
-  // se sÛ tiver um item e o mesmo estiver em promoÁ„o, desabilito o desconto no total
+  // se s√≥ tiver um item e o mesmo estiver em promo√ß√£o, desabilito o desconto no total
   if prevenda.itens.Count = 1 then
   begin
     if prevenda.itens[0].Promocao_desconto_Item = True then
@@ -5048,7 +5050,7 @@ begin
     existeProdutoSemPromocaoEDesconto := false;
     for i := 0 to prevenda.itens.Count - 1 do
     begin
-      // primeiro verifico se o item esta em promocao       //depois verifico se o item n„o teve desconto
+      // primeiro verifico se o item esta em promocao       //depois verifico se o item n√£o teve desconto
       if (prevenda.itens[i].Promocao_desconto_Item = false) and
         (prevenda.itens[i].precoVenda = prevenda.itens[i].precoBruto) then
       begin
@@ -5056,8 +5058,8 @@ begin
         Break;
       end;
     end;
-    // se teve algum produto que n„o est· em promoÁ„o ou nao teve desconto por item ent„o libero o campo de desconto no total
-    // sÛ libero o campo de desconto no total se
+    // se teve algum produto que n√£o est√° em promo√ß√£o ou nao teve desconto por item ent√£o libero o campo de desconto no total
+    // s√≥ libero o campo de desconto no total se
     if ((existeProdutoSemPromocaoEDesconto) and
       ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO') and (UpperCase(vEmpresa) <> 'CAMARATUBA')))
       or (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS') or (UpperCase(vEmpresa) = 'PROAUTO'))
@@ -5074,7 +5076,7 @@ procedure TFrmPrincipalPreVenda.EdtQtdKeyPress(Sender: TObject; var Key: Char);
 var
   Texto: string;
 begin
-  // na mega moveis, eles n„o querem q os vendedores vendam "Meio" produto, ou 0,5 sof·. kenneth
+  // na mega moveis, eles n√£o querem q os vendedores vendam "Meio" produto, ou 0,5 sof√°. kenneth
   if ((UpperCase(vEmpresa) = 'MEGA') or (UpperCase(vEmpresa) = 'BELAVISTA'))
   then
     ValidarInteiro(Key)
@@ -5140,7 +5142,7 @@ begin
   // if (diminuiuTotal) and (bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')  then
   // begin
   // Application.OnMessage:=  FrmPrincipalPreVenda.NaoProcessaMsg;
-  // Application.messagebox('Desconto n„o permitido: cliente atacado!','AtenÁ„o', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+  // Application.messagebox('Desconto n√£o permitido: cliente atacado!','Aten√ß√£o', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
   // EdtSubTotal.Text:= FormatFloat('0.00', vlTotalAnterior);
   // EdtSubTotal.selectAll;
   // EdtSubTotal.setFocus;
@@ -5149,12 +5151,12 @@ begin
   // end;
   if vCasasPreco > vLimiteCasasPreco then
     Recalcula_Desconto
-    // recalcula o valor do desconto sem recalculoar o preÁo com desconto
-    // e sem ajustar o n˙mero de casas decimais
+    // recalcula o valor do desconto sem recalculoar o pre√ßo com desconto
+    // e sem ajustar o n√∫mero de casas decimais
   else
     Corrige_Desconto;
-  // recalcula o desconto % e recalcula o preÁo com desconto,
-  // para n„o dar diferenÁa na hora de puxar no SPDV100 e no CUPOM
+  // recalcula o desconto % e recalcula o pre√ßo com desconto,
+  // para n√£o dar diferen√ßa na hora de puxar no SPDV100 e no CUPOM
   diminuiuTotal := (StrToFloat(FormatFloat('0.00', vlTotalAnterior)) >
     StrToFloat(EdtSubTotal.Text));
   if diminuiuTotal then
@@ -5165,7 +5167,7 @@ begin
       if vBloquearDescontoAtacado = True then
       begin
         Application.OnMessage := NaoProcessaMsg;
-        MessageDlg('Desconto para clientes atacado est· bloqueado.', mtWarning,
+        MessageDlg('Desconto para clientes atacado est√° bloqueado.', mtWarning,
           [mbOK], 0);
         EdtDesconto.Text := '0,00';
         EdtDesconto.SelectAll;
@@ -5181,7 +5183,7 @@ begin
       if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
       begin
         Application.OnMessage := NaoProcessaMsg;
-        MessageDlg('Desconto j· È autom·tico para clientes de credi·rio.',
+        MessageDlg('Desconto j√° √© autom√°tico para clientes de credi√°rio.',
           mtWarning, [mbOK], 0);
         EdtDesconto.Text := '0,00';
         EdtSubTotal.Text := FormatFloat('0.00', vlTotalAnterior);
@@ -5196,7 +5198,7 @@ begin
       (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto j· È autom·tico para este cliente.', mtWarning,
+      MessageDlg('Desconto j√° √© autom√°tico para este cliente.', mtWarning,
         [mbOK], 0);
       EdtDesconto.Text := '0,00';
       EdtSubTotal.Text := FormatFloat('0.00', vlTotalAnterior);
@@ -5238,7 +5240,7 @@ begin
             EdtUsuario.Text, False)) then
           begin
             Application.MessageBox(Pchar('Vendendo abaixo do custo final'),
-              'AtenÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+              'Aten√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
           end
           else
           begin
@@ -5278,7 +5280,7 @@ begin
           EdtUsuario.Text, False)) then
         begin
           Application.MessageBox(Pchar('Vendendo abaixo do custo final'),
-            'AtenÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+            'Aten√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
         end
         else
         begin
@@ -5344,7 +5346,7 @@ begin
   vlProdutos := TNEGPrevenda.GetValorItensSemPromocao(prevenda) +
     GetValorIPIBruto(prevenda);
   vlBruto := vlBruto + GetValorIPIBruto(prevenda);
-  // calculo o valor do desconto em porcentagem somente no valor referente aos produtos que n„o est„o em promoÁ„o
+  // calculo o valor do desconto em porcentagem somente no valor referente aos produtos que n√£o est√£o em promo√ß√£o
   vlDescPorc := 0;
   if vlProdutos > 0 then
     vlDescPorc :=
@@ -5403,7 +5405,7 @@ begin
     varvdesc := (1-(varvlComDesc/varvlSemDesc))*100;
     EdtDesconto.Text := FormatFloat('0.00000',varvdesc);
     end;
-    exit; //Ainda n„o estamos usando essa parte debaixo do cÛdigo
+    exit; //Ainda n√£o estamos usando essa parte debaixo do c√≥digo
     end
     else
     case vCasasPreco of   // preco de venda
@@ -5420,7 +5422,7 @@ procedure TFrmPrincipalPreVenda.Corrige_Desconto;
 var
   vdesconto, vValor_total, vPreco_Desconto: Real;
 begin
-  // atribuo valores ‡s vari·ves que vou usar na procedure para recalcular o juro
+  // atribuo valores √†s vari√°ves que vou usar na procedure para recalcular o juro
   vdesconto := StrToFloat(EdtDesconto.Text);
   vValor_total := StrToFloat(EdtTotal.Text);
   vPreco_Desconto := StrToFloat(EdtSubTotal.Text);
@@ -5441,17 +5443,17 @@ begin
   end;
 end;
 
-// preco_desconto ......: preÁo apÛs o desconto
-// Desconto_Atual ......: vari·vel que vai receber o valor do deconto com duas casas decimais
+// preco_desconto ......: pre√ßo ap√≥s o desconto
+// Desconto_Atual ......: vari√°vel que vai receber o valor do deconto com duas casas decimais
 // Valor_Total .........: Valor total da venda
-// Casas_Decimais_Preco : N˙mero de casas decimais do preÁo de acordo com a configuraÁ„o do saef
+// Casas_Decimais_Preco : N√∫mero de casas decimais do pre√ßo de acordo com a configura√ß√£o do saef
 procedure TFrmPrincipalPreVenda.Gera_Desconto_Correto(var Preco_Desconto: Real;
   var Desconto_Atual: Real; valor_Total: Real; casas_decimais: Integer);
 var
   vdesconto, vPreco, vlBruto, descReal: Real;
   i: Integer;
 begin
-  // sÛ È permitido aplicar desconto nos itens que n„o est„o em promoÁ„o
+  // s√≥ √© permitido aplicar desconto nos itens que n√£o est√£o em promo√ß√£o
   // vlBruto:= 0;
   // for I := 0 to prevenda.itens.Count - 1 do begin
   // if prevenda.itens[i].Promocao_desconto_Item = false then begin
@@ -5467,9 +5469,9 @@ begin
   // arredondo o desconto para duas casas decimais
   vPreco := (1 - vdesconto / 100) * valor_Total;
   if vPreco <> Preco_Desconto then
-  // se o novo preÁo com desconto for diferente do antigo, o antigo sai e fica o novo
-  begin // porque sen„o gera uma diferenÁa quando for recalcular o desconto no SPDV100 ou CUPOM FISCAL
-    Preco_Desconto := vPreco; // atribuo o preÁo recalculado
+  // se o novo pre√ßo com desconto for diferente do antigo, o antigo sai e fica o novo
+  begin // porque sen√£o gera uma diferen√ßa quando for recalcular o desconto no SPDV100 ou CUPOM FISCAL
+    Preco_Desconto := vPreco; // atribuo o pre√ßo recalculado
     Desconto_Atual := vdesconto;
   end;
 end;
@@ -5514,7 +5516,7 @@ begin
         result := Arred;
       end;
   else
-    result := numero; // sen„o estiver entre 1 e 4, n„o arredonda
+    result := numero; // sen√£o estiver entre 1 e 4, n√£o arredonda
   end;
 end;
 
@@ -5557,15 +5559,15 @@ var
   envioOK: Boolean;
   qry: TADOQuery;
 begin
-  // Imprime Somente o OrÁamento
+  // Imprime Somente o Or√ßamento
   if vPAFECF and ((vOrcamento = 'N') or (RgOpcoes.ItemIndex in [0, 4])) then
     exit;
   if vMemo.Text <> '' then
   begin
-    if (UpperCase(vEmpresa) <> 'JNUNES') and (MessageDlg('Imprimir o campo OBSERVA«√O?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
+    if (UpperCase(vEmpresa) <> 'JNUNES') and (MessageDlg('Imprimir o campo OBSERVA√á√ÉO?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
       vMemo.Clear;
   end;
-  FrmRelOrcamentos := TFrmRelOrcamentos.Create(self); // Cria o formul·rio
+  FrmRelOrcamentos := TFrmRelOrcamentos.Create(self); // Cria o formul√°rio
   qry := TADOQuery.Create(nil);
   with qry do
   begin
@@ -5598,7 +5600,7 @@ begin
     FrmRelOrcamentos.QreRota.Visible := True;
     FrmRelOrcamentos.QreRota2.Visible := True;
     FrmRelOrcamentos.RLLinhaProduto.Visible := True;
-    // solicitou para que esses campos n„o aparecam
+    // solicitou para que esses campos n√£o aparecam
 
     FrmRelOrcamentos.RLDBResult3.Visible := False;
     FrmRelOrcamentos.QREPreco.Visible  := False;
@@ -5637,7 +5639,7 @@ begin
   if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
-  // Hiper mÛveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
+  // Hiper m√≥veis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
   begin
     FrmRelOrcamentos.QRLblEmpresa2.caption := 'Cliente';
     FrmRelOrcamentos.QRLabel18.caption := 'Empresa';
@@ -5657,12 +5659,12 @@ begin
   begin
     FrmRelOrcamentos.RLLabel5.caption  := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel13.caption := ''; // 'Validade    Lote';
-    FrmRelOrcamentos.RLLabel24.Caption := 'DescriÁ„o \ Validade \  Lote';
+    FrmRelOrcamentos.RLLabel24.Caption := 'Descri√ß√£o \ Validade \  Lote';
     FrmRelOrcamentos.RLDBText2.AutoSize := True;
     FrmRelOrcamentos.RLDBText2.DataField := 'nrLote';
     FrmRelOrcamentos.RLBand2.height := 27;
     FrmRelOrcamentos.RLDBText2.Top := 13;
-    FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left;;   // ficar· embaixo da descriÁ„o
+    FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left;;   // ficar√° embaixo da descri√ß√£o
     FrmRelOrcamentos.RLDBText2.Alignment := taLeftJustify;
     FrmRelOrcamentos.RlDescricao.width := 362;
     FrmRelOrcamentos.QREDescricao.width := 362;
@@ -5681,7 +5683,7 @@ begin
     Parameters.ParamByName('@CODIGO').Value := EdtCdCliente.Text;
     if (UpperCase(vEmpresa) = 'TRESLEOES') then
       Parameters.ParamByName('@FLAG').Value := 3
-      // SELECT DO ORCAMENTO ORDENANDO OS ITENS PELA DESCRI«√O
+      // SELECT DO ORCAMENTO ORDENANDO OS ITENS PELA DESCRI√á√ÉO
     else
       Parameters.ParamByName('@FLAG').Value := 2;
     // INDICA Q A STORED PROCEDURE RODA PARA SELECT DOS ORCAMENTOS
@@ -5815,42 +5817,42 @@ begin
   if vPAFECF then
   begin
     if RgOpcoes.ItemIndex = 0 then
-      FrmRelOrcamentos.QRLblTitulo2.caption := 'PrÈ-Venda'
+      FrmRelOrcamentos.QRLblTitulo2.caption := 'Pr√©-Venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
-        FrmRelOrcamentos.QRLblTitulo2.caption := 'OrÁamento'
+        FrmRelOrcamentos.QRLblTitulo2.caption := 'Or√ßamento'
       else if vOrcamento = 'N' then
-        FrmRelOrcamentos.QRLblTitulo2.caption := 'PrÈ-Venda'
+        FrmRelOrcamentos.QRLblTitulo2.caption := 'Pr√©-Venda'
     end else if RgOpcoes.ItemIndex = 2 then
-      FrmRelOrcamentos.QRLblTitulo2.caption := 'OrÁamento'
+      FrmRelOrcamentos.QRLblTitulo2.caption := 'Or√ßamento'
     else if RgOpcoes.ItemIndex = 4 then
       FrmRelOrcamentos.QRLblTitulo2.caption := 'Simples Remessa';
   end
   else
   begin
     if RgOpcoes.ItemIndex = 0 then
-      FrmRelOrcamentos.QRLblTitulo.caption := 'PrÈ-Venda'
+      FrmRelOrcamentos.QRLblTitulo.caption := 'Pr√©-Venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
-        FrmRelOrcamentos.QRLblTitulo.caption := 'OrÁamento'
+        FrmRelOrcamentos.QRLblTitulo.caption := 'Or√ßamento'
       else if vOrcamento = 'N' then
-        FrmRelOrcamentos.QRLblTitulo.caption := 'PrÈ-Venda'
+        FrmRelOrcamentos.QRLblTitulo.caption := 'Pr√©-Venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
-      FrmRelOrcamentos.QRLblTitulo.caption := 'OrÁamento'
+      FrmRelOrcamentos.QRLblTitulo.caption := 'Or√ßamento'
     else if RgOpcoes.ItemIndex = 4 then
       FrmRelOrcamentos.QRLblTitulo.caption := 'Simples Remessa';
     if CbPrevisao.Checked = True then
-      FrmRelOrcamentos.QRLblPrevisao.caption := 'Previs„o de Entrega: ' +
+      FrmRelOrcamentos.QRLblPrevisao.caption := 'Previs√£o de Entrega: ' +
         DateToStr(DtLancto.Date)
     else
       FrmRelOrcamentos.QRLblPrevisao.Enabled := false;
   end;
   if (UpperCase(vEmpresa) = 'LLPARAFUSOS') then
   begin
-    FrmRelOrcamentos.QRLblTitulo.caption := 'OrÁamento';
+    FrmRelOrcamentos.QRLblTitulo.caption := 'Or√ßamento';
     FrmRelOrcamentos.QrMdRel.PrintDialog := True;
   end;
   FrmRelOrcamentos.QrlCnpj.caption := 'CNPJ: ' +
@@ -5870,7 +5872,7 @@ begin
         FrmRelOrcamentos.RlblFormaPgto.caption := FrmRelOrcamentos.RlblFormaPgto.caption + ' ' + FrmFormaPag.edtParcelas.Text;
     end;
     4:
-      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: cheque prÈ';
+      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: cheque pr√©';
     5:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: entrada + prazo';
     6:
@@ -5884,11 +5886,11 @@ begin
     12:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Cheque a Vista';
     13:
-      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Cart„o DÈbito';
+      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Cart√£o D√©bito';
     14:
       FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Deposito/Transferencia/Pix';
     15:
-      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Boleto Banc·rio';
+      FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: Boleto Banc√°rio';
   else
     FrmRelOrcamentos.RlblFormaPgto.caption := 'Forma Pgto: a vista';
   end;
@@ -5919,7 +5921,7 @@ begin
       Repeat
         FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
         email := InputBox('Envio por e-mail',
-          'Digite o e-mail do destinat·rio', '');
+          'Digite o e-mail do destinat√°rio', '');
         if trim(email) <> '' then
         begin
           FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
@@ -5969,7 +5971,7 @@ begin
         Repeat
           FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
           email := InputBox('Envio por e-mail',
-            'Digite o e-mail do destinat·rio', '');
+            'Digite o e-mail do destinat√°rio', '');
           if trim(email) <> '' then
           begin
             FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
@@ -6039,11 +6041,11 @@ begin
   if vMemo.Text <> '' then
   begin
     if (UpperCase(vEmpresa) <> 'JNUNES') and
-      (MessageDlg('Imprimir o campo OBSERVA«√O?', mtConfirmation, [mbYes, mbNo],
+      (MessageDlg('Imprimir o campo OBSERVA√á√ÉO?', mtConfirmation, [mbYes, mbNo],
       0) = mrNo) then
       vMemo.Clear;
   end;
-  frmRelOrcamentos40 := TfrmRelOrcamentos40.Create(self); // Cria o formul·rio
+  frmRelOrcamentos40 := TfrmRelOrcamentos40.Create(self); // Cria o formul√°rio
   if TNEGLoja.ImprimirComprovantePreVendaDetalhado = False then
   begin
 //    frmRelOrcamentos40.RLBand2.height := 27;
@@ -6071,7 +6073,7 @@ begin
     Parameters.ParamByName('@CODIGO').Value := EdtCdCliente.Text;
     if (UpperCase(vEmpresa) = 'TRESLEOES') then
       Parameters.ParamByName('@FLAG').Value := 3
-      // SELECT DO ORCAMENTO ORDENANDO OS ITENS PELA DESCRI«√O
+      // SELECT DO ORCAMENTO ORDENANDO OS ITENS PELA DESCRI√á√ÉO
     else
       Parameters.ParamByName('@FLAG').Value := 2;
     // INDICA Q A STORED PROCEDURE RODA PARA SELECT DOS ORCAMENTOS
@@ -6119,16 +6121,16 @@ begin
     frmRelOrcamentos40.AdoQryOrcamento.FieldByName('hrHora').AsString;
   frmRelOrcamentos40.AdoQryOrcamento.Close;
   if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentos40.QRLblTitulo.caption := 'PrÈ-Venda'
+    frmRelOrcamentos40.QRLblTitulo.caption := 'Pr√©-Venda'
   else if RgOpcoes.ItemIndex = 1 then
   begin
     if vOrcamento = 'O' then
-      frmRelOrcamentos40.QRLblTitulo.caption := 'OrÁamento'
+      frmRelOrcamentos40.QRLblTitulo.caption := 'Or√ßamento'
     else if vOrcamento = 'N' then
-      frmRelOrcamentos40.QRLblTitulo.caption := 'PrÈ-Venda'
+      frmRelOrcamentos40.QRLblTitulo.caption := 'Pr√©-Venda'
   end
   else if RgOpcoes.ItemIndex = 2 then
-    frmRelOrcamentos40.QRLblTitulo.caption := 'OrÁamento'
+    frmRelOrcamentos40.QRLblTitulo.caption := 'Or√ßamento'
   else if RgOpcoes.ItemIndex = 4 then
     frmRelOrcamentos40.QRLblTitulo.caption := 'Simples Remessa';
   case valor of
@@ -6142,7 +6144,7 @@ begin
       frmRelOrcamentos40.RlblFormaPgto.caption :=
         'Forma Pgto: cartao parcelado';
     4:
-      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: cheque prÈ';
+      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: cheque pr√©';
     5:
       frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: entrada + prazo';
     6:
@@ -6154,12 +6156,12 @@ begin
     12:
       frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Cheque a Vista';
     13:
-      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Cart„o DÈbito';
+      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Cart√£o D√©bito';
     14:
       frmRelOrcamentos40.RlblFormaPgto.caption :=
         'Forma Pgto: Deposito/Transferencia/Pix';
     15:
-      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Boleto Banc·rio';
+      frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: Boleto Banc√°rio';
   else
     frmRelOrcamentos40.RlblFormaPgto.caption := 'Forma Pgto: a vista';
   end;
@@ -6241,7 +6243,7 @@ var
 begin
   if email = '' then
   begin
-    ShowMessage('Email n„o cadastrado ou n„o informado.');
+    ShowMessage('Email n√£o cadastrado ou n√£o informado.');
     exit; // cliente sem email
   end;
   // criando
@@ -6273,25 +6275,25 @@ begin
   with MSG_XML do
   begin
     if tipo = 'O' then
-      Body.Add('Esta mensagem refere-se ao OrÁamento emitido no dia ' +
+      Body.Add('Esta mensagem refere-se ao Or√ßamento emitido no dia ' +
         FormatDateTime('dd-mm-yyyy', DtLancto.Date))
     else
-      Body.Add('Esta mensagem refere-se a PrÈ-Venda emitida no dia ' +
+      Body.Add('Esta mensagem refere-se a Pr√©-Venda emitida no dia ' +
         FormatDateTime('dd-mm-yyyy', DtLancto.Date));
     // Body.Add('[SUPPORT INFORMATICA LTDA]');
     // Body.add('[04.041.252/0001-10])');
     Body.Add(' ');
     Body.Add(' ');
-    Body.Add('Este e-mail foi enviado automaticamente pelo sistema da SUPPORT INFORM¡TICA LTDA (79)3302-5707');
+    Body.Add('Este e-mail foi enviado automaticamente pelo sistema da SUPPORT INFORM√ÅTICA LTDA (79)3302-5707');
     From.Address := ''; // opcional
     From.Name := TNEGLoja.getRazaoSocialConfiguracao; // opcional
     Recipients.Add;
     Recipients.Items[0].Address := trim(email);
     Recipients.Items[0].Name := ''; // opcional
     if tipo = 'O' then
-      Subject := 'OrÁamento n∞' + numero
+      Subject := 'Or√ßamento n¬∞' + numero
     else
-      Subject := 'PrÈ-Venda n∞' + numero;
+      Subject := 'Pr√©-Venda n¬∞' + numero;
     TIdAttachmentFile.Create(MSG_XML.MessageParts, TFileName(pdf_enviado));
     // Anexo dos arquivos
   end;
@@ -6320,16 +6322,16 @@ var
   i: Integer;
   varQtdItens: Integer;
 begin
-  // Imprime Somente o OrÁamento
+  // Imprime Somente o Or√ßamento
   if vPAFECF and ((vOrcamento = 'N') or (RgOpcoes.ItemIndex = 0)) then
     exit;
   if vMemo.Text <> '' then
   begin
-    if (UpperCase(vEmpresa) <> 'JNUNES') and (MessageDlg('Imprimir o campo OBSERVA«√O?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
+    if (UpperCase(vEmpresa) <> 'JNUNES') and (MessageDlg('Imprimir o campo OBSERVA√á√ÉO?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
       vMemo.Clear;
   end;
   frmRelOrcamentosAmbiente := TFrmRelOrcamentosAmbiente.Create(self);
-  // Cria o formul·rio
+  // Cria o formul√°rio
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
   { if vAutoPecas = 'H' then begin
     frmRelOrcamentosAmbiente.RLLabel5.Caption:= 'Lote';
@@ -6466,29 +6468,29 @@ begin
 
   { if vPAFECF then begin
     if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**PrÈ-Venda**'
+    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Pr√©-Venda**'
     else if RgOpcoes.ItemIndex = 1 then begin
     if vOrcamento = 'O' then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**OrÁamento**'
+    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Or√ßamento**'
     else if vOrcamento = 'N' then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**PrÈ-Venda**'
+    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Pr√©-Venda**'
     end else if RgOpcoes.ItemIndex = 2 then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**OrÁamento**';
+    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Or√ßamento**';
     end else begin
   }
   if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'PrÈ-Venda'
+    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pr√©-Venda'
   else if RgOpcoes.ItemIndex = 1 then
   begin
     if vOrcamento = 'O' then
-      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'OrÁamento'
+      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Or√ßamento'
     else if vOrcamento = 'N' then
-      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'PrÈ-Venda'
+      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pr√©-Venda'
   end
   else if RgOpcoes.ItemIndex = 2 then
-    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'OrÁamento';
+    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Or√ßamento';
   if CbPrevisao.Checked = True then
-    frmRelOrcamentosAmbiente.QRLblPrevisao.caption := 'Previs„o de Entrega: ' +
+    frmRelOrcamentosAmbiente.QRLblPrevisao.caption := 'Previs√£o de Entrega: ' +
       DateToStr(DtLancto.Date)
   else
     frmRelOrcamentosAmbiente.QRLblPrevisao.Enabled := false;
@@ -6510,7 +6512,7 @@ begin
         'Forma Pgto: cartao parcelado';
     4:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
-        'Forma Pgto: cheque prÈ';
+        'Forma Pgto: cheque pr√©';
     5:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
         'Forma Pgto: entrada + prazo';
@@ -6519,13 +6521,13 @@ begin
         'Forma Pgto: entrada + cartao';
     7:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
-        'Forma Pgto: entrada + ch prÈ';
+        'Forma Pgto: entrada + ch pr√©';
     8:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
         'Forma Pgto: Cheque a Vista';
     9:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
-        'Forma Pgto: Cart„o DÈbito';
+        'Forma Pgto: Cart√£o D√©bito';
     10:
       frmRelOrcamentosAmbiente.RlblFormaPgto.caption :=
         'Forma Pgto: Deposito Bancario';
@@ -6573,7 +6575,7 @@ begin
         frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.00000';
       end;
   end; // case
-  // if valor <> 10 then  //sÛ imprime o campo memo se vir a impress„o a partir do formul·rio q solicita forma de pagamento
+  // if valor <> 10 then  //s√≥ imprime o campo memo se vir a impress√£o a partir do formul√°rio q solicita forma de pagamento
   if (vMemo <> nil) then
     frmRelOrcamentosAmbiente.RLMemo1.Lines := vMemo.Lines;
 
@@ -6648,7 +6650,7 @@ begin
   end;
 end;
 
-{$REGION 'Impress„o do orÁamento da PBFARMA'}
+{$REGION 'Impress√£o do or√ßamento da PBFARMA'}
 
 procedure TFrmPrincipalPreVenda.ImprimeOrcamentoPBFARMA
   (indexRadioGroupFormaPgto_: Integer; observacao: string = '');
@@ -6659,15 +6661,15 @@ var
 begin
   // ImprimeOrcamento(indexRadioGroupFormaPgto_);
 
-  // Imprime Somente o OrÁamento
+  // Imprime Somente o Or√ßamento
   if vPAFECF and ((vOrcamento = 'N') or (RgOpcoes.ItemIndex = 0)) then
     exit;
   if vMemo.Text <> '' then
   begin
-    if MessageDlg('Imprimir o campo OBSERVA«√O?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+    if MessageDlg('Imprimir o campo OBSERVA√á√ÉO?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       vMemo.Clear;
   end;
-  frmRelOrcamentosPB := TfrmRelOrcamentosPB.Create(self); // Cria o formul·rio
+  frmRelOrcamentosPB := TfrmRelOrcamentosPB.Create(self); // Cria o formul√°rio
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
   if usarLoteValidade = True then
   begin
@@ -6792,32 +6794,32 @@ begin
   if vPAFECF then
   begin
     if RgOpcoes.ItemIndex = 0 then
-      frmRelOrcamentosPB.QRLblTitulo2.caption := 'PrÈ-Venda'
+      frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pr√©-Venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
-        frmRelOrcamentosPB.QRLblTitulo2.caption := 'OrÁamento'
+        frmRelOrcamentosPB.QRLblTitulo2.caption := 'Or√ßamento'
       else if vOrcamento = 'N' then
-        frmRelOrcamentosPB.QRLblTitulo2.caption := 'PrÈ-Venda'
+        frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pr√©-Venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
-      frmRelOrcamentosPB.QRLblTitulo2.caption := 'OrÁamento';
+      frmRelOrcamentosPB.QRLblTitulo2.caption := 'Or√ßamento';
   end
   else
   begin
     if RgOpcoes.ItemIndex = 0 then
-      frmRelOrcamentosPB.QRLblTitulo.caption := 'PrÈ-Venda'
+      frmRelOrcamentosPB.QRLblTitulo.caption := 'Pr√©-Venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
-        frmRelOrcamentosPB.QRLblTitulo.caption := 'OrÁamento'
+        frmRelOrcamentosPB.QRLblTitulo.caption := 'Or√ßamento'
       else if vOrcamento = 'N' then
-        frmRelOrcamentosPB.QRLblTitulo.caption := 'PrÈ-Venda'
+        frmRelOrcamentosPB.QRLblTitulo.caption := 'Pr√©-Venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
-      frmRelOrcamentosPB.QRLblTitulo.caption := 'OrÁamento';
+      frmRelOrcamentosPB.QRLblTitulo.caption := 'Or√ßamento';
     if CbPrevisao.Checked = True then
-      frmRelOrcamentosPB.QRLblPrevisao.caption := 'Previs„o de Entrega: ' +
+      frmRelOrcamentosPB.QRLblPrevisao.caption := 'Previs√£o de Entrega: ' +
         DateToStr(DtLancto.Date)
     else
       frmRelOrcamentosPB.QRLblPrevisao.Enabled := false;
@@ -6837,7 +6839,7 @@ begin
       frmRelOrcamentosPB.RlblFormaPgto.caption :=
         'Forma Pgto: cartao parcelado';
     4:
-      frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: cheque prÈ';
+      frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: cheque pr√©';
     5:
       frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: entrada + prazo';
     6:
@@ -6845,11 +6847,11 @@ begin
         'Forma Pgto: entrada + cartao';
     7:
       frmRelOrcamentosPB.RlblFormaPgto.caption :=
-        'Forma Pgto: entrada + ch prÈ';
+        'Forma Pgto: entrada + ch pr√©';
     8:
       frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: Cheque a Vista';
     9:
-      frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: Cart„o DÈbito';
+      frmRelOrcamentosPB.RlblFormaPgto.caption := 'Forma Pgto: Cart√£o D√©bito';
     10:
       frmRelOrcamentosPB.RlblFormaPgto.caption :=
         'Forma Pgto: Deposito Bancario';
@@ -6947,7 +6949,7 @@ begin
     (StrToFloatDef(EdtDesconto.Text, 0) = 0) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    ShowMessage('J· foi concedido desconto no(s) iten(s) selecionado(s).');
+    ShowMessage('J√° foi concedido desconto no(s) iten(s) selecionado(s).');
     EdtConsulta.SelectAll;
     EdtConsulta.Setfocus;
     Application.OnMessage := ProcessaMsg;
@@ -6958,17 +6960,17 @@ begin
   begin
     Application.OnMessage := NaoProcessaMsg;
     MessageDlg
-      ('Esta prÈ-venda contÈm um ou mais produtos com o preÁo alterado no cadastro, n„o sendo possÌvel dar desconto.',
+      ('Esta pr√©-venda cont√©m um ou mais produtos com o pre√ßo alterado no cadastro, n√£o sendo poss√≠vel dar desconto.',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     exit;
   end;
   if trim(SgDados.Cells[0, 1]) = '' then
-  // so poder· dar desconto quando tiver algum item pelo menos
+  // so poder√° dar desconto quando tiver algum item pelo menos
   begin
     Application.OnMessage := NaoProcessaMsg;
     ShowMessage
-      ('O desconto sÛ È permitido quando este lanÁamento possuir pelo menos um Ìtem!');
+      ('O desconto s√≥ √© permitido quando este lan√ßamento possuir pelo menos um √≠tem!');
     EdtConsulta.SelectAll;
     EdtConsulta.Setfocus;
     Application.OnMessage := ProcessaMsg;
@@ -6976,14 +6978,14 @@ begin
     exit;
   end;
 
-  // VERIFICA SE EXISTE ALGUM PRODUTO EM PROMO«√O (itepromocao.dspromocao)
+  // VERIFICA SE EXISTE ALGUM PRODUTO EM PROMO√á√ÉO (itepromocao.dspromocao)
   if vProdutoPromocao = 'S' then
   begin
     Application.OnMessage := NaoProcessaMsg;
     if (UpperCase(vEmpresa) = 'NACIONAL') then
     begin
       ShowMessage
-        ('Esta prÈ-venda contÈm produtos em promoÁ„o, portanto n„o ser· possÌvel dar desconto!');
+        ('Esta pr√©-venda cont√©m produtos em promo√ß√£o, portanto n√£o ser√° poss√≠vel dar desconto!');
       EdtDesconto.Text := LimpaEdtDesconto;
       EdtDesconto.ReadOnly := True;
       EdtSubTotal.ReadOnly := True;
@@ -6991,7 +6993,7 @@ begin
     end
     else
     begin
-      // ShowMessage('Esta prÈ-venda contÈm produtos que est„o em promoÁ„o, cuidado com o desconto!');
+      // ShowMessage('Esta pr√©-venda cont√©m produtos que est√£o em promo√ß√£o, cuidado com o desconto!');
       EdtDesconto.ReadOnly := false;
       EdtSubTotal.ReadOnly := false;
       EdtDesconto.Setfocus;
@@ -7067,8 +7069,8 @@ end;
 procedure TFrmPrincipalPreVenda.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-  if Application.MessageBox('Tem certeza que deseja sair da PrÈ-Venda?',
-    'ConfirmaÁ„o', mb_IconExclamation + Mb_YesNo) = IdNo then
+  if Application.MessageBox('Tem certeza que deseja sair da Pr√©-Venda?',
+    'Confirma√ß√£o', mb_IconExclamation + Mb_YesNo) = IdNo then
     CanClose := false
   else
   begin
@@ -7087,7 +7089,7 @@ var
   wndHandle: THandle;
   wndClass: array [0 .. 50] of Char;
 begin
-  if MessageDlg('Tem certeza que deseja sair da PrÈ-Venda?', mtConfirmation,
+  if MessageDlg('Tem certeza que deseja sair da Pr√©-Venda?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   begin
     // ********* esconde a barra
@@ -7180,7 +7182,7 @@ begin
       Parameters.ParamByName('@DSREFERENCIA').Value := Null;
       Parameters.ParamByName('@CDCODIGODIC').Value  := NULL;
       Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      if LblEspecificacao.Caption <> 'Localizar especificaÁ„o contendo: ' then
+      if LblEspecificacao.Caption <> 'Localizar especifica√ß√£o contendo: ' then
       Parameters.ParamByName('@DSREFERENCIA').Value := Copy(LblEspecificacao.Caption,35,length(LblEspecificacao.Caption))
       else
       Parameters.ParamByName('@DSREFERENCIA').Value := null;
@@ -7243,7 +7245,7 @@ begin
       4:
         begin
           Parameters.ParamByName('@OPCAO').Value := '7';
-          if (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo da balanÁa
+          if (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo da balan√ßa
             Parameters.ParamByName('@PESQUISA').Value :=
               Copy(EdtConsulta.Text, 1, 7)
           else
@@ -7266,7 +7268,7 @@ begin
           end;
         end;
       5:
-        Parameters.ParamByName('@OPCAO').Value := '5'; // ESPECIFICA«√O
+        Parameters.ParamByName('@OPCAO').Value := '5'; // ESPECIFICA√á√ÉO
       6:
         Parameters.ParamByName('@OPCAO').Value := '4'; // CODIGO ADICIONAL
       7:
@@ -7281,13 +7283,13 @@ begin
     ADOSPConsultaPEDIDO.DisplayFormat := '#0.00';
     if (UpperCase(vEmpresa) = 'BELAVISTA') then
     begin
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'C”DIGO_BARRAS')].Visible := false;
+      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'C√ìDIGO_BARRAS')].Visible := false;
       // oculta o codigo de barras
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'DESCRI«√O')].width := 350;
+      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'DESCRI√á√ÉO')].width := 350;
       // aumenta a largura da coluna
     end;
     if (vAutoPecas = 'A') and (UpperCase(vEmpresa) <> 'TRATORMEC') then
-      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'C”DIGO_BARRAS')].Visible := false;
+      DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'C√ìDIGO_BARRAS')].Visible := false;
 
     if (UpperCase(vEmpresa) = 'CHALOC') and (EdtConsulta.Text = '') then
     begin
@@ -7327,12 +7329,12 @@ begin
   if RadioGroup1.ItemIndex = 5 then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    vIdent := InputBox('Localizar tambÈm pela especificaÁ„o',
+    vIdent := InputBox('Localizar tamb√©m pela especifica√ß√£o',
       'Entre com o texto para pesquisa, ou pressione enter para continuar!',
       '');
     Application.OnMessage := ProcessaMsg;
     LblEspecificacao.Visible := True;
-    LblEspecificacao.caption := 'Localizar especificaÁ„o contendo: ' + vIdent;
+    LblEspecificacao.caption := 'Localizar especifica√ß√£o contendo: ' + vIdent;
   end
   else
     LblEspecificacao.Visible := false;
@@ -7408,13 +7410,13 @@ begin
     EdtCFOP.Text := SugereCFOP;
   if UpperCase(vEmpresa) = 'ODONTO' then
     Label15.Text := FormatFloat('0.00',
-      PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+      PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
   // ConsultaGarantia;
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
@@ -7436,13 +7438,13 @@ begin
     EdtCFOP.Text := SugereCFOP;
   if UpperCase(vEmpresa) = 'ODONTO' then
     Label15.Text := FormatFloat('0.00',
-      PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+      PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
   // ConsultaGarantia;
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
@@ -7464,13 +7466,13 @@ begin
     EdtCFOP.Text := SugereCFOP;
   if UpperCase(vEmpresa) = 'ODONTO' then
     Label15.Text := FormatFloat('0.00',
-      PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+      PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
   // ConsultaGarantia;
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
@@ -7492,13 +7494,13 @@ begin
     EdtCFOP.Text := SugereCFOP;
   if UpperCase(vEmpresa) = 'ODONTO' then
     Label15.Text := FormatFloat('0.00',
-      PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+      PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
   // ConsultaGarantia;
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
@@ -7517,13 +7519,13 @@ begin
     EdtCFOP.Text := SugereCFOP;
   if UpperCase(vEmpresa) = 'ODONTO' then
     Label15.Text := FormatFloat('0.00',
-      PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+      PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
   // ConsultaGarantia;
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
@@ -7553,13 +7555,13 @@ end;
 
 procedure TFrmPrincipalPreVenda.ConsultaProduto1Click(Sender: TObject);
 begin
-  // GÈssica da Mega MÛveis Noderste n„o quer q ninguÈm olhe essa tela de consulta
-  // pois os funcion·rios dela est„o olhando o preÁo de custo e etc...
+  // G√©ssica da Mega M√≥veis Noderste n√£o quer q ningu√©m olhe essa tela de consulta
+  // pois os funcion√°rios dela est√£o olhando o pre√ßo de custo e etc...
   if (PERMISSAO('121', 'V', false) = 'N') then
   begin
     if FrmConsultaProduto <> nil then
       FrmConsultaProduto.PnlTotal.Visible := false;
-    Application.MessageBox('VocÍ n„o possui permiss„o para visualizar o custo do produto.', 'Aviso', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+    Application.MessageBox('Voc√™ n√£o possui permiss√£o para visualizar o custo do produto.', 'Aviso', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     exit;
   end;
   Application.OnMessage := FormPrincipal.NaoProcessaMsg;
@@ -7567,17 +7569,17 @@ begin
   with ADOQryProduto do
   begin
     sql.Text := 'Select vlcompra, vlAtacado, nrCustoAquisicao, nrCustofinal_v, nrCustofinal_a from produto WITH (NOLOCK) where cdproduto = :cdproduto';
-    Parameters.ParamByName('cdproduto').Value := ADOSPConsulta.FieldByName('CÛdigo').AsString;
+    Parameters.ParamByName('cdproduto').Value := ADOSPConsulta.FieldByName('C√≥digo').AsString;
     open;
   end;
   FrmConsultaProduto.LblCodigo.caption := ADOSPConsulta.FieldByName
-    ('CÛdigo').AsString;
+    ('C√≥digo').AsString;
   FrmConsultaProduto.LblBarras.caption := ADOSPConsulta.FieldByName
-    ('CÛdigo_Barras').AsString;
+    ('C√≥digo_Barras').AsString;
   FrmConsultaProduto.LblReferencia.caption :=
-    ADOSPConsulta.FieldByName('ReferÍncia').AsString;
+    ADOSPConsulta.FieldByName('Refer√™ncia').AsString;
   FrmConsultaProduto.LblDescricao.caption :=
-    ADOSPConsulta.FieldByName('DescriÁ„o').AsString;
+    ADOSPConsulta.FieldByName('Descri√ß√£o').AsString;
   FrmConsultaProduto.LblFabricante.caption :=
     ADOSPConsulta.FieldByName('Fabricante').AsString;
   FrmConsultaProduto.LblValor.caption := FormatFloat('#,##0.00',
@@ -7600,7 +7602,7 @@ begin
 //  if (PERMISSAO('121', 'V', false) = 'N') then
 //  begin
 //    FrmConsultaProduto.PnlTotal.Visible := false;
-//    Application.MessageBox('VocÍ n„o possui permiss„o para visualizar o custo do produto.', 'Aviso', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+//    Application.MessageBox('Voc√™ n√£o possui permiss√£o para visualizar o custo do produto.', 'Aviso', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
 //  end;
   FrmConsultaProduto.ShowModal;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
@@ -7613,7 +7615,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.Alterarpreodoproduto1Click(Sender: TObject);
 begin
-  if UpperCase(vEmpresa) = 'MEGA' then // a mega moveis n„o quer isso
+  if UpperCase(vEmpresa) = 'MEGA' then // a mega moveis n√£o quer isso
     exit;
   if vMudaPreco = 'N' then
   begin
@@ -7621,20 +7623,20 @@ begin
     begin
       vFlag := '10';
       LiberaVanda;
-      // < Se tiver permiss„o a varÌ·vel [vMudaPreco] fica, temporariamente, igual a 'S'
+      // < Se tiver permiss√£o a var√≠√°vel [vMudaPreco] fica, temporariamente, igual a 'S'
       if (vMudaPreco = 'S') then
       begin
         EdtPreco.Enabled := True;
         EdtPreco.Color := clWindow;
         if (UpperCase(vEmpresa) <> 'REZENDE') then
-        begin // < para a autopeÁas rezende n È p liberar o desconto
+        begin // < para a autope√ßas rezende n √© p liberar o desconto
           EdtDescUnit.Enabled := True;
           EdtDescUnit.Color := clWindow;
         end;
         EdtConsulta.Setfocus;
       end;
       vMudaPreco := getVMudaPreco;
-      // < Devolvo o valor que est· na tabela [configuracao] ‡ vari·vel
+      // < Devolvo o valor que est√° na tabela [configuracao] √† vari√°vel
     end
     else
     begin
@@ -7675,16 +7677,16 @@ begin
   if (intemIndexRgOpcoesOLD = 2) and
     (intemIndexRgOpcoesOLD <> RgOpcoes.ItemIndex) and (vEstqNegativo <> 'S') and
     (StrToFloatDef(EdtSubTotal.Text, 0) > 0) and (RgOpcoes.ItemIndex = 0) then
-  begin // alterou o itemIndex de orÁamento para prevenda
+  begin // alterou o itemIndex de or√ßamento para prevenda
     Application.OnMessage := NaoProcessaMsg;
     MessageDlg
-      ('Por conta da diretiva de seguranÁa definada no sistema, a grade com os Ìtens vai ser apagada para obedecer validaÁıes de pre-venda!',
+      ('Por conta da diretiva de seguran√ßa definada no sistema, a grade com os √≠tens vai ser apagada para obedecer valida√ß√µes de pre-venda!',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     LimpaGrid(prevenda);
   end;
   if (vOpcoes = '1') and (RgOpcoes.ItemIndex in [0, 2, 4]) then
-  // Se estiver fazendo uma prÈ-venda pode alterar para orÁamento sem limpar os produtos
+  // Se estiver fazendo uma pr√©-venda pode alterar para or√ßamento sem limpar os produtos
   begin
     CbxCliente.Enabled := True;
     Limpar_Tela;
@@ -7713,7 +7715,7 @@ begin
 //            if FrmCancelamentoVenda <> nil then
 //              FreeAndNil(FrmCancelamentoVenda);
 //            FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-//            FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   AlteraÁ„o de prÈ-venda    >>>>';
+//            FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Altera√ß√£o de pr√©-venda    >>>>';
 //            FrmCancelamentoVenda.showmodal;
 //            FreeAndNil(FrmCancelamentoVenda);
 //          except
@@ -7771,7 +7773,7 @@ begin
               FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '820',
                 'A', possuiPermissaoParaAlterarPrevenda);
               FrmCancelamentoVenda.Copyright.caption :=
-                '<<<<   AlteraÁ„o de prÈ-venda    >>>>';
+                '<<<<   Altera√ß√£o de pr√©-venda    >>>>';
               FrmCancelamentoVenda.ShowModal;
               FreeAndNil(FrmCancelamentoVenda);
             except
@@ -7781,7 +7783,7 @@ begin
           if (possuiPermissaoParaAlterarPrevenda) then
           // if (vSenha_Alteracao = 'X') then
           begin
-            // vTexto := InputBox('LiberaÁ„o para alteraÁ„o', 'Digite senha que permite alterar as prÈ-vendas', '#');
+            // vTexto := InputBox('Libera√ß√£o para altera√ß√£o', 'Digite senha que permite alterar as pr√©-vendas', '#');
             FrmPrincipalPreVenda.Enabled := True;
             FrmPrincipalPreVenda.vUltimo_USUARIO := cbxUsuario.Text;
             FrmPrincipalPreVenda.Enabled := True;
@@ -7811,9 +7813,9 @@ begin
         end else
         begin
           if vMatrizFilial = 'MATRIZ' then
-            CbxCliente.Text := 'Proauto Auto PeÁas (FILIAL) | 4427'
+            CbxCliente.Text := 'Proauto Auto Pe√ßas (FILIAL) | 4427'
           else
-            CbxCliente.Text := 'Proauto Auto PeÁas (MATRIZ) | 4427';
+            CbxCliente.Text := 'Proauto Auto Pe√ßas (MATRIZ) | 4427';
           EdtCdCliente.Text := '4427';
           CbxCliente.Enabled := false;
           EdtUsuario.SelectAll;
@@ -7826,9 +7828,9 @@ begin
     end;
   end;
   intemIndexRgOpcoesOLD := RgOpcoes.ItemIndex;
-  if RgOpcoes.ItemIndex in [0, 4] then // incica q È uma pre-venda
+  if RgOpcoes.ItemIndex in [0, 4] then // incica q √© uma pre-venda
     vOrcamento := 'N'
-  else if RgOpcoes.ItemIndex = 2 then // incica q È um orcamento
+  else if RgOpcoes.ItemIndex = 2 then // incica q √© um orcamento
     vOrcamento := 'O';
   vOpcoes := intToStr(RgOpcoes.ItemIndex);
   auxiLiberacao := false;
@@ -7909,13 +7911,13 @@ begin
   if (EdtLancto.Text = '') or (EdtLancto.Enabled = false) then
     exit;
   if RgOpcoes.ItemIndex = 1 then
-  begin // com orÁamento
+  begin // com or√ßamento
 
     try
       prevenda := TNEGPrevenda.getPrevenda(StrToInt(EdtLancto.Text), True);
       prevenda.isAlteracao := True;
     except
-      MessageDlg('PrÈ-Venda/OrÁamento n„o encontrado!', mtInformation,
+      MessageDlg('Pr√©-Venda/Or√ßamento n√£o encontrado!', mtInformation,
         [mbOK], 0);
       EdtLancto.Enabled := True;
       EdtLancto.Color := clWindow;
@@ -7933,8 +7935,8 @@ begin
       ((vConferencia = True) or (vBloqueioPreVenda = True)) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      Application.MessageBox('PrÈ-Venda/OrÁamento j· est· em uso no caixa!',
-        'AtenÁ„o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+      Application.MessageBox('Pr√©-Venda/Or√ßamento j√° est√° em uso no caixa!',
+        'Aten√ß√£o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       prevenda := nil;
       EdtLancto.Setfocus;
       EdtLancto.SelectAll;
@@ -7946,8 +7948,8 @@ begin
     begin
       Application.OnMessage := NaoProcessaMsg;
       Application.MessageBox
-        ('A conferÍncia desta PrÈ-Venda/OrÁamento ser· cancelada automaticamente ao salvar a alteraÁ„o!',
-        'AtenÁ„o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+        ('A confer√™ncia desta Pr√©-Venda/Or√ßamento ser√° cancelada automaticamente ao salvar a altera√ß√£o!',
+        'Aten√ß√£o', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       // EdtLancto.SetFocus;
       // EdtLancto.SelectAll;
       Application.OnMessage := ProcessaMsg;
@@ -7983,7 +7985,7 @@ begin
       ADOQryCliente.FieldByName('cdPessoa').AsString);
     PegaClienteAtacadoVarejo;
     vUF_Cliente := ADOQryCliente.FieldByName('dsUF').AsString;
-    // pega o n˙mero de itens
+    // pega o n√∫mero de itens
     edtQtdItens.Text := intToStr(prevenda.itens.Count);
     // Montar a grid dos produtos
     // ADOQryProcura.Prior;
@@ -8001,7 +8003,7 @@ begin
     if (vOrcamento = 'O') then
     begin // se for orcamento preguntar se ele vai transormar em pre-venda
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      if MessageDlg('Deseja transformar esse orÁamento em Pre Venda?',
+      if MessageDlg('Deseja transformar esse or√ßamento em Pre Venda?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
         vOrcamento := 'N';
@@ -8033,11 +8035,11 @@ begin
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
         if (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1) then
         begin // (vOrcamento = 'N') and
-          MessageDlg('O Produto de cÛdigo ' + prevenda.itens[i].descricao +
-            ' est· com a quantidade ' + FormatFloat('0.00', qtdDisponivel) +
+          MessageDlg('O Produto de c√≥digo ' + prevenda.itens[i].descricao +
+            ' est√° com a quantidade ' + FormatFloat('0.00', qtdDisponivel) +
             // prevenda.itens[I].nrQtdReal) +
-            ' disponÌvel em estoque.' + #13 + #13 +
-            'Portanto, ser· excluÌdo desta pre-venda!', mtWarning, [mbOK], 0);
+            ' dispon√≠vel em estoque.' + #13 + #13 +
+            'Portanto, ser√° exclu√≠do desta pre-venda!', mtWarning, [mbOK], 0);
           edtQtdItens.Text :=
             FormatFloat('0', StrToFloat(edtQtdItens.Text) - 1);
         end;
@@ -8068,7 +8070,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  ' <<< Transformar OrÁamento em PrÈ-venda >>>';
+          FrmCancelamentoVenda.Copyright.Caption :=  ' <<< Transformar Or√ßamento em Pr√©-venda >>>';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -8085,7 +8087,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   AlteraÁ„o de prÈ-venda    >>>>';
+          FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Altera√ß√£o de pr√©-venda    >>>>';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -8113,14 +8115,14 @@ begin
       Parameters.ParamByName('LANCTO').Value := EdtLancto.Text;
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       Parameters.ParamByName('CDPESSOA').Value :=
-        StrToIntDef(ChamaInputBox('SeleÁ„o de fornecedor',
+        StrToIntDef(ChamaInputBox('Sele√ß√£o de fornecedor',
         'Escolha o fornecedor na lista abaixo:'), 0);
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       open;
-      if RecordCount = 0 then // caso o lancamento n„o seja encontrado
+      if RecordCount = 0 then // caso o lancamento n√£o seja encontrado
       begin
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-        MessageDlg('LanÁamento n„o encontrado!', mtInformation, [mbOK], 0);
+        MessageDlg('Lan√ßamento n√£o encontrado!', mtInformation, [mbOK], 0);
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
         EdtLancto.Enabled := True;
         EdtLancto.Color := clWindow;
@@ -8174,11 +8176,11 @@ begin
           Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
           if (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1) then
           begin // (vOrcamento = 'N') and
-            MessageDlg('O Produto de cÛdigo ' + ADOQryProduto.FieldByName
-              ('cdProduto').AsString + ' est· com a quantidade ' +
+            MessageDlg('O Produto de c√≥digo ' + ADOQryProduto.FieldByName
+              ('cdProduto').AsString + ' est√° com a quantidade ' +
               FormatFloat('0.00', ADOQryProduto.FieldByName('nrqtdreal')
-              .AsFloat) + ' disponÌvel em estoque.' + #13 + #13 +
-              'Portanto, ser· excluÌdo desta pre-venda!', mtWarning, [mbOK], 0);
+              .AsFloat) + ' dispon√≠vel em estoque.' + #13 + #13 +
+              'Portanto, ser√° exclu√≠do desta pre-venda!', mtWarning, [mbOK], 0);
             edtQtdItens.Text :=
               FormatFloat('0', StrToFloat(edtQtdItens.Text) - 1);
           end;
@@ -8263,7 +8265,7 @@ procedure TFrmPrincipalPreVenda.ConsultaEspecificacao1Click(Sender: TObject);
 var
   i: Integer;
 begin
-  if ADOSPConsulta.FieldByName('CÛdigo').AsString = '' then
+  if ADOSPConsulta.FieldByName('C√≥digo').AsString = '' then
   begin
     ShowMessage('Selecione um produto antes de realizar esta consulta.');
     EdtConsulta.Setfocus;
@@ -8273,11 +8275,11 @@ begin
   FrmEspecificacao := TFrmEspecificacao.Create(Application);
   if (UpperCase(vEmpresa) = 'NACIONAL') then
     FrmEspecificacao.Color := clMoneyGreen;
-  // pegar os cÛdigos adicionais
+  // pegar os c√≥digos adicionais
   With ADOQryEspecificacao do
   begin
     sql.Text := 'Select * from CodAdicional WITH (NOLOCK) where cdproduto = ' +
-      ADOSPConsulta.FieldByName('CÛdigo').AsString;
+      ADOSPConsulta.FieldByName('C√≥digo').AsString;
     open;
     for i := 0 to RecordCount - 1 do
     begin
@@ -8291,7 +8293,7 @@ begin
       + 'From Produto P WITH (NOLOCK) left join clfiscal C WITH (NOLOCK) on P.dsMercosul = C.cdClassificacao '
       + 'Where P.cdProduto = :CDPRODUTO                                                                     ';
     Parameters.ParamByName('CDPRODUTO').Value :=
-      ADOSPConsulta.FieldByName('CÛdigo').AsString;
+      ADOSPConsulta.FieldByName('C√≥digo').AsString;
     open;
   end;
   FrmEspecificacao.Memo1.Text := ADOQryEspecificacao.FieldByName
@@ -8300,15 +8302,15 @@ begin
     FormatFloat('0.00', ADOQryEspecificacao.FieldByName
     ('vlCustoAvulso').AsFloat);
   FrmEspecificacao.LblProduto.caption := ADOSPConsulta.FieldByName
-    ('DescriÁ„o').AsString;
+    ('Descri√ß√£o').AsString;
   FrmEspecificacao.LblcdBarras.caption := ADOSPConsulta.FieldByName
-    ('CÛdigo_Barras').AsString;
+    ('C√≥digo_Barras').AsString;
   FrmEspecificacao.LblFab.caption := ADOSPConsulta.FieldByName
     ('Fabricante').AsString;
   FrmEspecificacao.LblRefer.caption := ADOSPConsulta.FieldByName
-    ('ReferÍncia').AsString;
+    ('Refer√™ncia').AsString;
   FrmEspecificacao.Lblcod.caption := ADOSPConsulta.FieldByName
-    ('CÛdigo').AsString;
+    ('C√≥digo').AsString;
   FrmEspecificacao.LblRefInterna.caption := ADOSPConsulta.FieldByName
     ('CDCODIGODIC').AsString;
   FrmEspecificacao.LblVarejo.caption :=
@@ -8316,7 +8318,7 @@ begin
   FrmEspecificacao.lblQtdFiscal.caption :=
     FormatFloat('0.00', ADOQryEspecificacao.FieldByName('nrQtdContab').AsFloat);
   if (vAtacadoVarejo = 'V') and (UpperCase(vEmpresa) = 'NACIONAL') then
-  // caso o cliente seja de varejo n mostra o preÁo de atacado
+  // caso o cliente seja de varejo n mostra o pre√ßo de atacado
   begin
     FrmEspecificacao.LblAtacado.caption := '0';
   end
@@ -8355,14 +8357,14 @@ var
   Path: String;
   ConstBd: String;
 begin
-  { Procedimento para criar ou carregar configuraÁıes do BD }
+  { Procedimento para criar ou carregar configura√ß√µes do BD }
   try { try finnaly }
     try
       Path := ExtractFilePath(Application.ExeName);
       ConstBd := '';
       if not FileExists(Path + 'ConfSQL.ini') then
       begin
-        ShowMessage('Configure a Conex„o com o Banco SQL Server');
+        ShowMessage('Configure a Conex√£o com o Banco SQL Server');
         Arquivo := TIniFile.Create(Path + 'ConfSQL.ini');
         DModulo.Conexao.ConnectionString := PromptDataSource(self.handle,
           'Provider=SQLOLEDB.1;Password=;' + 'Persist Security Info=True;' +
@@ -8376,7 +8378,7 @@ begin
         ConstBd := Arquivo.ReadString('BD', 'Path', '');
       end;
     except
-      ShowMessage('Erro ao carregar o arquivo de InicializaÁ„o. ' + #13 +
+      ShowMessage('Erro ao carregar o arquivo de Inicializa√ß√£o. ' + #13 +
         'Entre em contato com o Suporte do Sistema!');
     end;
   finally
@@ -8391,7 +8393,7 @@ begin
       Connected := True;
     end;
   except
-    ShowMessage('N„o foi possÌvel conectar com o banco de dados.' + #13 +
+    ShowMessage('N√£o foi poss√≠vel conectar com o banco de dados.' + #13 +
       '   Entre em contato com o suporte do sistema');
     Application.Terminate; // TESTE
     FrmPrincipalPreVenda.Close;
@@ -8428,7 +8430,7 @@ begin
     .AsFloat) then
   begin
     result := TNEGProduto.getValorAtacadoPreVenda
-      (ADOSPConsulta.FieldByName('C”DIGO').AsInteger);
+      (ADOSPConsulta.FieldByName('C√ìDIGO').AsInteger);
   end
   else
     result := ADOSPConsulta.FieldByName('Valor').AsFloat;
@@ -8543,7 +8545,7 @@ begin
         .cdProduto, 1) <= 0))) then
       begin
         MessageDlg
-          ('Os produtos em amarelo j· est„o reservados por outra(s) prevenda(s), '
+          ('Os produtos em amarelo j√° est√£o reservados por outra(s) prevenda(s), '
           + #13#10 + 'clique sobre o produto para saber mais detalhes.',
           mtWarning, [mbOK], 0);
         resultado := True;
@@ -8561,7 +8563,7 @@ begin
   DBGrid1.Color := clWindow;
   With ADOSPConsulta do
   begin
-    cod := ADOSPConsulta.FieldByName('cÛdigo').AsString;
+    cod := ADOSPConsulta.FieldByName('c√≥digo').AsString;
     ADOSPConsulta.Filtered := False;
     Close;
     Parameters.ParamByName('@DSATIVO').Value := 'S';
@@ -8578,7 +8580,7 @@ begin
       ADOSPConsulta.FieldByName('Valor').AsFloat);
     if UpperCase(vEmpresa) = 'ODONTO' then
       Label15.Text := FormatFloat('0.00',
-        PegaValorAtacado(ADOSPConsulta.FieldByName('cÛdigo').AsInteger));
+        PegaValorAtacado(ADOSPConsulta.FieldByName('c√≥digo').AsInteger));
     LblListados.caption := 'Listados--> ' + intToStr(RecordCount);
   end;
 end;
@@ -8595,7 +8597,7 @@ begin
       FrmPrincipalPreVenda.Enabled := false;
       if FrmCancelamentoVenda = nil then
         FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-      // Cria o formul·rio
+      // Cria o formul√°rio
       if vFlag = '2' then
         FrmCancelamentoVenda.Position := poDefaULTPosOnly;
       FrmCancelamentoVenda.ShowModal;
@@ -8605,12 +8607,12 @@ begin
       FreeAndNil(FrmCancelamentoVenda);
     end;
   end else if ((prevenda.descontoPercentual < StrToFloat(EdtDesconto.Text)) or (y < x)) and (liberouVenda = false) then
-  begin // se o valor total atual for menor que o anterior ent„o tem que liberar o desconto
+  begin // se o valor total atual for menor que o anterior ent√£o tem que liberar o desconto
     FrmPrincipalPreVenda.Enabled := false;
     try
       if FrmCancelamentoVenda = nil then
         FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-      // Cria o formul·rio
+      // Cria o formul√°rio
       FrmCancelamentoVenda.ShowModal;
       FreeAndNil(FrmCancelamentoVenda);
       vlTotalAnterior := StrToFloat(FormatFloat('0.00', StrToFloatDef(EdtSubTotal.Text, 0)));
@@ -8633,7 +8635,7 @@ begin
     if vBloquearDescontoAtacado = True then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto para clientes atacado est· bloqueado.', mtWarning,
+      MessageDlg('Desconto para clientes atacado est√° bloqueado.', mtWarning,
         [mbOK], 0);
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
       // ADOSPConsulta.FieldByName('Valor').AsFloat);
@@ -8652,7 +8654,7 @@ begin
       begin
         EdtDescUnit.Text := '0,00';
         Application.OnMessage := NaoProcessaMsg;
-        MessageDlg('Desconto j· È autom·tico para clientes de credi·rio.',
+        MessageDlg('Desconto j√° √© autom√°tico para clientes de credi√°rio.',
           mtWarning, [mbOK], 0);
         Application.OnMessage := ProcessaMsg;
         EdtDescUnit.Setfocus;
@@ -8666,7 +8668,7 @@ begin
     begin
       EdtDescUnit.Text := '0,00';
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto j· È autom·tico para este cliente.', mtWarning,
+      MessageDlg('Desconto j√° √© autom√°tico para este cliente.', mtWarning,
         [mbOK], 0);
       Application.OnMessage := ProcessaMsg;
       EdtDescUnit.Setfocus;
@@ -8674,14 +8676,14 @@ begin
   if vLimitarDescontoFornecedor then
   begin
     if StrToFloatDef(EdtDescUnit.Text, 0) > GetLimiteDescontoFornecedor
-      (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('CÛdigo')
+      (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger) then
     begin
       EdtDescUnit.Text := '0,00';
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto M·x definido pelo fornecedor È de ' +
+      MessageDlg('Desconto M√°x definido pelo fornecedor √© de ' +
         FormatFloat('0.00', GetLimiteDescontoFornecedor
-        (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('CÛdigo')
+        (StrToInt(EdtCdCliente.Text), ADOSPConsulta.FieldByName('C√≥digo')
         .AsInteger)) + '%', mtWarning, [mbOK], 0);
       Application.OnMessage := ProcessaMsg;
       EdtDescUnit.Setfocus;
@@ -8856,7 +8858,7 @@ begin
   if (trim(EdtCdCliente.Text) = '') then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    ShowMessage('O nome do cliente est· digitado errado!!');
+    ShowMessage('O nome do cliente est√° digitado errado!!');
     CbxCliente.Setfocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     BtnConfirmar.Enabled := True;
@@ -8890,8 +8892,8 @@ begin
   if (ADOSPConsulta.RecordCount = 0) or (Length(EdtCdNome.Text) = 0) then
     exit;
   FrmLancaVendaPerdida := TFrmLancaVendaPerdida.Create(Application,
-    ADOSPConsulta.FieldByName('CÛdigo').AsString,
-    ADOSPConsulta.FieldByName('DESCRI«√O').AsString);
+    ADOSPConsulta.FieldByName('C√≥digo').AsString,
+    ADOSPConsulta.FieldByName('DESCRI√á√ÉO').AsString);
   FrmLancaVendaPerdida.ShowModal;
   EdtConsulta.Setfocus;
 
@@ -8908,7 +8910,7 @@ begin
   // DModulo.Conexao.BeginTrans;
   // Sql.Text := 'Insert Into VendasPerdidas (cdProduto,nrQtd,data,cdPessoa) '+
   // 'Values (:CODIGO,:QUANTD,:DATA,:CDPESSOA)                   ';
-  // Parameters.ParamByName('CODIGO').Value   :=  ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+  // Parameters.ParamByName('CODIGO').Value   :=  ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
   // Parameters.ParamByName('QUANTD').Value   :=  vTexto;
   // Parameters.ParamByName('DATA').Value     :=  vdata_banco;
   // Parameters.ParamByName('CDPESSOA').Value :=  EdtCdNome.Text;
@@ -8918,12 +8920,12 @@ begin
   // on ER: EDBEngineError do begin
   // DModulo.Conexao.RollbackTrans;
   // Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA', 'TFrmPrincipalPreVenda.Registraperdadevemdaporestoqueinsuficiente1Click', ER.Message,EdtLancto.Text);
-  // Messagedlg('N„o foi possÌvel salvar!', mterror, [mbOk], 0);
+  // Messagedlg('N√£o foi poss√≠vel salvar!', mterror, [mbOk], 0);
   // end;
   // on E: Exception do begin
   // DModulo.Conexao.RollbackTrans;
   // Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA', 'TFrmPrincipalPreVenda.Registraperdadevemdaporestoqueinsuficiente1Click', e.Message,EdtLancto.Text);
-  // Messagedlg('N„o foi possÌvel salvar!', mterror, [mbOk], 0);
+  // Messagedlg('N√£o foi poss√≠vel salvar!', mterror, [mbOk], 0);
   // end;
   // end;  // except
   // end;
@@ -8952,7 +8954,7 @@ end;
 procedure TFrmPrincipalPreVenda.AjustarAposConsultaProduto;
 begin
   if (SoNumeros(dsCGC) = '11411925000141') then
-  // loj„o acricola do joao alves
+  // loj√£o acricola do joao alves
   begin
     ADOSPConsultavlComissao.Visible := True;
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].width := 70;
@@ -8969,9 +8971,9 @@ begin
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'GRUPO')].Visible := false;
   end;
   if (ADOSPConsulta.RecordCount > 0) and (RadioGroup1.ItemIndex = 4) and
-    (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balanÁa
+    (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balan√ßa
   begin
-    if vTipoCodigoBalanca = 1 then // calcula pelo preÁo
+    if vTipoCodigoBalanca = 1 then // calcula pelo pre√ßo
       EdtQtd.Text := FormatFloat('0.000',
         (StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
         Copy(EdtConsulta.Text, 10, 3)) / ADOSPConsulta.FieldByName('Valor').AsFloat) * 10)
@@ -9086,7 +9088,7 @@ begin
       if prevenda.itens[i].Promocao_desconto_Item then
         Cells[17, i + 1] := '1'
       else
-        Cells[17, i + 1] := '0'; // produto em promoÁ„o
+        Cells[17, i + 1] := '0'; // produto em promo√ß√£o
       if (UpperCase(vEmpresa) = 'MOTOBOX') then
         Cells[18, i + 1] := produto_temp.Grupo.nome;
       // ArraylinhasDestacadas[I+1] := prevenda.itens[I].itemLinhaDestacada;
@@ -9155,7 +9157,7 @@ begin
   begin
     if (StrToFloatDef(SgDados.Cells[2, indexGridAux], 0) <= 0) then
     begin
-      MessageDlg('Quantidade inv·lida no produto [' + SgDados.Cells[1,
+      MessageDlg('Quantidade inv√°lida no produto [' + SgDados.Cells[1,
         indexGridAux] + '].', mtWarning, [mbOK], 0);
       SgDados.Row := indexGridAux;
       SgDados.Col := 2;
@@ -9204,7 +9206,7 @@ begin
           StrToFloatDef(SgDados.Cells[8, i], 0)) then
         begin
           Application.MessageBox(PWideChar('O produto ' + SgDados.Cells[1,
-            i] + ' n„o possui estoque suficiente!'), 'AtenÁ„o',
+            i] + ' n√£o possui estoque suficiente!'), 'Aten√ß√£o',
             mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         end;
       end;
@@ -9243,7 +9245,7 @@ begin
   else if (SgDados.Col = 14) then
   begin
     Re := SgDados.CellRect(ACol, ARow);
-    // posiciona em relaÁ„o ‡ Form
+    // posiciona em rela√ß√£o √† Form
     Re.Left  := Re.Left + SgDados.Left;
     Re.Right := Re.Right + SgDados.Left;
     Re.Top   := Re.Top + SgDados.Top;
@@ -9268,10 +9270,10 @@ begin
   begin
     Application.OnMessage := NaoProcessaMsg;
     // if tipoCompos <> composto then
-    MessageDlg('Quantidade disponÌvel no estoque --> ' + FormatFloat('0.00',
+    MessageDlg('Quantidade dispon√≠vel no estoque --> ' + FormatFloat('0.00',
       qtdDisponivel) + ' ', mtWarning, [mbOK], 0);
     // else
-    // MessageDlg('Quantidade disponÌvel no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(cdProduto)-vQtd) + ' ', mtWarning,[mbOk],0);
+    // MessageDlg('Quantidade dispon√≠vel no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(cdProduto)-vQtd) + ' ', mtWarning,[mbOk],0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
 //    if (UpperCase(vEmpresa) <> 'DELUC') then
@@ -9286,12 +9288,12 @@ begin
   end;
   // begin
   if Frac(quantidade) <> 0 then
-  begin // a quantidade est· fracionada, logo, termos que testar se o produto esta definido como fracionado
+  begin // a quantidade est√° fracionada, logo, termos que testar se o produto esta definido como fracionado
     if not validarQuantidadeItemFracionado(SgDados.Cells[10, SgDados.Row]) then
     begin
       Application.OnMessage := NaoProcessaMsg;
       ShowMessage
-        ('Incompatibilidade na quantidade digitada.  Este Ìtem n„o pode ser vendido fracionado!');
+        ('Incompatibilidade na quantidade digitada.  Este √≠tem n√£o pode ser vendido fracionado!');
       SgDados.Cells[2, SgDados.Row] := FormatFloatQ(vCasasQtd,
         qtdAnteriorNaGrid);
       Application.OnMessage := ProcessaMsg;
@@ -9304,7 +9306,7 @@ begin
       StrToFloat(SgDados.Cells[2, SgDados.Row]);
     prevenda.itens[SgDados.Row - 1].SubTotal := prevenda.itens[SgDados.Row - 1]
       .quantidade * prevenda.itens[SgDados.Row - 1].precoVenda;
-    { INDICO NO ARRAY SE ESSA LINHA FICAR¡ DESTACADA OU N√O }
+    { INDICO NO ARRAY SE ESSA LINHA FICAR√Å DESTACADA OU N√ÉO }
     if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
       (RgOpcoes.ItemIndex = 1))) then
       if ((vEstqNegativo <> 'S') and
@@ -9327,15 +9329,15 @@ begin
     edtValorBruto.Text := FormatFloat('0.00', StrToFloat(edtValorBruto.Text) +
       (StrToFloat(Cells[9, Row]) * quantidade));
 
-    { abato o valor lÌquido anterior do item alterado }
+    { abato o valor l√≠quido anterior do item alterado }
     EdtTotal.Text := FormatFloat('0.00', StrToFloat(EdtTotal.Text) -
       (StrToFloat(Cells[9, Row]) * StrToFloat(Cells[2, Row])));
 
-    { corrijo o valor lÌquido do item }
+    { corrijo o valor l√≠quido do item }
     Cells[4, Row] := FormatFloatQ(vCasasPreco, StrToFloat(Cells[2, Row]) *
       StrToFloat(Cells[3, Row]));
 
-    { adiciono o novo valor lÌquido }
+    { adiciono o novo valor l√≠quido }
     EdtTotal.Text := FormatFloat('0.00', StrToFloat(EdtTotal.Text) +
       (StrToFloat(Cells[9, Row]) * StrToFloat(Cells[2, Row])));
     Refresh;
@@ -9377,17 +9379,17 @@ begin
   if (vOrcamento = 'N') or (RgOpcoes.ItemIndex = 0) then
   begin
     // if TestaRestricao then exit;
-    // Vou testar a situaÁ„o financeira do cliente
+    // Vou testar a situa√ß√£o financeira do cliente
     if (trim(UpperCase(copy_campo(CbxCliente.Text, '|', 1))) <>
       'VENDA A CONSUMIDOR') and (vTeste_do_Financeiro = '1') then
-    begin // testo somente se n„o for venda a consumidor
+    begin // testo somente se n√£o for venda a consumidor
       resultado := false;
       // vauxi:= 'N';
       vteste1 := 0;
       vLimite := 0;
       vChDevolvido := 0;
       vAtraso := 0;
-      With ADOSPLiberacao1 do // pega o limite de crÈdito do cliente
+      With ADOSPLiberacao1 do // pega o limite de cr√©dito do cliente
       begin
         Close;
         Parameters.ParamByName('@Codigo_Cliente').Value :=
@@ -9429,7 +9431,7 @@ begin
         Next;
         vteste1 := FieldByName('Saldo').AsFloat;
       end;
-      if vLimCredito = 'S' then // Limite de crÈdito
+      if vLimCredito = 'S' then // Limite de cr√©dito
       begin
         With ADOSPLiberacao3 do
         begin
@@ -9443,7 +9445,7 @@ begin
           // valorLimiteDisponivel := vLimite - vEmAberto;
           valorLimiteDisponivel := vLimite;
           if (vteste1 > valorLimiteDisponivel) then
-          // verifica o limite de crÈdito
+          // verifica o limite de cr√©dito
           begin
             restricao := restricao + [LIMITE];
             resultado := True;
@@ -9481,7 +9483,7 @@ begin
     // vAuxi := 'N';
     resultado := false;
   end;
-  // if vauxi = 'S' then // Se passou por alguma das opÁıes acima ent„o chama a tela de liberaÁ„o
+  // if vauxi = 'S' then // Se passou por alguma das op√ß√µes acima ent√£o chama a tela de libera√ß√£o
   // begin
   // Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
   // vFlag := '7';
@@ -9492,7 +9494,7 @@ begin
 end;
 
 {
-  Verifica se, ao mudar o cliente na prevenda, o DESCONTO do cliente(cadastro cliente) tambÈm È diferente
+  Verifica se, ao mudar o cliente na prevenda, o DESCONTO do cliente(cadastro cliente) tamb√©m √© diferente
 }
 function TFrmPrincipalPreVenda.mudouDescontoCadastroCliente: Boolean;
 var
@@ -9516,7 +9518,7 @@ begin
 end;
 
 {
-  Verifica se, ao mudar o cliente na prevenda, o tipo do cliente tambÈm È diferente
+  Verifica se, ao mudar o cliente na prevenda, o tipo do cliente tamb√©m √© diferente
   (verifica se mudou de um cliente atacado -> varejo ou varejo -> atacado)
 }
 function TFrmPrincipalPreVenda.mudouTipoClienteAtacadoVarejo: Boolean;
@@ -9618,7 +9620,7 @@ var
   codigoClienteNovo, textoConsulta_temp: string;
 begin
 
-  // so testa a restriÁ„o se estiver incluindo ou alterando uma prevenda
+  // so testa a restri√ß√£o se estiver incluindo ou alterando uma prevenda
   // vauxi := 'N';
 
   if ADOQryCliente.Active then
@@ -9627,7 +9629,7 @@ begin
       ADOQryCliente.FieldByName('cdPessoa').AsString);
   if EdtCdCliente.Text = '' then
   begin
-    MessageDlg('Selecione um cliente v·lido na lista de clientes.', mtWarning,
+    MessageDlg('Selecione um cliente v√°lido na lista de clientes.', mtWarning,
       [mbOK], 0);
     CbxCliente.Setfocus;
     exit;
@@ -9648,7 +9650,7 @@ begin
         if TNEGCliente.isClienteFidelizado(Cliente) = false then
         begin
           Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-          Application.MessageBox('Cliente n„o fidelizado!', 'AtenÁ„o',
+          Application.MessageBox('Cliente n√£o fidelizado!', 'Aten√ß√£o',
             mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
           Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
           exit;
@@ -9659,8 +9661,8 @@ begin
           begin
             Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
             Application.MessageBox
-              (Pchar('Todos os prÍmios est„o com data de validade vencidas!' +
-              #13#10 + 'Verifique no cadastro de prÍmios.'), 'AtenÁ„o',
+              (Pchar('Todos os pr√™mios est√£o com data de validade vencidas!' +
+              #13#10 + 'Verifique no cadastro de pr√™mios.'), 'Aten√ß√£o',
               mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
             Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
           end;
@@ -9682,7 +9684,7 @@ begin
         FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '821', 'V',
           possuiPermissaoParaAlterarCliente);
         FrmCancelamentoVenda.Copyright.caption :=
-          '<<<<   AlteraÁ„o de Cliente    >>>>';
+          '<<<<   Altera√ß√£o de Cliente    >>>>';
         FrmCancelamentoVenda.ShowModal;
         FreeAndNil(FrmCancelamentoVenda);
       except
@@ -9692,7 +9694,7 @@ begin
     if (not possuiPermissaoParaAlterarCliente) then
     begin
 
-      // VOLTA PARA O CLIENTE ORIGINAL DA PR…-VENDA
+      // VOLTA PARA O CLIENTE ORIGINAL DA PR√â-VENDA
       SetarClienteNaCombo(codigoClienteAtual);
     end;
   end;
@@ -9703,8 +9705,8 @@ begin
   begin
     if Application.MessageBox
       (PWideChar
-      ('Ao mudar para um cliente de tipo diferente(tabela de preÁo, atacado, varejo, desconto do cadastro diferente ou credi·rio) ou informar um cliente inexistente no cadastro, os produtos lanÁados ser„o excluÌdos da prevenda. Deseja continuar?'),
-      'ConfirmaÁ„o', mb_IconExclamation + Mb_YesNo) = IdYes then
+      ('Ao mudar para um cliente de tipo diferente(tabela de pre√ßo, atacado, varejo, desconto do cadastro diferente ou credi√°rio) ou informar um cliente inexistente no cadastro, os produtos lan√ßados ser√£o exclu√≠dos da prevenda. Deseja continuar?'),
+      'Confirma√ß√£o', mb_IconExclamation + Mb_YesNo) = IdYes then
     begin
       LimpaGrid(prevenda, True);
       EdtTotal.Text := '0,00';
@@ -9734,10 +9736,10 @@ begin
     begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       if Application.MessageBox
-        (PWideChar('RestriÁ„o: ' + getMensagemRestricao(restricaoFinanceira) +
+        (PWideChar('Restri√ß√£o: ' + getMensagemRestricao(restricaoFinanceira) +
         #13#10 + #13#10 +
-        'Pode ser necess·ria liberaÁ„o por senha na confirmaÁ„o, deseja continuar a prevenda?'),
-        'ConfirmaÁ„o', mb_IconExclamation + Mb_YesNo) = IdNo then
+        'Pode ser necess√°ria libera√ß√£o por senha na confirma√ß√£o, deseja continuar a prevenda?'),
+        'Confirma√ß√£o', mb_IconExclamation + Mb_YesNo) = IdNo then
       begin
         CbxCliente.Setfocus;
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -9778,7 +9780,7 @@ begin
   // prevenda.Cliente:= TNEGCliente.getCliente(StrToIntDef(codigoClienteAtual, -1));
 end;
 
-{ Preenche a vari·vel vDescontoCliente, que sÛ È usada para o cliente PROAUTO }
+{ Preenche a vari√°vel vDescontoCliente, que s√≥ √© usada para o cliente PROAUTO }
 procedure TFrmPrincipalPreVenda.ProautoPreencherVDescontoCliente
   (codCliente: string);
 var
@@ -9792,7 +9794,7 @@ begin
       'Select dsmotivo from cliente WITH (NOLOCK) where cdPessoa = :CDCLIENTE';
     if Length(codCliente) <> 0 then
       Parameters.ParamByName('CDCLIENTE').Value := codCliente
-    else // caso n tenha nehum cliente selecionado vou forÁar o codigo 1 p n dar mensagem de erro p o usu·rio
+    else // caso n tenha nehum cliente selecionado vou for√ßar o codigo 1 p n dar mensagem de erro p o usu√°rio
       Parameters.ParamByName('CDCLIENTE').Value := 1;
     open;
     if FieldByName('dsMotivo').AsString <> '' then
@@ -9803,7 +9805,7 @@ begin
       except
         vDescontoCliente := 0;
         ShowMessage
-          ('O desconto do cliente est· definido incorretamente. Verifique no cadastro do cliente!');
+          ('O desconto do cliente est√° definido incorretamente. Verifique no cadastro do cliente!');
       end;
     end
     else
@@ -9811,7 +9813,7 @@ begin
   end;
 end;
 
-{ preenche vari·veis de acordo com o cliente selecionado }
+{ preenche vari√°veis de acordo com o cliente selecionado }
 procedure TFrmPrincipalPreVenda.preencherVariaveisCliente(codCliente: string);
 var
   query: TADOQuery;
@@ -9824,7 +9826,7 @@ begin
       'Select ISNULL(cdTabelaPreco,0) cdTabelaPreco, dsAtacado from cliente WITH (NOLOCK) where cdPessoa = :CDCLIENTE';
     if Length(codCliente) <> 0 then
       Parameters.ParamByName('CDCLIENTE').Value := codCliente
-    else // caso n tenha nehum cliente selecionado vou forÁar o codigo 1 p n dar mensagem de erro p o usu·rio
+    else // caso n tenha nehum cliente selecionado vou for√ßar o codigo 1 p n dar mensagem de erro p o usu√°rio
       Parameters.ParamByName('CDCLIENTE').Value := 1;
     open;
     cdTabelaPreco := FieldByName('cdTabelaPreco').AsInteger;
@@ -9850,7 +9852,7 @@ begin
       'Select dsrestricao, dsMotivo from cliente WITH (NOLOCK) where cdPessoa = :CDCLIENTE';
     if Length(EdtCdCliente.Text) <> 0 then
       Parameters.ParamByName('CDCLIENTE').Value := EdtCdCliente.Text
-    else // caso n tenha nehum cliente selecionado vou forÁar o codigo 1 p n dar mensagem de erro p o usu·rio
+    else // caso n tenha nehum cliente selecionado vou for√ßar o codigo 1 p n dar mensagem de erro p o usu√°rio
       Parameters.ParamByName('CDCLIENTE').Value := 1;
     open;
     if UpperCase(vEmpresa) = 'PROAUTO' then
@@ -9858,7 +9860,7 @@ begin
     if UpperCase(FieldByName('dsrestricao').AsString) = 'S' then
     begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      ShowMessage('RestriÁ„o para prÈ-venda: ' + FieldByName('dsMotivo')
+      ShowMessage('Restri√ß√£o para pr√©-venda: ' + FieldByName('dsMotivo')
         .AsString);
       TestaRestricao := True;
       if (RgOpcoes.ItemIndex = 0) or (RgOpcoes.ItemIndex = 2) then
@@ -9912,7 +9914,7 @@ begin
   { With ADOSP_PEDIDO_GARANTIA do begin
     Close;
     Parameters.ParamByName('@OPCAO').Value  := 'P';
-    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
     Open;
     Label13.Caption := FieldByName('dtEmissao').AsString;
     Label11.Text := FormatFloat('#,##0.00',ADOSP_PEDIDO_GARANTIA.FieldByName('NrQtd').AsFloat);
@@ -9930,7 +9932,7 @@ begin
       + 'P.nrLancto = I.nrLancto and I.cdProduto = W.cdProduto                                       '
       + 'and P.nrLancto = I.nrLancto and I.nrqtd > isnull(I.nrqtdchegada,0) Order by P.dtChegada asc ';
     Parameters.ParamByName('CDPRODUTO').Value :=
-      ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+      ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
     open;
     if (FieldByName('dtChegada').AsDateTime <> 0) then
       Label13.Text := DateToStr(DateOf(FieldByName('dtChegada').AsDateTime))
@@ -9948,7 +9950,7 @@ begin
   { With ADOSP_PEDIDO_GARANTIA do begin
     Close;
     Parameters.ParamByName('@OPCAO').Value  := 'G';
-    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
     Open;
     label15.Text := FormatFloat('#,##0.00',ADOSP_PEDIDO_GARANTIA.FieldByName('NQtd').AsFloat);
     end; }
@@ -9965,12 +9967,12 @@ begin
       'L.dsCancelado is null and I.cdProduto = P.cdProduto               ' +
       'group by I.nrqtd,I.cdProduto                                      ';
     Parameters.ParamByName('CODIGO').Value :=
-      ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+      ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
     open;
     Label15.Text := FormatFloat('#,##0.00',
       ADOQuery1.FieldByName('Qtd').AsFloat);
   end;
-  { TODO -oclaudioo -c : corrigir o o lanÁaProdutos, o segundo lote lanÁado automaticamente est· ficando com o cÛdigo do produto errado 08/05/2013 11:52:49 }
+  { TODO -oclaudioo -c : corrigir o o lan√ßaProdutos, o segundo lote lan√ßado automaticamente est√° ficando com o c√≥digo do produto errado 08/05/2013 11:52:49 }
 end;
 
 procedure TFrmPrincipalPreVenda.preencheArrayLinhasDestacadas;
@@ -10026,7 +10028,7 @@ begin
     with SgDados do
     begin
       if Row = RowCount - 1 then
-      begin // limpa quando a grid tem sÛ uma linha
+      begin // limpa quando a grid tem s√≥ uma linha
         for C := 0 to ColCount do
           Cells[C, Row] := '';
       end
@@ -10059,7 +10061,7 @@ begin
     Application.OnMessage := NaoProcessaMsg;
     cbxUsuario.Setfocus;
     Application.OnMessage := ProcessaMsg;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
 end;
@@ -10218,7 +10220,7 @@ begin
   if usarLoteValidade = True then
   begin
     montaComboLote;
-    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('CÛdigo')
+    setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('C√≥digo')
       .AsInteger));
   end;
   Consultapedidodecompra1Click(Sender);
@@ -10244,14 +10246,14 @@ begin
   Label15.Text := '0';
   if ADOSPConsulta.RecordCount > 0 then
   begin
-    with query do // Vou pegar o q est· reservado  ( OU SEJA NAS OS )
+    with query do // Vou pegar o q est√° reservado  ( OU SEJA NAS OS )
     begin
       sql.Text :=
         'SELECT Sum(I.nrQtd) as Qtd FROM Orcamento O WITH (NOLOCK) INNER JOIN IteOrcamento '
         + 'I WITH (NOLOCK) ON O.nrOrcamento = I.nrOrcamento Where I.cdproduto = :CDPRODUTO '
         + 'and I.dsSituacao <> ''C'' and O.dsImpresso = ''N'' AND o.nrobjeto = 0';
       Parameters.ParamByName('CDPRODUTO').Value :=
-        ADOSPConsulta.FieldByName('CÛdigo').AsString;
+        ADOSPConsulta.FieldByName('C√≥digo').AsString;
       open;
       if query.FieldByName('Qtd').AsString = '' then
         Label15.Text := '0,00'
@@ -10277,7 +10279,7 @@ begin
     LblReserva.Text := '0';
   if ADOSPConsulta.RecordCount > 0 then
   begin
-    with ADOQuery1 do // Vou pegar o q est· reservado  ( OU SEJA NAS OS )
+    with ADOQuery1 do // Vou pegar o q est√° reservado  ( OU SEJA NAS OS )
     begin
       // if (UpperCase(vEmpresa) = 'NACIONAL')
       // or (UpperCase(vEmpresa) = 'REIDOFIAT')
@@ -10304,7 +10306,7 @@ begin
           + 'and I.dsSituacao <> ''C'' and O.dsImpresso = ''N'' ';
       end;
       Parameters.ParamByName('CDPRODUTO').Value :=
-        ADOSPConsulta.FieldByName('CÛdigo').AsString;
+        ADOSPConsulta.FieldByName('C√≥digo').AsString;
       open;
       if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
       begin
@@ -10528,12 +10530,12 @@ begin
   begin // antes if (vOrcamento <> 'O') and (vImpressao_40 = 'S') then begin
     if (UpperCase(vEmpresa) = 'SODUCATO') then
     begin
-      if MessageDlg('Deseja imprimir o Comprovante Pequeno da PrÈ-Venda \ OrÁamento de n∫ '
+      if MessageDlg('Deseja imprimir o Comprovante Pequeno da Pr√©-Venda \ Or√ßamento de n¬∫ '
         + EdtLancto.Text + ' ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         exit;
     end;
-    if not FileExists('Print.bat') then // Caso n„o encontre o arquivo tenta criar
-      ShowMessage('Arquivo Print.bat n„o foi encontrado!');
+    if not FileExists('Print.bat') then // Caso n√£o encontre o arquivo tenta criar
+      ShowMessage('Arquivo Print.bat n√£o foi encontrado!');
     if FileExists('Print.bat') then
     begin // and (vOrcamento <> 'O') // FileExists('Texto.txt') and
       if (UpperCase(vEmpresa) = 'LLPARAFUSOS') then
@@ -10544,7 +10546,7 @@ begin
       if (UpperCase(vEmpresa) = 'LLPARAFUSOS') then
         vPergunta_Apos_Comprovante := '2';
       parcelasCartao := '';
-      // n„o pergunta se quer imprimir a pre-venda
+      // n√£o pergunta se quer imprimir a pre-venda
       case StrToInt(prevenda.codigoFormaPagamento) of
         0 : vformapag  := 'Forma Pgto: A vista';
         1 : vformapag  := 'Forma Pgto: A prazo';
@@ -10569,14 +10571,14 @@ begin
         12 : vformapag := 'Forma Pgto: Cheque a Vista';
         13 : vformapag := 'Forma Pgto: Cartao Debito';
         14 : vformapag := 'Forma Pgto: Deposito/Transferencia/Pix';
-        15 : vformapag := 'Forma Pgto: Boleto Banc·rio';
+        15 : vformapag := 'Forma Pgto: Boleto Banc√°rio';
       end;
       vvencimento := '';
       if (RgOpcoes.ItemIndex = 0) or ((vOrcamento = 'N') and (RgOpcoes.ItemIndex = 1)) then
         vtitulo := 'PRE-VENDA'
       else if RgOpcoes.ItemIndex = 2 then
         vtitulo := 'ORCAMENTO';
-      // esta primeira impress„o referente ao bloco abaixo È somente p a ELETRONICAf NACIONAL
+      // esta primeira impress√£o referente ao bloco abaixo √© somente p a ELETRONICAf NACIONAL
       if (FileExists('Texto.txt') and FileExists('Print.bat') and
         ((UpperCase(vEmpresa) = 'NACIONAL') or (UpperCase(vEmpresa) = 'CICLOMOTOS')
         or (dsCGC = '03821965000133') or (dsCGC = '17111138000160')) // eletronica Campos
@@ -10625,7 +10627,7 @@ begin
           Editor.Clear;
           TNEGACBrPosPrint.fecharPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
         end;
-        // Ciclomotos e Trevo n„o imprimir„o em um arquivo sÛ
+        // Ciclomotos e Trevo n√£o imprimir√£o em um arquivo s√≥
         if (UpperCase(vEmpresa) = 'CICLOMOTOS') or (UpperCase(vEmpresa) = 'TREVO') then
         begin
           try
@@ -10655,12 +10657,12 @@ begin
             WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
             Sleep(6000);
             if not FileExists('Print.bat') then
-              ShowMessage('N„o foi encontrado o arquivo Print.bat');
+              ShowMessage('N√£o foi encontrado o arquivo Print.bat');
           end;
         end;
       end;
       if (UpperCase(vEmpresa) = 'CICLOMOTOS') then
-      // ciclomotos n imprime os Ìtens
+      // ciclomotos n imprime os √≠tens
         exit;
       if (UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'LOCMAQ') then
       begin
@@ -10673,7 +10675,7 @@ begin
       isPrevendaOuOrcamento := (RgOpcoes.ItemIndex <> 3);
       isReimpressao := false;
       if imprimeImpressora40Windows = 'S' then
-      // rural pet imprime direto na impressora n„o fiscal
+      // rural pet imprime direto na impressora n√£o fiscal
         FrmPrincipalPreVenda.ImprimeOrcamento2(StrToInt(prevenda.codigoFormaPagamento))
       else
       begin
@@ -10716,10 +10718,10 @@ begin
             TNEGACBrPosPrint.fecharPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
           end else
           begin
-            if (UpperCase(vEmpresa) = 'CAMARATUBA') and ((RgOpcoes.ItemIndex = 2) or (prevenda.codigoFormaPagamento <> '1'))  then  // orÁamento, e prevenda diferente de A PRAZO (Kamarada), manda para outra impressora 40 colunas
+            if (UpperCase(vEmpresa) = 'CAMARATUBA') and ((RgOpcoes.ItemIndex = 2) or (prevenda.codigoFormaPagamento <> '1'))  then  // or√ßamento, e prevenda diferente de A PRAZO (Kamarada), manda para outra impressora 40 colunas
             begin
               if not FileExists('Print2.bat') then
-                ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+                ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print2.bat')), sw_ShowNormal)
             end else
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
@@ -10727,7 +10729,7 @@ begin
         end;
         Sleep(3000);
         if not FileExists('Print.bat') then
-          ShowMessage('N„o foi encontrado o arquivo Print.bat');
+          ShowMessage('N√£o foi encontrado o arquivo Print.bat');
       end;
       if (FileExists('Texto3.txt')) or (FileExists('Print3.bat')) or (FileExists('Print4.bat')) then
       begin // Caso encontre o arquivo manda p impressora and (RgOpcoes.ItemIndex <> 2) and (vtitulo <> 'ORCAMENTO')
@@ -10777,15 +10779,15 @@ begin
           vcampo_4 := AdoQryLocaliza.FieldByName('dsUnidade').AsString;
           vcampo_5 := TrimRight(AdoQryLocaliza.FieldByName('dsReferencia')
             .AsString);
-          // remove os espaÁos a direita da referecia p dar  + espaÁo p a descriÁao do produto
+          // remove os espa√ßos a direita da referecia p dar  + espa√ßo p a descri√ßao do produto
           while Length(vcampo_5) < 16 do
             vcampo_5 := vcampo_5 + ' ';
-          // VOU COLOCAR PELO - 16 ESPA«OS P GARANTIR COME«AR A DESCRI«AO BEM ABAIXO
+          // VOU COLOCAR PELO - 16 ESPA√áOS P GARANTIR COME√áAR A DESCRI√áAO BEM ABAIXO
           vcampo_6 := TrimRight(AdoQryLocaliza.FieldByName('dsPrateleira')
             .AsString);
           while Length(vcampo_6) < 4 do
             vcampo_6 := vcampo_6 + ' ';
-          // VOU COLOCAR PELO - 10 ESPA«OS P GARANTIR COME«AR A DESCRI«AO BEM ABAIXO
+          // VOU COLOCAR PELO - 10 ESPA√áOS P GARANTIR COME√áAR A DESCRI√áAO BEM ABAIXO
           Editor.Lines.Add(vcampo_1 + ' ' + vcampo_6 + '  ' + vcampo_5 + ' ' +
             vcampo_3 + '    ' + vcampo_4);
           AdoQryLocaliza.Next;
@@ -10941,8 +10943,8 @@ begin
     WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
       'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
-  // ShowMessage('PrÈ-venda realizada com sucesso!');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
+  // ShowMessage('Pr√©-venda realizada com sucesso!');
 end;
 
 procedure TFrmPrincipalPreVenda.Panel3Resize(Sender: TObject);
@@ -10985,7 +10987,7 @@ var
 begin
   if vFlagEtiqueta = '' then
   begin
-    MessageDlg('AusÍncia do flag do cliente no support.ini', mtWarning,
+    MessageDlg('Aus√™ncia do flag do cliente no support.ini', mtWarning,
       [mbOK], 0);
     exit;
   end;
@@ -11023,7 +11025,7 @@ begin
     ImprimeEtiquetaLayeVictorOS214;
   if UpperCase(vFlagEtiqueta) = 'LAYEVICTOR1' then
   begin // ELGIN
-    if MessageDlgDef('Escolha qual tipo de etiqueta:', 'Impress„o',
+    if MessageDlgDef('Escolha qual tipo de etiqueta:', 'Impress√£o',
       mtConfirmation, [mbOK, mbCancel], mrOK, 0) = mrOK then
     // ok - Pequena,Cancel - Grande
       ImprimeEtiquetas_LayEVictorI
@@ -11056,7 +11058,7 @@ begin
   end;
   if UpperCase(vFlagEtiqueta) = 'NEGROMONTE' then begin// ELGIN
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'Etiqueta trÍs colunas';
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Etiqueta tr√™s colunas';
     FrmDuasEtiquetas.BitBtn3.Caption := 'Etiqueta pequena';
     escolha := FrmDuasEtiquetas.ShowModal;
     if escolha = mrCancel then
@@ -11104,8 +11106,8 @@ begin
   if UpperCase(vFlagEtiqueta) = 'ANADRI' then
   begin // ARGOX  OS-214
     FrmTresEtiquetas := TFrmTresEtiquetas.Create(Application);
-    FrmTresEtiquetas.BitBtn1.Caption := 'Dupla Barras/CÛdigo';
-    FrmTresEtiquetas.BitBtn2.Caption := 'Dupla contÈm Barras/CÛdigo';
+    FrmTresEtiquetas.BitBtn1.Caption := 'Dupla Barras/C√≥digo';
+    FrmTresEtiquetas.BitBtn2.Caption := 'Dupla cont√©m Barras/C√≥digo';
     FrmTresEtiquetas.BitBtn3.Caption := 'Etiqueta Grande';
     escolha := FrmTresEtiquetas.ShowModal;
     if escolha = mrOK then
@@ -11121,7 +11123,7 @@ begin
     FrmTresEtiquetas := TFrmTresEtiquetas.Create(Application);
     FrmTresEtiquetas.BitBtn1.Caption := 'Gondola';
     FrmTresEtiquetas.BitBtn2.Caption := '3 colunas';
-    FrmTresEtiquetas.BitBtn3.Caption := '3 colunas c/ preÁo';
+    FrmTresEtiquetas.BitBtn3.Caption := '3 colunas c/ pre√ßo';
     escolha := FrmTresEtiquetas.ShowModal;
     if escolha = mrOK then
       ImprimeEtiquetas_ConstruFort_Gondola
@@ -11183,7 +11185,7 @@ begin
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
   (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then // ELGIN L42
-    case ChamaInputBoxEtiquetaZanquy('SeleÁ„o de modelo',
+    case ChamaInputBoxEtiquetaZanquy('Sele√ß√£o de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
       0 : ImprimeEtiquetaZANQUY;
       1 : ImprimeEtiquetaYZLU;
@@ -11197,7 +11199,7 @@ begin
       9 : ImprimeEtiquetaYZLUSANTANA;
     end
   else if (UpperCase(vFlagEtiqueta) = 'CAMPOS')  then // ELGIN L42
-    case ChamaInputBoxEtiquetaCAMPOS('SeleÁ„o de modelo',
+    case ChamaInputBoxEtiquetaCAMPOS('Sele√ß√£o de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
       0 : ImprimeEtiquetas_CAMPOS_1Col_Varejo;
       1 : ImprimeEtiquetas_CAMPOS_1Col_VarejoAtacado;
@@ -11261,7 +11263,7 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'SAFIRAARGOX' then
     ImprimeEtiquetasSafiraArgox
   else if UpperCase(vFlagEtiqueta) = 'JNUNES' then begin
-    if MessageDlg('Escolha SIM para 3 Colunas ou N√O para Gondola',
+    if MessageDlg('Escolha SIM para 3 Colunas ou N√ÉO para Gondola',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
         ImprimeEtiquetasJNUNES_3COL
     else
@@ -11283,7 +11285,7 @@ begin
     ImprimeEtiquetasDisCabos
   else if (UpperCase(vFlagEtiqueta) = 'KARIB') then
   begin // ZEBRA TLP 2844 - SHOPPING E RUA GERU
-    if MessageDlg('Escolha SIM para folheados ou N√O para jÛias',
+    if MessageDlg('Escolha SIM para folheados ou N√ÉO para j√≥ias',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       ImprimeEtiquetasCaribe
     else
@@ -11328,7 +11330,7 @@ begin
   begin
     FormQuatroEtiquetas := TFormQuatroEtiquetas.Create(Application);
     FormQuatroEtiquetas.btnUnicaGrande.caption := '3 Col c/ Barras';
-    FormQuatroEtiquetas.BtnDuplaGrande.caption := '3 Col c/ DescriÁ„o';
+    FormQuatroEtiquetas.BtnDuplaGrande.caption := '3 Col c/ Descri√ß√£o';
     FormQuatroEtiquetas.BtnTriplaGrande.caption := 'Gondola Varejo';
     FormQuatroEtiquetas.btnTriplaPequena.caption := 'Gondola Atacarejo';
     escolha := FormQuatroEtiquetas.ShowModal;
@@ -11348,7 +11350,7 @@ begin
     FrmTresEtiquetas := TFrmTresEtiquetas.Create(Application);
     FrmTresEtiquetas.BitBtn1.caption := 'Grande Tripla';
     FrmTresEtiquetas.BitBtn2.caption := 'Pequena Tripla';
-    FrmTresEtiquetas.BitBtn3.caption := 'JÛia';
+    FrmTresEtiquetas.BitBtn3.caption := 'J√≥ia';
     escolha := FrmTresEtiquetas.ShowModal;
     if escolha = mrOK then
       ImprimeEtiquetaElBarretoTriplaGrande
@@ -11445,7 +11447,7 @@ begin
   else if (UpperCase(vFlagEtiqueta) = 'SAOMIGUEL') then // ARGOX OS-214plus A
     ImprimeEtiquetaSaoMiguel
   else if (UpperCase(vFlagEtiqueta) = 'SA') then begin// ARGOX OS-214plus A
-    if MessageDlg('Escolha SIM para 2 Colunas ou N√O para Gondola',
+    if MessageDlg('Escolha SIM para 2 Colunas ou N√ÉO para Gondola',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
         ImprimeEtiquetasSA
     else
@@ -11513,8 +11515,8 @@ begin
     ImprimeEtiquetas_ZeroGrauDepositoMercearia
   else if UpperCase(vFlagEtiqueta) = 'MAISRACOES' then begin // ELGIN
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'GÙndola Grande';
-    FrmDuasEtiquetas.BitBtn3.Caption := 'GÙndola Pequena';
+    FrmDuasEtiquetas.BitBtn1.Caption := 'G√¥ndola Grande';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'G√¥ndola Pequena';
     escolha := FrmDuasEtiquetas.ShowModal;
     if escolha = mrCancel then
       ImprimeEtiquetas_MaisRacoes_MiniGondola
@@ -11533,7 +11535,7 @@ begin
     ImprimeEtiquetas_PandorDelicatesen_Atalaia
   else if UpperCase(vFlagEtiqueta) = 'CENTRALDEPESCADOS' then begin
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'GÙndola';
+    FrmDuasEtiquetas.BitBtn1.Caption := 'G√¥ndola';
     FrmDuasEtiquetas.BitBtn3.Caption := 'Grande Detalhada';
     escolha := FrmDuasEtiquetas.ShowModal;
     if escolha = mrOk then
@@ -11550,7 +11552,7 @@ begin
   end
     else if UpperCase(vFlagEtiqueta) = 'CENTRALDEPESCADOS2' then begin
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'GÙndola';
+    FrmDuasEtiquetas.BitBtn1.Caption := 'G√¥ndola';
     FrmDuasEtiquetas.BitBtn3.Caption := 'Grande Detalhada';
     escolha := FrmDuasEtiquetas.ShowModal;
     if escolha = mrOk then
@@ -11567,8 +11569,8 @@ begin
   end
   else if UpperCase(vFlagEtiqueta) = 'ACOGUITA' then begin
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'GÙndola Grande';
-    FrmDuasEtiquetas.BitBtn3.Caption := 'GÙndola 2 Colunas';
+    FrmDuasEtiquetas.BitBtn1.Caption := 'G√¥ndola Grande';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'G√¥ndola 2 Colunas';
 
     escolha := FrmDuasEtiquetas.ShowModal;
     if escolha = mrOk then
@@ -11592,10 +11594,20 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetas_Litoral655_New('Rua Geru');
   end
-  else if UpperCase(vFlagEtiqueta) = 'MINEITABAIANA' then
-    ImprimeEtiquetas_MiniMercadoItabaiana
+  else if UpperCase(vFlagEtiqueta) = 'MINEITABAIANA' then begin
+    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Etiqueta Grande';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'Etiqueta Pequena';
+    escolha := FrmDuasEtiquetas.ShowModal;
+    if escolha = mrOk then
+      ImprimeEtiquetas_MiniMercadoItabaiana
+    else if escolha = mrCancel then
+      ImprimeEtiquetas_MiniMercadoItabaiana_Pequena;
+  end
   else if UpperCase(vFlagEtiqueta) = 'MERCADINHOACAUA' then
-    ImprimeEtiquetas_ResMercadinhoAcaua;
+    ImprimeEtiquetas_ResMercadinhoAcaua
+  else if UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO' then
+    ImprimeEtiquetas_MaeDeDeusEspacoCatolico;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -11607,7 +11619,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -11616,7 +11628,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -11659,7 +11671,7 @@ begin
     Editor.Lines.Add('121100000070305' + trim(SgDados.Cells[0, L]));
     // Cod. Barra
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -11679,11 +11691,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasLindaStore;
@@ -11695,7 +11707,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -11704,7 +11716,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('N');
@@ -11823,7 +11835,7 @@ begin
 //    Editor.Lines.Add('TEXT 791,492,"0",180,15,11,"LINDA STORE"');
 //    Editor.Lines.Add('REVERSE 546,457,246,36');
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -11843,11 +11855,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArts;
@@ -11859,7 +11871,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -11868,7 +11880,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -11895,7 +11907,7 @@ begin
       20)) + '"');
     Editor.Lines.Add('A800,24,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
       20)) + '"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -11914,11 +11926,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasPipelaine;
@@ -11932,14 +11944,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-  if MessageDlg('Clique "Sim" para LITORAL 655 e "N„o" para APP LITORAL655!',
+  if MessageDlg('Clique "Sim" para LITORAL 655 e "N√£o" para APP LITORAL655!',
     mtConfirmation, [mbYes, mbNo], 0) = mrNo then begin
     nmEmpresa := 'LITORAL655';
     endereco := 'APP Litoral 655';
@@ -11982,7 +11994,7 @@ begin
   end;
   j := 0;
   for L := 0 to StrToInt(FormatFloat('0000', (List_nm1.Count / 2))) - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q559,019');
@@ -12052,22 +12064,22 @@ begin
     'print.bat')), sw_ShowNormal);
   // WinExec('c:\Arquiv~1\Saef\bin\print.bat',sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.SalvaEtiquetas;
 var
   L, vTeste: Integer;
 begin
-  // COMENTEI PARA N√O SALVAR PREVENDA AO IMPRIMIR OR«AMENTO
+  // COMENTEI PARA N√ÉO SALVAR PREVENDA AO IMPRIMIR OR√áAMENTO
   // With ADOQrySalvar do begin
   // try
   // DModulo.Conexao.BeginTrans;
-  // if RgOpcoes.ItemIndex = 1 then begin //Se for alteraÁ„o de um orÁamento
+  // if RgOpcoes.ItemIndex = 1 then begin //Se for altera√ß√£o de um or√ßamento
   // Sql.Text := 'Delete From Orcamento Where nrOrcamento = :NRORCAMENTO';
   // Parameters.ParamByName('NRORCAMENTO').Value := EdtLancto.Text;
   // ExecSql;
@@ -12075,7 +12087,7 @@ begin
   // Parameters.ParamByName('NRORCAMENTO').Value := EdtLancto.Text;
   // ExecSql;
   // end;
-  // if (RgOpcoes.ItemIndex = 0) or (RgOpcoes.ItemIndex = 2) then begin // Se for salvar um orÁamento
+  // if (RgOpcoes.ItemIndex = 0) or (RgOpcoes.ItemIndex = 2) then begin // Se for salvar um or√ßamento
   // UltimoLancamento;
   // Sql.Text := 'Update Sequencial Set nrPedidos = nrPedidos + 1 Where cdCodigo = 1 ';
   // ExecSql;
@@ -12093,11 +12105,11 @@ begin
   // Parameters.ParamByName('DATA').Value        := vdata_banco;
   // case RgOpcoes.ItemIndex of
   // 0: Parameters.ParamByName('tipo').Value  := 'N';
-  // 1: Parameters.ParamByName('tipo').Value  := vOrcamento; // Se for alterar pode continuar orcamento ou virar prÈ-venda
+  // 1: Parameters.ParamByName('tipo').Value  := vOrcamento; // Se for alterar pode continuar orcamento ou virar pr√©-venda
   // 2: Parameters.ParamByName('tipo').Value  := 'O';
   // end;
   // ExecSql;
-  // for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da prÈ-venda.
+  // for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pr√©-venda.
   // if SgDados.Cells[0,L] = '' then Break;
   // Sql.Text := 'Insert Into IteOrcamento (cdIteLcto,nrOrcamento,'+
   // 'cdProduto,nrQtd,vlPreco,dsSituacao,vlDesconto)  '+
@@ -12121,7 +12133,7 @@ begin
   // vSalvar := vSalvar + 1;
   // if vSalvar <= 4 then BtnConfirmarClick(Self)
   // else begin
-  // Messagedlg('N„o foi possÌvel salvar esta PrÈ Venda \ OrÁamento!', mterror, [mbOk], 0);
+  // Messagedlg('N√£o foi poss√≠vel salvar esta Pr√© Venda \ Or√ßamento!', mterror, [mbOk], 0);
   // vSalvar := 0;
   // end;
   // end;
@@ -12135,7 +12147,7 @@ begin
   // vSalvar := vSalvar + 1;
   // if vSalvar <= 4 then BtnConfirmarClick(Self)
   // else begin
-  // Messagedlg('N„o foi possÌvel salvar esta PrÈ Venda \ OrÁamento!', mterror, [mbOk], 0);
+  // Messagedlg('N√£o foi poss√≠vel salvar esta Pr√© Venda \ Or√ßamento!', mterror, [mbOk], 0);
   // vSalvar := 0;
   // end;
   // end;
@@ -12152,7 +12164,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12161,7 +12173,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -12188,7 +12200,7 @@ begin
     Editor.Lines.Add('^FD>;0' + SgDados.Cells[0, L] + '^FS');
     Editor.Lines.Add('^BY3,3,49^FT37,110^BCN,,Y,N');
     Editor.Lines.Add('^FD>;0' + SgDados.Cells[0, L] + '^FS');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -12202,11 +12214,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsOS214;
@@ -12218,7 +12230,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12227,7 +12239,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -12262,7 +12274,7 @@ begin
       19)) + '');
     Editor.Lines.Add('191100100380248' + trim(Copy(SgDados.Cells[1, L], 20,
       20)) + '');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -12278,11 +12290,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasPipelaineShopping;
@@ -12295,14 +12307,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-  if MessageDlg('Clique "Sim" para Shopping e "N„o" para Rua de Geru!',
+  if MessageDlg('Clique "Sim" para Shopping e "N√£o" para Rua de Geru!',
     mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     vendereco := 'SHOPPING JARDINS LJ 145'
   else
@@ -12342,7 +12354,7 @@ begin
   end;
   j := 0;
   for L := 0 to StrToInt(FormatFloat('0000', (List_nm1.Count / 2))) - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q559,019');
@@ -12380,11 +12392,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasPontoDasTintas;
@@ -12402,7 +12414,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12411,7 +12423,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('^Q25,3');
@@ -12444,11 +12456,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_AMORBEBE;
@@ -12460,7 +12472,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12469,7 +12481,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''70.1 mm''></xpml>I8,1,001');
@@ -12538,11 +12550,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ConstruFort_Gondola;
@@ -12557,7 +12569,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12567,7 +12579,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -12582,7 +12594,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
@@ -12628,7 +12640,7 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
@@ -12636,7 +12648,7 @@ begin
   RgOpcoes.ItemIndex := 0;
   if Produto <> nil then
     FreeAndNil(Produto);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_JMComercio;
@@ -12649,7 +12661,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12658,7 +12670,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -12695,11 +12707,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -12713,7 +12725,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12722,7 +12734,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -12756,11 +12768,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_1Col_Varejo_Logo;
@@ -12773,7 +12785,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12782,7 +12794,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -12817,11 +12829,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_1Col_VarejoAtacado;
@@ -12834,7 +12846,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12843,7 +12855,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -12879,11 +12891,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_1Col_VarejoAtacado_Logo;
@@ -12896,7 +12908,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12905,7 +12917,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -12942,11 +12954,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Menor_Descricao;
@@ -12959,7 +12971,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -12968,7 +12980,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13004,11 +13016,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Sem_Descricao_Varejo_Logo;
@@ -13021,7 +13033,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13030,7 +13042,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13063,11 +13075,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Sem_Descricao_2Col_Logo;
@@ -13080,7 +13092,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13089,7 +13101,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13124,11 +13136,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Sem_Descricao_VarejoAtacado_Logo;
@@ -13141,7 +13153,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13150,7 +13162,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13185,11 +13197,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Mini_3Col_Logo;
@@ -13202,7 +13214,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13211,7 +13223,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13247,11 +13259,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_Maior_Descricao;
@@ -13264,7 +13276,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13273,7 +13285,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13311,11 +13323,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MARCIAMODAS;
@@ -13328,7 +13340,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13337,7 +13349,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13372,11 +13384,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_1SubGrupo;
@@ -13389,7 +13401,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13398,7 +13410,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13430,11 +13442,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_2SubGrupo;
@@ -13447,7 +13459,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13456,7 +13468,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13494,11 +13506,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_3SubGrupo;
@@ -13511,7 +13523,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13520,7 +13532,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13563,11 +13575,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_4SubGrupo;
@@ -13580,7 +13592,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13589,7 +13601,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13635,11 +13647,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_Gaveta;
@@ -13652,7 +13664,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13661,7 +13673,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13693,11 +13705,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CAMPOS_2Col_AtacadoVarejo;
@@ -13710,7 +13722,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13719,7 +13731,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13761,11 +13773,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_EmporioVerdeBrasil;
@@ -13777,7 +13789,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13786,7 +13798,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('I8,1,001');
@@ -13817,11 +13829,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_JAKIDS_Gondola_Varejo_Atacado;
@@ -13834,7 +13846,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13843,7 +13855,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -13882,11 +13894,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_JAKIDS_Gondola_Varejo;
@@ -13898,7 +13910,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13907,7 +13919,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('I8,1,001');
@@ -13943,11 +13955,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_JAKIDS_3Col_CdBarras;
@@ -13959,7 +13971,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -13968,7 +13980,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14003,11 +14015,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_JAKIDS_3Col_Desc_Preco;
@@ -14019,7 +14031,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14028,7 +14040,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14070,11 +14082,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_AsaBranca_StGreide;
@@ -14087,7 +14099,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14096,7 +14108,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
     Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -14132,11 +14144,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_AsaBranca_StGreide_Varejo;
@@ -14149,7 +14161,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14158,7 +14170,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
     Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -14192,11 +14204,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_AsaBranca_Gondola_ARGOX;
@@ -14208,7 +14220,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14217,7 +14229,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
     Break;
     Editor.Lines.Add('n');
@@ -14246,11 +14258,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_NovoGarden_3Col;
@@ -14265,7 +14277,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14275,7 +14287,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -14290,7 +14302,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('^XA');
@@ -14380,7 +14392,7 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
@@ -14388,7 +14400,7 @@ begin
   RgOpcoes.ItemIndex := 0;
   if Produto <> nil then
     FreeAndNil(Produto);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_NovoGarden_Menor;
@@ -14400,7 +14412,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14409,7 +14421,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('^XA');
@@ -14456,11 +14468,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_NovoGarden_Maior;
@@ -14472,7 +14484,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14481,7 +14493,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('^XA');
@@ -14529,11 +14541,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_NegroMonte_Joia;
@@ -14545,7 +14557,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14554,7 +14566,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14580,11 +14592,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Pandoro_Pequena;
@@ -14596,7 +14608,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14605,7 +14617,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14631,11 +14643,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Geovana;
@@ -14647,7 +14659,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14656,7 +14668,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14689,11 +14701,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_AquiAcha;
@@ -14705,7 +14717,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14714,7 +14726,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14753,11 +14765,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_SAOMARCOS;
@@ -14769,7 +14781,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14778,7 +14790,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -14810,11 +14822,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Cardoso;
@@ -14828,7 +14840,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14838,7 +14850,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -14853,7 +14865,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
@@ -14899,13 +14911,13 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TokaDasGrifes;
@@ -14919,7 +14931,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -14929,7 +14941,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -14944,7 +14956,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
@@ -15007,13 +15019,13 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_NegroMonte_3_Colunas;
@@ -15025,7 +15037,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15034,7 +15046,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -15076,11 +15088,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ConstruFort_3_Colunas_Preco;
@@ -15092,7 +15104,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15101,7 +15113,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -15140,11 +15152,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiqueta_Dumbu_Gondola_Pequena;
@@ -15156,7 +15168,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15165,7 +15177,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -15195,11 +15207,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ConstruFort_3_Colunas;
@@ -15211,7 +15223,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15220,7 +15232,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -15259,11 +15271,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ELGIN_LAYELUC;
@@ -15275,7 +15287,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15284,7 +15296,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''23.0 mm''></xpml>I8,1,001');
@@ -15325,11 +15337,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Mercatto;
@@ -15341,7 +15353,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15350,7 +15362,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -15382,11 +15394,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_DUMBU;
@@ -15398,7 +15410,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15407,7 +15419,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>I8,1,001');
@@ -15440,11 +15452,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoMaisEconomia_Gondola;
@@ -15456,7 +15468,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15465,7 +15477,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -15493,11 +15505,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoMaisEconomia_Gondola_Mini;
@@ -15509,7 +15521,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15518,7 +15530,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -15545,11 +15557,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Anadri_A;
@@ -15561,7 +15573,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15570,7 +15582,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -15610,11 +15622,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Anadri_C;
@@ -15626,7 +15638,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15635,7 +15647,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
     Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''50.0 mm''></xpml>n');
@@ -15665,11 +15677,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Anadri_B;
@@ -15681,7 +15693,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15690,7 +15702,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -15732,11 +15744,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasShoez;
@@ -15749,7 +15761,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15758,7 +15770,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     desc1 := trim(Copy(SgDados.Cells[1, L], 1,20));
@@ -15810,11 +15822,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDiju;
@@ -15827,7 +15839,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15836,7 +15848,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     desc1 := trim(Copy(SgDados.Cells[1, L], 1,20));
@@ -15893,11 +15905,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Diju_New;
@@ -15912,7 +15924,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -15922,7 +15934,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -15937,7 +15949,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''40.0 mm''></xpml>n');
@@ -15995,7 +16007,7 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
@@ -16003,7 +16015,7 @@ begin
   RgOpcoes.ItemIndex := 0;
   if Produto <> nil then
     FreeAndNil(Produto);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.EdtUsuarioChange(Sender: TObject);
@@ -16021,7 +16033,7 @@ begin
   // if (cbxUsuario.Text = '')or(cbxUsuario.ItemIndex < 0) then
   // begin
   // Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-  // MessageDlg ('Selecione um usu·rio da lista!',mtWarning,[mbOk],0);
+  // MessageDlg ('Selecione um usu√°rio da lista!',mtWarning,[mbOk],0);
   // cbxUsuario.setfocus;
   // Application.OnMessage := FormPrincipal.ProcessaMsg;
   // Exit;
@@ -16041,7 +16053,7 @@ begin
       vVetor[i, j] := '';
   if EdtUsuario.Text <> '' then
   begin
-    i := 1; // Ìndice do vetor
+    i := 1; // √≠ndice do vetor
     vSenha := Senha(EdtUsuario.Text, 'C');
     with DModulo.ADOQuery1 do
     begin
@@ -16057,7 +16069,7 @@ begin
       if RecordCount = 0 then
       begin
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-        MessageDlg('Senha inv·lida. Tente novamente!' + ' ', mtWarning,
+        MessageDlg('Senha inv√°lida. Tente novamente!' + ' ', mtWarning,
           [mbOK], 0);
 
         limparDadosDoUsuario;
@@ -16166,7 +16178,8 @@ function TFrmPrincipalPreVenda.Empresas_UmaEtiqueta_porColuna: Boolean;
 begin
   if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
-   or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') then
+   or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
+   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') then
     Result := True
   else
     Result := False;
@@ -16184,8 +16197,8 @@ begin
       if (SgDados.Cells[0, i] <> '') and (SgDados.Cells[14, i] = '') then
       begin
         Result := False;
-        Application.MessageBox('… necess·rio selecionar o local de entrega de todos os produtos.',
-          'AtenÁ„o', mb_Ok + MB_ICONWARNING);
+        Application.MessageBox('√â necess√°rio selecionar o local de entrega de todos os produtos.',
+          'Aten√ß√£o', mb_Ok + MB_ICONWARNING);
         Break;
       end;
     end;
@@ -16237,7 +16250,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16246,7 +16259,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -16284,7 +16297,7 @@ begin
     Editor.Lines.Add('411100000210288DISCABOS');
     Editor.Lines.Add('1F2201500170150' + SgDados.Cells[6, L] + '');
     Editor.Lines.Add('1F2201500170294' + SgDados.Cells[6, L] + '');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -16300,11 +16313,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaLayeVictor;
@@ -16316,7 +16329,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16325,7 +16338,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -16374,7 +16387,7 @@ begin
     Editor.Lines.Add('B576,50,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('');
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -16388,11 +16401,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaLayeLuc;
@@ -16404,7 +16417,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16413,7 +16426,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -16448,7 +16461,7 @@ begin
     Editor.Lines.Add('A622,131,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A592,150,0,3,1,1,N,"R$ ' + SgDados.Cells[3, L] + '"');
     Editor.Lines.Add('Q184,24');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -16462,11 +16475,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaLordKids;
@@ -16480,17 +16493,17 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-  numeroNota := InputBox('Nota Fiscal','Insira a referÍncia da nota fiscal','');
+  numeroNota := InputBox('Nota Fiscal','Insira a refer√™ncia da nota fiscal','');
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     ref_interna := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L])).referenciaInterna; // codigo
@@ -16539,7 +16552,7 @@ begin
     Editor.Lines.Add('A574,32,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,20)) + '"');
     Editor.Lines.Add('A574,271,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,20)) + '"');
     Editor.Lines.Add('Q400,16');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -16553,11 +16566,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 function TFrmPrincipalPreVenda.MessageDlgDef(const Msg, MyCaption: string;
@@ -16584,7 +16597,7 @@ begin
               mrYes:
                 caption := 'Imprima';
               mrNo:
-                caption := 'N„o imprima';
+                caption := 'N√£o imprima';
               mrOK:
                 caption := 'Pequena';
               mrCancel:
@@ -16620,10 +16633,10 @@ var
   Cliente: TCliente;
 begin
 
-  // crio e preencho a lista de produtos q ser· passada para o form
+  // crio e preencho a lista de produtos q ser√° passada para o form
   if (ADOSPConsulta.Active) and (ADOSPConsulta.RecordCount > 0) then
-    Produto := TDOMProduto.Create(ADOSPConsulta.FieldByName('C”DIGO').AsInteger,
-      ADOSPConsulta.FieldByName('DESCRI«√O').AsString)
+    Produto := TDOMProduto.Create(ADOSPConsulta.FieldByName('C√ìDIGO').AsInteger,
+      ADOSPConsulta.FieldByName('DESCRI√á√ÉO').AsString)
   else
   begin
     MessageDlg('Selecione um produto.', mtInformation, [mbOK], 0);
@@ -16657,7 +16670,7 @@ var
   Cliente: TCliente;
 begin
 
-  // crio e preencho a lista de produtos q ser· passada para o form
+  // crio e preencho a lista de produtos q ser√° passada para o form
   produtos := TList<TDOMProduto>.Create;
   for i := 1 to (SgDados.RowCount - 1) do
     if TryStrToInt(SgDados.Cells[0, i], codigoProduto) then
@@ -16695,7 +16708,7 @@ begin
   else
   begin
     FreeAndNil(produtos);
-    ShowMessage('N„o existem produtos nesta prevenda.');
+    ShowMessage('N√£o existem produtos nesta prevenda.');
   end;
 end;
 
@@ -16704,7 +16717,7 @@ begin
   if FrmPrincipalPreVenda.vcdVendedor = '' then
   begin
     ShowMessage
-      ('Necess·rio efetuar o login na prevenda para visualizar essa opÁ„o.');
+      ('Necess√°rio efetuar o login na prevenda para visualizar essa op√ß√£o.');
     exit;
   end;
   Consulta_prevenca := TConsulta_prevenca.Create(Application);
@@ -16722,7 +16735,7 @@ begin
   consultarProdutosVendidosJunto;
 end;
 
-procedure TFrmPrincipalPreVenda.mi⁄ltimasVendasDoProdutoAoClienteClick
+procedure TFrmPrincipalPreVenda.mi√öltimasVendasDoProdutoAoClienteClick
   (Sender: TObject);
 begin
   consultarUltimasVendasDoProdutoAoCliente;
@@ -16742,7 +16755,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16751,7 +16764,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -16814,11 +16827,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaGrandeLayeVictor;
@@ -16830,7 +16843,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16839,7 +16852,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -16884,7 +16897,7 @@ begin
     Editor.Lines.Add('A818,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
     Editor.Lines.Add('');
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -16898,11 +16911,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaGrandeTriploRural;
@@ -16914,7 +16927,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -16923,7 +16936,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -17003,11 +17016,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 
 end;
 
@@ -17017,7 +17030,7 @@ var
   cdProduto, banco_deposito: string;
 begin
   CbLote.Clear;
-  cdProduto := ADOSPConsulta.FieldByName('CÛdigo').AsString;
+  cdProduto := ADOSPConsulta.FieldByName('C√≥digo').AsString;
   if Length(cdProduto) = 0 then
     exit;
   query := TADOQuery.Create(self);
@@ -17207,7 +17220,7 @@ begin
   // 'P WITH (NOLOCK),Funcionario F WITH (NOLOCK),Cargo C WITH (NOLOCK)        '+
   // 'Where P.cdPessoa = F.cdPessoa and F.cdCargo = C.cdCargo                  '+
   // 'and P.ser = ''U'' and P.dsAtivo = ''S'' and C.nmCargo in                 '+
-  // '(''Vendedor'',''BALCONISTA'',''T…CNICO'',''CHEFE CPD'',''FARMACEUTICA'') '+
+  // '(''Vendedor'',''BALCONISTA'',''T√âCNICO'',''CHEFE CPD'',''FARMACEUTICA'') '+
   // 'Order By P.nmPessoa                                                      ';
   // MontaComboListBoolADO(ADOQryNome,CbxNome);
   // end;
@@ -17272,7 +17285,7 @@ begin
   if trim(copy_campo(CbxCliente.Text, '|', 2)) = '' then
   begin
     Application.MessageBox
-      ('Selecione um cliente antes de abrir o cadastro de lista!', 'AtenÁ„o',
+      ('Selecione um cliente antes de abrir o cadastro de lista!', 'Aten√ß√£o',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     CbxCliente.Setfocus;
     exit;
@@ -17323,20 +17336,20 @@ begin
     if (ACol = 14) and (cbxEntrega.Items.Count > 0) and (gdFocused in State) then
     begin
       cbxEntrega.Visible := True;
-      // pega o ret‚ngulo da cÈlula
+      // pega o ret√¢ngulo da c√©lula
       Re := SgDados.CellRect(ACol, ARow);
-      // posiciona em relaÁ„o ‡ Form
+      // posiciona em rela√ß√£o √† Form
       Re.Left  := Re.Left + SgDados.Left;
       Re.Right := Re.Right + SgDados.Left;
       Re.Top   := Re.Top + SgDados.Top;
       Re.Bottom := Re.Bottom + SgDados.Top;
       cbxEntrega.SetBounds(Re.Left + 1,Re.Top + 1, (Re.Right + 1) - Re.Left,(Re.Bottom + 1) - Re.Top);
-      // posiciona a combobox no valor da cÈlula
+      // posiciona a combobox no valor da c√©lula
       cbxEntrega.ItemIndex := cbxEntrega.Items.IndexOf(SgDados.Cells[ACol,ARow]);
       cbxEntrega.Visible   := True;
       cbxEntrega.BringToFront;
       Re := SgDados.CellRect(ACol +1, ARow);
-      // posiciona em relaÁ„o ‡ Form
+      // posiciona em rela√ß√£o √† Form
       Re.Left  := Re.Left + SgDados.Left;
       Re.Right := Re.Right + SgDados.Left;
       Re.Top   := Re.Top + SgDados.Top;
@@ -17360,7 +17373,7 @@ begin
         DModulo.Conexao.BeginTrans;
         sucesso := false;
         if RgOpcoes.ItemIndex = 1 then
-        begin // Se for alteraÁ„o de um orÁamento
+        begin // Se for altera√ß√£o de um or√ßamento
           if TNEGPrevenda.isSimplesRemessa(prevenda.numeroPrevenda) then
             prevenda.simplesRemessa := 1
           else
@@ -17389,7 +17402,7 @@ begin
           if (RgOpcoes.ItemIndex = 0) or (RgOpcoes.ItemIndex = 2) or
             (RgOpcoes.ItemIndex = 4) then
           // or ((RgOpcoes.ItemIndex = 3)and((UpperCase( vEmpresa ) = 'AMBIENTAR')or(UpperCase( vEmpresa ) = 'PBFARMA')))
-          begin // Se for salvar um orÁamento
+          begin // Se for salvar um or√ßamento
             prevenda.numeroPrevenda :=
               StrToInt(UltimoLancamentoBloqueandoTabela(ADOQrySalvar));
             sql.Text := 'Update Sequencial Set nrPedidos = nrPedidos + 1';
@@ -17456,7 +17469,7 @@ begin
                 DModulo.Conexao.BeginTrans;
                 for i := 0 to listaProdutosAcrescimo.Count -1 do
                 begin
-                  TNEGLoja.SalvaLogEventos('Produto com AcrÈscimo PrÈ-Venda', IntToStr(prevenda.numeroPrevenda),
+                  TNEGLoja.SalvaLogEventos('Produto com Acr√©scimo Pr√©-Venda', IntToStr(prevenda.numeroPrevenda),
                   IntToStr(listaProdutosAcrescimo.Items[i]), 0 , prevenda.vendedor.codigo, '16');
                 end;
                 DModulo.Conexao.CommitTrans;
@@ -17468,29 +17481,29 @@ begin
             end;
             Application.OnMessage := FormPrincipal.NaoProcessaMsg;
             // if RgOpcoes.ItemIndex = 2 then //Orcamento
-            MessageDlg('PrÈ-Venda/OrÁamento salvo com sucesso! ' + #13#10 +
-              'N∫ ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,
+            MessageDlg('Pr√©-Venda/Or√ßamento salvo com sucesso! ' + #13#10 +
+              'N¬∫ ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,
               [mbOK], 0);
             if (chkbxOrcamentoExterno.Checked = True) then
               ImprimeOrcamentoExterno(enviar_email)
 //            else if (UpperCase(vEmpresa) = 'DELUC') then
 //              Application.MessageBox(PWideChar('Prevenda: ' + EdtLancto.Text +
-//                #13#10 + 'Valor: R$ ' + EdtSubTotal.Text), 'AtenÁ„o',
+//                #13#10 + 'Valor: R$ ' + EdtSubTotal.Text), 'Aten√ß√£o',
 //                mb_Ok + MB_ICONWARNING + MB_APPLMODAL)
             else if (UpperCase(vEmpresa) = 'COPYART') then
             begin
               if nrOrcamentoDia > 0 then
-                Msg := 'PrÈ-Venda/OrÁamento salvo com sucesso! ' + #13#10 +
-                  'N∫ ' + FrmPrincipalPreVenda.EdtLancto.Text + #13#10 + #13#10
+                Msg := 'Pr√©-Venda/Or√ßamento salvo com sucesso! ' + #13#10 +
+                  'N¬∫ ' + FrmPrincipalPreVenda.EdtLancto.Text + #13#10 + #13#10
                   + 'Sequencial: ' + intToStr(nrOrcamentoDia)
               else
-                Msg := 'PrÈ-Venda/OrÁamento salvo com sucesso! ' + #13#10 +
-                  'N∫ ' + FrmPrincipalPreVenda.EdtLancto.Text;
+                Msg := 'Pr√©-Venda/Or√ßamento salvo com sucesso! ' + #13#10 +
+                  'N¬∫ ' + FrmPrincipalPreVenda.EdtLancto.Text;
               if FrmPrincipalPreVenda.vPergunta_Apos_Comprovante = '1' then
               begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') then
                 begin
-                  if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ '
+                  if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ '
                     + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                     [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeComprovante
@@ -17501,13 +17514,13 @@ begin
                 begin
                   if nrOrcamentoDia > 0 then
                   begin
-                    if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
+                    if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
                       #13#10 + 'Sequencial: ' + intToStr(nrOrcamentoDia), mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                   end else
                   begin
                     if MessageDlg
-                      ('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ ' +
+                      ('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ ' +
                       FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento
@@ -17523,7 +17536,7 @@ begin
                 begin
                   if FrmPrincipalPreVenda.vPergunta_Apos_Comprovante = '1' then
                   begin
-                    if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ '
+                    if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -17538,20 +17551,20 @@ begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') or
                   (UpperCase(vEmpresa) = 'PROAUTO') then
                 begin
-                  if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ '
+                  if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ '
                     + FrmPrincipalPreVenda.EdtLancto.Text + ' em 40 colunas ?',
                     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeComprovante(StrToInt(prevenda.codigoFormaPagamento));
                 end;
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
                 begin
-                  if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ '
+                  if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento), enviar_email);
                 end;
                 // if FrmPrincipalPreVenda.vImpressao_80 = 'S' then begin
-                // if MessageDlg('Deseja imprimir a PrÈ-Venda \ OrÁamento de n∫ '+ FrmPrincipalPreVenda.EdtLancto.Text + ' em 80 colunas ?',
+                // if MessageDlg('Deseja imprimir a Pr√©-Venda \ Or√ßamento de n¬∫ '+ FrmPrincipalPreVenda.EdtLancto.Text + ' em 80 colunas ?',
                 // mtConfirmation,[mbYes, mbNo],0) = mrYes then
                 // FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                 // end;
@@ -17563,7 +17576,7 @@ begin
                   FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento), enviar_email);
               end;
               // if RgOpcoes.ItemIndex <> 2 then // diferente de orcamento
-              // MessageDlg('PrÈ-Venda/OrÁamento salvo com sucesso! ' + #13#10 + 'N∫ ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,[mbOk],0);
+              // MessageDlg('Pr√©-Venda/Or√ßamento salvo com sucesso! ' + #13#10 + 'N¬∫ ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,[mbOk],0);
             end;
           except
             //
@@ -17595,12 +17608,12 @@ var
   L, vTeste: Integer;
   vIdent: String;
 begin
-  vIdent := InputBox('ObservaÁ„o', 'ObservaÁ„o da transferencia', '');
+  vIdent := InputBox('Observa√ß√£o', 'Observa√ß√£o da transferencia', '');
   With ADOQrySalvar do
   begin
     Try
       DModulo.Conexao.BeginTrans;
-      // tem q atualizar o sequencial da prÈ-venda sen„o n faz 2 transferencias de vez
+      // tem q atualizar o sequencial da pr√©-venda sen√£o n faz 2 transferencias de vez
       // verificar o por que nao esta pegando o UltimoLancamento ANDRE
       sql.Text :=
         'Update Sequencial Set nrPedidos = nrPedidos + 1 Where cdCodigo = 1 ';
@@ -17678,7 +17691,7 @@ begin
         ExecSQL;
       end; // for StringGrid
       DModulo.Conexao.CommitTrans;
-      MessageDlg('LanÁamento confirmado com sucesso!', mtInformation,
+      MessageDlg('Lan√ßamento confirmado com sucesso!', mtInformation,
         [mbOK], 0);
       Application.OnMessage := FormPrincipal.ProcessaMsg;
     Except
@@ -17689,7 +17702,7 @@ begin
           'TFrmPrincipalPreVenda.SalvaTransferencia', e.Message,
           EdtLancto.Text);
         MessageDlg
-          ('N„o foi possivel salvar os dados. J· existe uma transferencia com o mesmo n˙mero de lanÁamento!',
+          ('N√£o foi possivel salvar os dados. J√° existe uma transferencia com o mesmo n√∫mero de lan√ßamento!',
           mterror, [mbOK], 0);
       end;
     end; // except
@@ -17713,7 +17726,7 @@ var
   data, vTime: String[10];
 begin
   if FileExists('Texto.txt') then
-  begin // Caso n„o encontre o arquivo.
+  begin // Caso n√£o encontre o arquivo.
     vQtdPrint := '1';
     for j := 1 to StrToInt(vQtdPrint) do
     begin
@@ -17827,8 +17840,8 @@ begin
   if ADOSPConsulta.RecordCount > 0 then
   begin
     With ADOQryUltimoCodigo do
-    begin // Pega da conex„o depÛsito
-      if (UpperCase(vEmpresa) = 'BELAVISTA') and (dsCGC <> '32738825000102') then // diferente do material de construÁıes
+    begin // Pega da conex√£o dep√≥sito
+      if (UpperCase(vEmpresa) = 'BELAVISTA') and (dsCGC <> '32738825000102') then // diferente do material de constru√ß√µes
         sql.Text := 'Select nrqtdReal From IteFilialProduto WITH (NOLOCK) WHERE cdFilial = '+vcdDeposito+' AND '
       else
         sql.Text := 'Select nrqtdReal From Produto WITH (NOLOCK) WHERE ';
@@ -17836,13 +17849,13 @@ begin
       begin
         sql.Add('dsReferencia = :REFERENCIA ');
         Parameters.ParamByName('REFERENCIA').Value :=
-          ADOSPConsulta.FieldByName('REFER NCIA').AsString;
+          ADOSPConsulta.FieldByName('REFER√äNCIA').AsString;
       end
       else
       begin
         sql.Add('cdProduto = :CDPRODUTO ');
         Parameters.ParamByName('CDPRODUTO').Value :=
-          ADOSPConsulta.FieldByName('CÛdigo').AsString;
+          ADOSPConsulta.FieldByName('C√≥digo').AsString;
       end;
       open;
     end;
@@ -17873,7 +17886,7 @@ var
   Path: String;
   ConstBd: String;
 begin
-  { Procedimento para criar ou carregar configuraÁıes do BD }
+  { Procedimento para criar ou carregar configura√ß√µes do BD }
   try { try finnaly }
     try
       Path := ExtractFilePath(Application.ExeName);
@@ -17881,7 +17894,7 @@ begin
       if not FileExists(Path + 'ConfSQLDep.ini') then
       begin
         ShowMessage
-          ('Configure a Conex„o com o Banco SQL Server para o DepÛsito');
+          ('Configure a Conex√£o com o Banco SQL Server para o Dep√≥sito');
         Arquivo := TIniFile.Create(Path + 'ConfSQLDep.ini');
         DModulo.ADODeposito.ConnectionString := PromptDataSource(self.handle,
           'Provider=SQLOLEDB.1;Password=;' + 'Persist Security Info=True;' +
@@ -17895,7 +17908,7 @@ begin
         ConstBd := Arquivo.ReadString('BD', 'Path', '');
       end;
     except
-      ShowMessage('Erro ao carregar o arquivo de InicializaÁ„o. ' + #13 +
+      ShowMessage('Erro ao carregar o arquivo de Inicializa√ß√£o. ' + #13 +
         'Entre em contato com o Suporte do Sistema!');
     end;
   finally
@@ -17910,7 +17923,7 @@ begin
       Connected := True;
     end;
   except
-    ShowMessage('N„o foi possÌvel conectar com o banco de dados.' + #13 +
+    ShowMessage('N√£o foi poss√≠vel conectar com o banco de dados.' + #13 +
       '   Entre em contato com o suporte do sistema');
     Application.Terminate; // TESTE
     FrmPrincipalPreVenda.Close;
@@ -17947,7 +17960,7 @@ begin
     FrmContagem.ShowModal;
   end
   else
-    ShowMessage('DisponÌvel somete para o cliente EletrÙnica Nacional!');
+    ShowMessage('Dispon√≠vel somete para o cliente Eletr√¥nica Nacional!');
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasTemdeTudoSempre;
@@ -17959,7 +17972,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -17968,7 +17981,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -18012,7 +18025,7 @@ begin
     // codigo
     Editor.Lines.Add('121100000680289' + 'Cod.' + SgDados.Cells[0, L] + '');
     // codigo
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -18028,11 +18041,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasVarejao;
@@ -18045,7 +18058,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -18054,7 +18067,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -18112,7 +18125,7 @@ begin
       Editor.Lines.Add('A343,160,2,4,2,2,N,"R$ ' + SgDados.Cells[3, L] + '"');
       Editor.Lines.Add('A679,208,2,4,1,1,N,"' + SgDados.Cells[1, L] + '"');
     end;
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + intToStr(Trunc(vqtd)));
   end;
@@ -18122,11 +18135,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJUDASTADEU_L42;
@@ -18139,7 +18152,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -18148,7 +18161,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -18171,7 +18184,7 @@ begin
     Editor.Lines.Add('A343,88,2,2,1,1,N,"Cod.:"');
     Editor.Lines.Add('A343,160,2,4,2,2,N,"R$ ' + SgDados.Cells[3, L] + '"');
     Editor.Lines.Add('A679,208,2,4,1,1,N,"' + SgDados.Cells[1, L] + '"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + intToStr(Trunc(vqtd)));
   end;
@@ -18181,11 +18194,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasGentePequena;
@@ -18197,7 +18210,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -18206,7 +18219,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,A,001');
@@ -18244,7 +18257,7 @@ begin
     Editor.Lines.Add('A245,18,2,2,1,1,N,"' + (SgDados.Cells[6, L]) + '"');
     Editor.Lines.Add('A528,18,2,2,1,1,N,"' + (SgDados.Cells[6, L]) + '"');
     Editor.Lines.Add('A822,18,2,2,1,1,N,"' + (SgDados.Cells[6, L]) + '"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -18258,11 +18271,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasGoncalves;
@@ -18274,7 +18287,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -18283,7 +18296,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,A,001');
@@ -18300,8 +18313,8 @@ begin
     Editor.Lines.Add('R32,0');
     Editor.Lines.Add('f100');
     Editor.Lines.Add('N');
-    Editor.Lines.Add('A441,11,0,4,1,1,N,"Auto PeÁa GonÁales"');
-    Editor.Lines.Add('A441,11,0,4,1,1,N,"Auto PeÁa GonÁales"');
+    Editor.Lines.Add('A441,11,0,4,1,1,N,"Auto Pe√ßa Gon√ßales"');
+    Editor.Lines.Add('A441,11,0,4,1,1,N,"Auto Pe√ßa Gon√ßales"');
     Editor.Lines.Add('A420,189,0,2,1,1,N,"Data: 14/12/2012"');
     Editor.Lines.Add('A1,189,0,2,1,1,N,"Data: 14/12/2012"');
     Editor.Lines.Add('A420,131,0,2,1,1,N,"Cod: ' + SgDados.Cells[0, L] +
@@ -18320,7 +18333,7 @@ begin
       19)) + '"');
     Editor.Lines.Add('A0,54,0,3,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
       19)) + '"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -18334,11 +18347,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDeluc;
@@ -18350,7 +18363,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -18359,7 +18372,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('CT~~CD,~CC^~CT~');
@@ -18403,7 +18416,7 @@ begin
       L] + '^FS');
     Editor.Lines.Add('^FT8,75^A0N,28,28^FH\^FD' + 'R$' + SgDados.Cells[3,
       L] + '^FS');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -18417,11 +18430,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.atualizaEditQtdItens;
@@ -18449,7 +18462,7 @@ begin
     and (TNEGLoja.getVersaoBanco < 9.21) then
   begin // ATACAREJO
     MessageDlg
-      ('Favor entrar em contato com a Support Inform·tica solicitando a atualizaÁ„o do RodaScript para continuar utilizando a PrÈ-Venda.',
+      ('Favor entrar em contato com a Support Inform√°tica solicitando a atualiza√ß√£o do RodaScript para continuar utilizando a Pr√©-Venda.',
       mtWarning, [mbOK], 0);
     result := false;
   end;
@@ -18461,7 +18474,7 @@ begin
   if (trim(EdtCdNome.Text) = '') then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    ShowMessage('O nome do vendedor est· digitado errado!!');
+    ShowMessage('O nome do vendedor est√° digitado errado!!');
     cbxUsuario.Setfocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     BtnConfirmar.Enabled := True;
@@ -18486,8 +18499,8 @@ begin
       begin
         Application.MessageBox
           (PWideChar('O produto ' + prevenda.itens[i].descricao +
-          ' est· com a quantidade zerada ou negativa.' + #13#10 +
-          'Para excluÌ-lo da prÈ venda dÍ dois cliques no item!'), 'AtenÁ„o',
+          ' est√° com a quantidade zerada ou negativa.' + #13#10 +
+          'Para exclu√≠-lo da pr√© venda d√™ dois cliques no item!'), 'Aten√ß√£o',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         resultado := True;
         Break;
@@ -18503,10 +18516,10 @@ var
 begin
   if (trim(tipoForro) = '') or (RgOpcoes.ItemIndex = 1) then
   begin
-    tipoForro := ChamaInputBoxTipoForracao('ForraÁ„o',
+    tipoForro := ChamaInputBoxTipoForracao('Forra√ß√£o',
       'Escolha um estilo de forro na lista abaixo:');
     while tipoForro = '' do
-      tipoForro := ChamaInputBoxTipoForracao('ForraÁ„o',
+      tipoForro := ChamaInputBoxTipoForracao('Forra√ß√£o',
         'Escolha um estilo de forro na lista abaixo:');
   end;
   if (trim(turno) = '') or (RgOpcoes.ItemIndex = 1) then
@@ -18515,7 +18528,7 @@ begin
       'Escolha o turno do aluno na lista abaixo:'));
     while turno = '' do
     begin
-      turno := intToStr(ChamaInputBoxTurno('ForraÁ„o',
+      turno := intToStr(ChamaInputBoxTurno('Forra√ß√£o',
         'Escolha o turno do aluno na lista abaixo:'));
     end;
   end;
@@ -18570,14 +18583,14 @@ begin
   if (trim(EdtCdCliente.Text) = '') or (trim(EdtCdNome.Text) = '') then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    ShowMessage('O nome do cliente ou do vendedor est· digitado errado!!');
+    ShowMessage('O nome do cliente ou do vendedor est√° digitado errado!!');
     CbxCliente.Setfocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     exit;
   end;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para essa prÈ venda \ orÁamento!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para essa pr√© venda \ or√ßamento!',
       mtWarning, [mbOK], 0);
     EdtDesconto.Text := '0,00000';
     EdtSubTotal.Text := '0,00';
@@ -18588,8 +18601,8 @@ begin
     exit;
   end;
   Application.OnMessage := NaoProcessaMsg;
-  vTexto := InputBox('Impress„o de requisiÁ„o',
-    'Entre com o nome da empresa onde est· solicitando o material!', '');
+  vTexto := InputBox('Impress√£o de requisi√ß√£o',
+    'Entre com o nome da empresa onde est√° solicitando o material!', '');
   Application.OnMessage := ProcessaMsg;
   With ADOQrySalvar do
   begin
@@ -18599,7 +18612,7 @@ begin
       open;
       vRequisicao := FieldByName('Lancto').AsInteger;
       for L := 1 to SgDados.RowCount - 1 do
-      begin // Salvando os itens da prÈ-venda.
+      begin // Salvando os itens da pr√©-venda.
         if SgDados.Cells[0, L] = '' then
           Break;
         sql.Text :=
@@ -18608,15 +18621,15 @@ begin
         Parameters.ParamByName('REQ').Value := vRequisicao;
         Parameters.ParamByName('DATA').Value := vData_Banco;
         Parameters.ParamByName('PROD').Value := StrToIntDef(SgDados.Cells[0, L],
-          3); // default È o primeiro vendedor, segundo herbert
+          3); // default √© o primeiro vendedor, segundo herbert
         Parameters.ParamByName('CODIGO').Value := StrToInt(EdtCdNome.Text);
         Parameters.ParamByName('CLIENTE').Value :=
-          StrToIntDef(EdtCdCliente.Text, 1); // default È venda a consumidor
+          StrToIntDef(EdtCdCliente.Text, 1); // default √© venda a consumidor
         Parameters.ParamByName('EMPRESA').Value := vTexto;
         ExecSQL;
       end;
       DModulo.Conexao.CommitTrans;
-      MessageDlg('RequisiÁ„o OK!', mtConfirmation, [mbOK], 0);
+      MessageDlg('Requisi√ß√£o OK!', mtConfirmation, [mbOK], 0);
       ImprimirRequisicao(vTexto, vRequisicao);
     Except
       on e: Exception do
@@ -18624,7 +18637,7 @@ begin
         DModulo.Conexao.RollbackTrans;
         Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA',
           'TFrmPrincipalPreVenda.Imprimir1Click', e.Message, EdtLancto.Text);
-        MessageDlg('N„o foi possÌvel salvar!', mterror, [mbOK], 0);
+        MessageDlg('N√£o foi poss√≠vel salvar!', mterror, [mbOK], 0);
       end;
     end; // except
   end;
@@ -18651,7 +18664,7 @@ var
   data: String[10];
 begin
   if FileExists('Texto.txt') then
-  begin // Caso n„o encontre o arquivo.
+  begin // Caso n√£o encontre o arquivo.
     Editor.Clear;
     Editor.Lines.Add(' ');
     Editor.Lines.Add('       **S E M  V A L O R  F I S C A L**');
@@ -18666,7 +18679,7 @@ begin
     Editor.Lines.Add(' ============================================');
     Editor.Lines.Add(' Descricao                              Qtd');
     for L := 1 to SgDados.RowCount - 1 do
-    begin // Salvando os itens da prÈ-venda.
+    begin // Salvando os itens da pr√©-venda.
       if SgDados.Cells[0, L] = '' then
         Break;
       vcampo_2 := SgDados.Cells[1, L];
@@ -18705,8 +18718,8 @@ begin
       WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
         'print.bat')), sw_ShowNormal);
     if not FileExists('Print.bat') then
-    // Caso n„o encontre o arquivo tenta criar
-      ShowMessage('Arquivo Print.bat n„o foi encontrado!');
+    // Caso n√£o encontre o arquivo tenta criar
+      ShowMessage('Arquivo Print.bat n√£o foi encontrado!');
   end;
 end;
 
@@ -18722,8 +18735,8 @@ begin
     '@LANCAMENTO VARCHAR(20) = NULL, @PESSOA VARCHAR(20) = NULL' + #13#10 +
     'AS' + #13#10 +
     'IF @OPCAO = 0 AND @ATACADOVAREJO = ''V'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'P.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18744,8 +18757,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE = @C_BARRAS OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'I.VLPRECO      AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,' + #13#10 +
@@ -18767,8 +18780,8 @@ begin
     'ORDER BY P.CDPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF (@OPCAO = 1 OR @OPCAO = 5) AND (@ATACADOVAREJO = ''V'') BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'P.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18790,8 +18803,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE LIKE ''%''+ @C_BARRAS +''%'' OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'I.VLPRECO      AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB AS PEDIDO,P.DSUNIDADE AS UNIDADE,' + #13#10 +
@@ -18813,8 +18826,8 @@ begin
     'ORDER BY P.NMPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 2 AND @ATACADOVAREJO = ''V'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'P.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18836,8 +18849,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE = @C_BARRAS OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'I.VLPRECO      AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,' + #13#10 +
@@ -18860,8 +18873,8 @@ begin
     'ORDER BY P.DSREFERENCIA' + #13#10 +
     'END' + #13#10 +
     'IF (@OPCAO = 3) AND (@ATACADOVAREJO = ''V'') BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'P.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18883,8 +18896,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE LIKE ''%''+ @C_BARRAS +''%'' OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'I.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18908,9 +18921,9 @@ begin
     'ORDER BY P.CDCODIGODIC' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 4 AND @ATACADOVAREJO = ''V'' BEGIN' + #13#10 +
-    'SELECT DISTINCT P.CDPRODUTO AS C”DIGO,' + #13#10 +
-    'P.CDFABRICANTE AS C”DIGO_BARRAS,P.DSREFERENCIA AS REFER NCIA,' + #13#10 +
-    'P.NMPRODUTO    AS DESCRI«√O,W.NMPESSOA     AS FABRICANTE,' + #13#10 +
+    'SELECT DISTINCT P.CDPRODUTO AS C√ìDIGO,' + #13#10 +
+    'P.CDFABRICANTE AS C√ìDIGO_BARRAS,P.DSREFERENCIA AS REFER√äNCIA,' + #13#10 +
+    'P.NMPRODUTO    AS DESCRI√á√ÉO,W.NMPESSOA     AS FABRICANTE,' + #13#10 +
     'P.VLPRECO      AS PRECO,P.VLPRECO      AS VALOR,' + #13#10 +
     'P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,' + #13#10 +
@@ -18925,9 +18938,9 @@ begin
     'INNER JOIN CODADICIONAL C ON P.CDPRODUTO = C.CDPRODUTO' + #13#10 +
     'WHERE (I.DSPROMOCAO <> ''S'') AND (C.CDADICIONAL LIKE @NMGRUPO + ''%'' OR @NMGRUPO IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT DISTINCT P.CDPRODUTO AS C”DIGO,' + #13#10 +
-    'P.CDFABRICANTE AS C”DIGO_BARRAS,P.DSREFERENCIA AS REFER NCIA,' + #13#10 +
-    'P.NMPRODUTO    AS DESCRI«√O,W.NMPESSOA     AS FABRICANTE,' + #13#10 +
+    'SELECT DISTINCT P.CDPRODUTO AS C√ìDIGO,' + #13#10 +
+    'P.CDFABRICANTE AS C√ìDIGO_BARRAS,P.DSREFERENCIA AS REFER√äNCIA,' + #13#10 +
+    'P.NMPRODUTO    AS DESCRI√á√ÉO,W.NMPESSOA     AS FABRICANTE,' + #13#10 +
     'P.VLPRECO      AS PRECO,I.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
     'P.NRQTDCONTAB  AS PEDIDO,P.DSUNIDADE    AS UNIDADE,' + #13#10 +
@@ -18943,8 +18956,8 @@ begin
     'ORDER BY  P.NMPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 6 AND @ATACADOVAREJO = ''V'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'P.VLPRECO      AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,P.DSUNIDADE    AS UNIDADE,' + #13#10 +
@@ -18958,8 +18971,8 @@ begin
     'OR (P.CDPRODUTO IN(SELECT CDSIMILAR FROM SIMILAR WHERE CDPRODUTO = @CDPRODUTO))' + #13#10 +
     'OR (P.CDPRODUTO IN(SELECT CDPRODUTO FROM SIMILAR WHERE CDSIMILAR = @CDPRODUTO))' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLPRECO      AS PRECO,' + #13#10 +
     'I.VLPRECO      AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -18975,8 +18988,8 @@ begin
     'ORDER BY  P.NMPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 0 AND @ATACADOVAREJO = ''A'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,P.DSUNIDADE    AS UNIDADE,' + #13#10 +
@@ -18996,8 +19009,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE = @C_BARRAS OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19021,8 +19034,8 @@ begin
     'ORDER BY  P.CDPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF (@OPCAO = 1 OR @OPCAO = 5) AND (@ATACADOVAREJO = ''A'') BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,P.DSPRATELEIRA AS PRATELEIRA,' + #13#10 +
     'P.NRQTDREAL    AS ESTOQUE,P.NRQTDCONTAB  AS PEDIDO,' + #13#10 +
@@ -19043,8 +19056,8 @@ begin
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE LIKE ''%''+ @C_BARRAS +''%'' OR @C_BARRAS IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19068,8 +19081,8 @@ begin
     'ORDER BY P.NMPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 2 AND @ATACADOVAREJO = ''A'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19090,8 +19103,8 @@ begin
     'AND (G.NMGRUPO LIKE @NMGRUPO +''%'' OR @NMGRUPO IS NULL)' + #13#10 +
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE = @C_BARRAS OR @C_BARRAS IS NULL)' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19115,8 +19128,8 @@ begin
     'ORDER BY P.DSREFERENCIA' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 3 AND @ATACADOVAREJO = ''A'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19137,8 +19150,8 @@ begin
     'AND (G.NMGRUPO LIKE @NMGRUPO +''%'' OR @NMGRUPO IS NULL)' + #13#10 +
     'AND (P.NMPRODUTO LIKE ''%''+ @NMPRODUTO2 +''%'' OR @NMPRODUTO2 IS NULL)' + #13#10 +
     'AND (P.CDFABRICANTE = @C_BARRAS OR @C_BARRAS IS NULL)' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19162,8 +19175,8 @@ begin
     'ORDER BY P.CDCODIGODIC' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 4 AND @ATACADOVAREJO = ''A'' BEGIN' + #13#10 +
-    'SELECT DISTINCT P.CDPRODUTO AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT DISTINCT P.CDPRODUTO AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19178,8 +19191,8 @@ begin
     'INNER JOIN CODADICIONAL C ON P.CDPRODUTO = C.CDPRODUTO' + #13#10 +
     'WHERE (I.DSPROMOCAO <> ''S'') AND (C.CDADICIONAL LIKE @NMGRUPO + ''%'' OR @NMGRUPO IS NULL)' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT DISTINCT P.CDPRODUTO AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT DISTINCT P.CDPRODUTO AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19196,8 +19209,8 @@ begin
     'ORDER BY  P.NMPRODUTO' + #13#10 +
     'END' + #13#10 +
     'IF @OPCAO = 6 AND @ATACADOVAREJO = ''A'' BEGIN' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'P.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19213,8 +19226,8 @@ begin
     'OR (P.CDPRODUTO IN(SELECT CDSIMILAR FROM SIMILAR WHERE CDPRODUTO = @CDPRODUTO))' + #13#10 +
     'OR (P.CDPRODUTO IN(SELECT CDPRODUTO FROM SIMILAR WHERE CDSIMILAR = @CDPRODUTO))' + #13#10 +
     'UNION ALL' + #13#10 +
-    'SELECT P.CDPRODUTO    AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,' + #13#10 +
-    'P.DSREFERENCIA AS REFER NCIA,P.NMPRODUTO    AS DESCRI«√O,' + #13#10 +
+    'SELECT P.CDPRODUTO    AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,' + #13#10 +
+    'P.DSREFERENCIA AS REFER√äNCIA,P.NMPRODUTO    AS DESCRI√á√ÉO,' + #13#10 +
     'W.NMPESSOA     AS FABRICANTE,P.VLATACADO    AS PRECO,' + #13#10 +
     'I.VLATACADO    AS VALOR,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL    AS ESTOQUE,' + #13#10 +
@@ -19233,8 +19246,8 @@ begin
     'END' + #13#10 +
     'IF @OPCAO = 7' + #13#10 +
     'BEGIN' + #13#10 +
-    'SELECT  P.CDPRODUTO AS C”DIGO,P.CDFABRICANTE AS C”DIGO_BARRAS,P.DSREFERENCIA AS REFER NCIA,' + #13#10 +
-    'P.NMPRODUTO AS DESCRI«√O,W.NMPESSOA AS FABRICANTE,P.VLATACADO AS VALOR,P.VLPRECO AS PRECO,P.CDCODIGODIC,' + #13#10 +
+    'SELECT  P.CDPRODUTO AS C√ìDIGO,P.CDFABRICANTE AS C√ìDIGO_BARRAS,P.DSREFERENCIA AS REFER√äNCIA,' + #13#10 +
+    'P.NMPRODUTO AS DESCRI√á√ÉO,W.NMPESSOA AS FABRICANTE,P.VLATACADO AS VALOR,P.VLPRECO AS PRECO,P.CDCODIGODIC,' + #13#10 +
     'P.DSPRATELEIRA AS PRATELEIRA,P.NRQTDREAL AS ESTOQUE,P.NRQTDCONTAB AS PEDIDO,' + #13#10 +
     'P.DSUNIDADE AS UNIDADE,P.DSEMBALAGEM AS EMBALAGEM,P.NRPESO AS PESO,G.NMGRUPO AS GRUPO,' + #13#10 +
     'P.CDPESSOA AS FORNECEDOR,P.DSPROMOCAO,P.DSPROMOCAOVAREJO,P.NRQTDPROMOCAO,P.dsAtivo,P.dsCFOPD,P.dsCFOPF' + #13#10 +
@@ -19271,7 +19284,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19280,7 +19293,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -19307,7 +19320,7 @@ begin
     Editor.Lines.Add('192200202360111' + 'HIPER J. ALVES'); // codigo
     Editor.Lines.Add('192300101350102' + trim(Copy(SgDados.Cells[1, L], 20, 40))
       + ''); // descricao
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -19323,11 +19336,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDIEGOCUNHA_GONDOLA;
@@ -19339,7 +19352,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19348,7 +19361,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     // Editor.Lines.Add('N');
@@ -19396,11 +19409,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDIEGOCUNHA_3COLUNAS;
@@ -19412,7 +19425,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19421,7 +19434,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -19469,7 +19482,7 @@ begin
 
     Editor.Lines.Add('Q176,24');
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -19485,11 +19498,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasVIVA_GONDOLA_PEQUENA;
@@ -19501,7 +19514,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19510,7 +19523,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -19548,11 +19561,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
       'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasVIVA_3COLUNAS;
@@ -19564,7 +19577,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19573,7 +19586,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -19638,11 +19651,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasAquarium;
@@ -19654,7 +19667,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19663,7 +19676,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''20.0 mm''></xpml>n');
@@ -19745,7 +19758,7 @@ begin
     Editor.Lines.Add('1Y1100000360060PB1');
     Editor.Lines.Add('1Y1100000360205PB1');
     Editor.Lines.Add('1Y1100000360346PB1');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('^' + FormatFloat('0', vqtd));
     Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
@@ -19758,11 +19771,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasFarofaChicBijoux;
@@ -19774,7 +19787,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19783,7 +19796,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''21.0 mm''></xpml>I8,A');
@@ -19817,11 +19830,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCasaDasPickups;
@@ -19834,7 +19847,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19843,7 +19856,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -19880,11 +19893,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJNUNES_Gondola;
@@ -19896,7 +19909,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19905,7 +19918,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>I8,1,001');
@@ -19932,11 +19945,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJNUNES_3COL;
@@ -19948,7 +19961,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -19957,7 +19970,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20023,11 +20036,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -20040,7 +20053,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20049,7 +20062,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''24.0 mm''></xpml>I8,1,001');
@@ -20092,11 +20105,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSA;
@@ -20108,7 +20121,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20117,7 +20130,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -20153,11 +20166,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCruzeiro;
@@ -20170,7 +20183,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20179,7 +20192,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -20214,11 +20227,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasMiniMercadoBemBaratinho;
@@ -20231,7 +20244,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20240,7 +20253,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -20275,11 +20288,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCOISABOA;
@@ -20292,7 +20305,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20301,7 +20314,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -20334,11 +20347,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCHALOC_Lingerie;
@@ -20350,7 +20363,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20359,7 +20372,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20399,11 +20412,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCHALOC_Tecidos;
@@ -20415,7 +20428,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20424,7 +20437,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20458,11 +20471,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSaboresDaVila;
@@ -20474,7 +20487,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20483,7 +20496,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20517,11 +20530,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasLaCasaDecor;
@@ -20535,7 +20548,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20545,7 +20558,7 @@ begin
   Editor.Lines.Clear;
   lstEtiqueta := TList<TProdutoEtiqueta>.Create;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     for I := 1 to Round(StrtoFloat(SgDados.Cells[2, L])) do begin
@@ -20559,7 +20572,7 @@ begin
   end;
   pont := 0;
   for L := 0 to lstEtiqueta.Count - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if L < pont then continue;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('q832');
@@ -20612,11 +20625,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasLosSantos;
@@ -20628,7 +20641,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20637,7 +20650,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20668,11 +20681,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasLosSantos_3Colunas;
@@ -20684,7 +20697,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20693,7 +20706,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -20733,11 +20746,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSUAQUITANDA;
@@ -20749,7 +20762,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20758,7 +20771,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('n');
@@ -20788,11 +20801,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJABUTIANA;
@@ -20804,7 +20817,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20813,7 +20826,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('n');
@@ -20842,11 +20855,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSA_Gondola;
@@ -20858,7 +20871,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20867,7 +20880,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''30.0 mm''></xpml>n');
@@ -20898,11 +20911,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasAsaBranca_Gondola;
@@ -20915,7 +20928,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20924,7 +20937,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -20957,11 +20970,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasAsaBranca_Gondola_Varejo;
@@ -20974,7 +20987,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -20983,7 +20996,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -21013,11 +21026,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDulalar;
@@ -21029,7 +21042,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21038,7 +21051,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -21062,7 +21075,7 @@ begin
     Editor.Lines.Add('1F4405300010209' + SgDados.Cells[6, L] + ''); // barra
     Editor.Lines.Add('141100000330028R$.:' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])) + ''); // valor
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('^' + FormatFloat('0', vqtd));
     Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
@@ -21074,11 +21087,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasFRUTARIA;
@@ -21090,7 +21103,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21099,7 +21112,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -21123,7 +21136,7 @@ begin
     Editor.Lines.Add('1F4405300010150' + SgDados.Cells[6, L] + ''); // barra
     Editor.Lines.Add('141100000330028R$.:' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])) + ''); // valor
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('^' + FormatFloat('0', vqtd));
     Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
@@ -21135,11 +21148,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJALVES_Gondola;
@@ -21151,7 +21164,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21160,7 +21173,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -21207,7 +21220,7 @@ begin
     // Editor.Lines.Add('191100500410036'+'R$'+FormatFloat('0.00',strtofloat(SgDados.Cells[3,L]))+'');   //valor
     // Editor.Lines.Add('191100300610035'+'Cod.'+SgDados.Cells[0,L]+''); //codigo
     // Editor.Lines.Add('191100400890139'+'HIPER J. ALVES'); //codigo
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     // if Frac(StrToFloat(SgDados.Cells[2,L])/3) = 0.00 then
     // vQtd := StrToFloat(SgDados.Cells[2,L])/3
     // else vQtd := (StrToint(FormatFloat('0000',StrToFloat(SgDados.Cells[2,L]))) div 3) + 1;
@@ -21221,11 +21234,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasONIX_FOLHEADOS;
@@ -21238,7 +21251,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21247,7 +21260,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -21266,7 +21279,7 @@ begin
     Editor.Lines.Add('1912A0600140201'+FormatDateTime('dd/MM/yyyy',Produto.dtCompra));
     Editor.Lines.Add('1912A0600210023'+trim(Copy(SgDados.Cells[1, L], 19, 20)));
 //    Editor.Lines.Add('PUTBMP 642,73,"LOGO.BMP"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q000'+intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -21278,11 +21291,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasONIX_OURO;
@@ -21295,7 +21308,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21304,7 +21317,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -21323,7 +21336,7 @@ begin
     Editor.Lines.Add('1912A0600140201'+Produto.referenciaInterna);
     Editor.Lines.Add('1912A0600210023'+trim(Copy(SgDados.Cells[1, L], 19, 20)));
 //    Editor.Lines.Add('PUTBMP 642,73,"LOGO.BMP"');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q000'+intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -21335,11 +21348,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDONA_SANTA;
@@ -21354,7 +21367,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21364,7 +21377,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -21379,7 +21392,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     produto := TNEGProduto.buscarProduto(StrtoInt(SgDados.Cells[0,L]));
     Editor.Lines.Add('n');
@@ -21428,13 +21441,13 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasWINBOX;
@@ -21446,7 +21459,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21455,7 +21468,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('q308');
@@ -21493,11 +21506,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasMIXTUDO;
@@ -21509,7 +21522,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21518,7 +21531,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -21557,11 +21570,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJALVES_Pequena;
@@ -21573,7 +21586,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21582,7 +21595,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -21630,7 +21643,7 @@ begin
     Editor.Lines.Add('121100000750015' + 'HIPER J. ALVES'); // codigo
     Editor.Lines.Add('121100000750160' + 'HIPER J. ALVES'); // codigo
     Editor.Lines.Add('121100000750304' + 'HIPER J. ALVES'); // codigo
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -21646,11 +21659,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.Visualizarapelidodocliente1Click
@@ -21667,7 +21680,7 @@ begin
     if (DModulo.ADOQuery1.RecordCount > 0) and
       (trim(DModulo.ADOQuery1.FieldByName('dsNaturalidade').AsString) <> '')
     then
-      ShowMessage('O apelido do cliente È: ' + #13#10 +
+      ShowMessage('O apelido do cliente √©: ' + #13#10 +
         DModulo.ADOQuery1.FieldByName('dsNaturalidade').AsString)
     else
     begin
@@ -21677,10 +21690,10 @@ begin
       open;
       if (DModulo.ADOQuery1.RecordCount > 0) and
         (trim(DModulo.ADOQuery1.FieldByName('nmContato').AsString) <> '') then
-        ShowMessage('O apelido do cliente È: ' + #13#10 +
+        ShowMessage('O apelido do cliente √©: ' + #13#10 +
           DModulo.ADOQuery1.FieldByName('nmContato').AsString)
       else
-        ShowMessage('O apelido do cliente n„o encontrado!');
+        ShowMessage('O apelido do cliente n√£o encontrado!');
     end;
   end;
 end;
@@ -21717,14 +21730,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
   if Application.MessageBox
-    ('Imprimir etiqueta com o PreÁo? (SIM) ou com o Peso? (NAO)', 'ConfirmaÁ„o',
+    ('Imprimir etiqueta com o Pre√ßo? (SIM) ou com o Peso? (NAO)', 'Confirma√ß√£o',
     Mb_YesNo + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
     imprimir_Com_Preco := True;
 
@@ -21736,7 +21749,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -21751,7 +21764,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
 
     Editor.Lines.Add('c0000');
@@ -21796,7 +21809,7 @@ begin
       StrToIntDef(SgDados.Cells[0, L + 2], 0);
     ADOVarejo.open;
 
-    if imprimir_Com_Preco then // sÛ mostra a ref. se for imprimir com peso
+    if imprimir_Com_Preco then // s√≥ mostra a ref. se for imprimir com peso
       if SgDados.Cells[1, L + 2] <> '' then
         Editor.Lines.Add('421100000220300REF.' + SoNumeros(FormatFloat('0.00',
           StrToFloatDef(ADOVarejo.FieldByName('vlAtacado').AsString, 0))))
@@ -21826,7 +21839,7 @@ begin
     ADOVarejo.Parameters.ParamByName('cdProduto').Value :=
       StrToIntDef(SgDados.Cells[0, L + 1], 0);
     ADOVarejo.open;
-    if imprimir_Com_Preco then // sÛ mostra a ref. se for imprimir com peso
+    if imprimir_Com_Preco then // s√≥ mostra a ref. se for imprimir com peso
       if SgDados.Cells[1, L + 1] <> '' then
         Editor.Lines.Add('421100000220172REF.' + SoNumeros(FormatFloat('0.00',
           StrToFloatDef(ADOVarejo.FieldByName('vlAtacado').AsString, 0))))
@@ -21850,7 +21863,7 @@ begin
     ADOVarejo.Parameters.ParamByName('cdProduto').Value :=
       StrToIntDef(SgDados.Cells[0, L], 0);
     ADOVarejo.open;
-    if imprimir_Com_Preco then // sÛ mostra a ref. se for imprimir com peso
+    if imprimir_Com_Preco then // s√≥ mostra a ref. se for imprimir com peso
       Editor.Lines.Add('421100000220042REF.' + SoNumeros(FormatFloat('0.00',
         StrToFloatDef(ADOVarejo.FieldByName('vlAtacado').AsString, 0))));
     Editor.Lines.Add('411100000030015' + trim(Copy(SgDados.Cells[1, L],
@@ -21858,7 +21871,7 @@ begin
     Editor.Lines.Add('411100000030024' + trim(Copy(SgDados.Cells[1, L],
       18, 18)));
     // Editor.Lines.Add('^PQ1,0,1,Y^XZ');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloatDef(SgDados.Cells[2, L], 0) / 3) = 0.00 then
       vqtd := StrToFloatDef(SgDados.Cells[2, L], 0) / 3
     else
@@ -21876,14 +21889,14 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
   FreeAndNil(qry);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJoalheriaFontes;
@@ -21898,7 +21911,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -21908,7 +21921,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -21923,7 +21936,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     produto := TNEGProduto.buscarProduto(StrtoInt(SgDados.Cells[0,L]));
     pessoa := TNEGPEssoa.getPessoa(produto.Fornecedor.codigo);
@@ -21973,13 +21986,13 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasCaribe2;
@@ -22007,14 +22020,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
   if Application.MessageBox
-    ('Imprimir etiqueta com o PreÁo? (SIM) ou com o Peso? (NAO)', 'ConfirmaÁ„o',
+    ('Imprimir etiqueta com o Pre√ßo? (SIM) ou com o Peso? (NAO)', 'Confirma√ß√£o',
     Mb_YesNo + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
     imprimir_Com_Preco := True;
 
@@ -22026,7 +22039,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -22037,7 +22050,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
 
     Editor.Lines.Add('c0000');
@@ -22061,7 +22074,7 @@ begin
     ADOVarejo.Parameters.ParamByName('cdProduto').Value :=
       StrToIntDef(SgDados.Cells[0, L], 0);
     ADOVarejo.open;
-    if imprimir_Com_Preco then // sÛ mostra a ref. se for imprimir com peso
+    if imprimir_Com_Preco then // s√≥ mostra a ref. se for imprimir com peso
       Editor.Lines.Add('121100000090118REF.' + SoNumeros(FormatFloat('0.00',
         StrToFloatDef(ADOVarejo.FieldByName('vlAtacado').AsString, 0))));
 
@@ -22079,7 +22092,7 @@ begin
       StrToFloatDef(SgDados.Cells[0, L], 0)));
     vqtd := 1;
     // Editor.Lines.Add('^PQ1,0,1,Y^XZ');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     // if Frac(StrToFloatdef(SgDados.Cells[2,L],0)/3) = 0.00 then
     // vQtd := StrToFloatdef(SgDados.Cells[2,L],0)/3
     // else vQtd := (StrToint(FormatFloat('0000',StrToFloat(SgDados.Cells[2,L]))) div 3) + 1;
@@ -22095,14 +22108,14 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
   FreeAndNil(qry);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.Button1Click(Sender: TObject);
@@ -22119,7 +22132,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22128,7 +22141,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -22165,7 +22178,7 @@ begin
     Editor.Lines.Add('112300000060153' + 'R$ ' + SgDados.Cells[3, L]); // preco
     Editor.Lines.Add('112300000060299' + 'R$ ' + SgDados.Cells[3, L]);
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22180,11 +22193,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoEnter(Sender: TObject);
@@ -22212,7 +22225,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22221,7 +22234,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -22255,7 +22268,7 @@ begin
     Editor.Lines.Add('1912A0600610253'+p.referenciaInterna);
     Editor.Lines.Add('1912A1000180200R$ '+ SgDados.Cells[3, L]);
     Editor.Lines.Add('');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -22270,11 +22283,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSuperDelli;
@@ -22286,7 +22299,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22295,7 +22308,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -22318,7 +22331,7 @@ begin
     Editor.Lines.Add('A112,188,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
 
     Editor.Lines.Add('Q24,0');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
 
     Editor.Lines.Add('P' + intToStr(Trunc(vqtd)));
@@ -22329,11 +22342,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSaoJudasTadeus2;
@@ -22345,7 +22358,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22354,7 +22367,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -22380,7 +22393,7 @@ begin
       RetirarAcento(trim(Copy(SgDados.Cells[1, L], 35, 6))));
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
 
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -22392,11 +22405,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSaoMiguel;
@@ -22408,18 +22421,18 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   Editor.Lines.Clear;
   if Application.MessageBox
-    ('Deseja imprimir o modelo grande (SIM) ou pequeno (N√O)?', 'ConfirmaÁ„o',
+    ('Deseja imprimir o modelo grande (SIM) ou pequeno (N√ÉO)?', 'Confirma√ß√£o',
     Mb_YesNo + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
   begin // grande
     for L := 1 to SgDados.RowCount - 1 do
-    begin // Salvando os itens da prÈ-venda.
+    begin // Salvando os itens da pr√©-venda.
       if SgDados.Cells[0, L] = '' then
         Break;
       Editor.Lines.Add('c0000');
@@ -22443,7 +22456,7 @@ begin
       Editor.Lines.Add('192200200440213R$');
 
       Editor.Lines.Add('^01');
-      // C·lculo para imprimir a qtd de etiquetas certo
+      // C√°lculo para imprimir a qtd de etiquetas certo
       vqtd := StrToFloat(SgDados.Cells[2, L]);
 
       Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -22453,7 +22466,7 @@ begin
   else
   begin
     for L := 1 to SgDados.RowCount - 1 do
-    begin // Salvando os itens da prÈ-venda.
+    begin // Salvando os itens da pr√©-venda.
       if SgDados.Cells[0, L] = '' then
         Break;
       Editor.Lines.Add('c0000');
@@ -22478,7 +22491,7 @@ begin
         StrToFloat(SgDados.Cells[3, L])));
 
       Editor.Lines.Add('^01');
-      // C·lculo para imprimir a qtd de etiquetas certo
+      // C√°lculo para imprimir a qtd de etiquetas certo
       vqtd := StrToFloat(SgDados.Cells[2, L]);
 
       Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -22491,11 +22504,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 function TFrmPrincipalPreVenda.Solicitar_Login(forcarLogin
@@ -22553,7 +22566,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22562,7 +22575,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -22598,7 +22611,7 @@ begin
     Editor.Lines.Add('191100302660055Alice Diniz');
     Editor.Lines.Add('191100302660258Alice Diniz');
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22613,11 +22626,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaAmorBebe;
@@ -22629,7 +22642,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22638,7 +22651,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -22684,7 +22697,7 @@ begin
     Editor.Lines.Add('1Y1100002280290PB2');
     Editor.Lines.Add('^01');
     Editor.Lines.Add('Q0001');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22699,11 +22712,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaRosaMenina;
@@ -22715,7 +22728,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22724,7 +22737,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -22774,7 +22787,7 @@ begin
     Editor.Lines.Add('1Y1100001910031PB25');
     Editor.Lines.Add('1Y1100001920198PB26');
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22789,11 +22802,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaListo;
@@ -22805,7 +22818,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22814,7 +22827,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,A,001');
@@ -22849,7 +22862,7 @@ begin
       36)) + '"'); // Descricao part 1
     Editor.Lines.Add('A514,142,2,1,1,2,N,"' + trim(Copy(SgDados.Cells[1, L], 17,
       36)) + '"'); // Descricao part 1
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22863,11 +22876,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsOS214TT;
@@ -22879,7 +22892,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -22888,7 +22901,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('');
@@ -22923,7 +22936,7 @@ begin
     Editor.Lines.Add('131100000010039' + SgDados.Cells[0, L] + '');
     Editor.Lines.Add('131100000010160' + SgDados.Cells[0, L] + '');
     Editor.Lines.Add('131100000010281' + SgDados.Cells[0, L] + '');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -22939,11 +22952,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.EdtCFOPKeyPress(Sender: TObject; var Key: Char);
@@ -22952,7 +22965,7 @@ begin
   begin // 42 -> *
     Application.OnMessage := FormPrincipal.NaoProcessaMsg;
     // Form1.WindowState := wsMinimized;
-    FrmCFOP := TFrmCFOP.Create(Application); // Cria o formul·rio
+    FrmCFOP := TFrmCFOP.Create(Application); // Cria o formul√°rio
     // FrmCFOP.Position := poMainFormCenter; comentei porque estava dando erro com o VCLSKIN
     FrmCFOP.Show;
     FrmCFOP.AtualizaQryConsulta;
@@ -23000,7 +23013,7 @@ begin
       StrToInt(SgDados.Cells[0, SgDados.Row]);
     frmConsultaComposicao.lblNome.caption := 'Produto: ' + SgDados.Cells
       [1, SgDados.Row];
-    frmConsultaComposicao.LblCodigo.caption := 'CÛdigo  : ' + SgDados.Cells
+    frmConsultaComposicao.LblCodigo.caption := 'C√≥digo  : ' + SgDados.Cells
       [0, SgDados.Row];
     frmConsultaComposicao.ShowModal;
     exit;
@@ -23012,7 +23025,7 @@ begin
   FrmInfo.Show;
   query := TADOQuery.Create(self);
   query.Connection := DModulo.Conexao;
-  { memoMensagem.Text :=   'CÛdigo do produto.......: ' + SgDados.Cells[0,SgDados.Row];
+  { memoMensagem.Text :=   'C√≥digo do produto.......: ' + SgDados.Cells[0,SgDados.Row];
     memoMensagem.Lines.Add('Faltam..........................: ' + FloatToStr(qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0,SgDados.Row]), strToFloatDef(SgDados.Cells[2,SgDados.Row],0))));
     memoMensagem.Lines.Add('Quantidade em reserva: ' + FloatToStr(quantidadeEmReserva(StrToInt(SgDados.Cells[0,SgDados.Row]))));
     memoMensagem.Lines.Add('Prevenda | Quantidade | Data '); }
@@ -23150,7 +23163,7 @@ begin
         begin
           Application.MessageBox
             (PWideChar('O produto ' + prevenda.itens[i].descricao +
-            ' n„o possui estoque suficiente!'), 'AtenÁ„o',
+            ' n√£o possui estoque suficiente!'), 'Aten√ß√£o',
             mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
           resultado := false;
           Break;
@@ -23170,7 +23183,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -23179,7 +23192,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -23214,7 +23227,7 @@ begin
     Editor.Lines.Add('1D4202500200287' + SgDados.Cells[6, L]); // barra
     Editor.Lines.Add('^01');
     // Editor.Lines.Add('Q0001');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -23229,11 +23242,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 function TFrmPrincipalPreVenda.quantidadeEmReserva(cdProduto: Integer): Real;
@@ -23245,7 +23258,7 @@ begin
   query.Connection := DModulo.Conexao;
   resultado := 0;
   with query do
-  begin // Vou pegar o q est· reservado  ( OU SEJA NAS OS )
+  begin // Vou pegar o q est√° reservado  ( OU SEJA NAS OS )
     sql.Text :=
       'SELECT Sum(I.nrQtd) as Qtd FROM Orcamento O WITH (NOLOCK) INNER JOIN IteOrcamento I '
       + 'WITH (NOLOCK) ON O.nrOrcamento = I.nrOrcamento Where I.cdproduto = :CDPRODUTO '
@@ -23269,7 +23282,7 @@ var
 begin
   if EdtLancto.Text = '' then
   begin
-    Application.MessageBox('Digite o n˙mero da PrÈ Venda / OS!', 'AtenÁ„o',
+    Application.MessageBox('Digite o n√∫mero da Pr√© Venda / OS!', 'Aten√ß√£o',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     EdtLancto.Setfocus;
     exit;
@@ -23287,8 +23300,8 @@ begin
       Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
       ExecSQL;
       DModulo.Conexao.CommitTrans;
-      Application.MessageBox('PrÈ Venda / OS desbloqueada com sucesso!',
-        'InformaÁ„o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+      Application.MessageBox('Pr√© Venda / OS desbloqueada com sucesso!',
+        'Informa√ß√£o', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     except
       DModulo.Conexao.RollbackTrans;
     end;
@@ -23362,9 +23375,9 @@ begin
         // SelectAll;
         cbxFornecedor.Items.Add('Vinitac');
         cbxFornecedor.Items.Add('NF/NE');
-        cbxFornecedor.Items.Add('SÛ Forrar');
-        cbxFornecedor.Items.Add('SÛ etiquetar');
-        cbxFornecedor.Items.Add('ObservaÁ„o');
+        cbxFornecedor.Items.Add('S√≥ Forrar');
+        cbxFornecedor.Items.Add('S√≥ etiquetar');
+        cbxFornecedor.Items.Add('Observa√ß√£o');
         cbxFornecedor.Items.Add('Personalizado');
         cbxFornecedor.Items.Add('Nenhuma');
       end;
@@ -23456,8 +23469,8 @@ begin
         // SelectAll;
         cbxFornecedor.Items.Add('1 Coluna Varejo');
         cbxFornecedor.Items.Add('1 Coluna Varejo Atacado');
-        cbxFornecedor.Items.Add('2 Colunas DescriÁ„o Menor');
-        cbxFornecedor.Items.Add('2 Colunas DescriÁ„o Maior');
+        cbxFornecedor.Items.Add('2 Colunas Descri√ß√£o Menor');
+        cbxFornecedor.Items.Add('2 Colunas Descri√ß√£o Maior');
         cbxFornecedor.Items.Add('2 Colunas 1 Subgrupo');
         cbxFornecedor.Items.Add('2 Colunas 2 Subgrupos');
         cbxFornecedor.Items.Add('2 Colunas 3 Subgrupos');
@@ -23655,7 +23668,7 @@ begin
         // PasswordChar := '*';
         // SelectAll;
         cbxFornecedor.Items.Add('Nenhum');
-        cbxFornecedor.Items.Add('Manh„');
+        cbxFornecedor.Items.Add('Manh√£');
         cbxFornecedor.Items.Add('Tarde');
         cbxFornecedor.Items.Add('Noite');
         cbxFornecedor.Items.Add('Integral');
@@ -23838,10 +23851,10 @@ procedure TFrmPrincipalPreVenda.Importarvendasexternas1Click(Sender: TObject);
 begin
   if StrToFloat(EdtTotal.Text) > 0 then
   begin
-    ShowMessage('Existe um orÁamento ou uma prÈ-venda em andamento!');
+    ShowMessage('Existe um or√ßamento ou uma pr√©-venda em andamento!');
     exit;
   end;
-  FrmListaPedidos := TFrmListaPedidos.Create(Application); // Cria o formul·rio
+  FrmListaPedidos := TFrmListaPedidos.Create(Application); // Cria o formul√°rio
   // vobs_Venda_Externa := '';
   FrmListaPedidos.Position := poMainFormCenter;
   FrmListaPedidos.DtInicial.Date := Date;
@@ -23884,8 +23897,8 @@ begin
       begin
         Application.MessageBox
           (PWideChar('O produto ' + prevenda.itens[i].descricao +
-          ' est· com a quantidade zerada ou negativa.' + #13#10 +
-          'Para excluÌ-lo da prÈ venda dÍ dois cliques no item!'), 'AtenÁ„o',
+          ' est√° com a quantidade zerada ou negativa.' + #13#10 +
+          'Para exclu√≠-lo da pr√© venda d√™ dois cliques no item!'), 'Aten√ß√£o',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         resultado := false;
         Break;
@@ -23895,7 +23908,7 @@ begin
   result := resultado;
 end;
 
-// funÁ„o para calcular a quantidade disponÌvel no lote (qtdlote - prevendas abertas - j· inseridos na prevenda atual)
+// fun√ß√£o para calcular a quantidade dispon√≠vel no lote (qtdlote - prevendas abertas - j√° inseridos na prevenda atual)
 function TFrmPrincipalPreVenda.QuantidadeDispNoLote(nrLote: string;
   cdProduto: Integer; cdFabricanteLote: Integer): Real;
 var
@@ -23907,7 +23920,7 @@ begin
   query.Connection := DModulo.Conexao;
   with query do
   begin
-    // PEGO A QUANTIDADE NAS TABELAS ITELOTE (LOJA + DEP”SITO)
+    // PEGO A QUANTIDADE NAS TABELAS ITELOTE (LOJA + DEP√ìSITO)
     // if (UpperCase(vEmpresa) = 'PBFARMA') then
     // begin
     // Connection := DModulo.ADODeposito;
@@ -23939,7 +23952,7 @@ begin
     end;
     open;
     QtdLote := FieldByName('nrqtd').AsFloat;
-    // DIMINUO A QUANTIDADE J¡ USADA NAS PREVENDAS
+    // DIMINUO A QUANTIDADE J√Å USADA NAS PREVENDAS
     sql.Text := 'select sum(i.nrqtd) as nrqtd               ' +
       'from iteorcamento i WITH (NOLOCK) inner join orcamento o WITH (NOLOCK) '
       + '	on i.nrorcamento= o.nrorcamento          ' +
@@ -23954,7 +23967,7 @@ begin
     // Parameters.ParamByName('cdfabricante').Value:= cdFabricanteLote;
     open;
     qtdPrevendas := FieldByName('nrqtd').AsFloat;
-    // DIMINUO A QUANTIDADE J¡ USADA NA GRID
+    // DIMINUO A QUANTIDADE J√Å USADA NA GRID
     qtdAtual := QuantidadeNoLoteNaGrid(nrLote, cdProduto, cdFabricanteLote);
   end;
   FreeAndNil(query);
@@ -23971,14 +23984,14 @@ var
 begin
   lote := copy_campo(CbLote.Text, '|', 1);
   cdFabricanteLote := StrToInt(copy_campo(CbLote.Text, '|', 4));
-  cdProduto := ADOSPConsulta.FieldByName('CÛdigo').AsInteger;
+  cdProduto := ADOSPConsulta.FieldByName('C√≥digo').AsInteger;
   setLabel23(QuantidadeDispNoLote(lote, cdProduto, cdFabricanteLote));
 end;
 
-// coloca no caption do label23 a quantidade disponÌvel no lote selecionado
+// coloca no caption do label23 a quantidade dispon√≠vel no lote selecionado
 procedure TFrmPrincipalPreVenda.setLabel23(quantidade: Real);
 begin
-  Label23.caption := 'Quant. disponÌvel: ' + FloatToStr(quantidade);
+  Label23.caption := 'Quant. dispon√≠vel: ' + FloatToStr(quantidade);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaLayeVictorArgoxOS214;
@@ -23990,7 +24003,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -23999,7 +24012,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -24031,7 +24044,7 @@ begin
     Editor.Lines.Add('1F2203100200293' + trim(SgDados.Cells[6, L]));
     // Cod. Barra
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
@@ -24046,11 +24059,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.EdtCFOPExit(Sender: TObject);
@@ -24077,7 +24090,7 @@ begin
     if (trim(CbxCliente.Text) = '') and (CbxCliente.Enabled) then
     begin
       ShowMessage
-        ('Para validar o campo CFOP, È necess·rio selecionar um cliente na caixa acima.');
+        ('Para validar o campo CFOP, √© necess√°rio selecionar um cliente na caixa acima.');
       CbxCliente.Setfocus;
     end;
   end;
@@ -24109,7 +24122,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.salvarPosicaoColunasDbGrid1;
 var
-  SupportIni: TIniFile; // Vari·veis que ir„o cahamar o support.ini
+  SupportIni: TIniFile; // Vari√°veis que ir√£o cahamar o support.ini
   i: Integer;
 begin
   SupportIni := TIniFile.Create(ExtractFilePath(Application.ExeName) +
@@ -24128,10 +24141,10 @@ begin
   SupportIni.Free;
 end;
 
-{ Carrega a ˙ltima posiÁ„o das colunas da DBGrid1 que ficou salva no support.ini }
+{ Carrega a √∫ltima posi√ß√£o das colunas da DBGrid1 que ficou salva no support.ini }
 procedure TFrmPrincipalPreVenda.carregarPosicaoColunasDbGrid1;
 var
-  SupportIni: TIniFile; // Vari·veis que ir„o cahamar o support.ini
+  SupportIni: TIniFile; // Vari√°veis que ir√£o cahamar o support.ini
   i, indiceAtual: Integer;
   fieldName: string;
   tamanho: Integer;
@@ -24173,7 +24186,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24205,7 +24218,7 @@ begin
   cont := 1;
   Editor.Lines.Clear;
   for x := 1 to L do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if vetorEtiqueta[cont] = 99 then
       Break;
 
@@ -24223,15 +24236,15 @@ begin
     Editor.Lines.Add('D11');
 
     Editor.Lines.Add('1F3303500260032' + SgDados.Cells[6, vetorEtiqueta[cont]]);
-    // cÛdigo de barras produto
+    // c√≥digo de barras produto
     Editor.Lines.Add('121100000910053' +
-      trim(Copy(SgDados.Cells[1, vetorEtiqueta[cont]], 1, 20))); // descriÁ„o
+      trim(Copy(SgDados.Cells[1, vetorEtiqueta[cont]], 1, 20))); // descri√ß√£o
     // if SgDados.Cells[7,vetorEtiqueta[cont]] <> '' then
     // Editor.Lines.Add('191100101540009REF: '+SgDados.Cells[7,vetorEtiqueta[cont]]) //referencia
     // else
     // Editor.Lines.Add('191100101540009'+SgDados.Cells[7,vetorEtiqueta[cont]]);
     Editor.Lines.Add('121100000770053' +
-      trim(Copy(SgDados.Cells[1, vetorEtiqueta[cont]], 21, 20))); // descriÁ„o
+      trim(Copy(SgDados.Cells[1, vetorEtiqueta[cont]], 21, 20))); // descri√ß√£o
     if SgDados.Cells[3, vetorEtiqueta[cont]] <> '' then
     begin
       if StrToFloat(FormatFloat('0.00', StrToFloat(SgDados.Cells[3,
@@ -24254,7 +24267,7 @@ begin
       Editor.Lines.Add('141100000040039' + SgDados.Cells[3, vetorEtiqueta[cont]
         ]); // valor
     Editor.Lines.Add('1F3303500260228' + SgDados.Cells[6,
-      vetorEtiqueta[cont + 1]]); // cÛdigo de barras produto
+      vetorEtiqueta[cont + 1]]); // c√≥digo de barras produto
     Editor.Lines.Add('121100000910250' +
       trim(Copy(SgDados.Cells[1, vetorEtiqueta[cont + 1]], 1, 20)));
     // if SgDados.Cells[7,vetorEtiqueta[cont+1]] <> '' then begin
@@ -24299,7 +24312,7 @@ begin
       Editor.Lines.Add('421100000430232' + SgDados.Cells[0,
         vetorEtiqueta[cont + 1]]);
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     Editor.Lines.Add('Q' + FormatFloat('0000', 1));
     Editor.Lines.Add('E');
     cont := cont + 2;
@@ -24310,11 +24323,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 // procedure TFrmPrincipalPreVenda.ImprimeEtiquetaParPerfeito;
@@ -24326,7 +24339,7 @@ end;
 // begin
 // //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
 // if SgDados.Cells[0,1] = '' then begin
-// Messagedlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!', mtWarning, [mbOk], 0);
+// Messagedlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!', mtWarning, [mbOk], 0);
 // EdtConsulta.Setfocus;
 // exit;
 // end;
@@ -24352,7 +24365,7 @@ end;
 // L := Trunc(vQtd);
 // cont := 1;
 // Editor.Lines.Clear;
-// for x := 1 to L do begin // Salvando os itens da prÈ-venda.
+// for x := 1 to L do begin // Salvando os itens da pr√©-venda.
 // if vetorEtiqueta[cont] = 99 then Break;
 //
 // Editor.Lines.Add('c0000');
@@ -24369,18 +24382,18 @@ end;
 // Editor.Lines.Add('D11');
 // Editor.Lines.Add('1Y1100001720038PB1');
 //
-// Editor.Lines.Add('1F2203700770018'+ SgDados.Cells[6,vetorEtiqueta[cont]]); //cÛdigo de barras produto
-// Editor.Lines.Add('121100001410009'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont]],1,20))); //descriÁ„o
+// Editor.Lines.Add('1F2203700770018'+ SgDados.Cells[6,vetorEtiqueta[cont]]); //c√≥digo de barras produto
+// Editor.Lines.Add('121100001410009'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont]],1,20))); //descri√ß√£o
 // if SgDados.Cells[7,vetorEtiqueta[cont]] <> '' then
 // Editor.Lines.Add('191100101540009REF: '+SgDados.Cells[7,vetorEtiqueta[cont]]) //referencia
 // else
 // Editor.Lines.Add('191100101540009'+SgDados.Cells[7,vetorEtiqueta[cont]]);
-// Editor.Lines.Add('121100001260009'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont]],21,20))); //descriÁ„o
+// Editor.Lines.Add('121100001260009'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont]],21,20))); //descri√ß√£o
 // if SgDados.Cells[3,vetorEtiqueta[cont]] <> '' then
 // Editor.Lines.Add('141100000250014R$ '+SgDados.Cells[3,vetorEtiqueta[cont]]) //valor
 // else
 // Editor.Lines.Add('141100000250014'+SgDados.Cells[3,vetorEtiqueta[cont]]); //valor
-// Editor.Lines.Add('1F2203700770160'+SgDados.Cells[6,vetorEtiqueta[cont+1]]);  //cÛdigo de barras produto
+// Editor.Lines.Add('1F2203700770160'+SgDados.Cells[6,vetorEtiqueta[cont+1]]);  //c√≥digo de barras produto
 // Editor.Lines.Add('121100001410151'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont+1]],1,20)));
 // if SgDados.Cells[7,vetorEtiqueta[cont+1]] <> '' then begin
 // Editor.Lines.Add('191100101540151REF:'+SgDados.Cells[7,vetorEtiqueta[cont+1]]);  //referencia
@@ -24393,7 +24406,7 @@ end;
 // Editor.Lines.Add('141100000250152R$ '+SgDados.Cells[3,vetorEtiqueta[cont+1]])
 // else
 // Editor.Lines.Add('141100000250152'+SgDados.Cells[3,vetorEtiqueta[cont+1]]);
-// Editor.Lines.Add('1F2203700770302'+SgDados.Cells[6,vetorEtiqueta[cont+2]]);  //cÛdigo de barras produto
+// Editor.Lines.Add('1F2203700770302'+SgDados.Cells[6,vetorEtiqueta[cont+2]]);  //c√≥digo de barras produto
 // Editor.Lines.Add('121100001410293'+ Trim(Copy(SgDados.Cells[1,vetorEtiqueta[cont+2]],1,20)));
 // if SgDados.Cells[7,vetorEtiqueta[cont+2]] <> '' then begin
 // Editor.Lines.Add('191100101540293REF:'+SgDados.Cells[7,vetorEtiqueta[cont+2]]); //referencia
@@ -24408,7 +24421,7 @@ end;
 // Editor.Lines.Add('141100000250294'+SgDados.Cells[3,vetorEtiqueta[cont+2]]);
 //
 // Editor.Lines.Add('^01');
-// // C·lculo para imprimir a qtd de etiquetas certo
+// // C√°lculo para imprimir a qtd de etiquetas certo
 // Editor.Lines.Add('Q'+ FormatFloat('0000',1));
 // Editor.Lines.Add('E');
 // cont := cont + 3;
@@ -24416,11 +24429,11 @@ end;
 // Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
 // WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
 // if not FileExists('Print2.bat') then
-// ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+// ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
 // Application.OnMessage := FormPrincipal.ProcessaMsg;
 // Limpar_Tela;
 // RgOpcoes.ItemIndex := 0;
-// Messagedlg('Impress„o ok!', mtInformation, [mbOk], 0);
+// Messagedlg('Impress√£o ok!', mtInformation, [mbOk], 0);
 // end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaParPerfeito;
@@ -24434,7 +24447,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24464,7 +24477,7 @@ begin
 
   Editor.Lines.Clear;
   for x := 1 to L do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if (vetorEtiqueta[cont] = 99) or (vetorEtiqueta[cont] = 0) then
       Break;
 
@@ -24518,7 +24531,7 @@ begin
     end;
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     Editor.Lines.Add('Q' + FormatFloat('0000', 1));
     Editor.Lines.Add('E');
     cont := cont + 2;
@@ -24529,11 +24542,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 
   // var L : integer;
   // Arq : TextFile;
@@ -24543,7 +24556,7 @@ begin
   // begin
   // //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   // if SgDados.Cells[0,1] = '' then begin
-  // Messagedlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!', mtWarning, [mbOk], 0);
+  // Messagedlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!', mtWarning, [mbOk], 0);
   // EdtConsulta.Setfocus;
   // exit;
   // end;
@@ -24570,7 +24583,7 @@ begin
   // L := Trunc(vQtd);
   // cont := 1;
   // Editor.Lines.Clear;
-  // for x := 1 to L do begin // Salvando os itens da prÈ-venda.
+  // for x := 1 to L do begin // Salvando os itens da pr√©-venda.
   // if (vetorEtiqueta[cont] = 99) or (vetorEtiqueta[cont] = 0) then Break;
   //
   // Editor.Lines.Add('c0000');
@@ -24608,7 +24621,7 @@ begin
   // end;
   //
   // Editor.Lines.Add('^01');
-  // // C·lculo para imprimir a qtd de etiquetas certo
+  // // C√°lculo para imprimir a qtd de etiquetas certo
   // Editor.Lines.Add('Q'+ FormatFloat('0000',1));
   // Editor.Lines.Add('E');
   // cont := cont + 2;
@@ -24616,11 +24629,11 @@ begin
   // Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
   // WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
   // if not FileExists('Print2.bat') then
-  // ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+  // ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   // Application.OnMessage := FormPrincipal.ProcessaMsg;
   // Limpar_Tela;
   // RgOpcoes.ItemIndex := 0;
-  // Messagedlg('Impress„o ok!', mtInformation, [mbOk], 0);
+  // Messagedlg('Impress√£o ok!', mtInformation, [mbOk], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPequenoTriploRural;
@@ -24632,7 +24645,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24641,7 +24654,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -24721,11 +24734,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 
 end;
 
@@ -24738,7 +24751,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24747,7 +24760,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -24778,7 +24791,7 @@ begin
       .referenciaFabrica);
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -24789,11 +24802,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPoliana;
@@ -24805,7 +24818,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24814,7 +24827,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -24857,7 +24870,7 @@ begin
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -24868,11 +24881,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaHIS;
@@ -24884,7 +24897,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24893,7 +24906,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -24933,7 +24946,7 @@ begin
     Editor.Lines.Add('121200001950028____/____/________');
     Editor.Lines.Add('121200001930216____/____/________');
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -24944,11 +24957,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaHITZ;
@@ -24960,7 +24973,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -24969,7 +24982,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -25018,7 +25031,7 @@ begin
     Editor.Lines.Add('121100000060275R$ ' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])));
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -25029,11 +25042,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaNutriMix;
@@ -25045,7 +25058,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25054,7 +25067,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -25076,7 +25089,7 @@ begin
     Editor.Lines.Add('1F3305600120067' + SgDados.Cells[6, L]); // barra
     Editor.Lines.Add('1Y1100000070007PB1');
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -25087,11 +25100,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPR;
@@ -25103,7 +25116,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25112,7 +25125,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -25134,7 +25147,7 @@ begin
     Editor.Lines.Add('132200000090228R$');
     Editor.Lines.Add('131100000690060' + SgDados.Cells[10, L]);
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -25145,11 +25158,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -25163,7 +25176,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25172,7 +25185,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -25236,7 +25249,7 @@ begin
       Editor.Lines.Add('A135,190,0,3,1,1,N,"' + SgDados.Cells[6, L] + '"');
       Editor.Lines.Add('Q18,0');
     end;
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P1,' + intToStr(Trunc(vqtd)));
   end;
@@ -25246,11 +25259,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaComplementusELGIN;
@@ -25262,7 +25275,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25271,7 +25284,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -25307,7 +25320,7 @@ begin
     Editor.Lines.Add('A587,135,0,2,1,1,N,"REF FAB. '+SgDados.Cells[7, L]+'"');
 
     Editor.Lines.Add('Q176,24');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P1,' + intToStr(Trunc(vqtd)));
   end;
@@ -25317,11 +25330,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPrecoBom;
@@ -25333,14 +25346,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -25364,7 +25377,7 @@ begin
     Editor.Lines.Add('192200200440213R$');
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
 
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -25376,11 +25389,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaMaisEconomia;
@@ -25392,14 +25405,14 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -25424,7 +25437,7 @@ begin
     Editor.Lines.Add('192200200030069R$');
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
 
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -25436,11 +25449,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaGAMBIARRA;
@@ -25456,7 +25469,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25465,7 +25478,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     // Creates the b-PAC object
@@ -25495,7 +25508,7 @@ begin
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaZANQUY_ELGIN;
@@ -25508,7 +25521,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25517,7 +25530,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -25539,9 +25552,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25554,9 +25567,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25572,11 +25585,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -25590,7 +25603,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25599,7 +25612,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -25621,9 +25634,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25636,9 +25649,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25654,11 +25667,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaAQUARELA_ELGIN;
@@ -25671,7 +25684,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25680,7 +25693,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -25702,9 +25715,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25717,9 +25730,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25735,11 +25748,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSerafina;
@@ -25752,7 +25765,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25761,7 +25774,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     desc1 := trim(Copy(SgDados.Cells[1, L], 1,20));
@@ -25808,11 +25821,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaZANQUY;
@@ -25825,7 +25838,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25834,7 +25847,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -25856,9 +25869,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25871,9 +25884,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -25889,11 +25902,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaCASADOROSARIO2COLUNAS;
@@ -25906,7 +25919,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25915,7 +25928,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -25962,11 +25975,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaCASADOROSARIO3COLUNAS;
@@ -25979,7 +25992,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -25988,7 +26001,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26045,11 +26058,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaQUIVER;
@@ -26062,7 +26075,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26071,7 +26084,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26093,9 +26106,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26108,9 +26121,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26126,11 +26139,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLU;
@@ -26143,7 +26156,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26152,7 +26165,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26173,9 +26186,9 @@ begin
     Editor.Lines.Add('A35,48,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,145,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,80,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,65,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,145,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26188,9 +26201,9 @@ begin
     Editor.Lines.Add('A451,48,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,145,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,80,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,65,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,145,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26206,11 +26219,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaDOFF;
@@ -26223,7 +26236,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26232,7 +26245,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26254,9 +26267,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26269,9 +26282,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26287,11 +26300,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -26306,7 +26319,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26315,7 +26328,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26337,9 +26350,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26352,9 +26365,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26370,11 +26383,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLUCALCADOS;
@@ -26387,7 +26400,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26396,7 +26409,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26417,9 +26430,9 @@ begin
     Editor.Lines.Add('A35,48,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,145,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,80,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,65,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,145,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26432,9 +26445,9 @@ begin
     Editor.Lines.Add('A451,48,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,145,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,80,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,65,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,145,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26450,11 +26463,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLUCENTRO;
@@ -26467,7 +26480,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26476,7 +26489,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26497,9 +26510,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26512,9 +26525,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26530,11 +26543,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaYZLUSANTANA;
@@ -26547,7 +26560,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26556,7 +26569,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -26577,9 +26590,9 @@ begin
     Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26592,9 +26605,9 @@ begin
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
       '"'); // descricao
     Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
-    // cÛdigo
+    // c√≥digo
     Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
     // ref interna
     Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
@@ -26610,11 +26623,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPR_ELGIN;
@@ -26626,7 +26639,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26635,7 +26648,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -26669,11 +26682,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSAOJOAO;
@@ -26685,7 +26698,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26694,7 +26707,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -26728,11 +26741,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPRECINHO10;
@@ -26744,7 +26757,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26753,7 +26766,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -26868,11 +26881,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 // procedure TFrmPrincipalPreVenda.ImprimeEtiquetaBRAZNAMODA;
@@ -26882,14 +26895,14 @@ end;
 // begin
 // //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
 // if SgDados.Cells[0,1] = '' then begin
-// Messagedlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!', mtWarning, [mbOk], 0);
+// Messagedlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!', mtWarning, [mbOk], 0);
 // EdtConsulta.Setfocus;
 // exit;
 // end;
 // //if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
 // //SalvaEtiquetas;
 // Editor.Lines.Clear;
-// for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da prÈ-venda.
+// for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pr√©-venda.
 // if SgDados.Cells[0,L] = '' then Break;
 // Editor.Lines.Add('N');
 // Editor.Lines.Add('R0,0');
@@ -26914,11 +26927,11 @@ end;
 // Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
 // WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
 // if not FileExists('Print2.bat') then
-// ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+// ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
 // Application.OnMessage := FormPrincipal.ProcessaMsg;
 // Limpar_Tela;
 // RgOpcoes.ItemIndex := 0;
-// Messagedlg('Impress„o ok!', mtInformation, [mbOk], 0);
+// Messagedlg('Impress√£o ok!', mtInformation, [mbOk], 0);
 // end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaBRAZNAMODA;
@@ -26930,7 +26943,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -26939,7 +26952,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -26999,11 +27012,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaECONOMIZE_ELGIN;
@@ -27015,7 +27028,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27024,7 +27037,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -27058,11 +27071,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaMERCADINHOSAOJUDASTADEU18_ELGIN;
@@ -27074,7 +27087,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27083,7 +27096,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -27117,11 +27130,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaDISSEMEDISSE_ELGIN;
@@ -27133,7 +27146,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27142,7 +27155,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -27202,11 +27215,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaCLOSETMARIAFLOR_ELGIN;
@@ -27218,7 +27231,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27227,7 +27240,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -27287,11 +27300,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaFlorDLis;
@@ -27303,7 +27316,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27312,7 +27325,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -27367,11 +27380,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaDAYA_ELGIN;
@@ -27383,7 +27396,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27392,7 +27405,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -27452,11 +27465,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaAtacarejo;
@@ -27469,7 +27482,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27478,7 +27491,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -27515,11 +27528,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaJetLaser;
@@ -27531,7 +27544,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27540,7 +27553,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -27568,7 +27581,7 @@ begin
     Editor.Lines.Add('131100000020230R$ ' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])));
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -27579,11 +27592,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaChaloc;
@@ -27596,7 +27609,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27605,7 +27618,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -27696,11 +27709,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaChavesDeOuro;
@@ -27712,7 +27725,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27721,7 +27734,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -27741,7 +27754,7 @@ begin
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
     Editor.Lines.Add('191100100510015REF: ' + SgDados.Cells[7, L]);
     // Referencia interna
-    // A cliente solicitou a retirada do preÁo. Protocolo: 31277
+    // A cliente solicitou a retirada do pre√ßo. Protocolo: 31277
     // Editor.Lines.Add('121100000390016R$ '+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     Editor.Lines.Add('121100000650015' + Copy(SgDados.Cells[1, L], 21, 20));
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
@@ -27751,7 +27764,7 @@ begin
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
     Editor.Lines.Add('191100100510151REF: ' + SgDados.Cells[7, L]);
     // Referencia Interna
-    // A cliente solicitou a retirada do preÁo. Protocolo: 31277
+    // A cliente solicitou a retirada do pre√ßo. Protocolo: 31277
     // Editor.Lines.Add('121100000390152R$ '+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     Editor.Lines.Add('121100000650151' + Copy(SgDados.Cells[1, L], 21, 20));
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
@@ -27761,13 +27774,13 @@ begin
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
     Editor.Lines.Add('191100100510288REF: ' + SgDados.Cells[7, L]);
     // Referencia Interna
-    // A cliente solicitou a retirada do preÁo. Protocolo: 31277
+    // A cliente solicitou a retirada do pre√ßo. Protocolo: 31277
     // Editor.Lines.Add('121100000390289R$ '+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     Editor.Lines.Add('121100000650288' + Copy(SgDados.Cells[1, L], 21, 20));
     // DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -27778,11 +27791,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPS;
@@ -27795,12 +27808,12 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-  if Application.MessageBox('Deseja exibir o preÁo na etiqueta?', 'ConfirmaÁ„o',
+  if Application.MessageBox('Deseja exibir o pre√ßo na etiqueta?', 'Confirma√ß√£o',
     Mb_YesNo + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
     exibirPreco := True
   else
@@ -27810,7 +27823,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -27881,7 +27894,7 @@ begin
     // Editor.Lines.Add('141100000260166CODIGO: '+SgDados.Cells[0,L]);
     // Editor.Lines.Add('1X1100000200001b0313007700010001');
     // Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -27892,11 +27905,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaBrumar;
@@ -27908,7 +27921,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -27917,7 +27930,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -27959,7 +27972,7 @@ begin
     // Editor.Lines.Add('141100000260166CODIGO: '+SgDados.Cells[0,L]);
     // Editor.Lines.Add('1X1100000200001b0313007700010001');
     // Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -27970,11 +27983,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 function TFrmPrincipalPreVenda.getVMudaPreco: string;
@@ -28001,7 +28014,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28010,7 +28023,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('c0000');
@@ -28073,26 +28086,26 @@ begin
     // Editor.Lines.Add('PC');
     // Editor.Lines.Add('A2');
     // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('191100100270013C”D. '+SgDados.Cells[0,L]);
+    // Editor.Lines.Add('191100100270013C√ìD. '+SgDados.Cells[0,L]);
     // Editor.Lines.Add('191100200140026'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     // Editor.Lines.Add('191100100030013REF FAB.'+SgDados.Cells[7,L]);
     // Editor.Lines.Add('191100100150013R$');
     // Editor.Lines.Add('191100100370013'+Trim(Copy(SgDados.Cells[1,L],21,40)));
     // Editor.Lines.Add('191100100450013'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('191100100280128C”D. '+SgDados.Cells[0,L]);
+    // Editor.Lines.Add('191100100280128C√ìD. '+SgDados.Cells[0,L]);
     // Editor.Lines.Add('191100200150141'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     // Editor.Lines.Add('191100100040128REF FAB.'+ SgDados.Cells[7,L]);
     // Editor.Lines.Add('191100100160128R$');
     // Editor.Lines.Add('191100100380128'+Trim(Copy(SgDados.Cells[1,L],21,40)));
     // Editor.Lines.Add('191100100460128'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('191100100280242C”D. '+SgDados.Cells[0,L]);
+    // Editor.Lines.Add('191100100280242C√ìD. '+SgDados.Cells[0,L]);
     // Editor.Lines.Add('191100200150255'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
     // Editor.Lines.Add('191100100040242REF FAB.'+ SgDados.Cells[7,L]);
     // Editor.Lines.Add('191100100160242R$');
     // Editor.Lines.Add('191100100380242'+Trim(Copy(SgDados.Cells[1,L],21,40)));
     // Editor.Lines.Add('191100100460242'+Trim(Copy(SgDados.Cells[1,L],1,20)));
     // Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     // if Frac(StrToFloat(SgDados.Cells[2,L])/2) = 0.00 then
     // vQtd := StrToFloat(SgDados.Cells[2,L])/2
     // else vQtd := (StrToint(FormatFloat('000',StrToFloat(SgDados.Cells[2,L]))) div 2) + 1;
@@ -28106,11 +28119,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasMarttina;
@@ -28122,7 +28135,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28131,7 +28144,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add(' <xpml><page quantity=''0'' pitch=''60.1 mm''></xpml>n');
@@ -28193,7 +28206,7 @@ begin
     Editor.Lines.Add('1911A08000901801');
     Editor.Lines.Add('1911A0800670166A PRAZO R$ ' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])));
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -28210,11 +28223,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasPazone;
@@ -28226,7 +28239,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28235,7 +28248,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28256,7 +28269,7 @@ begin
     Editor.Lines.Add('A15,42,0,3,1,1,N,"Cod. ' + SgDados.Cells[0, L] + '"');
     Editor.Lines.Add('A76,178,0,3,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('Q216,8');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     // if Frac(StrToFloat(SgDados.Cells[2,L])/2) = 0.00 then
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     // else vQtd := (StrToint(FormatFloat('0000',StrToFloat(SgDados.Cells[2,L]))) div 2) + 1;
@@ -28269,11 +28282,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSaboramil;
@@ -28285,7 +28298,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28294,7 +28307,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28315,7 +28328,7 @@ begin
       StrToFloat(SgDados.Cells[3, L])) + '"');
     Editor.Lines.Add('A15,38,0,3,1,1,N,"Cod. ' + SgDados.Cells[0, L] + '"');
     Editor.Lines.Add('Q216,8');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -28330,11 +28343,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasDalBosco;
@@ -28346,7 +28359,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28355,7 +28368,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28390,7 +28403,7 @@ begin
     Editor.Lines.Add('A11,207,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A433,205,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('Q240,24');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -28405,11 +28418,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasComercialGraca;
@@ -28421,7 +28434,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28430,7 +28443,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28465,7 +28478,7 @@ begin
     Editor.Lines.Add('A11,207,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A433,205,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('Q240,24');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 2) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 2
     else
@@ -28480,15 +28493,15 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
-{ Indica se a prevenda ou orÁamento j· possui itens lanÁados na grid }
-function TFrmPrincipalPreVenda.possuiItensLanÁados: Boolean;
+{ Indica se a prevenda ou or√ßamento j√° possui itens lan√ßados na grid }
+function TFrmPrincipalPreVenda.possuiItensLan√ßados: Boolean;
 begin
   result := trim(SgDados.Cells[0, 1]) <> '';
 end;
@@ -28503,7 +28516,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28512,7 +28525,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -28568,7 +28581,7 @@ begin
       Editor.Lines.Add('A811,189,2,4,1,1,N,"'+SgDados.Cells[1, L]+'"');
       Editor.Lines.Add('B812,116,2,1,3,9,74,B,"'+SgDados.Cells[6, L]+'"');
     end;
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + intToStr(Trunc(vqtd)));
   end;
@@ -28578,11 +28591,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEletroSatDuplaGrande;
@@ -28594,7 +28607,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28603,7 +28616,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28617,7 +28630,7 @@ begin
     Editor.Lines.Add('JB');
     Editor.Lines.Add('JF');
     Editor.Lines.Add('A14,4,0,3,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A14,38,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A14,68,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28629,7 +28642,7 @@ begin
     Editor.Lines.Add('A20,173,0,3,1,1,N,"' + SgDados.Cells[6, L] + '"');
 
     Editor.Lines.Add('A362,4,0,3,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A362,38,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A362,68,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28650,11 +28663,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 
 end;
 
@@ -28667,7 +28680,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28676,7 +28689,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28690,7 +28703,7 @@ begin
     Editor.Lines.Add('JB');
     Editor.Lines.Add('JF');
     Editor.Lines.Add('A14,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A14,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A14,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28702,7 +28715,7 @@ begin
     Editor.Lines.Add('A14,152,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
 
     Editor.Lines.Add('A302,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A302,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A302,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28715,7 +28728,7 @@ begin
     Editor.Lines.Add('JF');
 
     Editor.Lines.Add('A589,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A589,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A589,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28735,11 +28748,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaElBarretoTriplaMenor;
@@ -28751,7 +28764,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28760,7 +28773,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28805,11 +28818,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaElBarretoJoias;
@@ -28821,7 +28834,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28830,7 +28843,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28851,7 +28864,7 @@ begin
     Editor.Lines.Add('A624,69,0,3,1,1,N,"' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])) + '"'); // Valor
     Editor.Lines.Add('A346,38,0,2,1,1,N,"' + 'Cod: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A343,72,0,1,1,1,N,"' + SgDados.Cells[6, L] + '"');
     // codigo de barras
     Editor.Lines.Add('Q8,0');
@@ -28864,11 +28877,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEletroSatGrande;
@@ -28880,7 +28893,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28889,7 +28902,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28903,7 +28916,7 @@ begin
     Editor.Lines.Add('JB');
     Editor.Lines.Add('JF');
     Editor.Lines.Add('A35,11,0,4,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A37,49,0,4,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 30) +
       '"'); // Descricao
     Editor.Lines.Add('A37,78,0,4,1,1,N,"' + Copy(SgDados.Cells[1, L], 31, 40) +
@@ -28923,11 +28936,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEletroSatTriplaGrande;
@@ -28939,7 +28952,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -28948,7 +28961,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -28962,7 +28975,7 @@ begin
     Editor.Lines.Add('JB');
     Editor.Lines.Add('JF');
     Editor.Lines.Add('A14,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A14,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A14,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28974,7 +28987,7 @@ begin
     Editor.Lines.Add('A14,152,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
 
     Editor.Lines.Add('A302,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A302,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A302,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -28987,7 +29000,7 @@ begin
     Editor.Lines.Add('JF');
 
     Editor.Lines.Add('A589,4,0,2,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A589,38,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A589,66,0,2,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -29007,11 +29020,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEletroSatTriplaPequena;
@@ -29023,7 +29036,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29032,7 +29045,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('N');
@@ -29045,7 +29058,7 @@ begin
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
     Editor.Lines.Add('A27,4,0,1,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A27,23,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A27,40,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -29057,7 +29070,7 @@ begin
     Editor.Lines.Add('A24,106,0,1,1,1,N,"' + SgDados.Cells[6, L] + '"');
 
     Editor.Lines.Add('A259,4,0,1,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A259,23,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A259,40,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -29070,7 +29083,7 @@ begin
     Editor.Lines.Add('JF');
 
     Editor.Lines.Add('A491,4,0,1,1,1,N,"' + 'Codigo: ' + SgDados.Cells[0, L] +
-      '"'); // CÛdigo
+      '"'); // C√≥digo
     Editor.Lines.Add('A491,23,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 20) +
       '"'); // Descricao
     Editor.Lines.Add('A491,40,0,1,1,1,N,"' + Copy(SgDados.Cells[1, L], 21, 40) +
@@ -29090,11 +29103,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEmporioJardins;
@@ -29106,7 +29119,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29115,7 +29128,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -29158,7 +29171,7 @@ begin
     // Editor.Lines.Add('111100000230010'+ SgDados.Cells[7,L]);
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -29169,11 +29182,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaEmporioJardins_Pequeno;
@@ -29185,7 +29198,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29194,7 +29207,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -29242,7 +29255,7 @@ begin
     end;
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -29253,11 +29266,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaOticaSantaLuiza;
@@ -29269,7 +29282,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29278,7 +29291,7 @@ begin
   // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
 
@@ -29311,7 +29324,7 @@ begin
     Editor.Lines.Add('111100000230010' + SgDados.Cells[7, L]);
 
     Editor.Lines.Add('^01');
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
     Editor.Lines.Add('E');
@@ -29323,11 +29336,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 function TFrmPrincipalPreVenda.MessageDlgDef2(const Msg, MyCaption: string;
@@ -29388,7 +29401,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29460,11 +29473,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print.bat')), sw_ShowNormal);
   if not FileExists('Print.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSafiraArgox;
@@ -29479,7 +29492,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29557,11 +29570,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -29575,7 +29588,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29584,7 +29597,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
     Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -29620,11 +29633,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -29638,7 +29651,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29647,7 +29660,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -29687,11 +29700,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -29705,7 +29718,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29714,7 +29727,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -29753,11 +29766,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -29771,7 +29784,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29780,7 +29793,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -29820,11 +29833,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -29838,7 +29851,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29847,7 +29860,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -29918,11 +29931,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_LayEVictorI;
@@ -29936,7 +29949,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -29945,7 +29958,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -29988,7 +30001,7 @@ begin
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
 
-    // C·lculo para imprimir a qtd de etiquetas certo
+    // C√°lculo para imprimir a qtd de etiquetas certo
 //    if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
 //      vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
 //    else
@@ -30025,11 +30038,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30044,7 +30057,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30054,7 +30067,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -30069,7 +30082,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
@@ -30130,13 +30143,13 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30150,7 +30163,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30159,7 +30172,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30196,11 +30209,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30214,7 +30227,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30223,7 +30236,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30261,11 +30274,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30279,7 +30292,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30288,7 +30301,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30335,11 +30348,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30354,7 +30367,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30363,7 +30376,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30410,11 +30423,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30428,7 +30441,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30437,7 +30450,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30520,11 +30533,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30538,7 +30551,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30547,7 +30560,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30584,11 +30597,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30604,7 +30617,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30614,7 +30627,7 @@ begin
   // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
@@ -30629,7 +30642,7 @@ begin
   Editor.Lines.Clear;
   L := 1;
   for y := 1 to cont do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
@@ -30675,7 +30688,7 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
@@ -30683,7 +30696,7 @@ begin
   RgOpcoes.ItemIndex := 0;
   if Produto <> nil then
     FreeAndNil(Produto);
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30697,7 +30710,7 @@ var
 begin
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30776,14 +30789,14 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
   begin
-    ShowMessage('N„o foi encontrado o arquivo Print.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
     exit;
   end;
 
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30798,7 +30811,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30807,7 +30820,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30849,11 +30862,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30868,7 +30881,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30877,7 +30890,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -30921,11 +30934,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -30941,7 +30954,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -30950,7 +30963,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -31016,11 +31029,11 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -31034,7 +31047,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -31043,7 +31056,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -31084,11 +31097,115 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoItabaiana_Pequena;
+var
+  L, y: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da prÔøΩ-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 2) = 0.00 then
+    vqtd := cont / 2
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 2) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da prÔøΩ-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q240,25');
+    Editor.Lines.Add('q819');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A22,10,0,2,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,30)+'"');
+    Editor.Lines.Add('A22,49,0,2,1,2,N,"'+Copy(SgDados.Cells[1, L], 31,10)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A22,98,0,2,1,1,N,"' +SgDados.Cells[10, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A182,98,0,2,1,1,N,"R$"');
+    Editor.Lines.Add('A216,71,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B20,128,0,1,3,6,52,N,"' +SgDados.Cells[6, L]+ '"');
+    Editor.Lines.Add('A140,186,0,2,1,1,N,"' +SgDados.Cells[6, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Editor.Lines.Add('A429,10,0,2,1,2,N,"'+Copy(SgDados.Cells[1, L+1], 1,30)+'"');
+      Editor.Lines.Add('A429,49,0,2,1,2,N,"'+Copy(SgDados.Cells[1, L+1], 31,10)+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A429,98,0,2,1,1,N,"' +SgDados.Cells[10, L+1]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A589,98,0,2,1,1,N,"R$"');
+      Editor.Lines.Add('A623,71,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B415,128,0,1,3,6,52,N,"' +SgDados.Cells[6, L+1]+ '"');
+      Editor.Lines.Add('A551,186,0,2,1,1,N,"' +SgDados.Cells[6, L+1]+ '"');
+      Editor.Lines.Add('');
+    end;
+
+    Editor.Lines.Add('P1');
+    L := L + 2;
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+  begin
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  if Produto <> nil then
+    FreeAndNil(Produto);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -31102,7 +31219,7 @@ begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!',
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
@@ -31111,7 +31228,7 @@ begin
     SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da prÈ-venda.
+  begin // Salvando os itens da pr√©-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -31154,11 +31271,117 @@ begin
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists('Print2.bat') then
-    ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+    ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impress„o ok!', mtInformation, [mbOK], 0);
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MaeDeDeusEspacoCatolico;
+var
+  L, y: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pr√©-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 3) = 0.00 then
+    vqtd := cont / 3
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 3) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da pr√©-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q1168,25');
+    Editor.Lines.Add('q832');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A24,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A24,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B20,72,0,1,2,4,40,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A59,115,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A34,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Editor.Lines.Add('A304,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
+      Editor.Lines.Add('A304,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B300,72,0,1,2,4,40,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('A339,115,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A314,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+    end;
+
+    if SgDados.Cells[0,L+2] <> '' then begin
+      Editor.Lines.Add('A575,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
+      Editor.Lines.Add('A575,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B571,72,0,1,2,4,40,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('A610,115,0,1,1,1,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A585,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
+      Editor.Lines.Add('');
+    end;
+    Editor.Lines.Add('P1');
+    L := L + 3;
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+  begin
+    ShowMessage('N√£o foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impress√£o ok!', mtInformation, [mbOK], 0);
 end;
 
 
@@ -31172,7 +31395,7 @@ end;
 // begin
 // //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
 // if SgDados.Cells[0,1] = '' then begin
-// Messagedlg('N„o foi lanÁado nenhum item para impress„o das etiquetas!', mtWarning, [mbOk], 0);
+// Messagedlg('N√£o foi lan√ßado nenhum item para impress√£o das etiquetas!', mtWarning, [mbOk], 0);
 // EdtConsulta.Setfocus;
 // exit;
 // end;
@@ -31242,11 +31465,11 @@ end;
 // Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
 // WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
 // if not FileExists('Print2.bat') then
-// ShowMessage('N„o foi encontrado o arquivo Print2.bat');
+// ShowMessage('N√£o foi encontrado o arquivo Print2.bat');
 // Application.OnMessage := FormPrincipal.ProcessaMsg;
 // Limpar_Tela;
 // RgOpcoes.ItemIndex := 0;
-// Messagedlg('Impress„o ok!', mtInformation, [mbOk], 0);
+// Messagedlg('Impress√£o ok!', mtInformation, [mbOk], 0);
 // end;
 
 procedure TFrmPrincipalPreVenda.persistirFormulario;
@@ -31280,7 +31503,7 @@ begin
       Image4.Picture := imgAlta.Picture;
     end
     else if (PorcCustoTotal > 0) and (PorcCustoTotal < 4.99) then begin
-      //Result := 'MÈdia';
+      //Result := 'M√©dia';
       Image2.Picture := imgTransparente.Picture;
       Image3.Picture := imgNormal.Picture;
       Image4.Picture := imgTransparente.Picture;
