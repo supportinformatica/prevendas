@@ -937,6 +937,7 @@ var
   vEstqNegativo: String[01]; // vender com estoque negativo ?
   vSelecionaForma: String[01]; // Selciona forma de pagamento.
   vSelecionaCFOP: String[01]; // Selciona CFOP por item
+  vOtimiza: String[01];
   vJurosCobrado: Real;
   // porcentagem padrao de juros cobrado & pega a porcentagem padrao de desconto
   vMudaPreco, vTipoImp: String[01];
@@ -2004,6 +2005,7 @@ begin
     vPorcDesconto := FieldByName('dsPorcDesconto').AsFloat;
     vEstqNegativo := FieldByName('dsBloqEstqNegativo').AsString;
     vSelecionaCFOP := FieldByName('campo_48').AsString;
+    vOtimiza := FieldByName('campo_41').AsString;
     vAutoLogoff := FieldByName('PrevendaAutoLogoff').AsString = 'S';
     vBloquearDescontoAtacado := FieldByName('bloquearDescontoAtacado')
       .AsBoolean;
@@ -7361,9 +7363,31 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
-  TimerRealizarPesquisa.Enabled := false;
-//  if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
-//    AtualizaQryConsulta;
+  if vOtimiza = 'S' then
+    TimerRealizarPesquisa.Enabled := false
+  else begin
+    if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
+      AtualizaQryConsulta;
+    Screen.Cursor := crDefault;
+    TimerRealizarPesquisa.Enabled := false;
+    if DBGrid1.Color = clBtnHighlight then;
+    DBGrid1.Color := clInfoBk;
+    if ADOSPConsulta.RecordCount > 0 then
+    begin
+      ConsultaReserva;
+      if usarLoteValidade = True then
+        montaComboLote;
+      if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
+        or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
+        OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
+      then
+        Consulta_Deposito
+      else if Label12.Visible = True then
+        Consultapedidodecompra1.Click;
+      if (UpperCase(vEmpresa) = 'PTINTAS') then
+        Consultapedidodecompra1.Click;
+    end;
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtConsultaEnter(Sender: TObject);
@@ -10491,10 +10515,12 @@ end;
 procedure TFrmPrincipalPreVenda.EdtConsultaKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-if (Key <> 13) and (Key <> VK_Down) and (Key <> VK_Up)
+  if (Key <> 13) and (Key <> VK_Down) and (Key <> VK_Up)
     and (Key <> VK_Left) and (Key <> VK_Right)then begin
-    Screen.Cursor := crHourGlass;
-    TimerRealizarPesquisa.Enabled := true;
+    if vOtimiza = 'S' then begin
+      Screen.Cursor := crHourGlass;
+      TimerRealizarPesquisa.Enabled := true;
+    end;
   end;
 end;
 
