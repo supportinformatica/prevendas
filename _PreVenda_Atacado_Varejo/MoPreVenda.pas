@@ -656,6 +656,7 @@ type
     procedure ImprimeEtiquetas_MiniMercadoItabaiana_Pequena; //Elgin L42 Pro
     procedure ImprimeEtiquetas_ResMercadinhoAcaua; //Argox OS 214 Plus
     procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_OnixJoalheria;
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11639,7 +11640,9 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'MERCADINHOACAUA' then
     ImprimeEtiquetas_ResMercadinhoAcaua
   else if UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO' then
-    ImprimeEtiquetas_MaeDeDeusEspacoCatolico;
+    ImprimeEtiquetas_MaeDeDeusEspacoCatolico
+  else if UpperCase(vFlagEtiqueta) = 'ONIXJOALHERIA' then
+    ImprimeEtiquetas_OnixJoalheria;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -31416,92 +31419,81 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-// procedure TFrmPrincipalPreVenda.ImprimeEtiquetasSafiraArgox;
-// var L : integer;
-// Arq : TextFile;
-// vQtd : integer;
-// produto: TDOMProduto;
-// esp1, esp2, esp3: string;
-// i, ult: integer;
-// begin
-// //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-// if SgDados.Cells[0,1] = '' then begin
-// Messagedlg('Não foi lançado nenhum item para impressão das etiquetas!', mtWarning, [mbOk], 0);
-// EdtConsulta.Setfocus;
-// exit;
-// end;
-// Editor.Lines.Clear;
-// for L := 1 to SgDados.RowCount - 1 do begin
-// if SgDados.Cells[0,L] = '' then Break;
-// produto := TNegProduto.BuscarProduto(strtoint(SgDados.Cells[0,L]));
-// Editor.Lines.Add('c0000');
-// Editor.Lines.Add('KI503');
-// Editor.Lines.Add('O0220');
-// Editor.Lines.Add('f220');
-// Editor.Lines.Add('KW0307');
-// Editor.Lines.Add('KI7');
-// Editor.Lines.Add('V0');
-// Editor.Lines.Add('L');
-// Editor.Lines.Add('H12');
-// Editor.Lines.Add('PC');
-// Editor.Lines.Add('A2');
-// Editor.Lines.Add('D11');
-/// /    Editor.Lines.Add('A305,37,2,1,1,1,N,"'+produto.referenciaFabrica+'"');
-//
-// Memo1.Text := produto.especificacao;
-//
-// esp1 := '';
-// esp2 := '';
-// esp3 := '';
-//
-// for I := 0 to Memo1.Lines.Count - 1 do begin
-// if i = 0 then begin
-// if Memo1.lines[i] <> '' then
-// esp1 := copy(Memo1.lines[i],1,14);
-// end
-// else
-// if i = 1 then begin
-// if Memo1.lines[i] <> '' then
-// esp2 := copy(Memo1.lines[i],1,14);
-// end
-// else
-// if i = 2 then begin
-// if Memo1.lines[i] <> '' then
-// esp3 := copy(Memo1.lines[i],1,14);
-// end;
-// end;
-//
-// Editor.Lines.Add('1d6301600280131' + inttostr(produto.cdProduto));
-// Editor.Lines.Add('121100000170130' + inttostr(produto.cdProduto));
-// Editor.Lines.Add('121100000040130' + produto.referenciaFabrica);
-//
-/// /    Editor.Lines.Add('121100000360213R$'+formatFloat('0.00',produto.vlPreco));
-// Editor.Lines.Add('121100000260213' + esp1);
-// Editor.Lines.Add('121100000150213' + esp2);
-// Editor.Lines.Add('121100000040213' + esp3);
-//
-// if produto.referenciaInterna <> '' then
-// Editor.Lines.Add('121100000360213'+produto.referenciaInterna)
-/// /      Editor.Lines.Add('A145,102,2,2,1,1,N,"'+produto.referenciaInterna+'"')
-// else
-// Editor.Lines.Add('121100000360213R$'+formatFloat('0.00',produto.vlPreco));
-/// /      Editor.Lines.Add('A145,102,2,2,1,1,N,"'+formatFloat('0.00',produto.vlPreco)+'"');
-//
-//
-// vQtd := StrToint(FormatFloat('0000',StrToFloat(SgDados.Cells[2,L])));
-// Editor.Lines.Add('^01');
-// Editor.Lines.Add('Q'+ IntToStr(vQtd));
-// Editor.Lines.Add('E');
-// end;
-// Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
-// WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
-// if not FileExists('Print2.bat') then
-// ShowMessage('Não foi encontrado o arquivo Print2.bat');
-// Application.OnMessage := FormPrincipal.ProcessaMsg;
-// Limpar_Tela;
-// RgOpcoes.ItemIndex := 0;
-// Messagedlg('Impressão ok!', mtInformation, [mbOk], 0);
-// end;
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_OnixJoalheria;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('I8,1,001');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q80,12');
+      Editor.Lines.Add('q620');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D11');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A4,0,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],1,18)+ '"');
+      Editor.Lines.Add('A4,16,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],19,18)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A28,36,0,1,1,1,N,"COD: ' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A232,0,0,1,1,1,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B216,24,0,1,2,2,24,N,"' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      Editor.Lines.Add('');
+      FreeAndNil(Produto);
+
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+{
+  ##### ULTIMO MÉTODO DE ETIQUETA ^^^^
+}
+
 
 procedure TFrmPrincipalPreVenda.persistirFormulario;
 var
