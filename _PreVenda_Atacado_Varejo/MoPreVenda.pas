@@ -31215,7 +31215,7 @@ begin
       Editor.Lines.Add('A429,98,0,2,1,1,N,"' +SgDados.Cells[10, L+1]+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A589,98,0,2,1,1,N,"R$"');
-      Editor.Lines.Add('A623,71,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A623,71,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+1]))+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('B415,128,0,1,3,6,52,N,"' +SgDados.Cells[6, L+1]+ '"');
       Editor.Lines.Add('A551,186,0,2,1,1,N,"' +SgDados.Cells[6, L+1]+ '"');
