@@ -569,6 +569,7 @@ type
     Procedure ImprimeEtiquetasTemdeTudoSempre;
     procedure ImprimeEtiquetasJALVES_Grande;
     procedure ImprimeEtiquetasDIEGOCUNHA_3COLUNAS;
+    procedure ImprimeEtiquetasPEDALAMAIS_3COLUNAS;
     procedure ImprimeEtiquetasVIVA_3COLUNAS;
     procedure ImprimeEtiquetaGrandeTriploRural;
     procedure ImprimeEtiquetaPequenoTriploRural;
@@ -11181,6 +11182,11 @@ begin
     ImprimeEtiquetaNutriMix;
   end;
 
+  if UpperCase(vFlagEtiqueta) = 'PEDALA+' then
+  begin // ELGIN L42
+    ImprimeEtiquetasPEDALAMAIS_3COLUNAS;
+  end;
+
   if UpperCase(vFlagEtiqueta) = 'ANERIFIT' then begin
     ImprimeEtiquetaPR_ELGIN // ok
   end;
@@ -19516,6 +19522,80 @@ begin
       StrToFloat(SgDados.Cells[3, L])) + '"'); // valor
 
     Editor.Lines.Add('Q176,24');
+
+    // Cálculo para imprimir a qtd de etiquetas certo
+    if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
+      vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
+    else
+      vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
+        div 3) + 1;
+
+    // vQtd := StrToFloat(SgDados.Cells[2,L]);
+    Editor.Lines.Add('P1,' + FormatFloat('0000', vqtd));
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetasPEDALAMAIS_3COLUNAS;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+  // SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('q832');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('ZT');
+    Editor.Lines.Add('Q170,25');
+    Editor.Lines.Add('N');
+
+    Editor.Lines.Add('A796,168,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 1, 20)+'"');
+    Editor.Lines.Add('A796,139,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 21, 40)+'"');
+    Editor.Lines.Add('A662,51,2,1,1,2,N,"C. '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B565,70,0,1,2,6,40,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A812,63,2,3,1,2,N,"R$ '+FormatFloat('0.00',
+          StrToFloat(SgDados.Cells[3, L]))+'"');
+
+    Editor.Lines.Add('A508,168,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 1, 20)+'"');
+    Editor.Lines.Add('A508,139,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 21, 40)+'"');
+    Editor.Lines.Add('A374,51,2,1,1,2,N,"C. '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B285,70,0,1,2,6,40,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A524,63,2,3,1,2,N,"R$ '+FormatFloat('0.00',
+          StrToFloat(SgDados.Cells[3, L]))+'"');
+
+    Editor.Lines.Add('A241,168,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 1, 20)+'"');
+    Editor.Lines.Add('A241,139,2,1,1,2,N,"'+Copy(RetirarAcento(SgDados.Cells[1, L]), 21, 40)+'"');
+    Editor.Lines.Add('A87,51,2,1,1,2,N,"C. '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B15,70,0,1,2,6,40,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A237,63,2,3,1,2,N,"R$ '+FormatFloat('0.00',
+          StrToFloat(SgDados.Cells[3, L]))+'"');
 
     // Cálculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
