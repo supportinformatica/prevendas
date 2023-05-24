@@ -2315,7 +2315,8 @@ begin
      (dsCGC = '32879272000108') or (dsCGC = '32879272000361') or
      (dsCGC = '03334531000109') or (dsCGC = '15555876000171') or
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
-     (dsCGC = '21597412000120') or (dsCGC = '36056673000100')
+     (dsCGC = '21597412000120') or (dsCGC = '36056673000100') or
+     (dsCGC = '15066244000144')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -2942,7 +2943,7 @@ end;
 Procedure TFrmPrincipalPreVenda.LancaProdutosHospitalar;
 var
   quantidade, qtdTotalLote, qtdLoteAtual, qtdLancada: Real;
-  sequencialLote, cdProduto: Integer;
+  sequencialLote, cdProduto, diasParaVecer: Integer;
   lote, cdFabricanteLote: string;
 begin
   quantidade := StrToFloatDef(EdtQtd.Text, 0);
@@ -2997,6 +2998,17 @@ begin
       cdFabricanteLote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 4);
       qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
         StrToInt(cdFabricanteLote));
+      if StrToDate(copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 2)) < StrToDate(vdata_banco) then
+      begin
+        diasParaVecer := DaysBetween(StrToDate(copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 2)), StrToDate(vdata_banco));
+        if diasParaVecer <= 10 then
+          Application.MessageBox(pchar('Este produto ' +
+          'está com a validade próxima de vencer. Restam '+ IntToStr(diasParaVecer) + ' dias.' ), 'Atenção',
+          MB_OK + MB_ICONWARNING + MB_APPLMODAL)
+        else if diasParaVecer > 0 then
+          Application.MessageBox(pchar('Este produto ' + 'está com a validade vencida.'), 'Atenção',
+          MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+      end;
       if quantidade > qtdLoteAtual then
       // SE NÃO HOUVER QUANTIDADE SUFICIENTE CANCELO O LANÇAMENTO
       begin
