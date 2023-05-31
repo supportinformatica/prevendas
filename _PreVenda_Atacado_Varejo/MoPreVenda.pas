@@ -16605,13 +16605,14 @@ begin
     Editor.Lines.Add('A574,32,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,20)) + '"');
     Editor.Lines.Add('A574,271,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,20)) + '"');
     Editor.Lines.Add('Q400,16');
-    // Cálculo para imprimir a qtd de etiquetas certo
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
       vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
         div 3) + 1;
-    Editor.Lines.Add('P1,' + FloatToStr(vqtd));
+
+    // vQtd := StrToFloat(SgDados.Cells[2,L]);
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd)+',1');
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
