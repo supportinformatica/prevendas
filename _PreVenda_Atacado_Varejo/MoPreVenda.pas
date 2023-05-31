@@ -578,6 +578,7 @@ type
     procedure ImprimeEtiquetaAQUARELA_ELGIN;
     procedure ImprimeEtiquetaSerafina;
     procedure ImprimeEtiquetaZANQUY;
+    procedure ImprimeEtiquetaZAVIXE;
     procedure ImprimeEtiquetaQUIVER;
     procedure ImprimeEtiquetaYZLU;
     procedure ImprimeEtiquetaYZLUCENTRO;
@@ -657,7 +658,8 @@ type
     procedure ImprimeEtiquetas_MiniMercadoItabaiana_Pequena; //Elgin L42 Pro
     procedure ImprimeEtiquetas_ResMercadinhoAcaua; //Argox OS 214 Plus
     procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
-    procedure ImprimeEtiquetas_OnixJoalheria;
+    procedure ImprimeEtiquetas_OnixJoalheria; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_GrupoAquarela(StoreName: string); //Elgin L42
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -817,6 +819,7 @@ type
     function ChamaInputBox(const ACaption, APrompt: string): string;
     function ChamaInputBoxTipoForracao(const ACaption, APrompt: string): string;
     function ChamaInputBoxEtiquetaZanquy(const ACaption,APrompt: string): integer;
+    function ChamaInputBoxEtiquetaGrupoAquarela(const ACaption,APrompt: string): integer;
     function ChamaInputBoxEtiquetaCAMPOS(const ACaption,APrompt: string): integer;
     function ChamaInputBoxTurno(const ACaption, APrompt: string): Integer;
     procedure AuxiliarLanctoNFe(i: Integer);
@@ -2279,7 +2282,7 @@ begin
   (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
-  (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUPEIXOTO') then
+  (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
     chkbxEtiqueta.Visible := true;
 
   if (UpperCase(vEmpresa) = 'DISCABOS') or (UpperCase(vEmpresa) = 'SANTANA')
@@ -11231,10 +11234,20 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetaPequenoTriploRural;
   end
-  else if (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
-  (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
-  (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
-  (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
+  else if (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') then
+    case ChamaInputBoxEtiquetaGrupoAquarela('Seleção de modelo',
+        'Escolha o modelo de etiqueta na lista abaixo:') of
+      0 : ImprimeEtiquetas_GrupoAquarela('ZANQUY CENTRO');
+      1 : ImprimeEtiquetas_GrupoAquarela('ZANQUY PREMIO');
+      2 : ImprimeEtiquetas_GrupoAquarela('AQUARELA CONFECCOES');
+      3 : ImprimeEtiquetas_GrupoAquarela('ZAVIXE');
+    end
+
+  else if (UpperCase(vFlagEtiqueta) = 'IMA') or
+  (UpperCase(vFlagEtiqueta) = 'YZLU') or
+  (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
+  (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
+  (UpperCase(vFlagEtiqueta) = 'DOFF') or
   (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then // ELGIN L42
     case ChamaInputBoxEtiquetaZanquy('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
@@ -16232,7 +16245,7 @@ begin
   if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
    or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
-   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') then
+   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') then
     Result := True
   else
     Result := False;
@@ -23743,6 +23756,98 @@ begin
   end;
 end;
 
+
+function TFrmPrincipalPreVenda.ChamaInputBoxEtiquetaGrupoAquarela(const ACaption,
+  APrompt: string): integer;
+var
+  Form: TForm;
+  Prompt: TLabel;
+  cbxFornecedor: TComboBox;
+  DialogUnits: TPoint;
+  ButtonTop, ButtonWidth, ButtonHeight: Integer;
+  Value: integer;
+  i: Integer;
+  Buffer: array [0 .. 51] of Char;
+begin
+  result := -1;
+  Form := TForm.Create(Application);
+  with Form do
+  begin
+    try
+      Canvas.Font := Font;
+      for i := 0 to 25 do
+        Buffer[i] := Chr(i + Ord('A'));
+      for i := 0 to 25 do
+        Buffer[i + 26] := Chr(i + Ord('a'));
+      GetTextExtentPoint(Canvas.handle, Buffer, 52, TSize(DialogUnits));
+      DialogUnits.x := DialogUnits.x div 52;
+      BorderStyle := bsDialog;
+      caption := ACaption;
+      ClientWidth := MulDiv(380, DialogUnits.x, 4);
+      ClientHeight := MulDiv(63, DialogUnits.y, 8);
+      Position := poScreenCenter;
+      Prompt := TLabel.Create(Form);
+      with Prompt do
+      begin
+        Parent := Form;
+        AutoSize := True;
+        Left := MulDiv(8, DialogUnits.x, 4);
+        Top := MulDiv(8, DialogUnits.y, 8);
+        caption := APrompt;
+      end;
+      cbxFornecedor := TComboBox.Create(Form);
+      with cbxFornecedor do
+      begin
+        Parent := Form;
+        ItemIndex := 5;
+        Left := Prompt.Left;
+        Top := MulDiv(19, DialogUnits.y, 8);
+        width := MulDiv(340, DialogUnits.x, 4);
+        Style := csDropDownList;
+        // MaxLength := 255;
+        // aqui vc pode adicionar a data de como vai ser exibida no input:
+        // EditMask := '99/99/9999';
+        // PasswordChar := '*';
+        // SelectAll;
+        cbxFornecedor.Items.Add('ZANQUY CENTRO');
+        cbxFornecedor.Items.Add('ZANQUY PREMIO');
+        cbxFornecedor.Items.Add('AQUARELA');
+        cbxFornecedor.Items.Add('ZAVIXE');
+      end;
+      ButtonTop := MulDiv(41, DialogUnits.y, 8);
+      ButtonWidth := MulDiv(50, DialogUnits.x, 4);
+      ButtonHeight := MulDiv(14, DialogUnits.y, 8);
+      with TButton.Create(Form) do
+      begin
+        Parent := Form;
+        caption := 'OK';
+        ModalResult := mrOK;
+        Default := True;
+        SetBounds(MulDiv(38, DialogUnits.x, 4), ButtonTop, ButtonWidth,
+          ButtonHeight);
+      end;
+      with TButton.Create(Form) do
+      begin
+        Parent := Form;
+        caption := 'Cancel';
+        ModalResult := mrCancel;
+        Cancel := True;
+        SetBounds(MulDiv(92, DialogUnits.x, 4), ButtonTop, ButtonWidth,
+          ButtonHeight);
+      end;
+      cbxFornecedor.ItemIndex := 0;
+      if ShowModal = mrOK then
+      begin
+        Value := cbxFornecedor.ItemIndex;
+        result := Value;
+      end;
+    finally
+      Form.Free;
+      Form := nil;
+    end;
+  end;
+end;
+
 function TFrmPrincipalPreVenda.ChamaInputBoxTurno(const ACaption,
   APrompt: string): Integer;
 var
@@ -26007,6 +26112,88 @@ begin
     Editor.Lines.Add('JF');
 
     Editor.Lines.Add('A520,3,0,4,1,1,N,"ZANQUY CENTRO"');
+    Editor.Lines.Add('A451,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
+      '"'); // descricao
+    Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
+      '"'); // descricao
+    Editor.Lines.Add('A448,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
+    // código
+    Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
+    // código
+    Editor.Lines.Add('A451,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
+    // ref interna
+    Editor.Lines.Add('A670,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L])) + '"'); // valor
+
+    Editor.Lines.Add('Q200,16');
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('P1,' + FormatFloat('0000', vqtd));
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetaZAVIXE;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  p: TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+  // SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('R0,0');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('I8,0,001');
+    Editor.Lines.Add('q1080');
+    Editor.Lines.Add('JY0000Kf00D8');
+    Editor.Lines.Add('S3');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('JB');
+
+    Editor.Lines.Add('A104,3,0,4,1,1,N,"ZAVIXE"');
+    Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
+      '"'); // descricao
+    Editor.Lines.Add('A35,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
+      '"'); // descricao
+    Editor.Lines.Add('A32,167,0,3,1,1,N,"' + SgDados.Cells[0, L] + '"');
+    // código
+    Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' + SgDados.Cells[0, L] + '"');
+    // código
+    Editor.Lines.Add('A35,85,0,2,1,1,N,"' + p.referenciaInterna + '"');
+    // ref interna
+    Editor.Lines.Add('A254,165,0,4,1,1,N,"R$' + FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L])) + '"'); // valor
+    Editor.Lines.Add('JF');
+
+    Editor.Lines.Add('A520,3,0,4,1,1,N,"ZAVIXE"');
     Editor.Lines.Add('A451,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
     Editor.Lines.Add('A451,61,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 26, 25) +
@@ -31579,6 +31766,115 @@ begin
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_GrupoAquarela(StoreName: string);
+var
+  L, y: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 2) = 0.00 then
+    vqtd := cont / 2
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 2) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q200,16');
+    Editor.Lines.Add('q1080');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A104,6,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A35,42,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A35,61,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A32,167,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B35,102,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A35,85,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A254,165,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
+      Editor.Lines.Add('A520,6,0,4,1,1,N,"' +StoreName+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A451,42,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+      Editor.Lines.Add('A451,61,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A448,167,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('B451,102,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A451,85,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A670,165,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+        StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+    end;
+
+    Editor.Lines.Add('P1');
+    L := L + 2;
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists('Print2.bat') then
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  if Produto <> nil then
+    FreeAndNil(Produto);
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
