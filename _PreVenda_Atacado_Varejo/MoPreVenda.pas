@@ -11645,7 +11645,8 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetas_Litoral655_New('Rua Geru');
   end
-  else if UpperCase(vFlagEtiqueta) = 'MINEITABAIANA' then begin
+  else if (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA') or
+   (UpperCase(vFlagEtiqueta) = 'OLIVEIRA') then begin
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
     FrmDuasEtiquetas.BitBtn1.Caption := 'Etiqueta Grande';
     FrmDuasEtiquetas.BitBtn3.Caption := 'Etiqueta Pequena';
