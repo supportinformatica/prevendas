@@ -14761,7 +14761,9 @@ begin
     Editor.Lines.Add('A210,164,0,4,1,1,N,"R$"');
     Editor.Lines.Add('A254,122,0,3,2,4,N,"' +SgDados.Cells[3, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A6,170,0,2,1,1,N,"COD: ' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A6,125,0,2,2,2,N,"' +SgDados.Cells[10, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A6,178,0,2,1,1,N,"COD: ' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
