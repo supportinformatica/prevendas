@@ -5621,7 +5621,6 @@ begin
     FrmRelOrcamentos.QreRota2.Visible := True;
     FrmRelOrcamentos.RLLinhaProduto.Visible := True;
     // solicitou para que esses campos não aparecam
-
     FrmRelOrcamentos.RLDBResult3.Visible := False;
     FrmRelOrcamentos.QREPreco.Visible  := False;
     FrmRelOrcamentos.QRETotal.Visible  := False;
@@ -5632,7 +5631,6 @@ begin
     FrmRelOrcamentos.RLLabel18.Visible := False;
     FrmRelOrcamentos.RLLabel19.Visible := False;
     FrmRelOrcamentos.RLLabel20.Visible := False;
-
   end;
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
@@ -5674,7 +5672,6 @@ begin
   FrmRelOrcamentos.RLBPAF.height := 0;
   FrmRelOrcamentos.RLBand3.height := 120; //110
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
-
   if (usarLoteValidade = True) then // and (UpperCase(vEmpresa) <> 'ATIVAOLD')
   begin
     FrmRelOrcamentos.RLLabel5.caption  := ''; // 'Validade    Lote';
@@ -5682,7 +5679,7 @@ begin
     FrmRelOrcamentos.RLLabel24.Caption := 'Descrição \ Validade \  Lote';
     FrmRelOrcamentos.RLDBText2.AutoSize := True;
     FrmRelOrcamentos.RLDBText2.DataField := 'nrLote';
-    FrmRelOrcamentos.RLBand2.height := 27;
+    FrmRelOrcamentos.RLBand2.height := 34;  //27
     FrmRelOrcamentos.RLDBText2.Top := 13;
     FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left;;   // ficará embaixo da descrição
     FrmRelOrcamentos.RLDBText2.Alignment := taLeftJustify;
@@ -17489,7 +17486,6 @@ begin
         end
         else
           prevenda.numeroPrevenda := StrToInt(EdtLancto.Text);
-
         // if prevenda <> nil then begin
         // prevenda.Destroy;
         // prevenda:= nil;

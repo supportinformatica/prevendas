@@ -17,7 +17,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 120
+  PixelsPerInch = 96
   TextHeight = 13
   object QRMdRel: TRLReport
     Left = 40
@@ -471,7 +471,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         AfterPrint = QREOrcamentoAfterPrint
       end
       object RLLabel1: TRLLabel
-        Left = 43
+        Left = 42
         Top = 165
         Width = 61
         Height = 14
@@ -1002,17 +1002,16 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Visible = False
         end
         object RLDBText1: TRLDBText
-          Left = 45
-          Top = -1
-          Width = 68
+          Left = 42
+          Top = 1
+          Width = 71
           Height = 12
-          Alignment = taCenter
           AutoSize = False
           DataField = 'dsReferencia'
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -8
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -1020,16 +1019,16 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         end
         object RLDBText6: TRLDBText
           Left = 109
-          Top = 0
+          Top = 1
           Width = 66
           Height = 12
           AutoSize = False
           DataField = 'cdCodigoDIC'
           DataSource = DS
-          Font.Charset = DEFAULT_CHARSET
+          Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -8
+          Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
           Text = ''
@@ -1578,7 +1577,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel10: TRLLabel
-        Left = 43
+        Left = 42
         Top = 115
         Width = 61
         Height = 14
