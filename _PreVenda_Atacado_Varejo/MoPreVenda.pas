@@ -21619,9 +21619,12 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q320,12');
     Editor.Lines.Add('q308');
     Editor.Lines.Add('');
-    Editor.Lines.Add('D16');
+    Editor.Lines.Add('D15');
     Editor.Lines.Add('');
     Editor.Lines.Add('OD');
     Editor.Lines.Add('');
@@ -21634,7 +21637,7 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A90,15,0,3,1,2,N,"ORIGINAL"');
+    Editor.Lines.Add('A114,15,0,3,1,2,N,"BJEANS"');
     Editor.Lines.Add('');
     Editor.Lines.Add('A48,66,0,2,1,1,N,"'+trim(Copy(SgDados.Cells[1, L], 1, 20))+'"');
     Editor.Lines.Add('A48,88,0,2,1,1,N,"'+trim(Copy(SgDados.Cells[1, L], 21, 20))+'"');
@@ -21644,6 +21647,7 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('A76,246,0,3,1,2,N,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
     Editor.Lines.Add('A76,286,0,3,1,1,N,"Ref. '+SgDados.Cells[7, L]+'"');
+    Editor.Lines.Add('');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + intToStr(Trunc(vqtd)));
   end;
