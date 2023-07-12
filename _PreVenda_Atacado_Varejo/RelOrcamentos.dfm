@@ -840,6 +840,12 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Top = 4
         Width = 718
         Height = 25
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         object QRECodigo: TRLDBText
           Left = 2
           Top = -1
@@ -850,7 +856,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -926,16 +932,16 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           BeforePrint = QREPrecoBeforePrint
         end
         object QREQtd: TRLDBResult
-          Left = 399
+          Left = 428
           Top = 0
-          Width = 118
-          Height = 14
+          Width = 89
+          Height = 11
           Alignment = taRightJustify
           DataFormula = 'NrQtd * 1'
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -972,7 +978,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -12
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -995,7 +1001,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Caption = '                         '
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -1003,15 +1009,15 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         end
         object RLDBText1: TRLDBText
           Left = 42
-          Top = 1
-          Width = 71
-          Height = 12
+          Top = 0
+          Width = 90
+          Height = 11
           AutoSize = False
           DataField = 'dsReferencia'
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -1019,7 +1025,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         end
         object RLDBText6: TRLDBText
           Left = 109
-          Top = 1
+          Top = 0
           Width = 66
           Height = 12
           AutoSize = False
@@ -1027,7 +1033,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           DataSource = DS
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
@@ -1045,7 +1051,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1061,7 +1067,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1077,7 +1083,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Caption = '                         '
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False

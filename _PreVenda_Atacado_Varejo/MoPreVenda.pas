@@ -2978,7 +2978,7 @@ begin
         // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE JÁ ESTÃO ORDENADOS PELA VALIDADE;
         begin
           lote := copy_campo(CbLote.Items[sequencialLote], '|', 1);
-          cdFabricanteLote := copy_campo(CbLote.Items[sequencialLote], '|', 4);
+          cdFabricanteLote := '0'; // copy_campo(CbLote.Items[sequencialLote], '|', 4);
           qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
             StrToInt(cdFabricanteLote));
 
@@ -2999,7 +2999,7 @@ begin
     else // SE O USUÁRIO ESCOLHER UM LOTE, VEJO SE TEM QUANTIDADE SUFICIENTE
     begin
       lote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 1);
-      cdFabricanteLote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 4);
+      cdFabricanteLote := '0'; // copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 4);
       qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
         StrToInt(cdFabricanteLote));
       if StrToDate(copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 2)) < StrToDate(vdata_banco) then
@@ -5647,10 +5647,10 @@ begin
     FrmRelOrcamentos.QREDescricao.width := 228;
   end else
   begin
-    FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLLabel11.Left;
-    FrmRelOrcamentos.RLLabel24.Left := FrmRelOrcamentos.QRLabel6.Left;
-    FrmRelOrcamentos.RlDescricao.Left := FrmRelOrcamentos.RLDBText6.Left;
-    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLDBText6.Left;
+    FrmRelOrcamentos.RLLabel24.Left := FrmRelOrcamentos.QRLabel6.Left + 22;
+    FrmRelOrcamentos.RlDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
+    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
+    FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLDBText6.Left + 22; // FrmRelOrcamentos.RLLabel11.Left;
     FrmRelOrcamentos.RlDescricao.width := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
@@ -5681,7 +5681,7 @@ begin
     FrmRelOrcamentos.RLDBText2.DataField := 'nrLote';
     FrmRelOrcamentos.RLBand2.height := 34;  //27
     FrmRelOrcamentos.RLDBText2.Top := 13;
-    FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left;;   // ficará embaixo da descrição
+    FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left + 22;   // ficará embaixo da descrição
     FrmRelOrcamentos.RLDBText2.Alignment := taLeftJustify;
     FrmRelOrcamentos.RlDescricao.width := 362;
     FrmRelOrcamentos.QREDescricao.width := 362;
@@ -17150,20 +17150,20 @@ begin
     // else
     begin
       Connection := DModulo.Conexao;
-      sql.Text := 'Select NRLOTE lote,                    ' +
-        '	CONVERT(VARCHAR(10),VALIDADE,103) validade,     ' +
-        '	CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,' +
-        '	cdFabricante fabricante,                        ' +
-        '	validade                                        ' +
-        'FROM ITELOTE WITH (NOLOCK)                       ' +
-        'where (cdproduto=:CODIGO)                        ' +
-        'group by ITELOTE.nrLote, ITELOTE.validade,       ' +
-        'ITELOTE.cdFabricante, ITELOTE.validade           ' +
-        'having (SUM(nrqtd) > 0)                          ' +
-        'order by 5                                       ';
+      sql.Text :=
+        'Select NRLOTE lote,                             '+
+        'CONVERT(VARCHAR(10),VALIDADE,103) validade,     '+
+        'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,'+
+        'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao '+
+        'FROM ITELOTE WITH (NOLOCK)                      '+
+        'Where (cdproduto=:CODIGO)                       '+
+        'Group by ITELOTE.nrLote, ITELOTE.validade,      '+
+        'ITELOTE.dtFabricacao                            '+
+        'having (SUM(nrqtd) > 0)                         '+
+        'order by 2 DESC                                 ';
       Parameters.ParamByName('CODIGO').Value := cdProduto;
     end;
-    MontaComboListComposto(query, CbLote, 4);
+    MontaComboListComposto(query, CbLote, 3);
     CbLote.Enabled := True;
     CbLote.ItemIndex := -1;
     CbLote.Text := '';
@@ -24227,7 +24227,7 @@ var
   cdProduto, cdFabricanteLote: Integer;
 begin
   lote := copy_campo(CbLote.Text, '|', 1);
-  cdFabricanteLote := StrToInt(copy_campo(CbLote.Text, '|', 4));
+  cdFabricanteLote := 0; //StrToInt(copy_campo(CbLote.Text, '|', 4));
   cdProduto := ADOSPConsulta.FieldByName('Código').AsInteger;
   setLabel23(QuantidadeDispNoLote(lote, cdProduto, cdFabricanteLote));
 end;
