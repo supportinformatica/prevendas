@@ -550,7 +550,7 @@ type
     procedure ImprimeEtiquetas_Pandoro_Pequena;
     procedure ImprimeEtiquetas_AquiAcha;
     procedure ImprimeEtiquetas_SAOMARCOS;
-    procedure ImprimeEtiquetas_TokaDasGrifes;
+    procedure ImprimeEtiquetas_TokaDasGrifes; //ZEBRA ->> ELGIN L42 DT
     procedure ImprimeEtiquetas_Cardoso;
     procedure ImprimeEtiquetas_Geovana;
     procedure ImprimeEtiquetas_NegroMonte_3_Colunas;
@@ -868,7 +868,7 @@ type
     procedure ImprimeEtiquetaCLOSETMARIAFLOR_ELGIN;
     procedure ImprimeEtiquetaNutriMix;
     procedure ImprimeEtiquetaMEGA;
-    procedure ImprimeEtiquetaJetLaser;
+    procedure ImprimeEtiquetaJetLaser;  // ZEBRA TLP 2844 --> ELGIN L42 PRO FULL
     procedure ImprimeEtiquetaPS;
     procedure ImprimeEtiquetaBrumar;
     procedure ImprimeEtiquetaChavesDeOuro;
@@ -11125,7 +11125,7 @@ begin
     ImprimeEtiquetas_AquiAcha;
   if UpperCase(vFlagEtiqueta) = 'SAOMARCOS' then // ELGIN
     ImprimeEtiquetas_SAOMARCOS;
-  if UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES' then // ZEBRA GC 420t
+  if UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES' then
     ImprimeEtiquetas_TokaDasGrifes;
   if UpperCase(vFlagEtiqueta) = 'CARDOSO' then // ELGIN L42PRO
     ImprimeEtiquetas_Cardoso;
@@ -11458,7 +11458,6 @@ begin
   // ARGOX OS 214 PPLA 300 dpi
     ImprimeEtiquetaNutriMix
   else if (UpperCase(vFlagEtiqueta) = 'JETLASER') then
-  // ZEBRA TLP 2844 - SHOPPING E RUA GERU
     ImprimeEtiquetaJetLaser
   else if (UpperCase(vFlagEtiqueta) = 'PS') then // ARGOX OS-214plus A
     ImprimeEtiquetaPS
@@ -15047,39 +15046,39 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A19,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A19,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('A19,18,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A19,42,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B-4,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A54,109,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('B-4,68,0,E30,2,4,39,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A54,113,0,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A19,126,0,1,1,1,N,"'+SgDados.Cells[7, L]+'"');
+    Editor.Lines.Add('A19,138,0,1,1,1,N,"'+SgDados.Cells[7, L]+'"');
     Editor.Lines.Add('A29,152,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
-      Editor.Lines.Add('A299,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
-      Editor.Lines.Add('A299,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('A299,18,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
+      Editor.Lines.Add('A299,42,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B288,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+1]+'"');
-      Editor.Lines.Add('A342,109,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('B288,68,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+1]+'"');
+      Editor.Lines.Add('A342,113,0,1,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A307,126,0,1,1,1,N,"'+SgDados.Cells[7, L+1]+'"');
+      Editor.Lines.Add('A307,138,0,1,1,1,N,"'+SgDados.Cells[7, L+1]+'"');
       Editor.Lines.Add('A317,152,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('');
     end;
 
     if SgDados.Cells[0,L+2] <> '' then begin
-      Editor.Lines.Add('A585,10,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
-      Editor.Lines.Add('A585,38,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('A585,18,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
+      Editor.Lines.Add('A585,42,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B568,64,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+2]+'"');
-      Editor.Lines.Add('A621,109,0,1,1,1,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('B568,68,0,E30,2,4,39,N,"'+SgDados.Cells[6, L+2]+'"');
+      Editor.Lines.Add('A621,113,0,1,1,1,N,"'+SgDados.Cells[6, L+2]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A585,126,0,1,1,1,N,"'+SgDados.Cells[7, L+2]+'"');
-      Editor.Lines.Add('A585,152,0,1,1,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
+      Editor.Lines.Add('A585,138,0,1,1,1,N,"'+SgDados.Cells[7, L+2]+'"');
+      Editor.Lines.Add('A585,152,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
       Editor.Lines.Add('');
     end;
     Editor.Lines.Add('P1');
@@ -27866,6 +27865,7 @@ var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
+  Produto: TDOMProduto;
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
@@ -27882,35 +27882,44 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-    Editor.Lines.Add('c0000');
-    Editor.Lines.Add('KI503');
-    Editor.Lines.Add('O0220');
-    Editor.Lines.Add('f220');
-    Editor.Lines.Add('KW0346');
-    Editor.Lines.Add('KI7');
-    Editor.Lines.Add('V0');
-    Editor.Lines.Add('L');
-    Editor.Lines.Add('H12');
-    Editor.Lines.Add('PC');
-    Editor.Lines.Add('A2');
-    Editor.Lines.Add('D11');
-    Editor.Lines.Add('1f2202500230060' + SgDados.Cells[6, L]); // barra
-    Editor.Lines.Add('121100000650050' +
-      Copy(PegaNomeFabricante(StrToInt(SgDados.Cells[0, L])), 1, 20) + '.');
-    Editor.Lines.Add('121100000540050' + 'Ref.' + SgDados.Cells[7, L]);
-    Editor.Lines.Add('131100000020059R$ ' + FormatFloat('0.00',
-      StrToFloat(SgDados.Cells[3, L])));
-    Editor.Lines.Add('1f2202500230231' + SgDados.Cells[6, L]); // barra
-    Editor.Lines.Add('121100000650221' +
-      Copy(PegaNomeFabricante(StrToInt(SgDados.Cells[0, L])), 1, 20) + '.');
-    Editor.Lines.Add('121100000540221' + 'Ref.' + SgDados.Cells[7, L]);
-    Editor.Lines.Add('131100000020230R$ ' + FormatFloat('0.00',
-      StrToFloat(SgDados.Cells[3, L])));
-    Editor.Lines.Add('^01');
-    // Cálculo para imprimir a qtd de etiquetas certo
-    vqtd := StrToFloat(SgDados.Cells[2, L]);
-    Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
-    Editor.Lines.Add('E');
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      Editor.Lines.Add('I8,1,001');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q160,25');
+      Editor.Lines.Add('q699');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D12');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A46,-4,0,2,1,1,N,"' +Copy(Produto.Fabricante.nome, 1, 23)+ '"');
+      Editor.Lines.Add('A46,18,0,2,1,1,N,"' +Copy(Produto.referenciaFabrica, 1, 23)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B38,40,0,1,3,6,44,N,"' +SgDados.Cells[6, L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A105,94,0,3,1,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A390,-4,0,2,1,1,N,"' +Copy(Produto.Fabricante.nome, 1, 23)+ '"');
+      Editor.Lines.Add('A390,18,0,2,1,1,N,"' +Copy(Produto.referenciaFabrica, 1, 23)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B382,40,0,1,3,6,44,N,"' +SgDados.Cells[6, L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A449,94,0,3,1,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('');
+
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
