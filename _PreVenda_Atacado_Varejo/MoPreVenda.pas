@@ -1014,7 +1014,7 @@ uses uFuncoesPadrao, DataModulo, FrmPrincipal, relOrcamentosPBFARMA,
   IdAttachmentFile, Rel_Orcamentos,
   Rel_Orcamentos_Novo.dcu, FrmTresEtiquetasViva, FrmQuatroEtiquetas, DOMPremio,
   NEGPremio,DOMPessoa, NEGPessoa,unitLogoMaker,
-  BuscaObjetos, FrmTresEtiquetasRural,
+  BuscaObjetos, FrmTresEtiquetasRural, AlterProdutoPosAdded,
   uThreadChaveAcesso, FormRegistroSistema, uThreadBlockChave, RelOrcamentos40,
   comobj, LucroVenda, NEGACBrPosPrint, CdCreditoCliente;
 
@@ -4591,7 +4591,22 @@ begin
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-    EdtConsulta.Setfocus;
+    if FrmPrincipalPreVenda.dsCGC = '38030572000196' then begin
+      frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
+      frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
+      frmAlterProdutoPosAdded.edtUnidade.Text := SgDados.Cells[10, SgDados.Row];
+      frmAlterProdutoPosAdded.edtQuantidade.Text := SgDados.Cells[2, SgDados.Row];
+      frmAlterProdutoPosAdded.edtPreco.Text := SgDados.Cells[3, SgDados.Row];
+      frmAlterProdutoPosAdded.ShowModal;
+      prevenda.itens[SgDados.Row - 1].unidade.unidade := frmAlterProdutoPosAdded.edtUnidade.Text;
+      prevenda.itens[SgDados.Row - 1].quantidade := StrToFloat(frmAlterProdutoPosAdded.edtQuantidade.Text);
+      prevenda.itens[SgDados.Row - 1].precoVenda := StrToFloat(frmAlterProdutoPosAdded.edtPreco.Text);
+      prevenda.itens[SgDados.Row - 1].precoBruto := StrToFloat(frmAlterProdutoPosAdded.edtPreco.Text);
+      CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
+      SgDadosExit(self);
+    end
+    else
+      EdtConsulta.Setfocus;
     exit;
   end;
   // remove o valor cancelado do edit do valor total
