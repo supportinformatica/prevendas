@@ -79,7 +79,8 @@ uses
   NEGACBrPosPrint in '..\..\support\NEG\NEGACBrPosPrint.pas',
   unitLogoMaker in 'unitLogoMaker.pas',
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
-  Prevenda.EtiquetasEspeciais.DmCasaDecor in 'etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas';
+  Prevenda.EtiquetasEspeciais.DmCasaDecor in 'etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas',
+  AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded};
 
 {$R *.RES}
 var
@@ -95,6 +96,7 @@ begin
     Application.CreateForm(TDModulo, DModulo);
   Application.CreateForm(TFrmPrincipalPreVenda, FrmPrincipalPreVenda);
   Application.CreateForm(TFrmDataProduzidoValidade, FrmDataProduzidoValidade);
+  Application.CreateForm(TfrmAlterProdutoPosAdded, frmAlterProdutoPosAdded);
   TBuscaObjeto.AbreLauncher;
     if FrmPrincipalPreVenda.GetFlagEmpresa <> 'TREVO' then
     begin
