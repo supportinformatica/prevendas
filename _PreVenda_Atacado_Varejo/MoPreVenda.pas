@@ -11263,6 +11263,11 @@ begin
     case ChamaInputBoxEtiquetaGrupoLojasAlexandre('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
       0 : ImprimeEtiquetas_GrupoLojasAlexandre('EQUILIBRIO');
+      1 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU CENTRO');
+      2 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU PREMIO');
+      3 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU CALCADOS');
+      4 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU SANTANA');
+      5 : ImprimeEtiquetas_GrupoLojasAlexandre('QUIVER');
     end
 
   else if (UpperCase(vFlagEtiqueta) = 'IMA') or
@@ -23943,6 +23948,11 @@ begin
         // PasswordChar := '*';
         // SelectAll;
         cbxFornecedor.Items.Add('EQUILIBRIO');
+        cbxFornecedor.Items.Add('YZLU CENTRO');
+        cbxFornecedor.Items.Add('YZLU PREMIO');
+        cbxFornecedor.Items.Add('YZLU CALCADOS');
+        cbxFornecedor.Items.Add('YZLU SANTANA');
+        cbxFornecedor.Items.Add('QUIVER');
       end;
 
       ButtonTop := MulDiv(41, DialogUnits.y, 8);
