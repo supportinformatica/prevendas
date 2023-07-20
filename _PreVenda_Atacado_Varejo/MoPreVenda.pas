@@ -11249,6 +11249,7 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetaPequenoTriploRural;
   end
+
   else if (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') then
     case ChamaInputBoxEtiquetaGrupoAquarela('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
@@ -11258,7 +11259,12 @@ begin
       3 : ImprimeEtiquetas_GrupoAquarela('ZAVIXE');
     end
 
+  else if (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') then
+    case ChamaInputBoxEtiquetaGrupoLojasAlexandre('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
+      0 : ImprimeEtiquetas_GrupoLojasAlexandre('EQUILIBRIO');
+    end
+
   else if (UpperCase(vFlagEtiqueta) = 'IMA') or
   (UpperCase(vFlagEtiqueta) = 'YZLU') or
   (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
