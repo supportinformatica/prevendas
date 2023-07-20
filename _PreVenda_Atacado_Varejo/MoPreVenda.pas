@@ -16275,7 +16275,7 @@ begin
   if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
    or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
-   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA')
+   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE')
    or (UpperCase(vFlagEtiqueta) = 'ZAVIXE') then
     Result := True
   else
