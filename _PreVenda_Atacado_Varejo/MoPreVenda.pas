@@ -11258,6 +11258,7 @@ begin
       3 : ImprimeEtiquetas_GrupoAquarela('ZAVIXE');
     end
 
+        'Escolha o modelo de etiqueta na lista abaixo:') of
   else if (UpperCase(vFlagEtiqueta) = 'IMA') or
   (UpperCase(vFlagEtiqueta) = 'YZLU') or
   (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
