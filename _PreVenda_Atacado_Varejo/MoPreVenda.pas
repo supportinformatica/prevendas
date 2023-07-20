@@ -1,4 +1,4 @@
-﻿unit MoPreVenda;
+unit MoPreVenda;
 
 interface
 
@@ -660,6 +660,7 @@ type
     procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
     procedure ImprimeEtiquetas_OnixJoalheria; //Elgin L42 Pro
     procedure ImprimeEtiquetas_GrupoAquarela(StoreName: string); //Elgin L42
+    procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     Procedure AjustaForm;
     procedure RodaScripts;
