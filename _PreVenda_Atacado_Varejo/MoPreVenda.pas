@@ -1,4 +1,4 @@
-unit MoPreVenda;
+﻿unit MoPreVenda;
 
 interface
 
@@ -32040,7 +32040,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string);
 var
-  L, y: Integer;
+  L: Integer;
   Arq: TextFile;
   vqtd: Real;
   cont: Integer;
@@ -32058,33 +32058,12 @@ begin
   end;
 
   // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
   // SalvaEtiquetas;
 
-  cont := 0;
-
-  for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da pré-venda.
-    if SgDados.Cells[0, L] = '' then
-      Break;
-    cont := cont + 1;
-  end;
-
-  if Frac(cont / 2) = 0.00 then
-    vqtd := cont / 2
-  else
-    vqtd := (StrToInt(FormatFloat('0000', cont)) div 2) + 1;
-
-  cont := Trunc(vqtd);
-
-  if cont <= 0 then
-    cont := 1;
 
   Editor.Lines.Clear;
 
-  L := 1;
-
-  for y := 1 to cont do
+  for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     // if SgDados.Cells[0,L] = '' then Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -32118,26 +32097,23 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
+    Editor.Lines.Add('A520,-2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A467,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A467,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A464,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B467,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A467,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A686,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
 
-    if SgDados.Cells[0,L+1] <> '' then begin
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
-      Editor.Lines.Add('A520,-2,0,4,1,1,N,"' +StoreName+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A467,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-      Editor.Lines.Add('A467,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A464,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('B467,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A467,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A686,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
-        StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('');
-    end;
-
-    Editor.Lines.Add('P1');
-    L := L + 2;
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
+    FreeAndNil(Produto);
   end;
 
   Editor.Lines.SaveToFile
@@ -32156,9 +32132,6 @@ begin
   Limpar_Tela;
 
   RgOpcoes.ItemIndex := 0;
-
-  if Produto <> nil then
-    FreeAndNil(Produto);
 
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
