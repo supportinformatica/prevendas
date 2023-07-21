@@ -677,13 +677,13 @@ type
     procedure pintarLinhaStringGrid(Grid: TStringGrid; linha: Integer;
       cor: TColor);
     function quantidadeEmReserva(cdProduto: Integer): Real;
-    procedure montaComboLote;
+    procedure montaComboLote(cdProduto : string);
     function QuantidadeDispNoLote(nrLote: string; cdProduto: Integer;
-      cdFabricanteLote: Integer): Real;
+      cdFabricanteLote: Integer; nrIgnorar : string): Real;
     function QuantidadeNoLoteNaGrid(nrLote: string; cdProduto: Integer;
       cdFabricanteLote: Integer): Real;
     procedure setLabel23(quantidade: Real);
-    function QuantidadeDispEmLotes(cdProduto: Integer): Real;
+    function QuantidadeDispEmLotes(cdProduto: Integer; nrIgnorar : string): Real;
     function DisponivelNoEstoque(quantidade: Real; cdProduto: Integer;
       alterandoQuantidadeNaGrid: Boolean;
       out tipoComposicao: TTipoComposicaoProduto;
@@ -2894,7 +2894,7 @@ begin
     begin
       LancaProdutosHospitalar;
       setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-        .AsInteger));
+        .AsInteger,EdtLancto.Text));
     end
     else
       LancaProdutos(StrToFloatDef(EdtQtd.Text, 0));
@@ -2959,7 +2959,7 @@ begin
     if CbLote.ItemIndex = -1 then
     // SE O USUÁRIO NÃO ESCOLHER UM LOTE, LANÇAMOS AUTOMATICAMENTE OS MAIS ANTIGOS
     begin
-      qtdTotalLote := QuantidadeDispEmLotes(cdProduto);
+      qtdTotalLote := QuantidadeDispEmLotes(cdProduto,EdtLancto.Text);
       if quantidade > qtdTotalLote then
       // SE NÃO HOUVER QUANTIDADE SUFICIENTE CANCELO O LANÇAMENTO
       begin
@@ -2982,7 +2982,7 @@ begin
           lote := copy_campo(CbLote.Items[sequencialLote], '|', 1);
           cdFabricanteLote := '0'; // copy_campo(CbLote.Items[sequencialLote], '|', 4);
           qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
-            StrToInt(cdFabricanteLote));
+            StrToInt(cdFabricanteLote),EdtLancto.Text);
 
           { Se a quantidade de produtos que resta para ser lançada for maior que a quantidade disponível no lote lanço apenas a quantidade disponível no lote. }
           if (quantidade > qtdLoteAtual) then
@@ -3003,7 +3003,7 @@ begin
       lote := copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 1);
       cdFabricanteLote := '0'; // copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 4);
       qtdLoteAtual := QuantidadeDispNoLote(lote, cdProduto,
-        StrToInt(cdFabricanteLote));
+        StrToInt(cdFabricanteLote),EdtLancto.Text);
       if StrToDate(copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 2)) < StrToDate(vdata_banco) then
       begin
         diasParaVecer := DaysBetween(StrToDate(copy_campo(CbLote.Items[CbLote.ItemIndex], '|', 2)), StrToDate(vdata_banco));
@@ -4649,7 +4649,7 @@ begin
   cbxEntrega.Visible := False;
   EdtConsulta.Setfocus;
   setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-    .AsInteger));
+    .AsInteger,EdtLancto.Text));
 end;
 
 function TFrmPrincipalPreVenda.LimpaEdtDesconto: string;
@@ -7408,7 +7408,7 @@ begin
     begin
       ConsultaReserva;
       if usarLoteValidade = True then
-        montaComboLote;
+        montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
       if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
         or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
         OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
@@ -7477,9 +7477,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
@@ -7505,9 +7505,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
@@ -7533,9 +7533,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
@@ -7561,9 +7561,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
@@ -7586,9 +7586,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
@@ -7964,11 +7964,13 @@ end;
 
 procedure TFrmPrincipalPreVenda.Ds(Sender: TObject);
 var
-  i: Integer;
+  itemPrevenda : TItemPrevenda;
+  i, sequencialLote: Integer;
+  lote, cdFabricanteLote : string;
   verificarDispEmEstoque, possuiPermissaoParaTransformarOrcamento,
     possuiPermissaoParaAlterarPrevenda: Boolean;
   tipoCompos: TTipoComposicaoProduto;
-  qtdDisponivel: Real;
+  qtdDisponivel, qtdTotalLote, qtdLoteAtual, qtdLancada: Real;
 begin
   if (EdtLancto.Text = '') or (EdtLancto.Enabled = false) then
     exit;
@@ -8109,13 +8111,60 @@ begin
         prevenda.itens.Delete(i);
         i := i - 1;
       end;
-      // else begin
-
-      // AuxiliarLancto(i);
-      // SgDados.RowCount := SgDados.RowCount + 1;
-      // end;
-      // ADOQryProcura.Next;
       i := i + 1;
+    end;
+
+    for i := prevenda.itens.Count - 1 downto 0 do
+    begin
+      if prevenda.itens[i].lote = '' then continue;
+      montaComboLote(inttostr(prevenda.itens[i].cdProduto));
+      quantidade := prevenda.itens[i].quantidade;
+      qtdTotalLote := QuantidadeDispEmLotes(prevenda.itens[i].cdProduto,EdtLancto.Text);
+      cdFabricanteLote := '0'; // copy_campo(CbLote.Items[sequencialLote], '|', 4);
+      if quantidade > qtdTotalLote then
+      // SE NÃO HOUVER QUANTIDADE SUFICIENTE CANCELO O ITEM
+      begin
+        MessageDlg('O Produto de código ' + prevenda.itens[i].descricao +
+            ' está com a quantidade ' + FormatFloat('0.00', qtdTotalLote) +
+            // prevenda.itens[I].nrQtdReal) +
+            ' disponível nos lotes.' + #13 + #13 +
+            'Portanto, será excluído desta pre-venda!', mtWarning, [mbOK], 0);
+        prevenda.itens.Delete(i);
+      end
+      else if QuantidadeDispNoLote(prevenda.itens[i].lote, prevenda.itens[i].cdProduto,
+            StrToInt(cdFabricanteLote),EdtLancto.Text) >= prevenda.itens[i].quantidade then
+        Continue
+      else
+      begin
+        sequencialLote := 0;
+        while quantidade > 0 do
+        // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE JÁ ESTÃO ORDENADOS PELA VALIDADE;
+        begin
+          lote := copy_campo(CbLote.Items[sequencialLote], '|', 1);
+          qtdLoteAtual := QuantidadeDispNoLote(lote, prevenda.itens[i].cdProduto,
+            StrToInt(cdFabricanteLote),EdtLancto.Text);
+
+          { Se a quantidade de produtos que resta para ser lançada for maior que a quantidade disponível no lote lanço apenas a quantidade disponível no lote. }
+          if (quantidade > qtdLoteAtual) then
+            qtdLancada := qtdLoteAtual
+          else
+            qtdLancada := quantidade;
+          if qtdLancada > 0 then
+          begin // Se a quantidade a ser lançada for maior que zero eu mando pra grid
+            itemPrevenda := TItemPrevenda.Create(prevenda.itens[i].cdProduto);
+            itemPrevenda.quantidade := qtdLancada;
+            itemPrevenda.precoVenda := prevenda.itens[i].precoVenda;
+            itemPrevenda.precoBruto := prevenda.itens[i].precoBruto;
+            itemPrevenda.PrecoPromocao := prevenda.itens[i].PrecoPromocao;
+            itemPrevenda.SubTotal := qtdLancada * prevenda.itens[i].precoVenda;
+            itemPrevenda.lote := lote;
+            prevenda.itens.Add(itemPrevenda);
+            quantidade := quantidade - qtdLancada;
+          end;
+          sequencialLote := sequencialLote + 1;
+        end;
+        prevenda.itens.Delete(i);
+      end;
     end;
     CarregarItensGrid(prevenda, true);
     // tiraLinhasVazias(SgDados);
@@ -9954,7 +10003,7 @@ begin
   begin
     ConsultaReserva;
     if usarLoteValidade = True then
-      montaComboLote;
+      montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
       or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
       OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
@@ -10124,7 +10173,7 @@ begin
     cbxUsuario.Setfocus;
     Application.OnMessage := ProcessaMsg;
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
 end;
 
@@ -10281,9 +10330,9 @@ begin
   ConsultaReserva;
   if usarLoteValidade = True then
   begin
-    montaComboLote;
+    montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     setLabel23(QuantidadeDispEmLotes(ADOSPConsulta.FieldByName('Código')
-      .AsInteger));
+      .AsInteger,EdtLancto.Text));
   end;
   Consultapedidodecompra1Click(Sender);
 end;
@@ -10537,7 +10586,7 @@ begin
     begin
       ConsultaReserva;
       if usarLoteValidade = True then
-        montaComboLote;
+        montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     end;
   end;
   if (Key = Char(27)) then
@@ -17127,13 +17176,12 @@ begin
 
 end;
 
-procedure TFrmPrincipalPreVenda.montaComboLote;
+procedure TFrmPrincipalPreVenda.montaComboLote(cdProduto : string);
 var
   query: TADOQuery;
-  cdProduto, banco_deposito: string;
+  banco_deposito: string;
 begin
   CbLote.Clear;
-  cdProduto := ADOSPConsulta.FieldByName('Código').AsString;
   if Length(cdProduto) = 0 then
     exit;
   query := TADOQuery.Create(self);
@@ -17197,7 +17245,7 @@ begin
     CbLote.Text := '';
   end;
   FreeAndNil(query);
-  setLabel23(QuantidadeDispEmLotes(StrToIntDef(cdProduto, -1)));
+  setLabel23(QuantidadeDispEmLotes(StrToIntDef(cdProduto, -1),EdtLancto.Text));
 end;
 
 procedure TFrmPrincipalPreVenda.montarComboEntrega;
@@ -17217,7 +17265,7 @@ begin
   end;
 end;
 
-function TFrmPrincipalPreVenda.QuantidadeDispEmLotes(cdProduto: Integer): Real;
+function TFrmPrincipalPreVenda.QuantidadeDispEmLotes(cdProduto: Integer; nrIgnorar : string): Real;
 var
   query: TADOQuery;
   banco_deposito: string;
@@ -17257,7 +17305,7 @@ begin
     begin
       resultado := resultado + QuantidadeDispNoLote
         (FieldByName('lote').AsString, cdProduto,
-        FieldByName('cdFabricanteLote').AsInteger);
+        FieldByName('cdFabricanteLote').AsInteger, nrIgnorar);
       Next;
     end;
   end;
@@ -24292,7 +24340,7 @@ end;
 
 // função para calcular a quantidade disponível no lote (qtdlote - prevendas abertas - já inseridos na prevenda atual)
 function TFrmPrincipalPreVenda.QuantidadeDispNoLote(nrLote: string;
-  cdProduto: Integer; cdFabricanteLote: Integer): Real;
+  cdProduto: Integer; cdFabricanteLote: Integer; nrIgnorar : string): Real;
 var
   query: TADOQuery;
   QtdLote, qtdPrevendas, qtdAtual, resultado: Real;
@@ -24339,12 +24387,16 @@ begin
       'from iteorcamento i WITH (NOLOCK) inner join orcamento o WITH (NOLOCK) '
       + '	on i.nrorcamento= o.nrorcamento          ' +
       'where o.nrobjeto = 0                       ' +
-      '	and o.dsimpresso = ''N''                 ' +
+      '	and i.nrOrcamento <> :NRORCAMENTO and o.dsimpresso = ''N''                 ' +
       '	and i.dssituacao <> ''C''                ' +
       '	and i.cdproduto = :cdproduto             ' +
       '	and i.nrLote = :nrLote                   ';
     // '  and i.cdpessoa = :cdfabricante ';
     Parameters.ParamByName('cdproduto').Value := cdProduto;
+    if nrIgnorar <> '' then
+      Parameters.ParamByName('NRORCAMENTO').Value := nrIgnorar
+    else
+      Parameters.ParamByName('NRORCAMENTO').Value := 0;
     Parameters.ParamByName('nrLote').Value := nrLote;
     // Parameters.ParamByName('cdfabricante').Value:= cdFabricanteLote;
     open;
@@ -24367,7 +24419,7 @@ begin
   lote := copy_campo(CbLote.Text, '|', 1);
   cdFabricanteLote := 0; //StrToInt(copy_campo(CbLote.Text, '|', 4));
   cdProduto := ADOSPConsulta.FieldByName('Código').AsInteger;
-  setLabel23(QuantidadeDispNoLote(lote, cdProduto, cdFabricanteLote));
+  setLabel23(QuantidadeDispNoLote(lote, cdProduto, cdFabricanteLote,EdtLancto.Text));
 end;
 
 // coloca no caption do label23 a quantidade disponível no lote selecionado
