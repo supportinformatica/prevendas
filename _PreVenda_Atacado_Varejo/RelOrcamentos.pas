@@ -242,13 +242,14 @@ begin
     QreUnidade.DataField := 'dsUnidade';
   if (UpperCase(vEmpresa) = 'PTINTAS') then
     QREDescricao.DataField := 'dsServico';
-  if FrmPrincipalPreVenda.dsCGC = '21338426000120' then
+  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') or
+     (FrmPrincipalPreVenda.dsCGC = '39805209000168') then
   begin
     RLPanel1.Top := RLPanel1.Top + 15;
-    RLBand2.Borders.FixedBottom := true;
+    RLBand2.Borders.FixedBottom := True;
     RLBand2.Height := 53;
     RLLabel5.Caption := '';
-    Image1.Visible := true;
+    Image1.Visible := True;
   end;
 end;
 
@@ -347,7 +348,7 @@ begin
     RLBand2.Font.Size := 6
   else
     RLBand2.Font.Size := 7;
-  if (UPPERCASE(vEmpresa) = 'MEGA')and(vOrcamento = 'O') then
+{  if (UPPERCASE(vEmpresa) = 'MEGA')and(vOrcamento = 'O') then
   begin
     with AdoQuery1 do
     begin
@@ -355,8 +356,7 @@ begin
       if (not TNEGProduto.possuiEstoqueReal(ADOSPRelDados.fieldbyname('cdProduto').asInteger)) then
         RlDescricao.Caption:=  Chr(187) + ' ' + RlDescricao.Caption;
     end
-  end else
-  if UPPERCASE(vEmpresa) = 'CARIOCA' then
+  end else if UPPERCASE(vEmpresa) = 'CARIOCA' then
   begin
     with AdoQuery1 do
     begin
@@ -365,7 +365,7 @@ begin
       Open;
       RlDescricao.Caption := FieldByName('dsProdutoNota').asstring;
     end;
-  end else
+  end else }
   if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
     (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or (FrmPrincipalPreVenda.dsCGC = '26620942000166') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
     (FrmPrincipalPreVenda.dsCGC = '33185213000194') then

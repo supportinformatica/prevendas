@@ -3016,7 +3016,8 @@ var
   ConWeb : TIdHTTP;
 begin
   Result := true;
-  if url = '' then begin
+  if url = '' then
+  begin
     imagem.Picture := nil;
     exit;
   end;

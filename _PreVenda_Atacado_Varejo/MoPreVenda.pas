@@ -4800,7 +4800,7 @@ end;
 function TFrmPrincipalPreVenda.selecionarParcelasCartao: Boolean;
 begin
   if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
-     (dsCGC = '40484448000142') then
+     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
     Result := True
   else
     Result := False;
@@ -8399,10 +8399,11 @@ begin
       Next;
     end;
     sql.Text :=
-      'Select P.dsEspecificacao, P.dscaminho,P.nrCustofinal_v,P.vlPreco, P.vlAtacado, P.dsMercosul, '
-      + 'C.dsClassificacao, P.vlCustoAvulso, P.nrQtdContab  '
-      + 'From Produto P WITH (NOLOCK) left join clfiscal C WITH (NOLOCK) on P.dsMercosul = C.cdClassificacao '
-      + 'Where P.cdProduto = :CDPRODUTO                                                                     ';
+      'Select P.dsEspecificacao, P.dscaminho, P.nrCustofinal_v, P.vlPreco,          '+
+      'P.vlAtacado, P.dsMercosul, C.dsClassificacao, P.vlCustoAvulso, P.nrQtdContab '+
+      'From Produto P WITH (NOLOCK) left join clfiscal C WITH (NOLOCK)              '+
+      'ON P.dsMercosul = C.cdClassificacao '+
+      'Where P.cdProduto = :CDPRODUTO      ';
     Parameters.ParamByName('CDPRODUTO').Value :=
       ADOSPConsulta.FieldByName('Código').AsString;
     open;
@@ -8440,13 +8441,7 @@ begin
   end;
   FrmEspecificacao.LblClFiscal.caption := ADOQryEspecificacao.FieldByName
     ('dsMercosul').AsString + ' - ' + ADOQryEspecificacao.FieldByName
-    ('dsClassificacao').AsString;;
-//  try
-//    FrmEspecificacao.Image1.Picture.LoadFromFile
-//      (ADOQryEspecificacao.FieldByName('dsCaminho').AsString);
-//  except
-//    // MessageDlg('Erro ao buscar a foto!',mtInformation,[mbOK],0);  tirei a mensagem - kenneth (Atendimento 26582)
-//  end;
+    ('dsClassificacao').AsString;
   try
     FrmEspecificacao.Image1.Picture := nil;
     if Pos('http',ADOQryEspecificacao.fieldbyname('dscaminho').AsString) > 0 then
@@ -8454,7 +8449,7 @@ begin
     else
       FrmEspecificacao.Image1.Picture.LoadFromFile(ADOQryEspecificacao.fieldbyname('dscaminho').AsString);
   except
-    //MessageDlg('Erro ao buscar a foto!',mtInformation,[mbOK],0);
+
   end;
   FrmEspecificacao.Position := poMainFormCenter;
   Ativa := 'N';
@@ -8468,7 +8463,6 @@ var
   Path: String;
   ConstBd: String;
 begin
-  { Procedimento para criar ou carregar configurações do BD }
   try { try finnaly }
     try
       Path := ExtractFilePath(Application.ExeName);
