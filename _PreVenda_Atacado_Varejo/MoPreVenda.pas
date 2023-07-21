@@ -660,6 +660,7 @@ type
     procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
     procedure ImprimeEtiquetas_OnixJoalheria; //Elgin L42 Pro
     procedure ImprimeEtiquetas_GrupoAquarela(StoreName: string); //Elgin L42
+    procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     Procedure AjustaForm;
     procedure RodaScripts;
@@ -821,6 +822,7 @@ type
     function ChamaInputBoxTipoForracao(const ACaption, APrompt: string): string;
     function ChamaInputBoxEtiquetaZanquy(const ACaption,APrompt: string): integer;
     function ChamaInputBoxEtiquetaGrupoAquarela(const ACaption,APrompt: string): integer;
+    function ChamaInputBoxEtiquetaGrupoLojasAlexandre(const ACaption,APrompt: string): integer;
     function ChamaInputBoxEtiquetaCAMPOS(const ACaption,APrompt: string): integer;
     function ChamaInputBoxTurno(const ACaption, APrompt: string): Integer;
     procedure AuxiliarLanctoNFe(i: Integer);
@@ -11296,6 +11298,7 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetaPequenoTriploRural;
   end
+
   else if (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') then
     case ChamaInputBoxEtiquetaGrupoAquarela('Seleção de modelo',
         'Escolha o modelo de etiqueta na lista abaixo:') of
@@ -11303,6 +11306,17 @@ begin
       1 : ImprimeEtiquetas_GrupoAquarela('ZANQUY PREMIO');
       2 : ImprimeEtiquetas_GrupoAquarela('AQUARELA CONFECCOES');
       3 : ImprimeEtiquetas_GrupoAquarela('ZAVIXE');
+    end
+
+  else if (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') then
+    case ChamaInputBoxEtiquetaGrupoLojasAlexandre('Seleção de modelo',
+        'Escolha o modelo de etiqueta na lista abaixo:') of
+      0 : ImprimeEtiquetas_GrupoLojasAlexandre('EQUILIBRIO');
+      1 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU CENTRO');
+      2 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU PREMIO');
+      3 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU CALCADOS');
+      4 : ImprimeEtiquetas_GrupoLojasAlexandre('YZLU SANTANA');
+      5 : ImprimeEtiquetas_GrupoLojasAlexandre('QUIVER');
     end
 
   else if (UpperCase(vFlagEtiqueta) = 'IMA') or
@@ -23921,6 +23935,116 @@ begin
   end;
 end;
 
+
+function TFrmPrincipalPreVenda.ChamaInputBoxEtiquetaGrupoLojasAlexandre(const ACaption,
+  APrompt: string): integer;
+var
+  Form: TForm;
+  Prompt: TLabel;
+  cbxFornecedor: TComboBox;
+  DialogUnits: TPoint;
+  ButtonTop, ButtonWidth, ButtonHeight: Integer;
+  Value: integer;
+  i: Integer;
+  Buffer: array [0 .. 51] of Char;
+
+begin
+  result := -1;
+  Form := TForm.Create(Application);
+
+  with Form do
+  begin
+    try
+      Canvas.Font := Font;
+
+      for i := 0 to 25 do
+        Buffer[i] := Chr(i + Ord('A'));
+      for i := 0 to 25 do
+        Buffer[i + 26] := Chr(i + Ord('a'));
+
+      GetTextExtentPoint(Canvas.handle, Buffer, 52, TSize(DialogUnits));
+      DialogUnits.x := DialogUnits.x div 52;
+      BorderStyle := bsDialog;
+      caption := ACaption;
+      ClientWidth := MulDiv(380, DialogUnits.x, 4);
+      ClientHeight := MulDiv(63, DialogUnits.y, 8);
+      Position := poScreenCenter;
+      Prompt := TLabel.Create(Form);
+
+      with Prompt do
+      begin
+        Parent := Form;
+        AutoSize := True;
+        Left := MulDiv(8, DialogUnits.x, 4);
+        Top := MulDiv(8, DialogUnits.y, 8);
+        caption := APrompt;
+      end;
+
+      cbxFornecedor := TComboBox.Create(Form);
+
+      with cbxFornecedor do
+      begin
+        Parent := Form;
+        ItemIndex := 5;
+        Left := Prompt.Left;
+        Top := MulDiv(19, DialogUnits.y, 8);
+        width := MulDiv(340, DialogUnits.x, 4);
+        Style := csDropDownList;
+        // MaxLength := 255;
+        // aqui vc pode adicionar a data de como vai ser exibida no input:
+        // EditMask := '99/99/9999';
+        // PasswordChar := '*';
+        // SelectAll;
+        cbxFornecedor.Items.Add('EQUILIBRIO');
+        cbxFornecedor.Items.Add('YZLU CENTRO');
+        cbxFornecedor.Items.Add('YZLU PREMIO');
+        cbxFornecedor.Items.Add('YZLU CALCADOS');
+        cbxFornecedor.Items.Add('YZLU SANTANA');
+        cbxFornecedor.Items.Add('QUIVER');
+      end;
+
+      ButtonTop := MulDiv(41, DialogUnits.y, 8);
+      ButtonWidth := MulDiv(50, DialogUnits.x, 4);
+      ButtonHeight := MulDiv(14, DialogUnits.y, 8);
+
+      with TButton.Create(Form) do
+      begin
+        Parent := Form;
+        caption := 'OK';
+        ModalResult := mrOK;
+        Default := True;
+        SetBounds(MulDiv(38, DialogUnits.x, 4), ButtonTop, ButtonWidth,
+          ButtonHeight);
+      end;
+
+      with TButton.Create(Form) do
+      begin
+        Parent := Form;
+        caption := 'Cancel';
+        ModalResult := mrCancel;
+        Cancel := True;
+        SetBounds(MulDiv(92, DialogUnits.x, 4), ButtonTop, ButtonWidth,
+          ButtonHeight);
+      end;
+
+      cbxFornecedor.ItemIndex := 0;
+
+      if ShowModal = mrOK then
+      begin
+        Value := cbxFornecedor.ItemIndex;
+        result := Value;
+      end;
+
+    finally
+
+      Form.Free;
+      Form := nil;
+
+    end;
+  end;
+end;
+
+
 function TFrmPrincipalPreVenda.ChamaInputBoxTurno(const ACaption,
   APrompt: string): Integer;
 var
@@ -31962,6 +32086,105 @@ begin
   RgOpcoes.ItemIndex := 0;
   if Produto <> nil then
     FreeAndNil(Produto);
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string);
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+  // SalvaEtiquetas;
+
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q200,25');
+    Editor.Lines.Add('q880');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A104,-2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A51,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A51,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B51,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A48,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A51,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A270,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A520,-2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A467,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A467,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A464,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B467,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A467,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A686,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists('Print2.bat') then
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+
+  RgOpcoes.ItemIndex := 0;
+
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
