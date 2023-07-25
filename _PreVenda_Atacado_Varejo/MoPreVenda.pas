@@ -11746,7 +11746,10 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO' then
     ImprimeEtiquetas_MaeDeDeusEspacoCatolico
   else if UpperCase(vFlagEtiqueta) = 'ONIXJOALHERIA' then
-    ImprimeEtiquetas_OnixJoalheria;
+    ImprimeEtiquetas_OnixJoalheria
+
+  else if UpperCase(vFlagEtiqueta) = 'PANIMERCEARIACOMPREBEM2' then
+    ImprimeEtiquetas_PanificacaoMerceariaCompreBem2;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -32300,8 +32303,88 @@ end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PanificacaoMerceariaCompreBem2;
 
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+  BarcodeStringSize: Integer;
+
 begin
-//código aqui
+// if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    BarcodeStringSize := SgDados.Cells[0, L].Length;
+
+    Editor.Lines.Add('n');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('M0500');
+    Editor.Lines.Add('O0220');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('V0');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('f326');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('L');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A2');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('131100000790002' +SgDados.Cells[1, L]);
+    Editor.Lines.Add('');
+    Editor.Lines.Add('131100000620002' +Produto.unidade.unidade);
+    Editor.Lines.Add('');
+    Editor.Lines.Add('1e6302800160002C' +Copy(SgDados.Cells[0, L], 1, BarcodeStringSize - 1)+ '&E' +Copy(SgDados.Cells[0, L], BarcodeStringSize, 1));
+    Editor.Lines.Add('121100000050055' +SgDados.Cells[0, L]);
+    Editor.Lines.Add('');
+    Editor.Lines.Add('141100000210204R$');
+    Editor.Lines.Add('122400000140229'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L])));
+    Editor.Lines.Add('');
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('Q' + FormatFloat('0', vqtd));
+    Editor.Lines.Add('');
+    Editor.Lines.Add('E');
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
 {
