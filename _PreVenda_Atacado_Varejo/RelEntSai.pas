@@ -150,7 +150,7 @@ begin
 
   with AdoQryOrcamento do begin
     sql.text := 'select dtEmissao from orcamento where dsLancamento_1 = :LANCTO ';
-    Parameters.ParamByName('LANCTO').Value := ADOQryRelDadosdsLancamento_1.AsString;
+    Parameters.ParamByName('LANCTO').Value := ADOQryRelDadosdsLancamento.AsString;
     open;
     if AdoQryOrcamento.recordCount > 0 then
       QrlDtPreVenda.Caption := FormatDateTime('dd/MM/yyyy',fieldByname('dtEmissao').AsDateTime)
