@@ -2283,7 +2283,7 @@ begin
   end;
 
   if (Empresas_UmaEtiqueta_porColuna = True) or (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
-  (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or
+  (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
   (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
@@ -32139,32 +32139,32 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A104,-2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('A120,-2,0,4,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A51,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-    Editor.Lines.Add('A51,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('A67,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A67,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B51,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('A48,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B67,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A64,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A51,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('A67,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A270,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+    Editor.Lines.Add('A286,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A520,-2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('A536,-2,0,4,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A467,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-    Editor.Lines.Add('A467,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('A483,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A483,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A464,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('B467,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A480,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B483,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A467,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('A483,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A686,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+    Editor.Lines.Add('A702,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
 
