@@ -662,6 +662,7 @@ type
     procedure ImprimeEtiquetas_GrupoAquarela(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
+    procedure ImprimeEtiquetas_PanificacaoMerceariaCompreBem2; //Argox OS 214 Plus
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -19419,6 +19420,13 @@ begin
     end; }
 end;
 
+
+{
+  ###############################################################
+  ############### INÍCIO DOS MÉTODOS DE ETIQUETAS ###############
+  ###############################################################
+}
+
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasJALVES_Grande;
 var
   L: Integer;
@@ -32289,8 +32297,17 @@ begin
 end;
 
 
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PanificacaoMerceariaCompreBem2;
+
+begin
+//código aqui
+end;
+
 {
-  ##### ULTIMO MÉTODO DE ETIQUETA ^^^^
+  ###############################################################
+  ################## FIM DOS MÉTODOS DE ETIQUETAS ###############
+  ###############################################################
 }
 
 
