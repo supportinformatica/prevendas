@@ -79,7 +79,8 @@ uses
   NEGACBrPosPrint in '..\..\support\NEG\NEGACBrPosPrint.pas',
   unitLogoMaker in 'unitLogoMaker.pas',
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
-  AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded};
+  AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded},
+  Prevenda.Entities.ProductOnPriting in 'SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas';
 
 {$R *.RES}
 var
