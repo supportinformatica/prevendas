@@ -31972,14 +31972,14 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A28,0,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],1,18)+ '"');
-      Editor.Lines.Add('A28,16,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],19,18)+ '"');
+      Editor.Lines.Add('A20,0,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],1,18)+ '"');
+      Editor.Lines.Add('A20,16,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],19,18)+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A28,36,0,1,1,1,N,"COD: ' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('A20,36,0,1,1,1,N,"COD: ' +SgDados.Cells[0,L]+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A256,0,0,1,1,1,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A248,0,0,1,1,1,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B240,24,0,1,2,2,24,N,"' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('B232,24,0,1,2,2,24,N,"' +SgDados.Cells[0,L]+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       Editor.Lines.Add('');
@@ -32368,7 +32368,7 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('131100000620002' +Produto.unidade.unidade);
     Editor.Lines.Add('');
-    Editor.Lines.Add('1e6302800160002C' +Copy(SgDados.Cells[0, L], 1, BarcodeStringSize - 1)+ '&E' +Copy(SgDados.Cells[0, L], BarcodeStringSize, 1));
+    Editor.Lines.Add('1e6302800160002C' +Copy(SgDados.Cells[6, L], 1, BarcodeStringSize - 1)+ '&E' +Copy(SgDados.Cells[6, L], BarcodeStringSize, 1));
     Editor.Lines.Add('121100000050055' +SgDados.Cells[0, L]);
     Editor.Lines.Add('');
     Editor.Lines.Add('141100000210204R$');
