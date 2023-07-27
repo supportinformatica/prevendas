@@ -17,7 +17,10 @@ uses
   IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
-  ACBrBase, ACBrPosPrinter;
+  ACBrBase, ACBrPosPrinter,
+
+  Prevenda.Entities.ProductOnPriting,
+  Prevenda.TagsGondola.G001;
 
 type
   VetorPermissao = Array [1 .. 900, 1 .. 7] of String;
@@ -663,6 +666,7 @@ type
     procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_PanificacaoMerceariaCompreBem2; //Argox OS 214 Plus
+    procedure ImprimeEtiquetas_TesteTags;//Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11749,7 +11753,10 @@ begin
     ImprimeEtiquetas_OnixJoalheria
 
   else if UpperCase(vFlagEtiqueta) = 'PANIMERCEARIACOMPREBEM2' then
-    ImprimeEtiquetas_PanificacaoMerceariaCompreBem2;
+    ImprimeEtiquetas_PanificacaoMerceariaCompreBem2
+
+  else if UpperCase(vFlagEtiqueta) = 'TESTETAG' then
+    ImprimeEtiquetas_TesteTags;
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -32396,6 +32403,87 @@ begin
 
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+
+    EdtConsulta.Setfocus;
+
+    exit;
+  end;
+
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q240,12');
+    Editor.Lines.Add('q832');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A16,24,0,4,1,2,N,"'+SgDados.Cells[1, L]+'"');
+    Editor.Lines.Add('A16,76,0,4,1,2,N,"'+Produto.unidade.unidade+'"');
+    Editor.Lines.Add('B24,130,0,1,3,6,48,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A120,184,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A450,144,0,1,2,3,N,"R$"');
+    Editor.Lines.Add('A498,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+
+  Limpar_Tela;
+
   RgOpcoes.ItemIndex := 0;
 
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
