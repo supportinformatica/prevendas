@@ -32369,7 +32369,7 @@ begin
     Editor.Lines.Add('131100000620002' +Produto.unidade.unidade);
     Editor.Lines.Add('');
     Editor.Lines.Add('1e6302800160002C' +Copy(SgDados.Cells[6, L], 1, BarcodeStringSize - 1)+ '&E' +Copy(SgDados.Cells[6, L], BarcodeStringSize, 1));
-    Editor.Lines.Add('121100000050055' +SgDados.Cells[0, L]);
+    Editor.Lines.Add('121100000050055' +SgDados.Cells[6, L]);
     Editor.Lines.Add('');
     Editor.Lines.Add('141100000210204R$');
     Editor.Lines.Add('122400000140229'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L])));
