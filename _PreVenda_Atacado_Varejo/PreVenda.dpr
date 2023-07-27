@@ -80,7 +80,8 @@ uses
   unitLogoMaker in 'unitLogoMaker.pas',
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
   AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded},
-  Prevenda.Entities.ProductOnPriting in 'SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas';
+  Prevenda.Entities.ProductOnPriting in 'SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas',
+  Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas';
 
 {$R *.RES}
 var
