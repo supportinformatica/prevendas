@@ -32345,7 +32345,7 @@ begin
 
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
 
-    BarcodeStringSize := SgDados.Cells[0, L].Length;
+    BarcodeStringSize := SgDados.Cells[6, L].Length;
 
     Editor.Lines.Add('n');
     Editor.Lines.Add('');
