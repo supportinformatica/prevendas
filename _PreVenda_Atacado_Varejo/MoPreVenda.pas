@@ -32339,7 +32339,7 @@ begin
 
   Editor.Lines.Clear;
 
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda. 
     if SgDados.Cells[0, L] = '' then
       Break;
 
