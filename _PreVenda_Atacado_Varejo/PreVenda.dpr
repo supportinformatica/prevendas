@@ -79,7 +79,6 @@ uses
   NEGACBrPosPrint in '..\..\support\NEG\NEGACBrPosPrint.pas',
   unitLogoMaker in 'unitLogoMaker.pas',
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
-  Prevenda.EtiquetasEspeciais.DmCasaDecor in 'etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas',
   AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded};
 
 {$R *.RES}

@@ -312,7 +312,6 @@
             <Form>FrmDataProduzidoValidade</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas"/>
         <DCCReference Include="AlterProdutoPosAdded.pas">
             <Form>frmAlterProdutoPosAdded</Form>
             <FormType>dfm</FormType>
