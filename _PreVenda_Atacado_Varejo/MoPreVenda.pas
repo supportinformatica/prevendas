@@ -32416,7 +32416,12 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 
+  RequiredProducts: TRequiredProductsToPrint;
+  Gondola: TGondola001;
+
 begin
+  Gondola := TGondola001.Create;
+
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -32431,6 +32436,17 @@ begin
     SalvaEtiquetas;
 
   Editor.Lines.Clear;
+
+  SetLength(RequiredProducts, SgDados.RowCount);
+
+  for L := 0 to SgDados.RowCount do begin
+    RequiredProducts[L] := TRequiredProductToPrint.Create;
+    RequiredProducts[L].code := SgDados.Cells[0,L];
+    RequiredProducts[L].quantity := SgDados.Cells[2,L];
+  end;
+
+
+  Gondola.PrintTagGondolaG001(RequiredProducts, SgDados.RowCount);
 
   for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
