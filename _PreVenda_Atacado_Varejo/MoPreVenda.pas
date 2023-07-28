@@ -666,6 +666,7 @@ type
     procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_PanificacaoMerceariaCompreBem2; //Argox OS 214 Plus
+    procedure ImprimeEtiquetas_CasaDoRosario_3_Colunas; //Elsin L42 Pro Full
     procedure ImprimeEtiquetas_TesteTags;//Elgin L42 Pro
     Procedure AjustaForm;
     procedure RodaScripts;
@@ -11754,6 +11755,9 @@ begin
 
   else if UpperCase(vFlagEtiqueta) = 'PANIMERCEARIACOMPREBEM2' then
     ImprimeEtiquetas_PanificacaoMerceariaCompreBem2
+
+  else if UpperCase(vFlagEtiqueta) = 'ROSARYHOUSE' then
+    ImprimeEtiquetas_CasaDoRosario_3_Colunas
 
   else if UpperCase(vFlagEtiqueta) = 'TESTETAG' then
     ImprimeEtiquetas_TesteTags;
@@ -32387,6 +32391,134 @@ begin
     Editor.Lines.Add('Q' + FormatFloat('0', vqtd));
     Editor.Lines.Add('');
     Editor.Lines.Add('E');
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists('Print2.bat') then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CasaDoRosario_3_Colunas;
+
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+// if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q184,24');
+    Editor.Lines.Add('q819');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A8,5,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A8,26,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B8,48,0,1,3,6,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A64,96,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A15,124,0,1,1,1,N,"Pr.Varejo"');
+    Editor.Lines.Add('A124,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+
+    if Produto.vlPreco > Produto.vlAtacado then begin
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A15,152,0,1,1,1,N,"Pr.Atacado"');
+      Editor.Lines.Add('A124,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
+    end;
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('A289,5,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A289,26,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B289,48,0,1,3,6,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A338,96,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A296,124,0,1,1,1,N,"Pr.Varejo"');
+    Editor.Lines.Add('A405,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+
+    if Produto.vlPreco > Produto.vlAtacado then begin
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A296,152,0,1,1,1,N,"Pr.Atacado"');
+      Editor.Lines.Add('A405,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
+    end;
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('A570,5,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A570,26,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B570,48,0,1,3,6,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A618,96,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A577,124,0,1,1,1,N,"Pr.Varejo"');
+    Editor.Lines.Add('A686,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+
+    if Produto.vlPreco > Produto.vlAtacado then begin
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A577,152,0,1,1,1,N,"Pr.Atacado"');
+      Editor.Lines.Add('A686,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
+    end;
+
+
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
 
     FreeAndNil(Produto);
   end;
