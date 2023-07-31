@@ -11,11 +11,15 @@ uses
   Produto,
   NEGProduto,
 
-  Prevenda.Entities.ProductOnPriting;
+  Prevenda.Entities.ProductOnPriting,
+  Prevenda.Constants.App,
+  Prevenda.Utils.ExecutePrint;
 
 type
   TGondola001 = class
     private
+      ExecutePrint: TExecutePrint;
+
     public
       procedure PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
   end;
@@ -38,11 +42,10 @@ var
   Produto: TDomProduto;
 
 begin
-  assignfile(LogicalTagFile, GetCurrentDir+ '\myetiqueta.txt');
+  assignfile(LogicalTagFile, GetCurrentDir+ PHYSICAL_TAG_FILE);
   rewrite(LogicalTagFile);
 
-  if not FileExists('Print2.bat') then
-    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  ExecutePrint := TExecutePrint.Create;
 
   for I := 1 to NumberOfLinesOnGrid - 1 do begin
     Produto := TNEGProduto.buscarProduto(StrToInt(RequiredProductsToPrint[I].code));
@@ -86,13 +89,19 @@ begin
 
   close(LogicalTagFile);
 
-  ShellExecute(0, 'open', PChar(GetCurrentDir+ '\print2.bat'), '', PChar(GetCurrentDir), 1);
+  try
+
+    ExecutePrint.Start();
+
+  finally
+
+    ExecutePrint.Free;
+
+  end;
 
   FrmPrincipalPreVenda.Limpar_Tela;
 
   FrmPrincipalPreVenda.RgOpcoes.ItemIndex := 0;
-
-  MessageDlg('Impressão ok no método separado!', mtInformation, [mbOK], 0);
 
 end;
 

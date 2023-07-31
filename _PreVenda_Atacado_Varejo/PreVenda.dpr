@@ -81,7 +81,10 @@ uses
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
   AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded},
   Prevenda.Entities.ProductOnPriting in 'SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas',
-  Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas';
+  Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas',
+  Prevenda.Constants.App in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.App.pas',
+  Prevenda.Messages.SuccessOrError in 'SistemaEtiquetas\shared\messages\Prevenda.Messages.SuccessOrError.pas',
+  Prevenda.Utils.ExecutePrint in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas';
 
 {$R *.RES}
 var

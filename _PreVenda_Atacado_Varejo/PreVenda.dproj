@@ -318,6 +318,9 @@
         </DCCReference>
         <DCCReference Include="SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.App.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\messages\Prevenda.Messages.SuccessOrError.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
