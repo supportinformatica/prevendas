@@ -87,7 +87,8 @@ uses
   Prevenda.Utils.ExecutePrint in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas',
   Prevenda.Utils.TagFileWriter in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.TagFileWriter.pas',
   Prevenda.Utils.FirstImpression in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas',
-  Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas';
+  Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas',
+  Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas';
 
 {$R *.RES}
 var

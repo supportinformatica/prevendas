@@ -4,6 +4,9 @@ interface
 
 uses
   System.SysUtils,
+
+  System.IniFiles,
+
   ShellApi,
 
   Vcl.Dialogs,
@@ -15,6 +18,7 @@ uses
   Prevenda.Constants.App,
   Prevenda.Utils.ExecutePrint,
   Prevenda.Utils.TagFileWriter,
+  Prevenda.Utils.ConfigurationFileReader,
   Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList;
 
@@ -44,7 +48,21 @@ var
 
   MainGrid: TVerifyTagList;
 
+  Configuration: TConfigurationFileReader;
+  aOffsetXValue: integer;
+
 begin
+  Configuration := TConfigurationFileReader.Create;
+
+  try
+    aOffsetXValue := Configuration.ReadOffsetXFromConfigurationFile;
+
+  finally
+    Configuration.Free;
+  end;
+
+  MessageDlg('Valor do OffsetX: ' +aOffsetXValue.ToString, mtInformation, [mbOK], 0);
+
   MainGrid := TVerifyTagList.Create;
 
   try
