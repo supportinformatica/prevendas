@@ -32545,35 +32545,24 @@ end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
 var
-  L: Integer;
+  Line: Integer;
 
   RequiredProducts: TRequiredProductsToPrint;
   Gondola: TGondola001;
 
 begin
-  Gondola := TGondola001.Create;
-
   isFirstImpression := true;
-
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-//  if SgDados.Cells[0, 1] = '' then begin
-//    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
-//      mtWarning, [mbOK], 0);
-//
-//    EdtConsulta.Setfocus;
-//
-//    exit;
-//  end;
-
 
   SetLength(RequiredProducts, SgDados.RowCount);
 
-  for L := 1 to SgDados.RowCount - 1 do begin
-    RequiredProducts[L] := TRequiredProductToPrint.Create;
-    RequiredProducts[L].code := SgDados.Cells[0,L];
-    RequiredProducts[L].quantity := SgDados.Cells[2,L];
+  for Line := 1 to SgDados.RowCount - 1 do begin
+    RequiredProducts[Line] := TRequiredProductToPrint.Create;
+    RequiredProducts[Line].code := SgDados.Cells[0,Line];
+    RequiredProducts[Line].quantity := SgDados.Cells[2,Line];
   end;
 
+
+  Gondola := TGondola001.Create;
 
   try
 
@@ -32581,6 +32570,10 @@ begin
 
   finally
     Gondola.Free;
+
+    for Line := 1 to SgDados.RowCount - 1 do begin
+      RequiredProducts[Line].Free;
+    end;
   end;
 
   //Application.OnMessage := FormPrincipal.ProcessaMsg;
