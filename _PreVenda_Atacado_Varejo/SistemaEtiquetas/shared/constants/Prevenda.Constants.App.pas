@@ -7,6 +7,8 @@ const
 
   PHYSICAL_TAG_FILE = 'myetiqueta.txt';
 
+  PHYSICAL_CONFIG_FILE = 'mysupport.ini';
+
 implementation
 
 end.
