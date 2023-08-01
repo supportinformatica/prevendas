@@ -27,7 +27,7 @@ implementation
 procedure TExecutePrint.Start;
 
 var
-  retorno: integer;
+  ExecuterResponseValue: integer;
 
 begin
 
@@ -35,13 +35,12 @@ begin
 
   try
 
-    retorno := ShellExecute(0, 'open', PChar(GetCurrentDir+ '\' +PRINT_TAG_FILE), '', PChar(GetCurrentDir), 1);
+    ExecuterResponseValue := ShellExecute(0, 'open', PChar(GetCurrentDir+ '\' +PRINT_TAG_FILE), '', PChar(GetCurrentDir), 1);
 
-    if (retorno = 2) or (retorno = 3) then
+    if (ExecuterResponseValue = 2) or (ExecuterResponseValue = 3) then
       Messages.PrintFileNotFoundMessage
     else
       Messages.PrintedTagConfirmationMessage;
-
 
   finally
     Messages.Free;
