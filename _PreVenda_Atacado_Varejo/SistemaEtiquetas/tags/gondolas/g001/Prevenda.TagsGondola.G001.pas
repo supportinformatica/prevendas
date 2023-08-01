@@ -15,7 +15,8 @@ uses
   Prevenda.Constants.App,
   Prevenda.Utils.ExecutePrint,
   Prevenda.Utils.TagFileWriter,
-  Prevenda.Utils.FirstImpression;
+  Prevenda.Utils.FirstImpression,
+  Prevenda.Utils.VerifyTagList;
 
 type
   TGondola001 = class
@@ -37,15 +38,26 @@ uses
 procedure TGondola001.PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
 
 var
-  MainPrevenda: TFrmPrincipalPreVenda;
-
   I: integer;
 
   Produto: TDomProduto;
 
-begin
+  MainGrid: TVerifyTagList;
 
-  ExecutePrint := TExecutePrint.Create;
+begin
+  MainGrid := TVerifyTagList.Create;
+
+  try
+
+    MainGrid.VerifyTagList();
+
+  finally
+
+    MainGrid.Free;
+
+  end;
+
+
 
   for I := 1 to NumberOfLinesOnGrid - 1 do begin
     Produto := TNEGProduto.buscarProduto(StrToInt(RequiredProductsToPrint[I].code));
@@ -100,6 +112,9 @@ begin
       end;
 
   end;
+
+
+  ExecutePrint := TExecutePrint.Create;
 
   try
 

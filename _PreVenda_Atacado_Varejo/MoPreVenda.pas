@@ -32556,17 +32556,14 @@ begin
   isFirstImpression := true;
 
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
-    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
-      mtWarning, [mbOK], 0);
-
-    EdtConsulta.Setfocus;
-
-    exit;
-  end;
-
-  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
-    SalvaEtiquetas;
+//  if SgDados.Cells[0, 1] = '' then begin
+//    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+//      mtWarning, [mbOK], 0);
+//
+//    EdtConsulta.Setfocus;
+//
+//    exit;
+//  end;
 
 
   SetLength(RequiredProducts, SgDados.RowCount);
