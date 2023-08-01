@@ -13,7 +13,9 @@ uses
 
   Prevenda.Entities.ProductOnPriting,
   Prevenda.Constants.App,
-  Prevenda.Utils.ExecutePrint;
+  Prevenda.Utils.ExecutePrint,
+  Prevenda.Utils.TagFileWriter,
+  Prevenda.Utils.FirstImpression;
 
 type
   TGondola001 = class

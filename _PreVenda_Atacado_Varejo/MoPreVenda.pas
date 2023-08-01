@@ -20,7 +20,9 @@ uses
   ACBrBase, ACBrPosPrinter,
 
   Prevenda.Entities.ProductOnPriting,
-  Prevenda.TagsGondola.G001;
+  Prevenda.TagsGondola.G001,
+  Prevenda.Utils.FirstImpression;
+
 
 type
   VetorPermissao = Array [1 .. 900, 1 .. 7] of String;
@@ -32550,6 +32552,8 @@ var
 
 begin
   Gondola := TGondola001.Create;
+
+  isFirstImpression := true;
 
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then begin

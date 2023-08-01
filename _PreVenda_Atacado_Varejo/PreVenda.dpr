@@ -84,7 +84,9 @@ uses
   Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas',
   Prevenda.Constants.App in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.App.pas',
   Prevenda.Messages.SuccessOrError in 'SistemaEtiquetas\shared\messages\Prevenda.Messages.SuccessOrError.pas',
-  Prevenda.Utils.ExecutePrint in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas';
+  Prevenda.Utils.ExecutePrint in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas',
+  Prevenda.Utils.TagFileWriter in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.TagFileWriter.pas',
+  Prevenda.Utils.FirstImpression in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas';
 
 {$R *.RES}
 var
