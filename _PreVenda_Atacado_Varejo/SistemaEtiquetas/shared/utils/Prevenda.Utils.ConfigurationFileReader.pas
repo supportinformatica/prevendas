@@ -4,9 +4,7 @@ interface
 
 uses
   System.IniFiles,
-  System.SysUtils,
-
-  Prevenda.Constants.App;
+  System.SysUtils;
 
 type
   TConfigurationFileReader = class
@@ -21,6 +19,9 @@ implementation
 
 { TConfigurationFileReader }
 
+uses
+  Prevenda.Constants.App;
+
 function TConfigurationFileReader.ReadFlagFromConfigurationFile: string;
 
 var
@@ -32,7 +33,7 @@ begin
 
   try
 
-    FlagValue := LOGICAL_CONFIG_FILE.ReadString('Etiqueta', 'Flag', FlagValue);
+    FlagValue := LOGICAL_CONFIG_FILE.ReadString(CONFIG_SESSION_VALUE, CONFIG_FLAG_VALUE, FlagValue);
 
   finally
 
@@ -57,7 +58,7 @@ begin
 
   try
 
-    AxisXValue := LOGICAL_CONFIG_FILE.ReadInteger('Etiqueta', 'OffsetX', AxisXValue);
+    AxisXValue := LOGICAL_CONFIG_FILE.ReadInteger(CONFIG_SESSION_VALUE, CONFIG_OFFSET_X_VALUE, AxisXValue);
 
   finally
 
@@ -83,7 +84,7 @@ begin
 
   try
 
-    AxisYValue := LOGICAL_CONFIG_FILE.ReadInteger('Etiqueta', 'OffsetY', AxisYValue);
+    AxisYValue := LOGICAL_CONFIG_FILE.ReadInteger(CONFIG_SESSION_VALUE, CONFIG_OFFSET_Y_VALUE, AxisYValue);
 
   finally
 
