@@ -21,6 +21,7 @@ type
   TGondola001 = class
     private
       ExecutePrint: TExecutePrint;
+      TagFileWriter: TTagFileWriter;
 
     public
       procedure PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
@@ -38,58 +39,67 @@ procedure TGondola001.PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProd
 var
   MainPrevenda: TFrmPrincipalPreVenda;
 
-  LogicalTagFile: TextFile;
   I: integer;
 
   Produto: TDomProduto;
 
 begin
-  assignfile(LogicalTagFile, GetCurrentDir+ PHYSICAL_TAG_FILE);
-  rewrite(LogicalTagFile);
 
   ExecutePrint := TExecutePrint.Create;
 
   for I := 1 to NumberOfLinesOnGrid - 1 do begin
     Produto := TNEGProduto.buscarProduto(StrToInt(RequiredProductsToPrint[I].code));
 
-    try
+    TagFileWriter := TTagFileWriter.Create;
 
-      writeln(LogicalTagFile, 'I8,1,001');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'Q240,12');
-      writeln(LogicalTagFile, 'q832');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'D11');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'O');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'JF');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'WN');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'ZB');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'N');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A16,24,0,4,1,2,N,"' +Produto.descricao+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A16,76,0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'B24,130,0,1,3,6,48,N,"'+Produto.codigoBarras+'"');
-      writeln(LogicalTagFile, 'A120,184,0,1,1,2,N,"'+Produto.codigoBarras+'"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A450,144,0,1,2,3,N,"R$"');
-      writeln(LogicalTagFile, 'A498,96,0,3,2,5,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'P' +FormatFloat('0', StrToFloat(RequiredProductsToPrint[I].quantity)));
+      try
+        TagFileWriter.WriteOnTagFile('I8,1,001');
+        TagFileWriter.WriteOnTagFile('');
 
-    finally
-      FreeAndNil(Produto);
-    end;
+        TagFileWriter.WriteOnTagFile('Q240,12');
+        TagFileWriter.WriteOnTagFile('q832');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('D11');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('O');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('JF');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('WN');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('ZB');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('N');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('A16,24,0,4,1,2,N,"' +Produto.descricao+ '"');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('A16,76,0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('B24,130,0,1,3,6,48,N,"'+Produto.codigoBarras+'"');
+        TagFileWriter.WriteOnTagFile('A120,184,0,1,1,2,N,"'+Produto.codigoBarras+'"');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('A450,144,0,1,2,3,N,"R$"');
+        TagFileWriter.WriteOnTagFile('A498,96,0,3,2,5,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
+        TagFileWriter.WriteOnTagFile('');
+
+        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(RequiredProductsToPrint[I].quantity)));
+
+      finally
+        FreeAndNil(Produto);
+        TagFileWriter.Free;
+      end;
 
   end;
-
-  close(LogicalTagFile);
 
   try
 
