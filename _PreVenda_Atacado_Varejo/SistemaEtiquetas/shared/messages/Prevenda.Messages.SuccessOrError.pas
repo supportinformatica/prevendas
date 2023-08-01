@@ -22,7 +22,7 @@ procedure TMessageSuccessOrError.PrintedTagConfirmationMessage;
 
 begin
 
-  MessageDlg('Impressão ok no método separado!', mtInformation, [mbOK], 0);
+  MessageDlg('Impressão realizada!', mtInformation, [mbOK], 0);
 
 end;
 
