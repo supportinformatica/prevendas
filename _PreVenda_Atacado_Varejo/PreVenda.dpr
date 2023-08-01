@@ -88,7 +88,8 @@ uses
   Prevenda.Utils.TagFileWriter in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.TagFileWriter.pas',
   Prevenda.Utils.FirstImpression in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas',
   Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas',
-  Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas';
+  Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas',
+  Prevenda.Constants.GondolaG001 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas';
 
 {$R *.RES}
 var
