@@ -5,7 +5,7 @@ interface
 const
   PRINT_TAG_FILE = 'print2.bat';
 
-  PHYSICAL_TAG_FILE = '\myetiqueta.txt';
+  PHYSICAL_TAG_FILE = 'myetiqueta.txt';
 
 implementation
 
