@@ -89,7 +89,6 @@ uses
   Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas',
   Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas',
   Prevenda.Constants.GondolaG001 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas',
-  Prevenda.Helpers.CalculateGondolaG001Axis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001Axis.pas',
   Prevenda.Helpers.CalculateGondolaG001DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001DescriptionAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001BarcodeAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas',

@@ -325,7 +325,6 @@
         <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001Axis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001DescriptionAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas"/>
