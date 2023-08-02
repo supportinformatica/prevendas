@@ -89,7 +89,8 @@ uses
   Prevenda.Utils.FirstImpression in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas',
   Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas',
   Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas',
-  Prevenda.Constants.GondolaG001 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas';
+  Prevenda.Constants.GondolaG001 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas',
+  Prevenda.Helpers.CalculateGondolaG001Axis in 'SistemaEtiquetas\shared\helpers\Prevenda.Helpers.CalculateGondolaG001Axis.pas';
 
 {$R *.RES}
 var
