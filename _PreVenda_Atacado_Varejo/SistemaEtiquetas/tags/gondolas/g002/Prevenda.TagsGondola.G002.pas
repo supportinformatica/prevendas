@@ -110,14 +110,14 @@ begin
         TagFileWriter.WriteOnTagFile('N');
         TagFileWriter.WriteOnTagFile('');
 
-        TagFileWriter.WriteOnTagFile('A'+G002Description.GetG002DescriptionXValue+','+G002Description.GetG002DescriptionYValue+',0,4,1,,N,"' +Produto.descricao+ '"');
+        TagFileWriter.WriteOnTagFile('A'+G002Description.GetG002DescriptionXValue+','+G002Description.GetG002DescriptionYValue+',0,4,1,2,N,"' +Produto.descricao+ '"');
         TagFileWriter.WriteOnTagFile('');
 
-        TagFileWriter.WriteOnTagFile('A'+G002Unit.GetG002UnityXValue+','+G002Unit.GetG002UnityYValue+',0,4,1,1,N,"' +Produto.unidade.unidade+ '"');
+        TagFileWriter.WriteOnTagFile('A'+G002Unit.GetG002UnityXValue+','+G002Unit.GetG002UnityYValue+',0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
         TagFileWriter.WriteOnTagFile('');
 
-        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceLabelXValue+','+G002Price.GetG002PriceLabelYValue+',0,2,1,1,N,"R$"');
-        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceValueXValue+','+G002Price.GetG002PriceValueYValue+',0,3,2,4,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
+        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceLabelXValue+','+G002Price.GetG002PriceLabelYValue+',0,3,1,1,N,"Pr. Varejo"');
+        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceValueXValue+','+G002Price.GetG002PriceValueYValue+',0,3,2,4,N,"R$ ' +FormatFloat('0.00', Produto.vlPreco)+ '"');
         TagFileWriter.WriteOnTagFile('');
 
         TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
