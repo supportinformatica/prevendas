@@ -93,7 +93,8 @@ uses
   Prevenda.Helpers.CalculateGondolaG001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001BarcodeAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001PriceAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001PriceAxis.pas',
-  Prevenda.Constants.GondolaG002 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002.pas';
+  Prevenda.Constants.GondolaG002 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002.pas',
+  Prevenda.Helpers.CalculateGondolaG002DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002DescriptionAxis.pas';
 
 {$R *.RES}
 var
