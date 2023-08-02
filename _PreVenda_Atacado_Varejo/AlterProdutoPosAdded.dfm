@@ -5,7 +5,7 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
   BorderStyle = bsSingle
   Caption = 'Atualizar dados do item'
   ClientHeight = 199
-  ClientWidth = 350
+  ClientWidth = 304
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,9 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
   object lblProduto: TLabel
     Left = 24
     Top = 8
-    Width = 91
+    Width = 262
     Height = 19
+    AutoSize = False
     Caption = '<Descricao>'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -45,7 +46,7 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
   end
   object Label3: TLabel
     Left = 200
-    Top = 50
+    Top = 106
     Width = 32
     Height = 16
     Caption = 'Pre'#231'o'
@@ -78,29 +79,29 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
     TabOrder = 0
   end
   object edtPreco: TEdit
-    Left = 200
-    Top = 72
+    Left = 165
+    Top = 128
     Width = 121
     Height = 21
-    TabOrder = 1
+    TabOrder = 2
     OnKeyPress = edtPrecoKeyPress
   end
   object btnAtualizar: TButton
-    Left = 246
+    Left = 214
     Top = 166
     Width = 75
     Height = 25
     Caption = 'Atualizar'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = btnAtualizarClick
   end
   object btnReset: TButton
-    Left = 165
+    Left = 133
     Top = 166
     Width = 75
     Height = 25
     Caption = 'Resetar'
-    TabOrder = 3
+    TabOrder = 4
     OnClick = btnResetClick
   end
   object edtQuantidade: TEdit
@@ -108,7 +109,7 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
     Top = 128
     Width = 121
     Height = 21
-    TabOrder = 4
+    TabOrder = 1
     OnKeyPress = edtPrecoKeyPress
   end
 end
