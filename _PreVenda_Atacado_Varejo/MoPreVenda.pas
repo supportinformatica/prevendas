@@ -1,4 +1,4 @@
-unit MoPreVenda;
+﻿unit MoPreVenda;
 
 interface
 
@@ -32561,18 +32561,12 @@ begin
 //    RequiredProducts[Line].quantity := SgDados.Cells[2,Line];
 //  end;
 
-  for Line := 1 to SgDados.RowCount - 1 do begin
-    RequiredProducts[Line] := TRequiredProductToPrint.Create;
-    RequiredProducts[Line].code := SgDados.Cells[0,Line];
-    RequiredProducts[Line].quantity := SgDados.Cells[2,Line];
-  end;
-
 
   Gondola := TGondola001.Create;
 
   try
 
-    Gondola.PrintTagGondolaG001(RequiredProducts, SgDados.RowCount);
+    Gondola.PrintTagGondolaG001;
 
   finally
     Gondola.Free;

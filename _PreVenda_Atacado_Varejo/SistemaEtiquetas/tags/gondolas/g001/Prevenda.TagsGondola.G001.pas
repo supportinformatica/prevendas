@@ -33,7 +33,7 @@ type
       TagFileWriter: TTagFileWriter;
 
     public
-      procedure PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
+      procedure PrintTagGondolaG001;
   end;
 
 implementation
@@ -42,12 +42,13 @@ implementation
 
 uses
   MoPreVenda,
+
   Prevenda.Constants.GondolaG001;
 
-procedure TGondola001.PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
+procedure TGondola001.PrintTagGondolaG001;
 
 var
-  I: integer;
+  Line: integer;
 
   Produto: TDomProduto;
 
@@ -71,10 +72,12 @@ begin
 
 
 
-  for I := 1 to NumberOfLinesOnGrid - 1 do begin
-    Produto := TNEGProduto.buscarProduto(StrToInt(RequiredProductsToPrint[I].code));
+  for Line := 1 to FrmPrincipalPreVenda.SgDados.RowCount - 1 do begin
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
 
     TagFileWriter := TTagFileWriter.Create;
+
     G001Calcs := TGondolaG001Calcs.Create;
 
       try
@@ -117,12 +120,14 @@ begin
         TagFileWriter.WriteOnTagFile('A'+G001Calcs.GetG001PriceValueXValue+','+G001Calcs.GetG001PriceValueYValue+',0,3,2,5,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
         TagFileWriter.WriteOnTagFile('');
 
-        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(RequiredProductsToPrint[I].quantity)));
+        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
 
       finally
+
         FreeAndNil(Produto);
         TagFileWriter.Free;
         G001Calcs.Free;
+
       end;
 
   end;
