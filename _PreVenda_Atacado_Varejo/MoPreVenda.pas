@@ -32544,23 +32544,12 @@ end;
 
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
-var
-  Line: Integer;
 
-//  RequiredProducts: TRequiredProductsToPrint;
+var
   Gondola: TGondola001;
 
 begin
   isFirstImpression := true;
-
-//  SetLength(RequiredProducts, SgDados.RowCount);
-//
-//  for Line := 1 to SgDados.RowCount - 1 do begin
-//    RequiredProducts[Line] := TRequiredProductToPrint.Create;
-//    RequiredProducts[Line].code := SgDados.Cells[0,Line];
-//    RequiredProducts[Line].quantity := SgDados.Cells[2,Line];
-//  end;
-
 
   Gondola := TGondola001.Create;
 
@@ -32569,11 +32558,9 @@ begin
     Gondola.PrintTagGondolaG001;
 
   finally
+
     Gondola.Free;
 
-//    for Line := 1 to SgDados.RowCount - 1 do begin
-//      RequiredProducts[Line].Free;
-//    end;
   end;
 
   //Application.OnMessage := FormPrincipal.ProcessaMsg;
