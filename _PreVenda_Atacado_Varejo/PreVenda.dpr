@@ -80,8 +80,19 @@ uses
   unitLogoMaker in 'unitLogoMaker.pas',
   FormInformaDataProduzidoValidade in 'FormInformaDataProduzidoValidade.pas' {FrmDataProduzidoValidade},
   AlterProdutoPosAdded in 'AlterProdutoPosAdded.pas' {frmAlterProdutoPosAdded},
-  Prevenda.Entities.ProductOnPriting in 'SistemaEtiquetas\entities\Prevenda.Entities.ProductOnPriting.pas',
-  Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas';
+  Prevenda.TagsGondola.G001 in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas',
+  Prevenda.Constants.App in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.App.pas',
+  Prevenda.Messages.SuccessOrError in 'SistemaEtiquetas\shared\messages\Prevenda.Messages.SuccessOrError.pas',
+  Prevenda.Utils.ExecutePrint in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas',
+  Prevenda.Utils.TagFileWriter in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.TagFileWriter.pas',
+  Prevenda.Utils.FirstImpression in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas',
+  Prevenda.Utils.VerifyTagList in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas',
+  Prevenda.Utils.ConfigurationFileReader in 'SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas',
+  Prevenda.Constants.GondolaG001 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas',
+  Prevenda.Helpers.CalculateGondolaG001DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001DescriptionAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG001BarcodeAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG001PriceAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001PriceAxis.pas';
 
 {$R *.RES}
 var
