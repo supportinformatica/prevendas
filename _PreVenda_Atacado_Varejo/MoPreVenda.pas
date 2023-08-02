@@ -1,4 +1,4 @@
-﻿unit MoPreVenda;
+unit MoPreVenda;
 
 interface
 
@@ -32547,13 +32547,19 @@ procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
 var
   Line: Integer;
 
-  RequiredProducts: TRequiredProductsToPrint;
+//  RequiredProducts: TRequiredProductsToPrint;
   Gondola: TGondola001;
 
 begin
   isFirstImpression := true;
 
-  SetLength(RequiredProducts, SgDados.RowCount);
+//  SetLength(RequiredProducts, SgDados.RowCount);
+//
+//  for Line := 1 to SgDados.RowCount - 1 do begin
+//    RequiredProducts[Line] := TRequiredProductToPrint.Create;
+//    RequiredProducts[Line].code := SgDados.Cells[0,Line];
+//    RequiredProducts[Line].quantity := SgDados.Cells[2,Line];
+//  end;
 
   for Line := 1 to SgDados.RowCount - 1 do begin
     RequiredProducts[Line] := TRequiredProductToPrint.Create;
@@ -32571,9 +32577,9 @@ begin
   finally
     Gondola.Free;
 
-    for Line := 1 to SgDados.RowCount - 1 do begin
-      RequiredProducts[Line].Free;
-    end;
+//    for Line := 1 to SgDados.RowCount - 1 do begin
+//      RequiredProducts[Line].Free;
+//    end;
   end;
 
   //Application.OnMessage := FormPrincipal.ProcessaMsg;
