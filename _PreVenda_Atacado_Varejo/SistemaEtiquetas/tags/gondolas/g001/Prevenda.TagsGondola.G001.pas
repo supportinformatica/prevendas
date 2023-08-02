@@ -22,8 +22,6 @@ uses
   Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
 
-  Prevenda.Helpers.CalculateGondolaG001Axis,
-
   Prevenda.Helpers.CalculateGondolaG001DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG001UnityAxis,
   Prevenda.Helpers.CalculateGondolaG001BarcodeAxis,

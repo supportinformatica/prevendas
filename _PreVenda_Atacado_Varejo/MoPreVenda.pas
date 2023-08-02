@@ -20,6 +20,7 @@ uses
   ACBrBase, ACBrPosPrinter,
 
   Prevenda.TagsGondola.G001,
+
   Prevenda.Utils.FirstImpression;
 
 
@@ -490,6 +491,8 @@ type
     function PegaNomeFabricante(cdProduto: Integer): string;
     function isProdutoPromocao(cdProduto: Integer): Boolean;
     Procedure SalvaEtiquetas;
+
+    Procedure Mount_GondolaG001;
     Procedure ImprimeEtiquetasBijouArts;
     procedure ImprimeEtiquetasBijouArtsMaior;
     procedure ImprimeEtiquetasLindaStore;
@@ -668,7 +671,9 @@ type
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_PanificacaoMerceariaCompreBem2; //Argox OS 214 Plus
     procedure ImprimeEtiquetas_CasaDoRosario_3_Colunas; //Elsin L42 Pro Full
-    procedure ImprimeEtiquetas_TesteTags;//Elgin L42 Pro
+
+    procedure MountFlag_Cliente_De_Teste; // Elgins Printers
+
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11760,8 +11765,10 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'ROSARYHOUSE' then
     ImprimeEtiquetas_CasaDoRosario_3_Colunas
 
-  else if UpperCase(vFlagEtiqueta) = 'TESTETAG' then
-    ImprimeEtiquetas_TesteTags;
+
+  else if UpperCase(vFlagEtiqueta) = 'CLIENTEDETESTE' then
+    MountFlag_Cliente_De_Teste;
+
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -32542,7 +32549,15 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
+
+
+procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
+
+begin
+  Mount_GondolaG001;
+end;
+
+procedure TFrmPrincipalPreVenda.Mount_GondolaG001;
 
 var
   Gondola: TGondola001;
@@ -32561,9 +32576,6 @@ begin
     Gondola.Free;
 
   end;
-
-  //Application.OnMessage := FormPrincipal.ProcessaMsg;
-
 end;
 
 {
