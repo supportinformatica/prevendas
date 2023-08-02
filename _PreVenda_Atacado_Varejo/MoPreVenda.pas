@@ -19,7 +19,6 @@ uses
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
   ACBrBase, ACBrPosPrinter,
 
-  Prevenda.Entities.ProductOnPriting,
   Prevenda.TagsGondola.G001,
   Prevenda.Utils.FirstImpression;
 
