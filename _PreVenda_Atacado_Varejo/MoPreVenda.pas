@@ -4599,8 +4599,7 @@ begin
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-//    if FrmPrincipalPreVenda.dsCGC = '28028513000120' then begin
-      if 1 = 1 then begin
+    if FrmPrincipalPreVenda.dsCGC = '28028513000120' then begin
       frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
       frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
       frmAlterProdutoPosAdded.edtUnidade.Text := SgDados.Cells[10, SgDados.Row];
