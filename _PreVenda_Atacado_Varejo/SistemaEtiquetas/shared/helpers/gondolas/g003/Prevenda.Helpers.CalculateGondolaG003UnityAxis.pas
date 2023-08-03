@@ -8,7 +8,7 @@ uses
   Prevenda.Utils.ConfigurationFileReader;
 
 type
-  TGondolaG00UnityCalcs = class
+  TGondolaG003UnityCalcs = class
     private
     public
       function GetG003UnityXValue: string;
@@ -23,7 +23,7 @@ uses
   Prevenda.Constants.GondolaG002;
 
 
-function TGondolaG00UnityCalcs.GetG003UnityXValue: string;
+function TGondolaG003UnityCalcs.GetG003UnityXValue: string;
 
 var
   Config: TConfigurationFileReader;
@@ -48,7 +48,7 @@ begin
 end;
 
 
-function TGondolaG00UnityCalcs.GetG003UnityYValue: string;
+function TGondolaG003UnityCalcs.GetG003UnityYValue: string;
 
 var
   Config: TConfigurationFileReader;
