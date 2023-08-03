@@ -6,7 +6,7 @@ uses
   Prevenda.Utils.TagFileWriter;
 
 type
-  TGondola003Header = class
+  TGondolaG003Header = class
     private
       TagFileWriter: TTagFileWriter;
 
@@ -18,7 +18,7 @@ implementation
 
 { TGondola003Header }
 
-procedure TGondola003Header.Mount(CodePage, TagHeight, TagWidth, Density,
+procedure TGondolaG003Header.Mount(CodePage, TagHeight, TagWidth, Density,
   PrintMode, PaperOutputMode, PrintOrientation: string);
 
 

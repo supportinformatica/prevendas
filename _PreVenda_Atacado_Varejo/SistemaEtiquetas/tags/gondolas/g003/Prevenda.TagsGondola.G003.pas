@@ -61,8 +61,8 @@ var
 
   MainGrid: TVerifyTagList;
 
-  Header: TGondola003Header;
-  Body: TGondola003Body;
+  Header: TGondolaG003Header;
+  Body: TGondolaG003Body;
   Footer: TGondolaG003Footer;
 
   G003Description: TGondolaG003DescriptionCalcs;
@@ -89,8 +89,8 @@ begin
 
     Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
 
-    Header := TGondola003Header.Create;
-    Body   := TGondola003Body.Create;
+    Header := TGondolaG003Header.Create;
+    Body   := TGondolaG003Body.Create;
     Footer := TGondolaG003Footer.Create;
 
     G003Description := TGondolaG003DescriptionCalcs.Create;

@@ -8,7 +8,7 @@ uses
   Prevenda.Utils.TagFileWriter;
 
 type
-  TGondola003Body = class
+  TGondolaG003Body = class
     private
       TagFileWriter: TTagFileWriter;
 
@@ -28,7 +28,7 @@ implementation
 
 { TGondola003Body }
 
-procedure TGondola003Body.MountDescription(DescriptionAxisX, DescriptionAxisY,
+procedure TGondolaG003Body.MountDescription(DescriptionAxisX, DescriptionAxisY,
   DescriptionItem: string);
 
 begin
@@ -50,7 +50,7 @@ end;
 
 
 
-procedure TGondola003Body.MountUnity(UnityAxisX, UnityAxisY, UnityItem: string);
+procedure TGondolaG003Body.MountUnity(UnityAxisX, UnityAxisY, UnityItem: string);
 
 begin
   TagFileWriter := TTagFileWriter.Create;
@@ -70,7 +70,7 @@ end;
 
 
 
-procedure TGondola003Body.MountPriceVarejoLabel(PriceLabelAxisX, PriceLabelAxisY,
+procedure TGondolaG003Body.MountPriceVarejoLabel(PriceLabelAxisX, PriceLabelAxisY,
   PriceLabelText: string);
 
 begin
@@ -88,7 +88,7 @@ begin
 end;
 
 
-procedure TGondola003Body.MountPriceVarejoValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
+procedure TGondolaG003Body.MountPriceVarejoValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
 
 begin
   TagFileWriter := TTagFileWriter.Create;
@@ -108,7 +108,7 @@ end;
 
 
 
-procedure TGondola003Body.MountPriceAtacadoLabel(PriceLabelAxisX, PriceLabelAxisY,
+procedure TGondolaG003Body.MountPriceAtacadoLabel(PriceLabelAxisX, PriceLabelAxisY,
   PriceLabelText: string);
 
 
@@ -127,7 +127,7 @@ begin
 end;
 
 
-procedure TGondola003Body.MountPriceAtacadoValue(PriceValueAxisX,
+procedure TGondolaG003Body.MountPriceAtacadoValue(PriceValueAxisX,
   PriceValueAxisY: string; PriceValueItem: real);
 
 begin
