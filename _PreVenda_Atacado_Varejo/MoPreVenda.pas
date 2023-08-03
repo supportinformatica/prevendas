@@ -4599,17 +4599,24 @@ begin
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-    if FrmPrincipalPreVenda.dsCGC = '28028513000120' then begin
+//    if FrmPrincipalPreVenda.dsCGC = '28028513000120' then begin
+      if 1 = 1 then begin
       frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
       frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
       frmAlterProdutoPosAdded.edtUnidade.Text := SgDados.Cells[10, SgDados.Row];
       frmAlterProdutoPosAdded.edtQuantidade.Text := SgDados.Cells[2, SgDados.Row];
-      frmAlterProdutoPosAdded.edtPreco.Text := SgDados.Cells[3, SgDados.Row];
+      frmAlterProdutoPosAdded.edtPrecoLiquido.Text := SgDados.Cells[3, SgDados.Row];
+      frmAlterProdutoPosAdded.edtPrecoBruto.Text  := SgDados.Cells[9, SgDados.Row];
       frmAlterProdutoPosAdded.ShowModal;
       prevenda.itens[SgDados.Row - 1].unidade.unidade := frmAlterProdutoPosAdded.edtUnidade.Text;
       prevenda.itens[SgDados.Row - 1].quantidade := StrToFloat(frmAlterProdutoPosAdded.edtQuantidade.Text);
-      prevenda.itens[SgDados.Row - 1].precoVenda := StrToFloat(frmAlterProdutoPosAdded.edtPreco.Text);
-      prevenda.itens[SgDados.Row - 1].precoBruto := StrToFloat(frmAlterProdutoPosAdded.edtPreco.Text);
+      prevenda.itens[SgDados.Row - 1].precoVenda := StrToFloat(frmAlterProdutoPosAdded.edtPrecoLiquido.Text);
+      prevenda.itens[SgDados.Row - 1].precoBruto := StrToFloat(frmAlterProdutoPosAdded.edtPrecoBruto.Text);
+      if StrToFloat(frmAlterProdutoPosAdded.edtPrecoLiquido.Text) <>
+        StrToFloat(frmAlterProdutoPosAdded.edtPrecoBruto.Text) then
+        prevenda.itens[SgDados.Row - 1].Promocao_desconto_Item := True
+      else
+        prevenda.itens[SgDados.Row - 1].Promocao_desconto_Item := False;
       CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
       SgDadosExit(self);
     end
