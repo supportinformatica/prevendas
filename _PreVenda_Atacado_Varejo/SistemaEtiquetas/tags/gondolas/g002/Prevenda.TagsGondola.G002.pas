@@ -5,22 +5,15 @@ interface
 uses
   System.SysUtils,
 
-  System.IniFiles,
-
-  ShellApi,
-
-  Vcl.Dialogs,
-
   Produto,
   NEGProduto,
 
-  Prevenda.Constants.App,
-
   Prevenda.Utils.ExecutePrint,
-  Prevenda.Utils.TagFileWriter,
-  Prevenda.Utils.ConfigurationFileReader,
-  Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
+
+  Prevenda.TagsGondola.G002_Header,
+  Prevenda.TagsGondola.G002_Body,
+  Prevenda.TagsGondola.G002_Footer,
 
   Prevenda.Helpers.CalculateGondolaG002DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG002UnityAxis,
@@ -30,7 +23,6 @@ type
   TGondola002 = class
     private
       ExecutePrint: TExecutePrint;
-      TagFileWriter: TTagFileWriter;
 
     public
       procedure PrintTagGondolaG002;
@@ -53,6 +45,10 @@ var
   Produto: TDomProduto;
 
   MainGrid: TVerifyTagList;
+
+  Header: TGondolaG002Header;
+  Body: TGondolaG002Body;
+  Footer: TGondolaG002Footer;
 
   G002Description: TGondolaG002DescriptionCalcs;
   G002Unit: TGondolaG002UnityCalcs;
@@ -78,60 +74,39 @@ begin
 
     Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
 
-    TagFileWriter := TTagFileWriter.Create;
+    Header := TGondolaG002Header.Create;
+    Body   := TGondolaG002Body.Create;
+    Footer := TGondolaG002Footer.Create;
 
     G002Description := TGondolaG002DescriptionCalcs.Create;
     G002Unit := TGondolaG002UnityCalcs.Create;
     G002Price := TGondolaG002PriceCalcs.Create;
 
-      try
-        TagFileWriter.WriteOnTagFile('I8,1,001');
-        TagFileWriter.WriteOnTagFile('');
+    try
+      Header.Mount('I8,1,001', 'Q240,25', 'q832', 'D13', 'O', 'JF', 'ZB');
 
-        TagFileWriter.WriteOnTagFile('Q240,25');
-        TagFileWriter.WriteOnTagFile('q832');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountDescription(G002Description.GetG002DescriptionXValue, G002Description.GetG002DescriptionYValue, Produto.descricao);
 
-        TagFileWriter.WriteOnTagFile('D13');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountUnity(G002Unit.GetG002UnityXValue, G002Unit.GetG002UnityYValue, Produto.unidade.unidade);
 
-        TagFileWriter.WriteOnTagFile('O');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountPriceLabel(G002Price.GetG002PriceLabelXValue, G002Price.GetG002PriceLabelYValue, 'Pr. Varejo');
+      Body.MountPriceValue(G002Price.GetG002PriceValueXValue, G002Price.GetG002PriceValueYValue, Produto.vlPreco);
 
-        TagFileWriter.WriteOnTagFile('JF');
-        TagFileWriter.WriteOnTagFile('');
+      Footer.Mount(FrmPrincipalPreVenda.SgDados.Cells[2, Line]);
 
-        TagFileWriter.WriteOnTagFile('WN');
-        TagFileWriter.WriteOnTagFile('');
+    finally
 
-        TagFileWriter.WriteOnTagFile('ZB');
-        TagFileWriter.WriteOnTagFile('');
+      FreeAndNil(Produto);
 
-        TagFileWriter.WriteOnTagFile('N');
-        TagFileWriter.WriteOnTagFile('');
+      Header.Free;
+      Body.Free;
+      Footer.Free;
 
-        TagFileWriter.WriteOnTagFile('A'+G002Description.GetG002DescriptionXValue+','+G002Description.GetG002DescriptionYValue+',0,4,1,2,N,"' +Produto.descricao+ '"');
-        TagFileWriter.WriteOnTagFile('');
+      G002Description.Free;
+      G002Unit.Free;
+      G002Price.Free;
 
-        TagFileWriter.WriteOnTagFile('A'+G002Unit.GetG002UnityXValue+','+G002Unit.GetG002UnityYValue+',0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceLabelXValue+','+G002Price.GetG002PriceLabelYValue+',0,3,1,1,N,"Pr. Varejo"');
-        TagFileWriter.WriteOnTagFile('A'+G002Price.GetG002PriceValueXValue+','+G002Price.GetG002PriceValueYValue+',0,3,2,4,N,"R$ ' +FormatFloat('0.00', Produto.vlPreco)+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
-
-      finally
-
-        FreeAndNil(Produto);
-        TagFileWriter.Free;
-
-        G002Description.Free;
-        G002Unit.Free;
-        G002Price.Free;
-
-      end;
+    end;
 
   end;
 
