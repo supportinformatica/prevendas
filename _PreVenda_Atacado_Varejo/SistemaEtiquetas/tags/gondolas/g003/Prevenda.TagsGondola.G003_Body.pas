@@ -17,11 +17,8 @@ type
 
       procedure MountUnity(UnityAxisX, UnityAxisY, UnityItem: string);
 
-      procedure MountPriceVarejoLabel(PriceLabelAxisX, PriceLabelAxisY, PriceLabelText: string);
-      procedure MountPriceVarejoValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
-
-      procedure MountPriceAtacadoLabel(PriceLabelAxisX, PriceLabelAxisY, PriceLabelText: string);
-      procedure MountPriceAtacadoValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
+      procedure MountPriceLabel(PriceLabelAxisX, PriceLabelAxisY, PriceLabelText: string);
+      procedure MountPriceValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
   end;
 
 implementation
@@ -70,7 +67,7 @@ end;
 
 
 
-procedure TGondolaG003Body.MountPriceVarejoLabel(PriceLabelAxisX, PriceLabelAxisY,
+procedure TGondolaG003Body.MountPriceLabel(PriceLabelAxisX, PriceLabelAxisY,
   PriceLabelText: string);
 
 begin
@@ -88,7 +85,7 @@ begin
 end;
 
 
-procedure TGondolaG003Body.MountPriceVarejoValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
+procedure TGondolaG003Body.MountPriceValue(PriceValueAxisX, PriceValueAxisY: string; PriceValueItem: real);
 
 begin
   TagFileWriter := TTagFileWriter.Create;
@@ -105,44 +102,5 @@ begin
   end;
 end;
 
-
-
-
-procedure TGondolaG003Body.MountPriceAtacadoLabel(PriceLabelAxisX, PriceLabelAxisY,
-  PriceLabelText: string);
-
-
-begin
-  TagFileWriter := TTagFileWriter.Create;
-
-  try
-
-    TagFileWriter.WriteOnTagFile('A'+PriceLabelAxisX+','+PriceLabelAxisY+',0,3,1,1,N,"' +PriceLabelText+ '"');
-
-  finally
-
-    TagFileWriter.Free;
-
-  end;
-end;
-
-
-procedure TGondolaG003Body.MountPriceAtacadoValue(PriceValueAxisX,
-  PriceValueAxisY: string; PriceValueItem: real);
-
-begin
-  TagFileWriter := TTagFileWriter.Create;
-
-  try
-
-    TagFileWriter.WriteOnTagFile('A'+PriceValueAxisX+','+PriceValueAxisY+',0,3,2,4,N,"R$ ' +FormatFloat('0.00', PriceValueItem)+ '"');
-    TagFileWriter.WriteOnTagFile('');
-
-  finally
-
-    TagFileWriter.Free;
-
-  end;
-end;
 
 end.

@@ -105,11 +105,11 @@ begin
 
       Body.MountUnity(G003Unit.GetG003UnityXValue, G003Unit.GetG003UnityYValue, Produto.unidade.unidade);
 
-      Body.MountPriceVarejoLabel(G003PriceVarejo.GetG003PriceLabelXValue, G003PriceVarejo.GetG003PriceLabelYValue, 'Pr. Varejo');
-      Body.MountPriceVarejoValue(G003PriceVarejo.GetG003PriceValueXValue, G003PriceVarejo.GetG003PriceValueYValue, Produto.vlPreco);
+      Body.MountPriceLabel(G003PriceVarejo.GetG003PriceLabelXValue, G003PriceVarejo.GetG003PriceLabelYValue, 'Pr. Varejo');
+      Body.MountPriceValue(G003PriceVarejo.GetG003PriceValueXValue, G003PriceVarejo.GetG003PriceValueYValue, Produto.vlPreco);
 
-      Body.MountPriceAtacadoLabel(G003PriceAtacado.GetG003PriceLabelXValue, G003PriceAtacado.GetG003PriceLabelYValue, 'Pr. Atacado');
-      Body.MountPriceAtacadoValue(G003PriceAtacado.GetG003PriceValueXValue, G003PriceAtacado.GetG003PriceValueYValue, Produto.vlAtacado);
+      Body.MountPriceLabel(G003PriceAtacado.GetG003PriceLabelXValue, G003PriceAtacado.GetG003PriceLabelYValue, 'Pr. Atacado');
+      Body.MountPriceValue(G003PriceAtacado.GetG003PriceValueXValue, G003PriceAtacado.GetG003PriceValueYValue, Produto.vlAtacado);
 
       Footer.Mount(FrmPrincipalPreVenda.SgDados.Cells[2, Line]);
 
