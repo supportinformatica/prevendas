@@ -100,7 +100,8 @@ uses
   Prevenda.TagsGondola.G002 in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002.pas',
   Prevenda.Constants.GondolaG003 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG003.pas',
   Prevenda.Helpers.CalculateGondolaG003DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003DescriptionAxis.pas',
-  Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas';
+  Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis.pas';
 
 {$R *.RES}
 var
