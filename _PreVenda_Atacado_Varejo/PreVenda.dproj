@@ -336,6 +336,7 @@
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG003.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
