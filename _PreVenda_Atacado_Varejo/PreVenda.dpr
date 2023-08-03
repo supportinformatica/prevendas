@@ -103,7 +103,10 @@ uses
   Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas',
   Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis.pas',
   Prevenda.TagsGondola.G003 in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003.pas',
-  Prevenda.Helpers.CalculateGondolaG003UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003UnityAxis.pas';
+  Prevenda.Helpers.CalculateGondolaG003UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003UnityAxis.pas',
+  Prevenda.TagsGondola.G003_Header in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Header.pas',
+  Prevenda.TagsGondola.G003_Body in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Body.pas',
+  Prevenda.TagsGondola.G003_Footer in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Footer.pas';
 
 {$R *.RES}
 var

@@ -17,10 +17,13 @@ uses
   Prevenda.Constants.App,
 
   Prevenda.Utils.ExecutePrint,
-  Prevenda.Utils.TagFileWriter,
   Prevenda.Utils.ConfigurationFileReader,
   Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
+
+  Prevenda.TagsGondola.G003_Header,
+  Prevenda.TagsGondola.G003_Body,
+  Prevenda.TagsGondola.G003_Footer,
 
   Prevenda.Helpers.CalculateGondolaG003DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG003UnityAxis,
@@ -32,7 +35,6 @@ type
   TGondola003 = class
     private
       ExecutePrint: TExecutePrint;
-      TagFileWriter: TTagFileWriter;
 
     public
       procedure PrintTagGondolaG003;
@@ -59,6 +61,10 @@ var
 
   MainGrid: TVerifyTagList;
 
+  Header: TGondola003Header;
+  Body: TGondola003Body;
+  Footer: TGondolaG003Footer;
+
   G003Description: TGondolaG003DescriptionCalcs;
   G003Unit: TGondolaG003UnityCalcs;
   G003PriceVarejo: TGondolaG003PriceVarejoCalcs;
@@ -83,66 +89,44 @@ begin
 
     Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
 
-    TagFileWriter := TTagFileWriter.Create;
+    Header := TGondola003Header.Create;
+    Body   := TGondola003Body.Create;
+    Footer := TGondolaG003Footer.Create;
 
     G003Description := TGondolaG003DescriptionCalcs.Create;
     G003Unit := TGondolaG003UnityCalcs.Create;
     G003PriceVarejo := TGondolaG003PriceVarejoCalcs.Create;
     G003PriceAtacado := TGondolaG003PriceAtacadoCalcs.Create;
 
-      try
-        TagFileWriter.WriteOnTagFile('I8,1,001');
-        TagFileWriter.WriteOnTagFile('');
+    try
+      Header.Mount('I8,1,001', 'Q240,25', 'q832', 'D13', 'O', 'JF', 'ZB');
 
-        TagFileWriter.WriteOnTagFile('Q240,25');
-        TagFileWriter.WriteOnTagFile('q832');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountDescription(G003Description.GetG003DescriptionXValue, G003Description.GetG003DescriptionYValue, Produto.descricao);
 
-        TagFileWriter.WriteOnTagFile('D13');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountUnity(G003Unit.GetG003UnityXValue, G003Unit.GetG003UnityYValue, Produto.unidade.unidade);
 
-        TagFileWriter.WriteOnTagFile('O');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountPriceVarejoLabel(G003PriceVarejo.GetG003PriceLabelXValue, G003PriceVarejo.GetG003PriceLabelYValue, 'Pr. Varejo');
+      Body.MountPriceVarejoValue(G003PriceVarejo.GetG003PriceValueXValue, G003PriceVarejo.GetG003PriceValueYValue, Produto.vlPreco);
 
-        TagFileWriter.WriteOnTagFile('JF');
-        TagFileWriter.WriteOnTagFile('');
+      Body.MountPriceAtacadoLabel(G003PriceAtacado.GetG003PriceLabelXValue, G003PriceAtacado.GetG003PriceLabelYValue, 'Pr. Atacado');
+      Body.MountPriceAtacadoValue(G003PriceAtacado.GetG003PriceValueXValue, G003PriceAtacado.GetG003PriceValueYValue, Produto.vlAtacado);
 
-        TagFileWriter.WriteOnTagFile('WN');
-        TagFileWriter.WriteOnTagFile('');
+      Footer.Mount(FrmPrincipalPreVenda.SgDados.Cells[2, Line]);
 
-        TagFileWriter.WriteOnTagFile('ZB');
-        TagFileWriter.WriteOnTagFile('');
+    finally
 
-        TagFileWriter.WriteOnTagFile('N');
-        TagFileWriter.WriteOnTagFile('');
+      FreeAndNil(Produto);
 
-        TagFileWriter.WriteOnTagFile('A'+G003Description.GetG003DescriptionXValue+','+G003Description.GetG003DescriptionYValue+',0,4,1,2,N,"' +Produto.descricao+ '"');
-        TagFileWriter.WriteOnTagFile('');
+      Header.Free;
+      Body.Free;
+      Footer.Free;
 
-        TagFileWriter.WriteOnTagFile('A'+G003Unit.GetG003UnityXValue+','+G003Unit.GetG003UnityYValue+',0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
-        TagFileWriter.WriteOnTagFile('');
+      G003Description.Free;
+      G003Unit.Free;
+      G003PriceVarejo.Free;
+      G003PriceAtacado.Free;
 
-        TagFileWriter.WriteOnTagFile('A'+G003PriceVarejo.GetG003PriceLabelXValue+','+G003PriceVarejo.GetG003PriceLabelYValue+',0,3,1,1,N,"Pr. Varejo"');
-        TagFileWriter.WriteOnTagFile('A'+G003PriceVarejo.GetG003PriceValueXValue+','+G003PriceVarejo.GetG003PriceValueYValue+',0,3,2,4,N,"R$ ' +FormatFloat('0.00', Produto.vlPreco)+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('A'+G003PriceAtacado.GetG003PriceLabelXValue+','+G003PriceAtacado.GetG003PriceLabelYValue+',0,3,1,1,N,"Pr. Atacado"');
-        TagFileWriter.WriteOnTagFile('A'+G003PriceAtacado.GetG003PriceValueXValue+','+G003PriceAtacado.GetG003PriceValueYValue+',0,3,2,4,N,"R$ ' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
-
-      finally
-
-        FreeAndNil(Produto);
-        TagFileWriter.Free;
-
-        G003Description.Free;
-        G003Unit.Free;
-        G003PriceVarejo.Free;
-        G003PriceAtacado.Free;
-
-      end;
+    end;
 
   end;
 
