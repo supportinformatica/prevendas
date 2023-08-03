@@ -21,6 +21,7 @@ uses
 
   Prevenda.TagsGondola.G001,
   Prevenda.Tagsgondola.G002,
+  Prevenda.Tagsgondola.G003,
 
   Prevenda.Utils.FirstImpression;
 
@@ -495,6 +496,7 @@ type
 
     Procedure Mount_GondolaG001;
     Procedure Mount_GondolaG002;
+    Procedure Mount_GondolaG003;
 
     Procedure ImprimeEtiquetasBijouArts;
     procedure ImprimeEtiquetasBijouArtsMaior;
@@ -32557,7 +32559,7 @@ end;
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
-  Mount_GondolaG002;
+  Mount_GondolaG003;
 end;
 
 procedure TFrmPrincipalPreVenda.Mount_GondolaG001;
@@ -32599,6 +32601,28 @@ begin
   finally
 
     G002.Free;
+
+  end;
+end;
+
+
+procedure TFrmPrincipalPreVenda.Mount_GondolaG003;
+
+var
+  G003: TGondola003;
+
+begin
+  isFirstImpression := true;
+
+  G003 := TGondola003.Create;
+
+  try
+
+    G003.PrintTagGondolaG003;
+
+  finally
+
+    G003.Free;
 
   end;
 end;
