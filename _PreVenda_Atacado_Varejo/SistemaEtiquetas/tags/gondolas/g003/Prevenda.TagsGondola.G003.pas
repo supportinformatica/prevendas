@@ -5,20 +5,10 @@ interface
 uses
   System.SysUtils,
 
-  System.IniFiles,
-
-  ShellApi,
-
-  Vcl.Dialogs,
-
   Produto,
   NEGProduto,
 
-  Prevenda.Constants.App,
-
   Prevenda.Utils.ExecutePrint,
-  Prevenda.Utils.ConfigurationFileReader,
-  Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
 
   Prevenda.TagsGondola.G003_Header,
