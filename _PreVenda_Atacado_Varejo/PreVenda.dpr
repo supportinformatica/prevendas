@@ -111,7 +111,8 @@ uses
   Prevenda.TagsGondola.G002_Body in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Body.pas',
   Prevenda.TagsGondola.G002_Footer in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Footer.pas',
   Prevenda.TagsGondola.G001_Header in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Header.pas',
-  Prevenda.TagsGondola.G001_Body in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas';
+  Prevenda.TagsGondola.G001_Body in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas',
+  Prevenda.TagsGondola.G001_Footer in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas';
 
 {$R *.RES}
 var

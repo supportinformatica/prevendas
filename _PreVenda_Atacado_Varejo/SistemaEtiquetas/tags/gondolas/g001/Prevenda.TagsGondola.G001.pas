@@ -17,13 +17,11 @@ uses
   Prevenda.Constants.App,
 
   Prevenda.Utils.ExecutePrint,
-  Prevenda.Utils.TagFileWriter,
-  Prevenda.Utils.ConfigurationFileReader,
-  Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
 
   Prevenda.TagsGondola.G001_Header,
   Prevenda.TagsGondola.G001_Body,
+  Prevenda.TagsGondola.G001_Footer,
 
   Prevenda.Helpers.CalculateGondolaG001DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG001UnityAxis,
@@ -34,7 +32,6 @@ type
   TGondola001 = class
     private
       ExecutePrint: TExecutePrint;
-      TagFileWriter: TTagFileWriter;
 
     public
       procedure PrintTagGondolaG001;
@@ -60,6 +57,7 @@ var
 
   Header: TGondolaG001Header;
   Body: TGondolaG001Body;
+  Footer: TGondolaG001Footer;
 
   G001Description: TGondolaG001DescriptionCalcs;
   G001Unit: TGondolaG001UnityCalcs;
@@ -88,8 +86,7 @@ begin
 
     Header := TGondolaG001Header.Create;
     Body   := TGondolaG001Body.Create;
-
-    TagFileWriter := TTagFileWriter.Create;
+    Footer := TGondolaG001Footer.Create;
 
     G001Description := TGondolaG001DescriptionCalcs.Create;
     G001Unit := TGondolaG001UnityCalcs.Create;
@@ -109,15 +106,15 @@ begin
         Body.MountBarcodeSymbol(G001Barcode.GetG001BarcodeSymbolXValue, G001Barcode.GetG001BarcodeSymbolYValue, Produto.codigoBarras);
         Body.MountBarcodeValue(G001Barcode.GetG001BarcodeValueXValue, G001Barcode.GetG001BarcodeValueYValue, Produto.codigoBarras);
 
-        TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
+        Footer.Mount(FrmPrincipalPreVenda.SgDados.Cells[2, Line]);
 
       finally
 
         FreeAndNil(Produto);
-        TagFileWriter.Free;
 
         Header.Free;
         Body.Free;
+        Footer.Free;
 
         G001Description.Free;
         G001Unit.Free;
