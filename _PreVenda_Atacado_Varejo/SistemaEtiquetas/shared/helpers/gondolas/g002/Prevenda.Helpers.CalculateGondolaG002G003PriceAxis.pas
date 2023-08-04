@@ -1,4 +1,4 @@
-unit Prevenda.Helpers.CalculateGondolaG002PriceAxis;
+unit Prevenda.Helpers.CalculateGondolaG002G003PriceAxis;
 
 interface
 
@@ -8,13 +8,13 @@ uses
   Prevenda.Utils.ConfigurationFileReader;
 
 type
-  TGondolaG002PriceCalcs = class
+  TGondolaG002G003PriceCalcs = class
     private
     public
-      function GetG002PriceLabelXValue: string;
-      function GetG002PriceLabelYValue: string;
-      function GetG002PriceValueXValue: string;
-      function GetG002PriceValueYValue: string;
+      function GetG002G003PriceLabelXValue: string;
+      function GetG002G003PriceLabelYValue: string;
+      function GetG002G003PriceValueXValue: string;
+      function GetG002G003PriceValueYValue: string;
   end;
 
 implementation
@@ -22,9 +22,9 @@ implementation
 { TGondolaG002PriceCalcs }
 
 uses
-  Prevenda.Constants.GondolaG002;
+  Prevenda.Constants.GondolaG002G003;
 
-function TGondolaG002PriceCalcs.GetG002PriceLabelXValue: string;
+function TGondolaG002G003PriceCalcs.GetG002G003PriceLabelXValue: string;
 
 var
   Config: TConfigurationFileReader;
@@ -50,7 +50,7 @@ end;
 
 
 
-function TGondolaG002PriceCalcs.GetG002PriceLabelYValue: string;
+function TGondolaG002G003PriceCalcs.GetG002G003PriceLabelYValue: string;
 
 var
   Config: TConfigurationFileReader;
@@ -79,7 +79,7 @@ end;
 
 
 
-function TGondolaG002PriceCalcs.GetG002PriceValueXValue: string;
+function TGondolaG002G003PriceCalcs.GetG002G003PriceValueXValue: string;
 
 var
   Config: TConfigurationFileReader;
@@ -105,7 +105,7 @@ end;
 
 
 
-function TGondolaG002PriceCalcs.GetG002PriceValueYValue: string;
+function TGondolaG002G003PriceCalcs.GetG002G003PriceValueYValue: string;
 
 var
   Config: TConfigurationFileReader;

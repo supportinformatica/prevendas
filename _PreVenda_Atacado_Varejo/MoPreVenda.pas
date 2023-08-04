@@ -20,7 +20,7 @@ uses
   ACBrBase, ACBrPosPrinter,
 
   Prevenda.TagsGondola.G001,
-  Prevenda.Tagsgondola.G002,
+  Prevenda.Tagsgondola.G002G003,
   Prevenda.Tagsgondola.G003,
 
   Prevenda.Utils.FirstImpression;
@@ -495,7 +495,7 @@ type
     Procedure SalvaEtiquetas;
 
     Procedure Mount_GondolaG001;
-    Procedure Mount_GondolaG002;
+    Procedure Mount_GondolaG002G003;
     Procedure Mount_GondolaG003;
 
     Procedure ImprimeEtiquetasBijouArts;
@@ -32565,7 +32565,7 @@ end;
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
-  Mount_GondolaG003;
+  Mount_GondolaG002G003;
 end;
 
 
@@ -32591,23 +32591,23 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.Mount_GondolaG002;
+procedure TFrmPrincipalPreVenda.Mount_GondolaG002G003;
 
 var
-  G002: TGondola002;
+  G002G003: TGondolaG002G003;
 
 begin
   isFirstImpression := true;
 
-  G002 := TGondola002.Create;
+  G002G003 := TGondolaG002G003.Create;
 
   try
 
-    G002.PrintTagGondolaG002;
+    G002G003.PrintTagGondolaG002G003;
 
   finally
 
-    G002.Free;
+    G002G003.Free;
 
   end;
 end;

@@ -329,11 +329,10 @@
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001PriceAxis.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002DescriptionAxis.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002UnityAxis.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002PriceAxis.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002G003.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003UnityAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003PriceAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG003.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003DescriptionAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas"/>
@@ -343,12 +342,13 @@
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Header.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Body.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Footer.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Header.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Body.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Footer.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Header.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Body.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Header.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

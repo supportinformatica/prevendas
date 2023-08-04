@@ -12,6 +12,7 @@ type
     private
     public
       procedure VerifyTagList;
+
   end;
 
 implementation

@@ -4,16 +4,19 @@ interface
 
 uses
   System.SysUtils,
-  Vcl.Dialogs,
-  Prevenda.Constants.App;
 
+  Vcl.Dialogs,
+
+  Prevenda.Constants.App;
 
 type
   TTagFileWriter = class
     private
     public
       procedure WriteOnTagFile(AComand: string);
+
   end;
+
 implementation
 
 { TTagFileWriter }

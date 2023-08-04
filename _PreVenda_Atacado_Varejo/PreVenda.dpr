@@ -93,11 +93,10 @@ uses
   Prevenda.Helpers.CalculateGondolaG001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001BarcodeAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas',
   Prevenda.Helpers.CalculateGondolaG001PriceAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001PriceAxis.pas',
-  Prevenda.Constants.GondolaG002 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002.pas',
-  Prevenda.Helpers.CalculateGondolaG002DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002DescriptionAxis.pas',
-  Prevenda.Helpers.CalculateGondolaG002UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002UnityAxis.pas',
-  Prevenda.Helpers.CalculateGondolaG002PriceAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002PriceAxis.pas',
-  Prevenda.TagsGondola.G002 in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002.pas',
+  Prevenda.Constants.GondolaG002G003 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG002G003.pas',
+  Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG002G003UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003UnityAxis.pas',
+  Prevenda.Helpers.CalculateGondolaG002G003PriceAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g002\Prevenda.Helpers.CalculateGondolaG002G003PriceAxis.pas',
   Prevenda.Constants.GondolaG003 in 'SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG003.pas',
   Prevenda.Helpers.CalculateGondolaG003DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003DescriptionAxis.pas',
   Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas',
@@ -107,12 +106,13 @@ uses
   Prevenda.TagsGondola.G003_Header in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Header.pas',
   Prevenda.TagsGondola.G003_Body in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Body.pas',
   Prevenda.TagsGondola.G003_Footer in 'SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Footer.pas',
-  Prevenda.TagsGondola.G002_Header in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Header.pas',
-  Prevenda.TagsGondola.G002_Body in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Body.pas',
-  Prevenda.TagsGondola.G002_Footer in 'SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Footer.pas',
   Prevenda.TagsGondola.G001_Header in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Header.pas',
   Prevenda.TagsGondola.G001_Body in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas',
-  Prevenda.TagsGondola.G001_Footer in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas';
+  Prevenda.TagsGondola.G001_Footer in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas',
+  Prevenda.TagsGondola.G002G003 in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003.pas',
+  Prevenda.TagsGondola.G002G003_Body in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Body.pas',
+  Prevenda.TagsGondola.G002G003_Footer in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Footer.pas',
+  Prevenda.TagsGondola.G002G003_Header in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Header.pas';
 
 {$R *.RES}
 var

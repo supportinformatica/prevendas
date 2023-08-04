@@ -1,4 +1,4 @@
-unit Prevenda.TagsGondola.G002_Footer;
+unit Prevenda.TagsGondola.G002G003_Footer;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   Prevenda.Utils.TagFileWriter;
 
 type
-  TGondolaG002Footer = class
+  TGondolaG002G003Footer = class
     private
       TagFileWriter: TTagFileWriter;
 
@@ -18,9 +18,9 @@ type
 
 implementation
 
-{ TGondolaG002Footer }
+{ TGondolaG002G003Footer }
 
-procedure TGondolaG002Footer.Mount(ItemQuantity: string);
+procedure TGondolaG002G003Footer.Mount(ItemQuantity: string);
 
 begin
   TagFileWriter := TTagFileWriter.Create;
