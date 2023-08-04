@@ -346,6 +346,8 @@
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Header.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Body.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002\Prevenda.TagsGondola.G002_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Header.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

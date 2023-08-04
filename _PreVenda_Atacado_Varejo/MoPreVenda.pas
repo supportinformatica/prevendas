@@ -32559,8 +32559,9 @@ end;
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
-  Mount_GondolaG002;
+  Mount_GondolaG003;
 end;
+
 
 procedure TFrmPrincipalPreVenda.Mount_GondolaG001;
 

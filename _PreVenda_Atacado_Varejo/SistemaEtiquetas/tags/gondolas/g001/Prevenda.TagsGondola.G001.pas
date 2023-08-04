@@ -22,6 +22,9 @@ uses
   Prevenda.Utils.FirstImpression,
   Prevenda.Utils.VerifyTagList,
 
+  Prevenda.TagsGondola.G001_Header,
+  Prevenda.TagsGondola.G001_Body,
+
   Prevenda.Helpers.CalculateGondolaG001DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG001UnityAxis,
   Prevenda.Helpers.CalculateGondolaG001BarcodeAxis,
@@ -55,6 +58,9 @@ var
 
   MainGrid: TVerifyTagList;
 
+  Header: TGondolaG001Header;
+  Body: TGondolaG001Body;
+
   G001Description: TGondolaG001DescriptionCalcs;
   G001Unit: TGondolaG001UnityCalcs;
   G001Barcode: TGondolaG001BarcodeCalcs;
@@ -80,6 +86,9 @@ begin
 
     Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
 
+    Header := TGondolaG001Header.Create;
+    Body   := TGondolaG001Body.Create;
+
     TagFileWriter := TTagFileWriter.Create;
 
     G001Description := TGondolaG001DescriptionCalcs.Create;
@@ -88,44 +97,17 @@ begin
     G001Price := TGondolaG001PriceCalcs.Create;
 
       try
-        TagFileWriter.WriteOnTagFile('I8,1,001');
-        TagFileWriter.WriteOnTagFile('');
+        Header.Mount('I8,1,001', 'Q240,12', 'q832', 'D11', 'O', 'JF', 'ZB');
 
-        TagFileWriter.WriteOnTagFile('Q240,12');
-        TagFileWriter.WriteOnTagFile('q832');
-        TagFileWriter.WriteOnTagFile('');
+        Body.MountDescription(G001Description.GetG001DescriptionXValue, G001Description.GetG001DescriptionYValue, Produto.descricao);
 
-        TagFileWriter.WriteOnTagFile('D11');
-        TagFileWriter.WriteOnTagFile('');
+        Body.MountUnity(G001Unit.GetG001UnityXValue, G001Unit.GetG001UnityYValue, Produto.unidade.unidade);
 
-        TagFileWriter.WriteOnTagFile('O');
-        TagFileWriter.WriteOnTagFile('');
+        Body.MountPriceSymbol(G001Price.GetG001PriceSymbolXValue, G001Price.GetG001PriceSymbolYValue, 'R$');
+        Body.MountPriceValue(G001Price.GetG001PriceValueXValue, G001Price.GetG001PriceValueYValue, Produto.vlPreco);
 
-        TagFileWriter.WriteOnTagFile('JF');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('WN');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('ZB');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('N');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('A'+G001Description.GetG001DescriptionXValue+','+G001Description.GetG001DescriptionYValue+',0,4,1,2,N,"' +Produto.descricao+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('A'+G001Unit.GetG001UnityXValue+','+G001Unit.GetG001UnityYValue+',0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('B'+G001Barcode.GetG001BarcodeSymbolXValue+','+G001Barcode.GetG001BarcodeSymbolYValue+',0,1,3,6,48,N,"'+Produto.codigoBarras+'"');
-        TagFileWriter.WriteOnTagFile('A'+G001Barcode.GetG001BarcodeValueXValue+','+G001Barcode.GetG001BarcodeValueYValue+',0,1,1,2,N,"'+Produto.codigoBarras+'"');
-        TagFileWriter.WriteOnTagFile('');
-
-        TagFileWriter.WriteOnTagFile('A'+G001Price.GetG001PriceSymbolXValue+','+G001Price.GetG001PriceSymbolYValue+',0,1,2,3,N,"R$"');
-        TagFileWriter.WriteOnTagFile('A'+G001Price.GetG001PriceValueXValue+','+G001Price.GetG001PriceValueYValue+',0,3,2,5,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
-        TagFileWriter.WriteOnTagFile('');
+        Body.MountBarcodeSymbol(G001Barcode.GetG001BarcodeSymbolXValue, G001Barcode.GetG001BarcodeSymbolYValue, Produto.codigoBarras);
+        Body.MountBarcodeValue(G001Barcode.GetG001BarcodeValueXValue, G001Barcode.GetG001BarcodeValueYValue, Produto.codigoBarras);
 
         TagFileWriter.WriteOnTagFile('P' +FormatFloat('0', StrToFloat(FrmPrincipalPreVenda.SgDados.Cells[2, Line])));
 
@@ -133,6 +115,9 @@ begin
 
         FreeAndNil(Produto);
         TagFileWriter.Free;
+
+        Header.Free;
+        Body.Free;
 
         G001Description.Free;
         G001Unit.Free;
