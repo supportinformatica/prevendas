@@ -20,7 +20,7 @@ uses
   ACBrBase, ACBrPosPrinter,
 
   Prevenda.TagsGondola.G001,
-  Prevenda.Tagsgondola.G002G003,
+  Prevenda.Tagsgondola.AtacadoVarejo001,
   Prevenda.Tagsgondola.G003,
 
   Prevenda.Utils.FirstImpression;
