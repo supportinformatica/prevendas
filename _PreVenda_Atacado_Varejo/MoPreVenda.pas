@@ -32594,20 +32594,20 @@ end;
 procedure TFrmPrincipalPreVenda.Mount_GondolaG002G003;
 
 var
-  G002G003: TGondolaG002G003;
+  GAtacadoVarejo001: TGondolaAtacadoVarejo001;
 
 begin
   isFirstImpression := true;
 
-  G002G003 := TGondolaG002G003.Create;
+  GAtacadoVarejo001 := TGondolaAtacadoVarejo001.Create;
 
   try
 
-    G002G003.PrintTagGondolaG002G003;
+    GAtacadoVarejo001.PrintTagGondolaAtacadoVarejo001;
 
   finally
 
-    G002G003.Free;
+    GAtacadoVarejo001.Free;
 
   end;
 end;

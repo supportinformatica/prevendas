@@ -20,7 +20,7 @@ implementation
 { TGondolaG00UnityCalcs }
 
 uses
-  Prevenda.Constants.GondolaG002G003;
+  Prevenda.Constants.GondolaAtacadoVarejo001;
 
 
 function TGondolaG003UnityCalcs.GetG003UnityXValue: string;

@@ -11,10 +11,10 @@ type
   TGondolaAtacadoVarejo001PriceAtacadoCalcs = class
     private
     public
-      function GetAtacadoVarejoPriceLabelXValue: string;
-      function GetAtacadoVarejoPricePriceLabelYValue: string;
-      function GetAtacadoVarejoPricePriceValueXValue: string;
-      function GetAtacadoVarejoPricePriceValueYValue: string;
+      function GetPriceLabelTextX: string;
+      function GetPriceLabelTextY: string;
+      function GetPriceValueDataX: string;
+      function GetPriceValueDataY: string;
   end;
 
 implementation
@@ -25,7 +25,7 @@ uses
   Prevenda.Constants.GondolaG003;
 
 
-function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetAtacadoVarejoPriceLabelXValue: string;
+function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetPriceLabelTextX: string;
 
 var
   Config: TConfigurationFileReader;
@@ -51,7 +51,7 @@ end;
 
 
 
-function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetAtacadoVarejoPricePriceLabelYValue: string;
+function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetPriceLabelTextY: string;
 
 var
   Config: TConfigurationFileReader;
@@ -77,7 +77,7 @@ end;
 
 
 
-function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetAtacadoVarejoPricePriceValueXValue: string;
+function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetPriceValueDataX: string;
 
 var
   Config: TConfigurationFileReader;
@@ -103,7 +103,7 @@ end;
 
 
 
-function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetAtacadoVarejoPricePriceValueYValue: string;
+function TGondolaAtacadoVarejo001PriceAtacadoCalcs.GetPriceValueDataY: string;
 
 var
   Config: TConfigurationFileReader;

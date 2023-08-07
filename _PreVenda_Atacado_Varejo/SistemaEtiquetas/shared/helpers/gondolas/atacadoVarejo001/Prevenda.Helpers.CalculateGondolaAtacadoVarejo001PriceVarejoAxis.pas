@@ -51,7 +51,7 @@ begin
 
   end;
 
-  result := (SINGLE_PRICE_LABEL_X_DEFAULT + ExternalOffset).ToString;
+  result := (SINGLE_VAREJO_PRICE_LABEL_X_DEFAULT + ExternalOffset).ToString;
 
 end;
 
@@ -77,7 +77,7 @@ begin
 
   end;
 
-  result := (SINGLE_PRICE_LABEL_Y_DEFAULT + ExternalOffset).ToString;
+  result := (SINGLE_VAREJO_PRICE_LABEL_Y_DEFAULT + ExternalOffset).ToString;
 
 end;
 
@@ -106,7 +106,7 @@ begin
 
   end;
 
-  result := (SINGLE_PRICE_VALUE_X_DEFAULT + ExternalOffset).ToString;
+  result := (SINGLE_VAREJO_PRICE_VALUE_X_DEFAULT + ExternalOffset).ToString;
 
 end;
 
@@ -132,7 +132,7 @@ begin
 
   end;
 
-  result := (SINGLE_PRICE_VALUE_Y_DEFAULT + ExternalOffset).ToString;
+  result := (SINGLE_VAREJO_PRICE_VALUE_Y_DEFAULT + ExternalOffset).ToString;
 
 end;
 
@@ -140,14 +140,50 @@ end;
 
 
 function TGondolaAtacadoVarejo001PriceVarejoCalcs.GetDoublePriceLabelTextX: string;
+var
+  Config: TConfigurationFileReader;
+
+  ExternalOffset: integer;
+
 begin
+  Config := TConfigurationFileReader.Create;
+
+  try
+
+    ExternalOffset := Config.ReadOffsetXFromConfigurationFile;
+
+  finally
+
+    Config.Free;
+
+  end;
+
+  result := (DOUBLE_VAREJO_PRICE_LABEL_X_DEFAULT + ExternalOffset).ToString;
 
 end;
 
 
 
 function TGondolaAtacadoVarejo001PriceVarejoCalcs.GetDoublePriceLabelTextY: string;
+var
+  Config: TConfigurationFileReader;
+
+  ExternalOffset: integer;
+
 begin
+  Config := TConfigurationFileReader.Create;
+
+  try
+
+    ExternalOffset := Config.ReadOffsetXFromConfigurationFile;
+
+  finally
+
+    Config.Free;
+
+  end;
+
+  result := (DOUBLE_VAREJO_PRICE_LABEL_Y_DEFAULT + ExternalOffset).ToString;
 
 end;
 
@@ -155,14 +191,51 @@ end;
 
 
 function TGondolaAtacadoVarejo001PriceVarejoCalcs.GetDoublePriceValueDataX: string;
+var
+  Config: TConfigurationFileReader;
+
+  ExternalOffset: integer;
+
 begin
+  Config := TConfigurationFileReader.Create;
+
+  try
+
+    ExternalOffset := Config.ReadOffsetXFromConfigurationFile;
+
+  finally
+
+    Config.Free;
+
+  end;
+
+  result := (DOUBLE_VAREJO_PRICE_VALUE_X_DEFAULT + ExternalOffset).ToString;
 
 end;
 
 
 
 function TGondolaAtacadoVarejo001PriceVarejoCalcs.GetDoublePriceValueDataY: string;
+
+var
+  Config: TConfigurationFileReader;
+
+  ExternalOffset: integer;
+
 begin
+  Config := TConfigurationFileReader.Create;
+
+  try
+
+    ExternalOffset := Config.ReadOffsetXFromConfigurationFile;
+
+  finally
+
+    Config.Free;
+
+  end;
+
+  result := (DOUBLE_VAREJO_PRICE_VALUE_Y_DEFAULT + ExternalOffset).ToString;
 
 end;
 

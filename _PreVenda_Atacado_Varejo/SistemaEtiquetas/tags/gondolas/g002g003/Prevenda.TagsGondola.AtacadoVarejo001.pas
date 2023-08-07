@@ -19,7 +19,8 @@ uses
   Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis,
   Prevenda.Helpers.CalculateGondolaG002G003UnityAxis,
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis,
-  Prevenda.Helpers.CalculateGondolaG002G003PriceAxis,
+  Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis,
+
 
   Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis,
   Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis;
@@ -29,6 +30,10 @@ type
     private
       ExecutePrint: TExecutePrint;
 
+      GondolaDescription: TGondolaG002G003DescriptionCalcs;
+      GondolaUnity: TGondolaG002G003UnityCalcs;
+      GondolaPriceVarejo: TGondolaAtacadoVarejo001PriceVarejoCalcs;
+      GondolaPriceAtacado: TGondolaAtacadoVarejo001PriceAtacadoCalcs;
     public
       procedure PrintTagGondolaAtacadoVarejo001;
   end;
@@ -40,7 +45,7 @@ implementation
 uses
   MoPreVenda,
 
-  Prevenda.Constants.GondolaG002G003;
+  Prevenda.Constants.GondolaAtacadoVarejo001;
 
 procedure TGondolaAtacadoVarejo001.PrintTagGondolaAtacadoVarejo001;
 
@@ -56,12 +61,11 @@ var
   BodyAtacado: TGondolaG003Body;
   Footer: TGondolaG002G003Footer;
 
-  AtacadoVarejo001Description: TGondolaG002G003DescriptionCalcs;
-  AtacadoVarejo001Unit: TGondolaG002G003UnityCalcs;
-  AtacadoVarejo001Price: TGondolaG002G003PriceCalcs;
-
-  G003PriceVarejo: TGondolaG003PriceVarejoCalcs;
-  G003PriceAtacado: TGondolaG003PriceAtacadoCalcs;
+//  AtacadoVarejo001Description: TGondolaG002G003DescriptionCalcs;
+//  AtacadoVarejo001Unit: TGondolaG002G003UnityCalcs;
+//
+//  G003PriceVarejo: TGondolaG003PriceVarejoCalcs;
+//  G003PriceAtacado: TGondolaG003PriceAtacadoCalcs;
 
   condicao: boolean;
 
@@ -90,32 +94,33 @@ begin
     BodyAtacado := TGondolaG003Body.Create;
     Footer := TGondolaG002G003Footer.Create;
 
-    AtacadoVarejo001Description := TGondolaG002G003DescriptionCalcs.Create;
-    AtacadoVarejo001Unit := TGondolaG002G003UnityCalcs.Create;
-    AtacadoVarejo001Price := TGondolaG002G003PriceCalcs.Create;
+    GondolaDescription := TGondolaG002G003DescriptionCalcs.Create;
+    GondolaUnity := TGondolaG002G003UnityCalcs.Create;
+    GondolaPriceVarejo := TGondolaAtacadoVarejo001PriceVarejoCalcs.Create;
+    GondolaPriceAtacado := TGondolaAtacadoVarejo001PriceAtacadoCalcs.Create;
 
     condicao := true;
 
     try
       Header.Mount('I8,1,001', 'Q240,25', 'q832', 'D13', 'O', 'JF', 'ZB');
 
-      Body.MountDescription(AtacadoVarejo001Description.GetG002G003DescriptionXValue, AtacadoVarejo001Description.GetG002G003DescriptionYValue, Produto.descricao);
+      Body.MountDescription(GondolaDescription.GetG002G003DescriptionXValue, GondolaDescription.GetG002G003DescriptionYValue, Produto.descricao);
 
-      Body.MountUnity(AtacadoVarejo001Unit.GetG002G003UnityXValue, AtacadoVarejo001Unit.GetG002G003UnityYValue, Produto.unidade.unidade);
+      Body.MountUnity(GondolaUnity.GetG002G003UnityXValue, GondolaUnity.GetG002G003UnityYValue, Produto.unidade.unidade);
 
 
       if (condicao = false) then begin
 
-        Body.MountPriceLabel(AtacadoVarejo001Price.GetG002G003PriceLabelXValue, AtacadoVarejo001Price.GetG002G003PriceLabelYValue, 'Pr. Varejo');
-        Body.MountPriceValue(AtacadoVarejo001Price.GetG002G003PriceValueXValue, AtacadoVarejo001Price.GetG002G003PriceValueYValue, Produto.vlPreco);
+        Body.MountPriceLabel(GondolaPriceVarejo.GetSinglePriceLabelTextX, GondolaPriceVarejo.GetSinglePriceLabelTextY, 'Pr. Varejo');
+        Body.MountPriceValue(GondolaPriceVarejo.GetSinglePriceValueDataX, GondolaPriceVarejo.GetSinglePriceValueDataY, Produto.vlPreco);
 
       end else begin
 
-        Body.MountPriceLabel(G003PriceVarejo.GetG003PriceLabelXValue, G003PriceVarejo.GetG003PriceLabelYValue, 'Pr. Varejo');
-        Body.MountPriceValue(G003PriceVarejo.GetG003PriceValueXValue, G003PriceVarejo.GetG003PriceValueYValue, Produto.vlPreco);
+        Body.MountPriceLabel(GondolaPriceVarejo.GetDoublePriceLabelTextX, GondolaPriceVarejo.GetDoublePriceLabelTextY, 'Pr. Varejo');
+        Body.MountPriceValue(GondolaPriceVarejo.GetDoublePriceValueDataX, GondolaPriceVarejo.GetDoublePriceValueDataY, Produto.vlPreco);
 
-        Body.MountPriceLabel(G003PriceAtacado.GetG003PriceLabelXValue, G003PriceAtacado.GetG003PriceLabelYValue, 'Pr. Atacado');
-        Body.MountPriceValue(G003PriceAtacado.GetG003PriceValueXValue, G003PriceAtacado.GetG003PriceValueYValue, Produto.vlPreco);
+        Body.MountPriceLabel(GondolaPriceAtacado.GetPriceLabelTextX, GondolaPriceAtacado.GetPriceLabelTextY, 'Pr. Atacado');
+        Body.MountPriceValue(GondolaPriceAtacado.GetPriceValueDataX, GondolaPriceAtacado.GetPriceValueDataY, Produto.vlAtacado);
 
       end;
 
@@ -130,9 +135,10 @@ begin
       BodyAtacado.Free;
       Footer.Free;
 
-      AtacadoVarejo001Description.Free;
-      AtacadoVarejo001Unit.Free;
-      AtacadoVarejo001Price.Free;
+      GondolaDescription.Free;
+      GondolaUnity.Free;
+      GondolaPriceVarejo.Free;
+      GondolaPriceAtacado.Free;
 
     end;
 
