@@ -4,6 +4,9 @@ interface
 
 uses
   System.SysUtils,
+
+  System.IniFiles,
+
   ShellApi,
 
   Vcl.Dialogs,
@@ -11,13 +14,27 @@ uses
   Produto,
   NEGProduto,
 
-  Prevenda.Entities.ProductOnPriting;
+  Prevenda.Constants.App,
+
+  Prevenda.Utils.ExecutePrint,
+  Prevenda.Utils.VerifyTagList,
+
+  Prevenda.TagsGondola.G001_Header,
+  Prevenda.TagsGondola.G001_Body,
+  Prevenda.TagsGondola.G001_Footer,
+
+  Prevenda.Helpers.CalculateGondolaG001DescriptionAxis,
+  Prevenda.Helpers.CalculateGondolaG001UnityAxis,
+  Prevenda.Helpers.CalculateGondolaG001BarcodeAxis,
+  Prevenda.Helpers.CalculateGondolaG001PriceAxis;
 
 type
   TGondola001 = class
     private
+      ExecutePrint: TExecutePrint;
+
     public
-      procedure PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
+      procedure PrintTagGondolaG001;
   end;
 
 implementation
@@ -25,74 +42,105 @@ implementation
 { TGondola001 }
 
 uses
-  MoPreVenda;
+  MoPreVenda,
 
-procedure TGondola001.PrintTagGondolaG001(RequiredProductsToPrint: TRequiredProductsToPrint; NumberOfLinesOnGrid: integer);
+  Prevenda.Constants.GondolaG001;
+
+procedure TGondola001.PrintTagGondolaG001;
 
 var
-  MainPrevenda: TFrmPrincipalPreVenda;
-
-  LogicalTagFile: TextFile;
-  I: integer;
+  Line: integer;
 
   Produto: TDomProduto;
 
+  MainGrid: TVerifyTagList;
+
+  Header: TGondolaG001Header;
+  Body: TGondolaG001Body;
+  Footer: TGondolaG001Footer;
+
+  G001Description: TGondolaG001DescriptionCalcs;
+  G001Unit: TGondolaG001UnityCalcs;
+  G001Barcode: TGondolaG001BarcodeCalcs;
+  G001Price: TGondolaG001PriceCalcs;
+
 begin
-  assignfile(LogicalTagFile, GetCurrentDir+ '\myetiqueta.txt');
-  rewrite(LogicalTagFile);
 
-  if not FileExists('Print2.bat') then
-    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  MainGrid := TVerifyTagList.Create;
 
-  for I := 1 to NumberOfLinesOnGrid - 1 do begin
-    Produto := TNEGProduto.buscarProduto(StrToInt(RequiredProductsToPrint[I].code));
+  try
 
-    try
+    MainGrid.VerifyTagList();
 
-      writeln(LogicalTagFile, 'I8,1,001');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'Q240,12');
-      writeln(LogicalTagFile, 'q832');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'D11');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'O');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'JF');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'WN');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'ZB');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'N');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A16,24,0,4,1,2,N,"' +Produto.descricao+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A16,76,0,4,1,2,N,"' +Produto.unidade.unidade+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'B24,130,0,1,3,6,48,N,"'+Produto.codigoBarras+'"');
-      writeln(LogicalTagFile, 'A120,184,0,1,1,2,N,"'+Produto.codigoBarras+'"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'A450,144,0,1,2,3,N,"R$"');
-      writeln(LogicalTagFile, 'A498,96,0,3,2,5,N,"' +FormatFloat('0.00', Produto.vlPreco)+ '"');
-      writeln(LogicalTagFile, '');
-      writeln(LogicalTagFile, 'P' +FormatFloat('0', StrToFloat(RequiredProductsToPrint[I].quantity)));
+  finally
 
-    finally
-      FreeAndNil(Produto);
-    end;
+    MainGrid.Free;
 
   end;
 
-  close(LogicalTagFile);
 
-  ShellExecute(0, 'open', PChar(GetCurrentDir+ '\print2.bat'), '', PChar(GetCurrentDir), 1);
+
+  for Line := 1 to FrmPrincipalPreVenda.SgDados.RowCount - 1 do begin
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(FrmPrincipalPreVenda.SgDados.Cells[0, Line]));
+
+    Header := TGondolaG001Header.Create;
+    Body   := TGondolaG001Body.Create;
+    Footer := TGondolaG001Footer.Create;
+
+    G001Description := TGondolaG001DescriptionCalcs.Create;
+    G001Unit := TGondolaG001UnityCalcs.Create;
+    G001Barcode := TGondolaG001BarcodeCalcs.Create;
+    G001Price := TGondolaG001PriceCalcs.Create;
+
+      try
+        Header.Mount('I8,1,001', 'Q240,12', 'q832', 'D11', 'O', 'JF', 'ZB');
+
+        Body.MountDescription(G001Description.GetG001DescriptionXValue, G001Description.GetG001DescriptionYValue, Produto.descricao);
+
+        Body.MountUnity(G001Unit.GetG001UnityXValue, G001Unit.GetG001UnityYValue, Produto.unidade.unidade);
+
+        Body.MountPriceSymbol(G001Price.GetG001PriceSymbolXValue, G001Price.GetG001PriceSymbolYValue, 'R$');
+        Body.MountPriceValue(G001Price.GetG001PriceValueXValue, G001Price.GetG001PriceValueYValue, Produto.vlPreco);
+
+        Body.MountBarcodeSymbol(G001Barcode.GetG001BarcodeSymbolXValue, G001Barcode.GetG001BarcodeSymbolYValue, Produto.codigoBarras);
+        Body.MountBarcodeValue(G001Barcode.GetG001BarcodeValueXValue, G001Barcode.GetG001BarcodeValueYValue, Produto.codigoBarras);
+
+        Footer.Mount(FrmPrincipalPreVenda.SgDados.Cells[2, Line]);
+
+      finally
+
+        FreeAndNil(Produto);
+
+        Header.Free;
+        Body.Free;
+        Footer.Free;
+
+        G001Description.Free;
+        G001Unit.Free;
+        G001Barcode.Free;
+        G001Price.Free;
+
+      end;
+
+  end;
+
+
+  ExecutePrint := TExecutePrint.Create;
+
+  try
+
+    ExecutePrint.Start();
+
+  finally
+
+    ExecutePrint.Free;
+
+  end;
 
   FrmPrincipalPreVenda.Limpar_Tela;
 
   FrmPrincipalPreVenda.RgOpcoes.ItemIndex := 0;
-
-  MessageDlg('Impressão ok no método separado!', mtInformation, [mbOK], 0);
 
 end;
 

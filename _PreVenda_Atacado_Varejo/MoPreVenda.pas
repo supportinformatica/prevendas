@@ -19,8 +19,12 @@ uses
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
   ACBrBase, ACBrPosPrinter,
 
-  Prevenda.Entities.ProductOnPriting,
-  Prevenda.TagsGondola.G001;
+  Prevenda.TagsGondola.G001,
+  Prevenda.Tagsgondola.AtacadoVarejo001,
+  Prevenda.Tagsgondola.G003,
+
+  Prevenda.Utils.FirstImpression;
+
 
 type
   VetorPermissao = Array [1 .. 900, 1 .. 7] of String;
@@ -489,6 +493,11 @@ type
     function PegaNomeFabricante(cdProduto: Integer): string;
     function isProdutoPromocao(cdProduto: Integer): Boolean;
     Procedure SalvaEtiquetas;
+
+    Procedure Mount_GondolaG001;
+    Procedure Mount_GondolaAtacadoVarejo001;
+    Procedure Mount_GondolaG003;
+
     Procedure ImprimeEtiquetasBijouArts;
     procedure ImprimeEtiquetasBijouArtsMaior;
     procedure ImprimeEtiquetasLindaStore;
@@ -667,7 +676,9 @@ type
     procedure ImprimeEtiquetas_Zavixe(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_PanificacaoMerceariaCompreBem2; //Argox OS 214 Plus
     procedure ImprimeEtiquetas_CasaDoRosario_3_Colunas; //Elsin L42 Pro Full
-    procedure ImprimeEtiquetas_TesteTags;//Elgin L42 Pro
+
+    procedure MountFlag_Cliente_De_Teste; // Elgins Printers
+
     Procedure AjustaForm;
     procedure RodaScripts;
     function ExisteDescontoFornecedorInvalido: Boolean;
@@ -11765,8 +11776,10 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'ROSARYHOUSE' then
     ImprimeEtiquetas_CasaDoRosario_3_Colunas
 
-  else if UpperCase(vFlagEtiqueta) = 'TESTETAG' then
-    ImprimeEtiquetas_TesteTags;
+
+  else if UpperCase(vFlagEtiqueta) = 'CLIENTEDETESTE' then
+    MountFlag_Cliente_De_Teste;
+
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetasBijouArtsMaior;
@@ -32547,50 +32560,80 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_TesteTags;
-var
-  L: Integer;
 
-  RequiredProducts: TRequiredProductsToPrint;
-  Gondola: TGondola001;
+
+procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
-  Gondola := TGondola001.Create;
-
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
-    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
-      mtWarning, [mbOK], 0);
-
-    EdtConsulta.Setfocus;
-
-    exit;
-  end;
-
-  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
-    SalvaEtiquetas;
+  Mount_GondolaAtacadoVarejo001;
+end;
 
 
-  SetLength(RequiredProducts, SgDados.RowCount);
+procedure TFrmPrincipalPreVenda.Mount_GondolaG001;
 
-  for L := 1 to SgDados.RowCount - 1 do begin
-    RequiredProducts[L] := TRequiredProductToPrint.Create;
-    RequiredProducts[L].code := SgDados.Cells[0,L];
-    RequiredProducts[L].quantity := SgDados.Cells[2,L];
-  end;
+var
+  G001: TGondola001;
 
+begin
+  isFirstImpression := true;
+
+  G001 := TGondola001.Create;
 
   try
 
-    Gondola.PrintTagGondolaG001(RequiredProducts, SgDados.RowCount);
+    G001.PrintTagGondolaG001;
 
   finally
-    Gondola.Free;
+
+    G001.Free;
+
   end;
-
-  //Application.OnMessage := FormPrincipal.ProcessaMsg;
-
 end;
+
+
+procedure TFrmPrincipalPreVenda.Mount_GondolaAtacadoVarejo001;
+
+var
+  Gondola: TGondolaAtacadoVarejo001;
+
+begin
+  isFirstImpression := true;
+
+  Gondola := TGondolaAtacadoVarejo001.Create;
+
+  try
+
+    Gondola.PrintTagGondolaAtacadoVarejo001;
+
+  finally
+
+    Gondola.Free;
+
+  end;
+end;
+
+
+procedure TFrmPrincipalPreVenda.Mount_GondolaG003;
+
+var
+  G003: TGondola003;
+
+begin
+  isFirstImpression := true;
+
+  G003 := TGondola003.Create;
+
+  try
+
+    G003.PrintTagGondolaG003;
+
+  finally
+
+    G003.Free;
+
+  end;
+end;
+
 
 {
   ###############################################################
