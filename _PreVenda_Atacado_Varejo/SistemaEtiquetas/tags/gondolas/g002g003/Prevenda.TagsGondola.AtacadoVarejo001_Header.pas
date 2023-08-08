@@ -1,4 +1,4 @@
-unit Prevenda.TagsGondola.G002G003_Header;
+unit Prevenda.TagsGondola.AtacadoVarejo001_Header;
 
 interface
 
@@ -6,7 +6,7 @@ uses
   Prevenda.Utils.TagFileWriter;
 
 type
-  TGondolaG002G003Header = class
+  TGondolaAtacadoVarejo001Header = class
     private
       TagFileWriter: TTagFileWriter;
 
@@ -17,9 +17,9 @@ type
 
 implementation
 
-{ TGondolaG002G003Header }
+{ TGondolaAtacadoVarejo001Header }
 
-procedure TGondolaG002G003Header.Mount(CodePage, TagHeight, TagWidth, Density,
+procedure TGondolaAtacadoVarejo001Header.Mount(CodePage, TagHeight, TagWidth, Density,
   PrintMode, PaperOutputMode, PrintOrientation: string);
 
 begin

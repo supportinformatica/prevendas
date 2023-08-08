@@ -343,12 +343,12 @@
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas"/>
         <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Body.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Footer.pas"/>
-        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Header.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Body.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Header.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001DescriptionAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis.pas"/>
-        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaG002G003UnityAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

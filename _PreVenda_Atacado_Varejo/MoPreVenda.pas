@@ -495,7 +495,7 @@ type
     Procedure SalvaEtiquetas;
 
     Procedure Mount_GondolaG001;
-    Procedure Mount_GondolaG002G003;
+    Procedure Mount_GondolaAtacadoVarejo001;
     Procedure Mount_GondolaG003;
 
     Procedure ImprimeEtiquetasBijouArts;
@@ -32565,7 +32565,7 @@ end;
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
-  Mount_GondolaG002G003;
+  Mount_GondolaAtacadoVarejo001;
 end;
 
 
@@ -32591,23 +32591,23 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.Mount_GondolaG002G003;
+procedure TFrmPrincipalPreVenda.Mount_GondolaAtacadoVarejo001;
 
 var
-  GAtacadoVarejo001: TGondolaAtacadoVarejo001;
+  Gondola: TGondolaAtacadoVarejo001;
 
 begin
   isFirstImpression := true;
 
-  GAtacadoVarejo001 := TGondolaAtacadoVarejo001.Create;
+  Gondola := TGondolaAtacadoVarejo001.Create;
 
   try
 
-    GAtacadoVarejo001.PrintTagGondolaAtacadoVarejo001;
+    Gondola.PrintTagGondolaAtacadoVarejo001;
 
   finally
 
-    GAtacadoVarejo001.Free;
+    Gondola.Free;
 
   end;
 end;

@@ -107,12 +107,12 @@ uses
   Prevenda.TagsGondola.G001_Body in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas',
   Prevenda.TagsGondola.G001_Footer in 'SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas',
   Prevenda.TagsGondola.AtacadoVarejo001 in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001.pas',
-  Prevenda.TagsGondola.G002G003_Body in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Body.pas',
-  Prevenda.TagsGondola.G002G003_Footer in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Footer.pas',
-  Prevenda.TagsGondola.G002G003_Header in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.G002G003_Header.pas',
-  Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis.pas',
+  Prevenda.TagsGondola.AtacadoVarejo001_Body in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Body.pas',
+  Prevenda.TagsGondola.AtacadoVarejo001_Footer in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Footer.pas',
+  Prevenda.TagsGondola.AtacadoVarejo001_Header in 'SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Header.pas',
+  Prevenda.Helpers.CalculateGondolaAtacadoVarejo001DescriptionAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001DescriptionAxis.pas',
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis.pas',
-  Prevenda.Helpers.CalculateGondolaG002G003UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaG002G003UnityAxis.pas',
+  Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas';
 
 {$R *.RES}

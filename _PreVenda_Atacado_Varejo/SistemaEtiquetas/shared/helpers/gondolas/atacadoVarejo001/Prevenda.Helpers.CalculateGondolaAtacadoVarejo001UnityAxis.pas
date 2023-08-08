@@ -1,4 +1,4 @@
-unit Prevenda.Helpers.CalculateGondolaG002G003DescriptionAxis;
+unit Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis;
 
 interface
 
@@ -8,23 +8,21 @@ uses
   Prevenda.Utils.ConfigurationFileReader;
 
 type
-  TGondolaG002G003DescriptionCalcs = class
+  TGondolaAtacadoVarejo001UnityCalcs = class
     private
     public
-      function GetG002G003DescriptionXValue: string;
-      function GetG002G003DescriptionYValue: string;
+      function GetUnityValueDataX: string;
+      function GetUnityValueDataY: string;
   end;
 
 implementation
 
-{ TGondolaG002DescriptionCalcs }
-
+{ TGondolaAtacadoVarejo001UnityCalcs }
 
 uses
   Prevenda.Constants.GondolaAtacadoVarejo001;
 
-
-function TGondolaG002G003DescriptionCalcs.GetG002G003DescriptionXValue: string;
+function TGondolaAtacadoVarejo001UnityCalcs.GetUnityValueDataX: string;
 
 var
   Config: TConfigurationFileReader;
@@ -44,13 +42,13 @@ begin
 
   end;
 
-  result := (DESCRIPTION_X_DEFAULT + ExternalOffset).ToString;
+  result := (UNITY_X_DEFAULT + ExternalOffset).ToString;
 
 end;
 
 
 
-function TGondolaG002G003DescriptionCalcs.GetG002G003DescriptionYValue: string;
+function TGondolaAtacadoVarejo001UnityCalcs.GetUnityValueDataY: string;
 
 var
   Config: TConfigurationFileReader;
@@ -70,7 +68,8 @@ begin
 
   end;
 
-  result := (DESCRIPTION_Y_DEFAULT + ExternalOffset).ToString;
+  result := (UNITY_Y_DEFAULT + ExternalOffset).ToString;
+
 end;
 
 end.

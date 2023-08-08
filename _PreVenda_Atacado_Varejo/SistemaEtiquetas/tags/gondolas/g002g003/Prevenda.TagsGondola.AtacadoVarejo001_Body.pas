@@ -1,4 +1,4 @@
-unit Prevenda.TagsGondola.G002G003_Body;
+unit Prevenda.TagsGondola.AtacadoVarejo001_Body;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   Prevenda.Utils.TagFileWriter;
 
 type
-  TGondolaG002G003Body = class
+  TGondolaAtacadoVarejo001Body = class
     private
       TagFileWriter: TTagFileWriter;
 
@@ -23,9 +23,9 @@ type
 
 implementation
 
-{ TGondolaG002G003Body }
+{ TGondolaAtacadoVarejo001Body }
 
-procedure TGondolaG002G003Body.MountDescription(DescriptionAxisX, DescriptionAxisY,
+procedure TGondolaAtacadoVarejo001Body.MountDescription(DescriptionAxisX, DescriptionAxisY,
   DescriptionItem: string);
 
 begin
@@ -45,7 +45,7 @@ end;
 
 
 
-procedure TGondolaG002G003Body.MountUnity(UnityAxisX, UnityAxisY,
+procedure TGondolaAtacadoVarejo001Body.MountUnity(UnityAxisX, UnityAxisY,
   UnityItem: string);
 
 begin
@@ -66,7 +66,7 @@ end;
 
 
 
-procedure TGondolaG002G003Body.MountPriceLabel(PriceLabelAxisX, PriceLabelAxisY,
+procedure TGondolaAtacadoVarejo001Body.MountPriceLabel(PriceLabelAxisX, PriceLabelAxisY,
   PriceLabelText: string);
 
 begin
@@ -86,7 +86,7 @@ end;
 
 
 
-procedure TGondolaG002G003Body.MountPriceValue(PriceValueAxisX,
+procedure TGondolaAtacadoVarejo001Body.MountPriceValue(PriceValueAxisX,
   PriceValueAxisY: string; PriceValueItem: real);
 
 begin
