@@ -4,8 +4,8 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Atualizar dados do item'
-  ClientHeight = 199
-  ClientWidth = 350
+  ClientHeight = 336
+  ClientWidth = 332
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,9 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
   object lblProduto: TLabel
     Left = 24
     Top = 8
-    Width = 91
+    Width = 262
     Height = 19
+    AutoSize = False
     Caption = '<Descricao>'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -44,11 +45,11 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 200
-    Top = 50
-    Width = 32
+    Left = 26
+    Top = 106
+    Width = 80
     Height = 16
-    Caption = 'Pre'#231'o'
+    Caption = 'Pre'#231'o Unit'#225'rio'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -57,11 +58,50 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
     ParentFont = False
   end
   object Label1: TLabel
-    Left = 23
-    Top = 106
+    Left = 167
+    Top = 50
     Width = 65
     Height = 16
     Caption = 'Quantidade'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 26
+    Top = 165
+    Width = 74
+    Height = 16
+    Caption = 'Desconto(%)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 167
+    Top = 165
+    Width = 111
+    Height = 16
+    Caption = 'Pre'#231'o Unit'#225'rio Final'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 28
+    Top = 229
+    Width = 47
+    Height = 16
+    Caption = 'Subtotal'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -77,38 +117,70 @@ object frmAlterProdutoPosAdded: TfrmAlterProdutoPosAdded
     MaxLength = 6
     TabOrder = 0
   end
-  object edtPreco: TEdit
-    Left = 200
+  object edtPrecoBruto: TEdit
+    Left = 24
+    Top = 128
+    Width = 121
+    Height = 21
+    TabOrder = 2
+    OnChange = edtPrecoBrutoChange
+    OnKeyPress = edtPrecoBrutoKeyPress
+  end
+  object btnAtualizar: TButton
+    Left = 189
+    Top = 303
+    Width = 75
+    Height = 25
+    Caption = 'Atualizar'
+    TabOrder = 6
+    OnClick = btnAtualizarClick
+  end
+  object btnReset: TButton
+    Left = 84
+    Top = 303
+    Width = 75
+    Height = 25
+    Caption = 'Resetar'
+    TabOrder = 7
+    OnClick = btnResetClick
+  end
+  object edtQuantidade: TEdit
+    Left = 165
     Top = 72
     Width = 121
     Height = 21
     TabOrder = 1
-    OnKeyPress = edtPrecoKeyPress
+    OnChange = edtQuantidadeChange
+    OnKeyPress = edtPrecoBrutoKeyPress
   end
-  object btnAtualizar: TButton
-    Left = 246
-    Top = 166
-    Width = 75
-    Height = 25
-    Caption = 'Atualizar'
-    TabOrder = 2
-    OnClick = btnAtualizarClick
-  end
-  object btnReset: TButton
-    Left = 165
-    Top = 166
-    Width = 75
-    Height = 25
-    Caption = 'Resetar'
-    TabOrder = 3
-    OnClick = btnResetClick
-  end
-  object edtQuantidade: TEdit
-    Left = 23
-    Top = 128
+  object edtDesconto: TEdit
+    Left = 24
+    Top = 187
     Width = 121
     Height = 21
+    TabOrder = 3
+    Text = '0,00'
+    OnChange = edtDescontoChange
+    OnKeyPress = edtDescontoKeyPress
+  end
+  object edtPrecoLiquido: TEdit
+    Left = 165
+    Top = 187
+    Width = 121
+    Height = 21
+    Enabled = False
+    ReadOnly = True
     TabOrder = 4
-    OnKeyPress = edtPrecoKeyPress
+    OnKeyPress = edtPrecoLiquidoKeyPress
+  end
+  object edtSubtotal: TEdit
+    Left = 26
+    Top = 251
+    Width = 121
+    Height = 21
+    Enabled = False
+    ReadOnly = True
+    TabOrder = 5
+    OnKeyPress = edtPrecoBrutoKeyPress
   end
 end

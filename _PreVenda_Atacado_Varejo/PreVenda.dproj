@@ -87,11 +87,11 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <DCC_Define>PREVENDA;$(DCC_Define)</DCC_Define>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
-        <VerInfo_Keys>CompanyName=;FileVersion=2.1.21.0;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=2.1.26.0;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <VerInfo_Release>21</VerInfo_Release>
+        <VerInfo_Release>26</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -312,11 +312,44 @@
             <Form>FrmDataProduzidoValidade</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="etiquetas\especiais\Prevenda.EtiquetasEspeciais.DmCasaDecor.pas"/>
         <DCCReference Include="AlterProdutoPosAdded.pas">
             <Form>frmAlterProdutoPosAdded</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.App.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\messages\Prevenda.Messages.SuccessOrError.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.ExecutePrint.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.TagFileWriter.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.FirstImpression.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.VerifyTagList.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\utils\Prevenda.Utils.ConfigurationFileReader.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG001.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001UnityAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001BarcodeAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g001\Prevenda.Helpers.CalculateGondolaG001PriceAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaAtacadoVarejo001.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\constants\Prevenda.Constants.GondolaG003.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceVarejoAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003PriceAtacadoAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\g003\Prevenda.Helpers.CalculateGondolaG003UnityAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Header.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Body.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g003\Prevenda.TagsGondola.G003_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Header.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Body.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g001\Prevenda.TagsGondola.G001_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Body.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Footer.pas"/>
+        <DCCReference Include="SistemaEtiquetas\tags\gondolas\g002g003\Prevenda.TagsGondola.AtacadoVarejo001_Header.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001DescriptionAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas"/>
+        <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

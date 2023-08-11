@@ -17,18 +17,15 @@ object FrmImagemProduto: TFrmImagemProduto
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
-    Left = 1
-    Top = 1
-    Width = 1000
-    Height = 1000
-    Margins.Left = 0
-    Margins.Top = 0
-    Margins.Right = 0
-    Margins.Bottom = 0
-    Center = True
-    ParentShowHint = False
-    Proportional = True
-    ShowHint = True
+    Left = 0
+    Top = 0
+    Width = 1034
+    Height = 821
+    Align = alClient
     Stretch = True
+    ExplicitLeft = 272
+    ExplicitTop = 168
+    ExplicitWidth = 105
+    ExplicitHeight = 105
   end
 end
