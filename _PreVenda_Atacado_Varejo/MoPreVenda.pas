@@ -5626,6 +5626,13 @@ begin
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
     FrmRelOrcamentos.RLLabel1.Caption    := 'C. Barras';
   end;
+  if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
+  begin
+    FrmRelOrcamentos.RLLabel10.Enabled := False;
+    FrmRelOrcamentos.RLLabel10.Visible := False;
+    FrmRelOrcamentos.RLLabel11.Enabled := False;
+    FrmRelOrcamentos.RLLabel11.Visible := False;
+  end;
   if (UpperCase(vEmpresa) = 'ATIVA') then
   begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
@@ -17221,16 +17228,26 @@ begin
     begin
       Connection := DModulo.Conexao;
       sql.Text :=
-        'Select NRLOTE lote,                             '+
-        'CONVERT(VARCHAR(10),VALIDADE,103) validade,     '+
-        'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,'+
-        'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao '+
-        'FROM ITELOTE WITH (NOLOCK)                      '+
-        'Where (cdproduto=:CODIGO)                       '+
-        'Group by ITELOTE.nrLote, ITELOTE.validade,      '+
-        'ITELOTE.dtFabricacao                            '+
-        'having (SUM(nrqtd) > 0)                         '+
-        'order by 2 DESC                                 ';
+      'Select lote, CONVERT(VARCHAR(10),VALIDADE,103) validade,'+
+      'nrqtd, Fabricacao                                       '+
+      'From (Select NRLOTE lote, validade,                     '+
+      'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,        '+
+      'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao        '+
+      'FROM ITELOTE WITH (NOLOCK)                              '+
+      'Where cdproduto = :CODIGO                               '+
+      'Group by nrLote, validade, dtFabricacao                 '+
+      'Having (SUM(nrqtd) > 0) ) Selecao                       '+
+      'Order by cast(validade as date) ASC                     ';
+//        'Select NRLOTE lote,                             '+
+//        'CONVERT(VARCHAR(10),VALIDADE,103) validade,     '+
+//        'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,'+
+//        'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao '+
+//        'FROM ITELOTE WITH (NOLOCK)                      '+
+//        'Where (cdproduto=:CODIGO)                       '+
+//        'Group by ITELOTE.nrLote, ITELOTE.validade,      '+
+//        'ITELOTE.dtFabricacao                            '+
+//        'order by 2 ASC '+
+//        'having (SUM(nrqtd) > 0)                         ';
       Parameters.ParamByName('CODIGO').Value := cdProduto;
     end;
     MontaComboListComposto(query, CbLote, 3);
