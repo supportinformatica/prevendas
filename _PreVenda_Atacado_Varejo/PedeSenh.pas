@@ -396,9 +396,28 @@ begin
     // variaveis de configuracao de ambiente
     With FrmPedeSenha.ADOQryConfigurar do
     begin
-      Sql.Text := 'Select Cast(isnull(nrOutrosImpostos,0) as decimal(8,2)) as AliquotaSimples,* From Configuracao WITH (NOLOCK)';
+      Sql.Text := 'Select Cast(isnull(nrOutrosImpostos,0) as decimal(8,2)) as AliquotaSimples, '+
+      'ISNULL(nrPgCartaoDebito, 0) Deb, ISNULL(nrPgCartao1Vez,0) umV, ISNULL(nrPgCartao2Vezes,0) doisV, ISNULL(nrPgCartao3Vezes,0) tresV, '+
+      'ISNULL(nrPgCartao4Vezes,0) quatroV, ISNULL(nrPgCartao5Vezes,0) cincoV, ISNULL(nrPgCartao6Vezes,0) seisV, ISNULL(nrPgCartao7Vezes,0) seteV,'+
+      'ISNULL(nrPgCartao8Vezes,0) oitoV, ISNULL(nrPgCartao9Vezes,0) noveV, ISNULL(nrPgCartao10Vezes,0) dezV, ISNULL(nrPgCartao11Vezes,0) onzeV,  '+
+      'ISNULL(nrPgCartao12Vezes,0) dozeV, * From Configuracao WITH (NOLOCK)';
       Open;
-      //    if FrmPrincipalPreVenda.vDiasCarencia = 0 then FrmPrincipalPreVenda.vDiasCarencia := 5;
+      if (ADOQryConfigurar.FieldByName('Deb').AsCurrency    +
+         ADOQryConfigurar.FieldByName('umV').AsCurrency     +
+         ADOQryConfigurar.FieldByName('doisV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('tresV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('quatroV').AsCurrency +
+         ADOQryConfigurar.FieldByName('cincoV').AsCurrency  +
+         ADOQryConfigurar.FieldByName('seisV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('seteV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('oitoV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('noveV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('dezV').AsCurrency    +
+         ADOQryConfigurar.FieldByName('onzeV').AsCurrency   +
+         ADOQryConfigurar.FieldByName('dozeV').AsCurrency) > 0 then
+        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True
+      else
+        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := False;
       if ADOQryConfigurar.FieldByName('dtExpiracopia').AsDateTime > (StrToDate(vData_Banco) + 120) then
       begin
         with DModulo.ADOQuery1 do

@@ -742,7 +742,7 @@ type
     function Empresas_UmaEtiqueta_porColuna : Boolean;
   public
     prevenda: TPrevenda;
-    { Public declarations }
+    acrescimoParcelamentoCartao : Boolean;
     listaLiberacoes : Tlist<TLiveracao>;
     modeloImpressora : string;
     driveSpooler : integer;
@@ -4822,11 +4822,9 @@ end;
 
 function TFrmPrincipalPreVenda.selecionarParcelasCartao: Boolean;
 begin
-  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
-     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
-    Result := True
-  else
-    Result := False;
+//  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
+//     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
+    Result := acrescimoParcelamentoCartao;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoExit(Sender: TObject);

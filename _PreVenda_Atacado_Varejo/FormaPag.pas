@@ -774,7 +774,7 @@ begin
     end;
     for i := 1 to numParcelas do
     begin
-      if (vAtacadoVarejo = 'A') then
+      if (vAtacadoVarejo = 'A') or (vAtacadoVarejo = 'V') then
       begin
         with gridParcelas do
         begin
