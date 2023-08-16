@@ -5649,9 +5649,9 @@ begin
   end;
   if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
-    FrmRelOrcamentos.RLLabel10.Enabled := False;
+    FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel10.Visible := False;
-    FrmRelOrcamentos.RLLabel11.Enabled := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel11.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'ATIVA') then
@@ -5973,7 +5973,8 @@ begin
           FieldByName('NOME').AsString);
     Close;
   end;
-  if StrToFloat(EdtSubTotal.Text) > 999999 then begin
+  if StrToFloat(EdtSubTotal.Text) > 999999 then
+  begin
     FrmRelOrcamentos.RLLblTotal.Font.Size := 6;
     FrmRelOrcamentos.RLLblDesconto.Font.Size := 6;
     FrmRelOrcamentos.RLLblUnitario.Font.Size := 6;
