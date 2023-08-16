@@ -151,7 +151,7 @@ object FrmFormaPag: TFrmFormaPag
     Items.Strings = (
       #192' Vista'
       'A Prazo'
-      'Cart'#227'o a Vista'
+      'Cart'#227'o a Vista (vencimento)'
       'Cart'#227'o Parcelado'
       'Cheque Pr'#233
       'Entrada + Prazo'
@@ -351,8 +351,8 @@ object FrmFormaPag: TFrmFormaPag
     OnKeyPress = edtParcelasKeyPress
   end
   object gridParcelas: TStringGrid
-    Left = 385
-    Top = 45
+    Left = 386
+    Top = 46
     Width = 274
     Height = 270
     Hint = 
@@ -363,7 +363,7 @@ object FrmFormaPag: TFrmFormaPag
     DefaultRowHeight = 19
     FixedColor = clSilver
     FixedCols = 0
-    RowCount = 13
+    RowCount = 12
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -377,8 +377,6 @@ object FrmFormaPag: TFrmFormaPag
     TabOrder = 9
     OnDblClick = gridParcelasDblClick
     OnDrawCell = gridParcelasDrawCell
-    OnExit = gridParcelasExit
-    OnKeyPress = gridParcelasKeyPress
     OnMouseUp = gridParcelasMouseUp
     ColWidths = (
       64
