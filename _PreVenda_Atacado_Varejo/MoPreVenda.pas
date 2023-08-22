@@ -5659,7 +5659,7 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end;
-  if (UpperCase(vEmpresa) = 'MOSR') then
+{  if (UpperCase(vEmpresa) = 'MOSR') then
   begin
     FrmRelOrcamentos.QREOrcamento.Font.Size := 11;
     FrmRelOrcamentos.QreRota.Visible := True;
@@ -5676,7 +5676,7 @@ begin
     FrmRelOrcamentos.RLLabel18.Visible := False;
     FrmRelOrcamentos.RLLabel19.Visible := False;
     FrmRelOrcamentos.RLLabel20.Visible := False;
-  end;
+  end;}
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
     FrmRelOrcamentos.RLDBText6.Visible := True;
