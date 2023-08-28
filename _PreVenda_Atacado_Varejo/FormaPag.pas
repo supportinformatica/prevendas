@@ -55,9 +55,7 @@ type
     procedure CBXSelecionaProfissionaisClick(Sender: TObject);
     procedure CBXProfissionalChange(Sender: TObject);
     procedure Memo1KeyPress(Sender: TObject; var Key: Char);
-    procedure gridParcelasKeyPress(Sender: TObject; var Key: Char);
     procedure edtParcelasExit(Sender: TObject);
-    procedure gridParcelasExit(Sender: TObject);
     procedure edtVolumeKeyPress(Sender: TObject; var Key: Char);
     procedure edtNumeroKeyPress(Sender: TObject; var Key: Char);
     procedure edtParcelasKeyPress(Sender: TObject; var Key: Char);
@@ -550,25 +548,11 @@ var
 begin
   if (Acol = 3) and (ARow > 0) then
   begin
-    if gridParcelas.Cells[3,ARow] = '1' then
+    if gridParcelas.Cells[3, ARow] = '1' then
       ImageList1.Draw(gridParcelas.Canvas, Rect.Left + 1 , Rect.Top +2 , 0)
-    else if gridParcelas.Cells[3,ARow] = ' ' then
+    else if gridParcelas.Cells[3, ARow] = ' ' then
       ImageList1.Draw(gridParcelas.Canvas, Rect.Left + 1 , Rect.Top +2 , 1);
   end;
-end;
-
-procedure TFrmFormaPag.gridParcelasExit(Sender: TObject);
-begin
-//  atualizarLinhasGridParcelas;
-//  reordenarGridParcelas;
-end;
-
-procedure TFrmFormaPag.gridParcelasKeyPress(Sender: TObject; var Key: Char);
-begin
-//  if gridParcelas.Col <> 0 then
-//    Key := #0
-//  else
-//    ValidarInteiro(Key);
 end;
 
 procedure TFrmFormaPag.gridParcelasMouseUp(Sender: TObject;
@@ -579,8 +563,10 @@ begin
   if gridParcelas.Cells[3, gridParcelas.row] = '1' then
   begin
     gridParcelas.Cells[3, gridParcelas.row] := ' ';
-    edtParcelas.Text    := '1x';
-    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
+//    edtParcelas.Text    := '2x';
+//    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
+    edtParcelas.Text    := gridParcelas.Cells[0, gridParcelas.Row];
+    edtAcresCartao.Text := gridParcelas.Cells[1, gridParcelas.Row];
   end else if gridParcelas.Cells[3, gridParcelas.row] = ' ' then
   begin
     gridParcelas.Cells[3, gridParcelas.row] := '1';
@@ -723,15 +709,15 @@ begin
       Cells[1, 0] := 'Valor';
       Cells[2, 0] := 'Valor Parcela';
       Cells[0, 1] := 'Deb';
-      if (vAtacadoVarejo = 'A') then
-      begin
-        Cells[1, 1] := FormatFloatQ(2, valor * (1 + debito));
-        Cells[2, 1] := FormatFloatQ(2, (valor * (1 + debito)));
-      end else
-      begin
-        Cells[1, 1] := FormatFloatQ(2, valor);
-        Cells[2, 1] := FormatFloatQ(2, valor);
-      end;
+//      if (vAtacadoVarejo = 'A') then
+//      begin
+      Cells[1, 1] := FormatFloatQ(2, valor * (1 + debito));
+      Cells[2, 1] := FormatFloatQ(2, (valor * (1 + debito)));
+//      end else
+//      begin
+//        Cells[1, 1] := FormatFloatQ(2, valor);
+//        Cells[2, 1] := FormatFloatQ(2, valor);
+//      end;
     end;
   end else if (tipo = 'CARTAO') and (numParcelas = 1) then
   begin
@@ -741,104 +727,104 @@ begin
       Cells[1, 0] := 'Valor';
       Cells[2, 0] := 'Valor Parcela';
       Cells[0, 1] := '1x';
-      if (vAtacadoVarejo = 'A') then
-      begin
+//      if (vAtacadoVarejo = 'A') then
+//      begin
         Cells[1, 1] := FormatFloatQ(2, valor * (1 + parc1));
         Cells[2, 1] := FormatFloatQ(2, (valor * (1 + parc1)));
-      end else
-      begin
-        Cells[1, 1] := FormatFloatQ(2, valor);
-        Cells[2, 1] := FormatFloatQ(2, valor);
-      end;
+//      end else
+//      begin
+//        Cells[1, 1] := FormatFloatQ(2, valor);
+//        Cells[2, 1] := FormatFloatQ(2, valor);
+//      end;
     end;
   end else
   begin
     with gridParcelas do
     begin
-      gridParcelas.RowCount := 13;
+      gridParcelas.RowCount := 12;
       Cells[0, 0]  := 'Parc';
       Cells[1, 0]  := 'Valor';
       Cells[2, 0]  := 'Valor Parcela';
-      Cells[0, 1]  := '1x';
-      Cells[0, 2]  := '2x';
-      Cells[0, 3]  := '3x';
-      Cells[0, 4]  := '4x';
-      Cells[0, 5]  := '5x';
-      Cells[0, 6]  := '6x';
-      Cells[0, 7]  := '7x';
-      Cells[0, 8]  := '8x';
-      Cells[0, 9]  := '9x';
-      Cells[0, 10] := '10x';
-      Cells[0, 11] := '11x';
-      Cells[0, 12] := '12x';
+      Cells[0, 1]  := '2x';
+      Cells[0, 2]  := '3x';
+      Cells[0, 3]  := '4x';
+      Cells[0, 4]  := '5x';
+      Cells[0, 5]  := '6x';
+      Cells[0, 6]  := '7x';
+      Cells[0, 7]  := '8x';
+      Cells[0, 8]  := '9x';
+      Cells[0, 9]  := '10x';
+      Cells[0, 10] := '11x';
+      Cells[0, 11] := '12x';
+//      Cells[0, 12] := '12x';
     end;
-    for i := 1 to numParcelas do
+    for i := 2 to numParcelas do
     begin
-      if (vAtacadoVarejo = 'A') then
+      if (vAtacadoVarejo = 'A') or (vAtacadoVarejo = 'V') then
       begin
         with gridParcelas do
         begin
-          Cells[3, i] := ' ';
+          Cells[3, i-1] := ' ';
           case i of
-            1 :  // 1v
-            begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc1));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc1)));
-            end;
+//            1 :  // 1v selecionar cartão a vista (vencimento)
+//            begin
+//              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc1));
+//              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc1)));
+//            end;
             2 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc2));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc2))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc2));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc2))/(i));
             end;
             3 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc3));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc3))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc3));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc3))/(i));
             end;
             4 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc4));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc4))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc4));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc4))/(i));
             end;
             5 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc5));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc5))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc5));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc5))/(i));
             end;
             6 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc6));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc6))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc6));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc6))/(i));
             end;
             7 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc7));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc7))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc7));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc7))/(i));
             end;
             8 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc8));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc8))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc8));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc8))/(i));
             end;
             9 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc9));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc9))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc9));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc9))/(i));
             end;
             10 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc10));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc10))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc10));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc10))/(i));
             end;
             11 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc11));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc11))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc11));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc11))/(i));
             end;
             12 :
             begin
-              Cells[1, i] := FormatFloatQ(2, valor * (1 + parc12));
-              Cells[2, i] := FormatFloatQ(2, (valor * (1 + parc12))/(i));
+              Cells[1, i-1] := FormatFloatQ(2, valor * (1 + parc12));
+              Cells[2, i-1] := FormatFloatQ(2, (valor * (1 + parc12))/(i));
             end;
           end;
         end;
@@ -853,6 +839,9 @@ begin
       end;
     end;
   end;
+  edtParcelas.Text    := gridParcelas.Cells[0,1]; //'1x';
+  edtAcresCartao.Text := gridParcelas.Cells[1,1]; //FrmPrincipalPreVenda.EdtSubTotal.Text;
+  gridParcelas.Cells[3,1] := '1';
 end;
 
 procedure TFrmFormaPag.RadioGroup1Click(Sender: TObject);
@@ -867,8 +856,8 @@ begin
     else
       preencherGridParcelas(12, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'CARTAO');
     end;
-    edtParcelas.Text    := '1x';
-    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
+//    edtParcelas.Text    := gridParcelas.Cells[1,1]; //'1x';
+//    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
   end;
 end;
 
@@ -1039,7 +1028,7 @@ begin
       Break;
     qtdDias := StrToInt(gridParcelas.Cells[0, i]);
     novoVencimento := incDay(Now, qtdDias);
-    gridParcelas.Cells[3, i] := DateToStr(novoVencimento);
+    gridParcelas.Cells[3,  i] := DateToStr(novoVencimento);
   end;
 end;
 

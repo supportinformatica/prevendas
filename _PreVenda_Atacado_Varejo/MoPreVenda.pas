@@ -742,7 +742,7 @@ type
     function Empresas_UmaEtiqueta_porColuna : Boolean;
   public
     prevenda: TPrevenda;
-    { Public declarations }
+    acrescimoParcelamentoCartao : Boolean;
     listaLiberacoes : Tlist<TLiveracao>;
     modeloImpressora : string;
     driveSpooler : integer;
@@ -4822,11 +4822,9 @@ end;
 
 function TFrmPrincipalPreVenda.selecionarParcelasCartao: Boolean;
 begin
-  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
-     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
-    Result := True
-  else
-    Result := False;
+//  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
+//     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
+    Result := acrescimoParcelamentoCartao;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoExit(Sender: TObject);
@@ -5651,9 +5649,9 @@ begin
   end;
   if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
-    FrmRelOrcamentos.RLLabel10.Enabled := False;
+    FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel10.Visible := False;
-    FrmRelOrcamentos.RLLabel11.Enabled := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel11.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'ATIVA') then
@@ -5661,7 +5659,7 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end;
-  if (UpperCase(vEmpresa) = 'MOSR') then
+{  if (UpperCase(vEmpresa) = 'MOSR') then
   begin
     FrmRelOrcamentos.QREOrcamento.Font.Size := 11;
     FrmRelOrcamentos.QreRota.Visible := True;
@@ -5678,7 +5676,7 @@ begin
     FrmRelOrcamentos.RLLabel18.Visible := False;
     FrmRelOrcamentos.RLLabel19.Visible := False;
     FrmRelOrcamentos.RLLabel20.Visible := False;
-  end;
+  end;}
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
     FrmRelOrcamentos.RLDBText6.Visible := True;
@@ -5975,7 +5973,8 @@ begin
           FieldByName('NOME').AsString);
     Close;
   end;
-  if StrToFloat(EdtSubTotal.Text) > 999999 then begin
+  if StrToFloat(EdtSubTotal.Text) > 999999 then
+  begin
     FrmRelOrcamentos.RLLblTotal.Font.Size := 6;
     FrmRelOrcamentos.RLLblDesconto.Font.Size := 6;
     FrmRelOrcamentos.RLLblUnitario.Font.Size := 6;
