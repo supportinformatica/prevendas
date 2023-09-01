@@ -16372,7 +16372,7 @@ begin
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
    or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
    or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA')
-   or (UpperCase(vFlagEtiqueta) = 'ZAVIXE') then
+   or (UpperCase(vFlagEtiqueta) = 'VALMOTOS') then
     Result := True
   else
     Result := False;
@@ -32681,10 +32681,9 @@ end;
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ValMotos;
 
 var
-  L: Integer;
+  L, M, Cont: Integer;
   Arq: TextFile;
   vqtd: Real;
-  cont: Integer;
   pessoa : TPessoa;
   Produto: TDOMProduto;
 
@@ -32698,15 +32697,32 @@ begin
     exit;
   end;
 
+  Cont := 0;
 
+  for L := 1 to Pred(SgDados.RowCount) do begin
+    if (SgDados.Cells[0, L] = '') then
+      break;
 
+    Inc(Cont);
+  end;
+
+  if (Frac(Cont / 2) = 0.00) then
+    vqtd := Cont / 3
+  else
+    vqtd := (StrToInt(FormatFloat('0', Cont)) div 3) + 1;
+
+  Cont := Trunc(vqtd);
+
+  if (Cont <= 0) then
+    Cont := 1;
 
   Editor.Lines.Clear;
 
-  for L := 1 to SgDados.RowCount - 1 do
+  L := 1;
+
+  for M := 1 to Cont do
   begin // Salvando os itens da pré-venda.
     // if SgDados.Cells[0,L] = '' then Break;
-    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q184,25');
@@ -32734,28 +32750,42 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A304,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
-    Editor.Lines.Add('A304,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('B296,72,0,1,2,4,39,N,"' +SgDados.Cells[6, L]+ '"');
-    Editor.Lines.Add('A352,120,0,1,1,1,N,"' +SgDados.Cells[6, L]+ '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A312,144,0,1,1,2,N,"COD.: ' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A584,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
-    Editor.Lines.Add('A584,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('B576,72,0,1,2,4,39,N,"' +SgDados.Cells[6, L]+ '"');
-    Editor.Lines.Add('A632,120,0,1,1,1,N,"' +SgDados.Cells[6, L]+ '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A591,144,0,1,1,2,N,"COD.: ' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('');
 
-    vqtd := StrToFloat(SgDados.Cells[2, L]);
 
-    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
+    if (SgDados.Cells[0, L+1] <> '') then begin
+      Editor.Lines.Add('A304,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+1], 1, 20)+ '"');
+      Editor.Lines.Add('A304,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+1], 21, 20)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B296,72,0,1,2,4,39,N,"' +SgDados.Cells[6, L+1]+ '"');
+      Editor.Lines.Add('A352,120,0,1,1,1,N,"' +SgDados.Cells[6, L+1]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A312,144,0,1,1,2,N,"COD.: ' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+    end;
+
+
+    if (SgDados.Cells[0, L+2] <> '') then begin
+      Editor.Lines.Add('A584,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+2], 1, 20)+ '"');
+      Editor.Lines.Add('A584,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+2], 21, 20)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B576,72,0,1,2,4,39,N,"' +SgDados.Cells[6, L+2]+ '"');
+      Editor.Lines.Add('A632,120,0,1,1,1,N,"' +SgDados.Cells[6, L+2]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A591,144,0,1,1,2,N,"COD.: ' +SgDados.Cells[0, L+2]+ '"');
+      Editor.Lines.Add('');
+    end;
+
+
+    Editor.Lines.Add('P1');
+    L := L + 3;
+
+
+
+//    vqtd := StrToFloat(SgDados.Cells[2, L]);
+//
+//    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
     FreeAndNil(Produto);
   end;
 
