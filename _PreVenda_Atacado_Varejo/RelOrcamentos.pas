@@ -228,8 +228,8 @@ begin
   //FrmPrincipalPreVenda.RodaScripts2;
   ADOQryConfig.Open;
   QRLblPrograma.Caption := ADOQryConfig.FieldByName('dsEndereco').AsString;
-  QRLblEmpresa.Caption := AdoQryConfig.FieldByName('nmEmpresa').AsString;
-  QrlTel.Caption := 'Tel: '+AdoQryConfig.FieldByName('telefone').AsString;
+  QRLblEmpresa.Caption  := AdoQryConfig.FieldByName('nmEmpresa').AsString;
+  QrlTel.Caption   := 'Tel: '+AdoQryConfig.FieldByName('telefone').AsString;
   QrlEmail.Caption := 'Email: '+AdoQryConfig.FieldByName('email').AsString;
   if vOcultaDesconto = 'S' then
   begin
@@ -240,10 +240,9 @@ begin
     QreUnidade.DataField := 'dsMetragem'
   else
     QreUnidade.DataField := 'dsUnidade';
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-    QREDescricao.DataField := 'dsServico';
-  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') or
-     (FrmPrincipalPreVenda.dsCGC = '39805209000168') then
+//  if (UpperCase(vEmpresa) = 'PTINTAS') then
+//    QREDescricao.DataField := 'dsServico';
+  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then
   begin
     RLPanel1.Top := RLPanel1.Top + 15;
     RLBand2.Borders.FixedBottom := True;

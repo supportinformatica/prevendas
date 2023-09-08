@@ -2343,7 +2343,7 @@ begin
      (dsCGC = '03334531000109') or (dsCGC = '15555876000171') or
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
      (dsCGC = '21597412000120') or (dsCGC = '36056673000100') or
-     (dsCGC = '15066244000144')
+     (dsCGC = '15066244000144') or (dsCGC = '51276698000103')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5663,24 +5663,23 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end;
-{  if (UpperCase(vEmpresa) = 'MOSR') then
+  if (UpperCase(vEmpresa) = 'MOSR') then
   begin
-    FrmRelOrcamentos.QREOrcamento.Font.Size := 11;
+//    FrmRelOrcamentos.QREOrcamento.Font.Size := 11;
     FrmRelOrcamentos.QreRota.Visible := True;
     FrmRelOrcamentos.QreRota2.Visible := True;
-    FrmRelOrcamentos.RLLinhaProduto.Visible := True;
-    // solicitou para que esses campos não aparecam
-    FrmRelOrcamentos.RLDBResult3.Visible := False;
-    FrmRelOrcamentos.QREPreco.Visible  := False;
-    FrmRelOrcamentos.QRETotal.Visible  := False;
-    FrmRelOrcamentos.QRLabel8.Visible  := False;
-    FrmRelOrcamentos.RLLabel2.Visible  := False;
-    FrmRelOrcamentos.QRLabel9.Visible  := False;
-    FrmRelOrcamentos.RLLabel18.Enabled := false;
-    FrmRelOrcamentos.RLLabel18.Visible := False;
-    FrmRelOrcamentos.RLLabel19.Visible := False;
-    FrmRelOrcamentos.RLLabel20.Visible := False;
-  end;}
+//    FrmRelOrcamentos.RLLinhaProduto.Visible := True;
+//    FrmRelOrcamentos.RLDBResult3.Visible := False;
+//    FrmRelOrcamentos.QREPreco.Visible  := False;
+//    FrmRelOrcamentos.QRETotal.Visible  := False;
+//    FrmRelOrcamentos.QRLabel8.Visible  := False;
+//    FrmRelOrcamentos.RLLabel2.Visible  := False;
+//    FrmRelOrcamentos.QRLabel9.Visible  := False;
+//    FrmRelOrcamentos.RLLabel18.Enabled := false;
+//    FrmRelOrcamentos.RLLabel18.Visible := False;
+//    FrmRelOrcamentos.RLLabel19.Visible := False;
+//    FrmRelOrcamentos.RLLabel20.Visible := False;
+  end;
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
     FrmRelOrcamentos.RLDBText6.Visible := True;
