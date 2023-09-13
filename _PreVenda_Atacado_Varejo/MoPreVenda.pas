@@ -5417,34 +5417,8 @@ begin
       (StrToFloat(FormatFloatQ(vCasasPreco, vlLiquido)) -
       StrToFloat(FormatFloatQ(vCasasPreco, vlProdutos)))) * 100) /
       StrToFloat(FormatFloatQ(vCasasPreco, vlProdutos));
-
   EdtDesconto.Text := FormatFloat('0.000000', vlDescPorc);
   EdtDescontoExit(self);
-//  temp := StrToFloat(EdtSubTotal.Text);
-//  if StrToFloat(EdtDesconto.Text) > 0 then begin
-//    cont := 0;
-//    while vlLiquido < temp do
-//    begin
-//      EdtDesconto.Text := FloatToStr(StrToFloat(EdtDesconto.Text) + 0.005);
-//      EdtDescontoExit(self);
-//      temp := StrToFloat(EdtSubTotal.Text);
-//      cont := cont + 1;
-//      if cont > 100 then break;
-//    end;
-//  end;
-//  if StrToFloat(EdtDesconto.Text) > 0 then begin
-//    cont := 0;
-//    while StrToFloat(FormatFloat('0.00', vlLiquido)) >
-//      StrToFloat(EdtSubTotal.Text) do
-//    begin
-//      EdtDesconto.Text := FloatToStr(StrToFloat(EdtDesconto.Text) - 0.0025);
-//      EdtDescontoExit(self);
-//      temp := StrToFloat(EdtSubTotal.Text);
-//      cont := cont + 1;
-//      if cont > 100 then break;
-//    end;
-//  end;
-
   if (StrToFloat(FormatFloat('0.00', vlLiquido)) <> StrToFloat(EdtSubTotal.Text)) and
    (StrtoFloatDef(EdtDesconto.Text,0) <> 0)
   then
@@ -5455,29 +5429,6 @@ begin
       (valorAjustar / prevenda.itens[0].quantidade);
     EdtSubTotal.Text := FormatFloat('0.00', vlLiquido);
   end;
-
-  // estava antes assim
-  { if vCasasPreco > vLimiteCasasPreco then
-    begin
-    varvlComDesc := StrToFloat(EdtSubTotal.Text);
-    varvlSemDesc := StrToFloat(EdtTotal.Text);
-
-    if varvlSemDesc > 0 then
-    begin
-    varvdesc := (1-(varvlComDesc/varvlSemDesc))*100;
-    EdtDesconto.Text := FormatFloat('0.00000',varvdesc);
-    end;
-    exit; //Ainda não estamos usando essa parte debaixo do código
-    end
-    else
-    case vCasasPreco of   // preco de venda
-    1: EdtDesconto.Text := FormatFloat('0.0',varvdesc);
-    2: EdtDesconto.Text := FormatFloat('0.00',varvdesc);
-    3: EdtDesconto.Text := FormatFloat('0.000',varvdesc);
-    4: EdtDesconto.Text := FormatFloat('0.0000',varvdesc);
-    5: EdtDesconto.Text := FormatFloat('0.00000',varvdesc);
-    end;
-  }
 end;
 
 procedure TFrmPrincipalPreVenda.Corrige_Desconto;
@@ -5524,7 +5475,6 @@ begin
   // end;
   // valor_Total := vlBruto;
   // descReal := (vlBruto * StrToFloat(EdtDesconto.Text)) / 100;
-
   Desconto_Atual := (valor_Total - Preco_Desconto) * 100 / valor_Total;
   // calculando o desconto atual
   vdesconto := Arredonda_Pra_Cima(Desconto_Atual, casas_decimais);
@@ -17615,11 +17565,6 @@ begin
         end
         else
           prevenda.numeroPrevenda := StrToInt(EdtLancto.Text);
-        // if prevenda <> nil then begin
-        // prevenda.Destroy;
-        // prevenda:= nil;
-        // end;
-        // prevenda:= TPrevenda.Create();
         prevenda.dsReferencia := edtReferencia.Text;
         prevenda.isDescontoOculto := vOcultaDesconto;
         if selecionarParcelasCartao and (StrToIntDef(prevenda.codigoFormaPagamento, 0) in [3,6]) then

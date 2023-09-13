@@ -189,21 +189,24 @@ begin
     end;
     vMemo := Memo1;
     vTime := FrmPrincipalPreVenda.getHoraServidor;
-    if FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1 then
-    // Se for alteração de um orçamento
-      if FrmPrincipalPreVenda.Verifica_PREVENDA_SALVANOCAIXA = False then
-      begin
-        MessageDlg
-          ('Esta pre-venda já está confirmada no caixa então não será possível salva-la!',
-          mtWarning, [mbOk], 0);
-        BtnConfirmar.Enabled := True;
-        exit;
-      end;
-
-    if StrToCurrDef(edtAcresCartao.Text,0) > StrToCurr(FrmPrincipalPreVenda.EdtSubTotal.Text) then
+    if (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1) and  // Se for alteração de um orçamento
+       (FrmPrincipalPreVenda.Verifica_PREVENDA_SALVANOCAIXA = False) then
+    begin
+      MessageDlg('Esta pre-venda já está confirmada no caixa então não será possível salva-la!',
+        mtWarning, [mbOk], 0);
+      BtnConfirmar.Enabled := True;
+      exit;
+    end;
+    if StrToCurrDef(edtAcresCartao.Text, 0) > StrToCurr(FrmPrincipalPreVenda.EdtSubTotal.Text) then
     begin
       FrmPrincipalPreVenda.EdtSubTotal.Text := edtAcresCartao.Text;
       FrmPrincipalPreVenda.EdtSubTotal.Refresh;
+      // como alteramos o valor por conta das parcelas do cartão,
+      // tenho que mudar essa proproedade para reclacular o acrescimo desses items que tiveram desconto no valor
+      for i := 0 to FrmPrincipalPreVenda.prevenda.itens.Count - 1 do
+      begin
+        FrmPrincipalPreVenda.prevenda.itens[i].Promocao_desconto_Item := False;
+      end;
       FrmPrincipalPreVenda.Recalcula_Desconto;
     end;
     if vOrcamento = 'O' then

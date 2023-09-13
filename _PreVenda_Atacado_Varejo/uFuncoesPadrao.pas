@@ -845,14 +845,15 @@ function ValidaComputadorSupport(cnpj : string):boolean;
 var nomePc: String;
 begin
   try
-    if (cnpj = '32838245000260') or (cnpj = '01655446000117') then begin //CICLOMOTOS e IPANEMA TECIDO
+    if (cnpj = '32838245000260') or (cnpj = '01655446000117') then
+    begin //CICLOMOTOS e IPANEMA TECIDO
       result := false;
       exit;
     end;
     nomePc := RemoveEspaco(GetWMIstring('Win32_PhysicalMedia','SerialNumber'));
     if //(nomePC <> 'WD-WX91E15CRJ5F') and  COMPUTADOR DE ANDRE
        (nomePC <> '9QF5SGJ3') And  //batista
-       (nomePC <> '606569746803') And //anderson
+       (nomePC <> 'BR048K881CB0076JB0R2') And //anderson
        (nomePC <> '207C09058070') And  //felipe
        (nomePC <> 'WD-WMAV2CW15598') And //josinei
        (nomePC <> '33961GDPS') And       //junior
