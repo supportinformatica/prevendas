@@ -20,6 +20,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
     Top = 24
     Width = 816
     Height = 1056
+    ShowingPreview = False
     BeforePrint = QuickRep1BeforePrint
     DataSet = ADOQryRelDados
     Font.Charset = DEFAULT_CHARSET
@@ -70,6 +71,8 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
     Zoom = 100
     PrevFormStyle = fsStayOnTop
     PreviewInitialState = wsMaximized
+    PreviewWidth = 500
+    PreviewHeight = 500
     PrevInitialZoom = qrZoomToWidth
     PreviewDefaultSaveType = stQRP
     PreviewLeft = 0
@@ -81,7 +84,6 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
       Height = 129
       Frame.DrawBottom = True
       AlignToBottom = False
-      Color = clWhite
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
@@ -103,6 +105,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           111.125000000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Escola:'
@@ -131,6 +134,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           381.000000000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Font.Charset = ANSI_CHARSET
@@ -159,6 +163,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           92.604166666666680000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'S'#233'rie:'
@@ -187,6 +192,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           362.479166666666700000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Font.Charset = ANSI_CHARSET
@@ -215,6 +221,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           119.062500000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         Color = clWhite
@@ -228,6 +235,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         Text = ''
         Transparent = False
         ExportAs = exptText
+        VerticalAlignment = tlTop
         FontSize = 9
       end
       object QRLabel9: TQRLabel
@@ -242,6 +250,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           105.833333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'P'#225'gina'
@@ -270,6 +279,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           325.437500000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -286,6 +296,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 16
       end
       object qrImage: TQRImage
@@ -300,6 +311,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           296.333333333333400000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Stretch = True
       end
       object QRLabel10: TQRLabel
@@ -314,6 +326,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           240.770833333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         Caption = 'Data da impress'#227'o'
@@ -342,6 +355,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           82.020833333333340000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         Color = clWhite
@@ -355,6 +369,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         Text = ''
         Transparent = True
         ExportAs = exptText
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object QRSysData3: TQRSysData
@@ -369,6 +384,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           82.020833333333340000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         Color = clWhite
@@ -382,6 +398,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         Text = ''
         Transparent = True
         ExportAs = exptText
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object qrEndereco: TQRDBText
@@ -396,6 +413,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           124.354166666666700000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -412,6 +430,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object qrCNPJ: TQRDBText
@@ -426,6 +445,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           68.791666666666680000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -442,6 +462,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object QRDBText2: TQRDBText
@@ -456,6 +477,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           105.833333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -472,6 +494,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object QRDBText3: TQRDBText
@@ -486,6 +509,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           66.145833333333340000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -502,6 +526,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 8
       end
       object QRLabel11: TQRLabel
@@ -516,6 +541,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           288.395833333333400000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         Caption = '**Or'#231'amento**'
@@ -544,6 +570,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           1957.916666666667000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Shape = qrsRectangle
         VertAdjust = 0
       end
@@ -554,12 +581,11 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
       Width = 740
       Height = 22
       AlignToBottom = False
-      Color = clWhite
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        58.208333333333340000
+        58.208333333333330000
         1957.916666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -576,6 +602,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           420.687500000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Font.Charset = ANSI_CHARSET
@@ -604,6 +631,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           309.562500000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Font.Charset = ANSI_CHARSET
@@ -632,6 +660,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           209.020833333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -662,6 +691,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           193.145833333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -692,6 +722,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           121.708333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -717,12 +748,11 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
       Height = 23
       Frame.DrawTop = True
       AlignToBottom = False
-      Color = clWhite
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        60.854166666666680000
+        60.854166666666670000
         1957.916666666667000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
@@ -739,6 +769,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           169.333333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taRightJustify
         AlignToBand = False
         AutoSize = False
@@ -769,6 +800,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           95.250000000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Total:'
@@ -797,6 +829,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           145.520833333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Listados ->'
@@ -825,6 +858,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           174.625000000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Color = clWhite
@@ -838,6 +872,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
         Text = ''
         Transparent = False
         ExportAs = exptText
+        VerticalAlignment = tlTop
         FontSize = 8
       end
     end
@@ -870,6 +905,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           153.458333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Descri'#231#227'o'
@@ -898,6 +934,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           63.500000000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Qtd'
@@ -926,6 +963,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           92.604166666666680000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Pre'#231'o'
@@ -954,6 +992,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           84.666666666666680000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Total'
@@ -982,6 +1021,7 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
           116.416666666666700000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'C'#243'digo'
@@ -1122,8 +1162,10 @@ object frmRelOrcamentoLista: TfrmRelOrcamentoLista
   end
   object QRPDFFilter1: TQRPDFFilter
     CompressionOn = False
+    Fonthandling = False
     TextEncoding = AnsiEncoding
     Codepage = '1252'
+    SuppressDateTime = False
     Left = 304
     Top = 376
   end

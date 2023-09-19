@@ -103,8 +103,10 @@ begin
       qrImage.Picture.Bitmap.LoadFromStream(vLogoMarca);
     end;
   end
-  else if FileExists('Logo_Cupom.JPG') then
-    qrImage.Picture.LoadFromFile('Logo_Cupom.JPG');
+  else if FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Logo_Cupom.JPG'))) then
+    qrImage.Picture.LoadFromFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Logo_Cupom.JPG')));
   adoQryCabecalho.Open;
 
 //  ADOQryConfig.Open;

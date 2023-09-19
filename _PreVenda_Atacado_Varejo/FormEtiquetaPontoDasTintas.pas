@@ -108,7 +108,8 @@ begin
   end;
   FrmPrincipalPreVenda.Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
-  if not FileExists('Print2.bat') then
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   FrmPrincipalPreVenda.Limpar_Tela;
@@ -175,7 +176,8 @@ begin
   end;
   FrmPrincipalPreVenda.Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
-  if not FileExists('Print2.bat') then
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   FrmPrincipalPreVenda.Limpar_Tela;
@@ -232,7 +234,8 @@ begin
   end;
   FrmPrincipalPreVenda.Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
-  if not FileExists('Print2.bat') then
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   FrmPrincipalPreVenda.Limpar_Tela;
