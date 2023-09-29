@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, Buttons, Db,  Grids, DBGrids, ADODB, IniFiles, jpeg,
-  Menus, DateUtils, Thread_Conexao2;
+  Menus, DateUtils, Thread_Conexao2, Vcl.Imaging.pngimage;
 
 type
   TFrmPedeSenha = class(TForm)
