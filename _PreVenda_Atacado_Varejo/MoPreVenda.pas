@@ -31296,8 +31296,8 @@ begin
       Editor.Lines.Add('A506,21,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 1, 20)+'"');
       Editor.Lines.Add('A506,42,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 21, 10)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B526,148,0,1,2,4,44,N,"' +SgDados.Cells[6, L]+ '"');
-      Editor.Lines.Add('A566,201,0,1,1,1,N,"' +SgDados.Cells[6, L]+ '"');
+      Editor.Lines.Add('B526,148,0,1,2,4,44,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('A566,201,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A549,91,0,2,1,1,N,"R$"');
       Editor.Lines.Add('A594,89,0,1,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
