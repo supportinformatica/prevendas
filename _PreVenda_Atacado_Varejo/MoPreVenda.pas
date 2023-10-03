@@ -2128,7 +2128,6 @@ begin
     CbxNome.width := CbxNome.width + edtReferencia.width + 9;
     Label29.Left := Label25.Left;
   end;
-
   if FrmPrincipalPreVenda.vConferencia = True then
     PopupMenu1.Items.Items[13].Enabled := false;
   listarUsuariosNaCombo;
@@ -2152,13 +2151,11 @@ begin
     Label24.Visible := True;
   end;
   vFlag := '';
-
   if vAtacarejo = false then
   begin
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'nrQtdAtacarejo')].Visible := false;
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlAtacado')].Visible := false;
   end;
-
   Label14.Visible := false;
   Label15.Visible := false;
   Shape2.Visible := false;
@@ -2266,17 +2263,12 @@ begin
       Shape8.Visible := True;
     end;
   end;
-
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-  begin
-    CriarIniSQLDeposito;
-    Label16.caption := 'DEPÓSITO';
-    LblReserva.Hint := 'Quantidades do item selecionado no estoque do depósito';
-    // LblReserva.Visible    := True;
-    // Label16.Visible    := True;
-    // shape2.visible := True;
-    // shape3.visible := True;
-  end;
+//  if (UpperCase(vEmpresa) = 'PTINTAS') then
+//  begin
+//    CriarIniSQLDeposito;
+//    Label16.caption := 'DEPÓSITO';
+//    LblReserva.Hint := 'Quantidades do item selecionado no estoque do depósito';
+//  end;
   Label11.Hint := 'Informações do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
     'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de pré-vendas';
@@ -2301,15 +2293,13 @@ begin
     Shape1.Visible := false;
     Shape4.Visible := false;
   end;
-
   if (Empresas_UmaEtiqueta_porColuna = True) or (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
   (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
   (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
     chkbxEtiqueta.Visible := true;
-
-  if (UpperCase(vEmpresa) = 'DISCABOS') or (UpperCase(vEmpresa) = 'SANTANA')
+  if (UpperCase(vEmpresa) = 'SANTANA')
   then // LIBERA P ALTERAR A QUANTIDADE NO PRODUTO DIRETO NA GRID
     SgDados.Options := [goFixedVertLine, goFixedHorzLine, goRangeSelect,
       goEditing];
@@ -2642,7 +2632,7 @@ begin
   DtLancto.Date := Date;
   if UpperCase(vEmpresa) <> 'TREVO' then
   begin
-    if UpperCase(vEmpresa) = 'SANTANA' then
+    if (UpperCase(vEmpresa) = 'SANTANA') or (dsCGC = '39805209000168') then
       RgOpcoes.ItemIndex := 2
     else
       RgOpcoes.ItemIndex := 0;
@@ -10497,7 +10487,7 @@ begin
   // RgOpcoes.ItemIndex := 0;
   if UpperCase(vEmpresa) <> 'TREVO' then
   begin
-    if UpperCase(vEmpresa) = 'SANTANA' then
+    if (UpperCase(vEmpresa) = 'SANTANA') or (dsCGC = '39805209000168') then
       RgOpcoes.ItemIndex := 2
     else
       RgOpcoes.ItemIndex := 0;

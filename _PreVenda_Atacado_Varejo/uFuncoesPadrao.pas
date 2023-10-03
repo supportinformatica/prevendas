@@ -863,7 +863,7 @@ begin
        (nomePC <> 'WD-WCARW1186334') And //treinameno3
        (nomePC <> '0000_0000_0000_0000_707C_18F5_5DBB_D70F.') And    //thiago
        (nomePC <> 'WXU1A47AEU17') and
-       (nomePC <> '80C9PG0HT') and   // herbert
+       (nomePC <> '6479_A74E_1020_37F4.') and   // herbert
        (nomePC <> 'WD-WMAV2M247049') and //TREINAMENTO
        (nomePC <> 'AA000000000000000149')  //JOSE
     then
