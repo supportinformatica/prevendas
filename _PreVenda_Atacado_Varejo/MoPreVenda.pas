@@ -667,7 +667,7 @@ type
     procedure ImprimeEtiquetas_MiniMercadoItabaiana; //Elgin L42 Pro
     procedure ImprimeEtiquetas_MiniMercadoItabaiana_Pequena; //Elgin L42 Pro
     procedure ImprimeEtiquetas_ResMercadinhoAcaua; //Argox OS 214 Plus
-    procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro
+    procedure ImprimeEtiquetas_MaeDeDeusEspacoCatolico; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_OnixJoalheria; //Elgin L42 Pro
     procedure ImprimeEtiquetas_GrupoAquarela(StoreName: string); //Elgin L42
     procedure ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string); //Elgin L42  Pro Full
@@ -31866,10 +31866,11 @@ begin
     // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
-    Editor.Lines.Add('Q1168,25');
+    Editor.Lines.Add('Q184,25');
     Editor.Lines.Add('q832');
     Editor.Lines.Add('');
     Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
     Editor.Lines.Add('O');
     Editor.Lines.Add('');
     Editor.Lines.Add('JF');
@@ -31880,36 +31881,36 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A24,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A24,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('A48,8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A48,36,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B20,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('A59,115,0,1,1,1,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B44,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('A75,115,0,1,1,1,N,"'+SgDados.Cells[0, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A34,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('A58,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L]+'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
-      Editor.Lines.Add('A304,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
-      Editor.Lines.Add('A304,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
+      Editor.Lines.Add('A320,8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
+      Editor.Lines.Add('A320,36,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B300,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L+1]+'"');
-      Editor.Lines.Add('A339,115,0,1,1,1,N,"'+SgDados.Cells[0, L+1]+'"');
+      Editor.Lines.Add('B316,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L+1]+'"');
+      Editor.Lines.Add('A347,115,0,1,1,1,N,"'+SgDados.Cells[0, L+1]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A314,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
+      Editor.Lines.Add('A320,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+1]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('');
     end;
 
     if SgDados.Cells[0,L+2] <> '' then begin
-      Editor.Lines.Add('A575,16,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
-      Editor.Lines.Add('A575,44,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
+      Editor.Lines.Add('A607,8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
+      Editor.Lines.Add('A607,36,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B571,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L+2]+'"');
-      Editor.Lines.Add('A610,115,0,1,1,1,N,"'+SgDados.Cells[0, L+2]+'"');
+      Editor.Lines.Add('B603,72,0,1,2,4,40,N,"'+SgDados.Cells[0, L+2]+'"');
+      Editor.Lines.Add('A634,115,0,1,1,1,N,"'+SgDados.Cells[0, L+2]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A585,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
+      Editor.Lines.Add('A617,134,0,1,2,2,N,"R$ '+SgDados.Cells[3, L+2]+'"');
       Editor.Lines.Add('');
     end;
     Editor.Lines.Add('P1');
