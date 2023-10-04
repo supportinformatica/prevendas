@@ -15493,49 +15493,74 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-    Editor.Lines.Add('<xpml><page quantity=''0'' pitch=''23.0 mm''></xpml>I8,1,001');
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q160,161');
     Editor.Lines.Add('q832');
-    Editor.Lines.Add('OP');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
     Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
     Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
     Editor.Lines.Add('ZT');
-    Editor.Lines.Add('Q184,16+1');
-    Editor.Lines.Add('<xpml></page></xpml><xpml><page quantity=''1'' pitch=''23.0 mm''></xpml>N');
-    Editor.Lines.Add('A238,165,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A238,148,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
-    Editor.Lines.Add('B246,123,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A210,87,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A206,67,2,4,1,2,N,"R$ '+SgDados.Cells[3, L]+'"');
-    Editor.Lines.Add('B533,122,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A498,86,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A486,67,2,4,1,2,N,"R$ '+SgDados.Cells[3, L]+'"');
-    Editor.Lines.Add('A525,164,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A525,147,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A238,132,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A238,115,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B246,90,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A211,54,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A211,27,2,4,1,1,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A525,132,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A525,115,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B533,90,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A498,54,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A486,27,2,4,1,1,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A803,132,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
+    Editor.Lines.Add('A803,115,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B810,90,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A775,54,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A775,27,2,4,1,1,N,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('');
 
-    Editor.Lines.Add('B810,122,2,E30,2,4,27,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A759,86,2,1,1,1,N,"'+SgDados.Cells[6, L]+'"');
-    Editor.Lines.Add('A771,67,2,4,1,2,N,"R$ '+SgDados.Cells[3, L]+'"');
-    Editor.Lines.Add('A803,164,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],1,20)+'"');
-    Editor.Lines.Add('A803,147,2,1,1,1,N,"'+Copy(SgDados.Cells[1, L],21,20)+'"');
     if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
       vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
     else
       vqtd := (StrToInt(FormatFloat('0', StrToFloat(SgDados.Cells[2, L])))
       div 3) + 1;
+
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-    Editor.Lines.Add('<xpml></page></xpml><xpml><end/></xpml>');
   end;
+
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
+
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
+
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
+
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
