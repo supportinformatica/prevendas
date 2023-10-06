@@ -900,6 +900,7 @@
         OnDrawCell = SgDadosDrawCell
         OnExit = SgDadosExit
         OnGetEditText = SgDadosGetEditText
+        OnKeyDown = SgDadosKeyDown
         OnKeyPress = SgDadosKeyPress
         OnKeyUp = SgDadosKeyUp
         ColWidths = (
@@ -1036,6 +1037,7 @@
         OnColumnMoved = DBGrid1ColumnMoved
         OnDrawColumnCell = DBGrid1DrawColumnCell
         OnDblClick = DBGrid1DblClick
+        OnKeyDown = DBGrid1KeyDown
         OnKeyPress = DBGrid1KeyPress
         Columns = <
           item

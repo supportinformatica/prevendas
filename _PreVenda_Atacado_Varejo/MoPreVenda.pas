@@ -450,6 +450,10 @@ type
     procedure TimerRealizarPesquisaTimer(Sender: TObject);
     procedure EdtConsultaKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure SgDadosKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     valorAjustar: Real;
@@ -10252,6 +10256,13 @@ begin
     BtnCancelar.Click;
 end;
 
+procedure TFrmPrincipalPreVenda.SgDadosKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Shift = [SsCtrl]) and (key = 46) then
+    key := 0;
+end;
+
 procedure TFrmPrincipalPreVenda.SgDadosKeyPress(Sender: TObject; var Key: Char);
 begin
   if (Key = Char(27)) then
@@ -10287,6 +10298,13 @@ begin
     end;
   end else if (SgDados.Col = 14) and (SgDados.Cells[0, SgDados.Row] <> '') then
     cbxEntrega.Visible := True;
+end;
+
+procedure TFrmPrincipalPreVenda.DBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Shift = [SsCtrl]) and (key = 46) then
+    key := 0;
 end;
 
 procedure TFrmPrincipalPreVenda.DBGrid1KeyPress(Sender: TObject; var Key: Char);

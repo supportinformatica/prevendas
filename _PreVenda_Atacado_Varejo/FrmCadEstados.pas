@@ -72,6 +72,8 @@ type
       Shift: TShiftState);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
      { Private declarations }
   public
@@ -299,6 +301,13 @@ begin
   end;
 //  dbgrid1.Canvas.FillRect(Rect);
 //  dbgrid1.Canvas.TextOut(Rect.Left + 2,Rect.Top,Column.Field.AsString);
+end;
+
+procedure TFrmMdCadastro.DBGrid1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Shift = [SsCtrl]) and (key = 46) then
+    key := 0;
 end;
 
 end.

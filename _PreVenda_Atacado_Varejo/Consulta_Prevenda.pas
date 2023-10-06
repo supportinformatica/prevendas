@@ -686,12 +686,15 @@ procedure TConsulta_prevenca.DBGrid1KeyDown(Sender: TObject; var Key: Word;
 begin
   if VK_ESCAPE  = key then
     Close;
+  if (Shift = [SsCtrl]) and (key = 46) then
+    key := 0;
 end;
 
 procedure TConsulta_prevenca.DBGrid1KeyPress(Sender: TObject; var Key: Char);
 begin
   edtcodigo.clear;
-  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then begin   // enter
+  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then
+  begin   // enter
     FrmPrincipalPreVenda.Enabled := True;
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
     FrmPrincipalPreVenda.Enabled := True;
@@ -702,7 +705,8 @@ begin
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     close;
   end;
-  if Key = Char(27) then begin   // ESC
+  if Key = Char(27) then
+  begin   // ESC
     FrmPrincipalPreVenda.Enabled := True;
     if FrmPrincipalPreVenda.EdtLancto.Text = '*' then
       FrmPrincipalPreVenda.EdtLancto.Clear;
@@ -720,7 +724,8 @@ end;
 
 procedure TConsulta_prevenca.rbClienteClick(Sender: TObject);
 begin
-  if rbCliente.Checked = true then begin
+  if rbCliente.Checked = true then
+  begin
     rbProduto.Checked := not rbCliente.Checked;
     rbVendedor.Checked := not rbCliente.Checked;
     rbReferencia.Checked := not rbCliente.Checked;
