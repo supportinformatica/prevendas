@@ -394,10 +394,11 @@ begin
     end;
   end;
   try
+    if Image1.visible = False then exit;    
     Image1.Picture := nil;
     if Pos('http',ADOSPRelDados.fieldbyname('dscaminho').AsString) > 0 then
       CarregarImagemURL(Image1, ADOSPRelDados.fieldbyname('dscaminho').AsString)
-    else
+    else if (ADOSPRelDados.fieldbyname('dscaminho').AsString <> '') then         
       Image1.Picture.LoadFromFile(ADOSPRelDados.fieldbyname('dscaminho').AsString);
   except
     //MessageDlg('Erro ao buscar a foto!',mtInformation,[mbOK],0);
