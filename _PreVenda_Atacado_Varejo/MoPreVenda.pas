@@ -31326,35 +31326,35 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A32,8,0,1,1,2,N,"'+StoreName+'"');
+    Editor.Lines.Add('A64,8,0,1,1,2,N,"'+StoreName+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A32,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('A64,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B32,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('A32,148,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B64,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A64,148,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A312,8,0,1,1,2,N,"'+StoreName+'"');
+      Editor.Lines.Add('A344,8,0,1,1,2,N,"'+StoreName+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A312,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+1]))+ '"');
+      Editor.Lines.Add('A344,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+1]))+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B312,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+1]+ '"');
-      Editor.Lines.Add('A312,148,0,1,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('B344,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('A344,148,0,1,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
       Editor.Lines.Add('');
     end;
 
     if SgDados.Cells[0,L+2] <> '' then begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A592,8,0,1,1,2,N,"'+StoreName+'"');
+      Editor.Lines.Add('A624,8,0,1,1,2,N,"'+StoreName+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A592,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+2]))+ '"');
+      Editor.Lines.Add('A624,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+2]))+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B592,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+2]+ '"');
-      Editor.Lines.Add('A592,148,0,1,1,1,N,"' +SgDados.Cells[0, L+2]+ '"');
+      Editor.Lines.Add('B624,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+2]+ '"');
+      Editor.Lines.Add('A624,148,0,1,1,1,N,"' +SgDados.Cells[0, L+2]+ '"');
       Editor.Lines.Add('');
     end;
 
