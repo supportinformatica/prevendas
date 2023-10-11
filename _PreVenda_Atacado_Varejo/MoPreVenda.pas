@@ -32630,18 +32630,18 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A40,24,0,3,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('A74,24,0,3,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A24,64,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
-    Editor.Lines.Add('A24,112,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('A74,64,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A74,112,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B24,176,0,1,3,6,80,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('A40,264,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B74,176,0,1,3,6,80,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A90,264,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A48,320,0,3,1,1,N,"REF.' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('A80,320,0,3,1,1,N,"REF.' +Produto.referenciaInterna+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A56,412,0,2,1,1,N,"R$"');
-    Editor.Lines.Add('A88,388,0,4,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('A80,412,0,2,1,1,N,"R$"');
+    Editor.Lines.Add('A120,388,0,4,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
 
     vqtd := StrToFloat(SgDados.Cells[2, L]);
