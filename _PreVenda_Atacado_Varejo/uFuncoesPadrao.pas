@@ -3025,12 +3025,16 @@ begin
   end;
   try
     try
+      url := StringReplace(url,'https','http',[]);
       Screen.Cursor := crHourGlass;
       Jpeg := TJpegImage.Create;
       Strm := TMemoryStream.Create;
       ConWeb := TIdHTTP.Create;
-      ConWeb.IOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(ConWeb);
-      ConWeb.HandleRedirects := True;
+      //ConWeb.IOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(ConWeb);
+      //ConWeb.HandleRedirects := true;
+      ConWeb.Request.BasicAuthentication := True;
+      ConWeb.ConnectTimeout := 3000;
+      ConWeb.ReadTimeout := 3000;
       ConWeb.Get(url, Strm);
       if (Strm.Size > 0) then
       begin
@@ -3050,17 +3054,19 @@ begin
           Imagem.Picture.Assign(Jpeg);
         end;
       end;
-    finally
-      Strm.Free;
-      Bitmap.Free;
-      ConWeb.Free;
-      Jpeg.Free;
+    except
       Screen.Cursor := crDefault;
+      imagem.Picture := nil;
+      Result := false;
+      raise Exception.Create('Erro ao carregar o link da imagem');
     end;
-  except
-    imagem.Picture := nil;
-    Result := false;
-    raise Exception.Create('Erro ao carregar o link da imagem');
+  finally
+    Screen.Cursor := crDefault;
+    Strm.Free;
+    if Bitmap <> nil then
+      Bitmap.Free;
+    ConWeb.Free;
+    Jpeg.Free;
   end;
 end;
 

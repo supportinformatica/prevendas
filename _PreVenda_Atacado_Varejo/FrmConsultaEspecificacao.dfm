@@ -278,7 +278,6 @@ object FrmEspecificacao: TFrmEspecificacao
     Proportional = True
     ShowHint = True
     Stretch = True
-    Transparent = True
     OnClick = Image1Click
     OnMouseDown = Image1MouseDown
   end
