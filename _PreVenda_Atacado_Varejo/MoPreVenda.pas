@@ -664,7 +664,7 @@ type
     procedure ImprimeEtiquetas_ItaCentralPescados_AdesivaDetalhada(aDtProduzido, aDtValidade: string); //Elgin L42 Pro
     procedure ImprimeEtiquetas_MiniMercadoAcougueItabaiana_GondolaGrande; //Elgin L42 Pro
     procedure ImprimeEtiquetas_MiniMercadoAcougueItabaiana_Gondola2Colunas; //Elgin L42 Pro
-    procedure ImprimeEtiquetas_DmCasaDecor;
+    procedure ImprimeEtiquetas_DmCasaDecor(StoreName: string); //Zebra TLP 2844
     procedure ImprimeEtiquetas_FenixSuperMercados; //Elgin L42 Pro
     procedure ImprimeEtiquetas_SenhorCoco; //Elgin L42 Pro
     procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
@@ -11704,8 +11704,8 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetas_MiniMercadoAcougueItabaiana_Gondola2Colunas;
   end
-  else if UpperCase(vFlagEtiqueta) = 'DMCASADECOR' then // ARGOX OS 214 Plus
-    ImprimeEtiquetas_DmCasaDecor
+  else if UpperCase(vFlagEtiqueta) = 'DMCASADECOR' then
+    ImprimeEtiquetas_DmCasaDecor('DM CASA DECOR')
   else if UpperCase(vFlagEtiqueta) = 'FENIXSUPER' then
     ImprimeEtiquetas_FenixSuperMercados
   else if UpperCase(vFlagEtiqueta) = 'SENHORCOCO' then
@@ -31270,7 +31270,7 @@ begin
 end;
 
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_DmCasaDecor;
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_DmCasaDecor(StoreName: string);
 
 var
   L, y, cont: integer;
@@ -31295,10 +31295,10 @@ begin
     cont := cont + 1;
   end;
 
-  if Frac(cont / 2) = 0.00 then
-    vqtd := cont / 2
+  if Frac(cont / 3) = 0.00 then
+    vqtd := cont / 3
   else
-    vqtd := (StrToInt(FormatFloat('0000', cont)) div 2) + 1;
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 3) + 1;
   cont := Trunc(vqtd);
 
   if cont <= 0 then
@@ -31311,7 +31311,7 @@ begin
   begin
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
-    Editor.Lines.Add('Q240,25');
+    Editor.Lines.Add('Q184,25');
     Editor.Lines.Add('q831');
     Editor.Lines.Add('');
     Editor.Lines.Add('D6');
@@ -31326,30 +31326,40 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A82,21,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 1, 20)+'"');
-    Editor.Lines.Add('A82,42,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 21, 10)+'"');
+    Editor.Lines.Add('A32,8,0,1,1,2,N,"'+StoreName+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B102,148,0,1,2,4,44,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('A142,201,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A32,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A125,91,0,2,1,1,N,"R$"');
-    Editor.Lines.Add('A170,89,0,1,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('B32,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A32,148,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('');
+
     if SgDados.Cells[0,L+1] <> '' then begin
-      Editor.Lines.Add('A506,21,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 1, 20)+'"');
-      Editor.Lines.Add('A506,42,0,2,1,1,N,"'+Copy(SgDados.Cells[1, L], 21, 10)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B526,148,0,1,2,4,44,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('A566,201,0,1,1,1,N,"' +SgDados.Cells[0, L]+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A549,91,0,2,1,1,N,"R$"');
-      Editor.Lines.Add('A594,89,0,1,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A312,8,0,1,1,2,N,"'+StoreName+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A312,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+1]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B312,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('A312,148,0,1,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('');
+    end;
+
+    if SgDados.Cells[0,L+2] <> '' then begin
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A592,8,0,1,1,2,N,"'+StoreName+'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A592,50,0,1,2,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L+2]))+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B592,100,0,1,2,4,40,N,"' +SgDados.Cells[0, L+2]+ '"');
+      Editor.Lines.Add('A592,148,0,1,1,1,N,"' +SgDados.Cells[0, L+2]+ '"');
       Editor.Lines.Add('');
     end;
 
     Editor.Lines.Add('P1');
-    L := L + 2;
+    L := L + 3;
   end;
 
   Editor.Lines.SaveToFile
