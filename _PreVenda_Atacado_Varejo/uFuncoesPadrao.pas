@@ -3013,6 +3013,7 @@ end;
 function CarregarImagemURL(var imagem :TImage; url: string) : Boolean;
 var
   Jpeg: TJpegImage;
+  Bitmap: TBitmap;
   Strm: TMemoryStream;
   ConWeb : TIdHTTP;
 begin
@@ -3035,10 +3036,23 @@ begin
       begin
         Strm.Position := 0;
         Jpeg.LoadFromStream(Strm);
-        imagem.Picture.Assign(Jpeg);
+        Bitmap := TBitmap.Create;
+        if (Jpeg.Width > imagem.Width) or (Jpeg.Height > imagem.Height) then
+        begin
+          // Redimensiona a imagem
+          Bitmap.Width := imagem.Width;
+          Bitmap.Height := imagem.Height;
+          Bitmap.Canvas.StretchDraw(Rect(0, 0, imagem.Width, imagem.Height), Jpeg);
+          Imagem.Picture.Assign(Bitmap);
+        end
+        else begin
+          // Se a imagem já for menor que as dimensões desejadas, carrega-a diretamente
+          Imagem.Picture.Assign(Jpeg);
+        end;
       end;
     finally
       Strm.Free;
+      Bitmap.Free;
       ConWeb.Free;
       Jpeg.Free;
       Screen.Cursor := crDefault;
