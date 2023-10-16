@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, IdSNTP, Variants,
   StdCtrls, Buttons, Db, DBTables, Mask, ExtCtrls, Registry, ComCtrls, CheckLst, ActiveX,
   DBIPROCS, DBITypes, DBIErrs,Grids, ADODB, IDhTTP,TypInfo, iniFiles, Vcl.Clipbrd, NEGLoja,
-  jpeg, IdIOHandlerSocket,IdSSLOpenSSL, IdFTP;
+  jpeg, IdIOHandlerSocket,IdSSLOpenSSL, IdFTP, System.Net.HttpClientComponent;
 
 type
    TNumerico = (SmallInt, Int, TinyInt);
@@ -3013,9 +3013,9 @@ end;
 function CarregarImagemURL(var imagem :TImage; url: string) : Boolean;
 var
   Jpeg: TJpegImage;
-  Bitmap: TBitmap;
+  //Bitmap: TBitmap;
   Strm: TMemoryStream;
-  ConWeb : TIdHTTP;
+  ConWeb : TNetHTTPClient;
 begin
   Result := true;
   if url = '' then
@@ -3025,47 +3025,51 @@ begin
   end;
   try
     try
-      url := StringReplace(url,'https','http',[]);
+      //url := StringReplace(url,'https','http',[]);
       Screen.Cursor := crHourGlass;
       Jpeg := TJpegImage.Create;
       Strm := TMemoryStream.Create;
-      ConWeb := TIdHTTP.Create;
+      ConWeb := TNetHTTPClient.Create(nil);
       //ConWeb.IOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(ConWeb);
-      //ConWeb.HandleRedirects := true;
-      ConWeb.Request.BasicAuthentication := True;
-      ConWeb.ConnectTimeout := 3000;
-      ConWeb.ReadTimeout := 3000;
+      ConWeb.HandleRedirects := true;
+      //ConWeb.ConnectTimeout := 3000;
+      //ConWeb.ReadTimeout := 3000;
+      //ConWeb.BoundPort := 0;
+      //ConWeb.BoundIP := '';
       ConWeb.Get(url, Strm);
+      //ConWeb.IOHandler.Free;
+      ConWeb.Free;
       if (Strm.Size > 0) then
       begin
         Strm.Position := 0;
         Jpeg.LoadFromStream(Strm);
-        Bitmap := TBitmap.Create;
-        if (Jpeg.Width > imagem.Width) or (Jpeg.Height > imagem.Height) then
-        begin
-          // Redimensiona a imagem
-          Bitmap.Width := imagem.Width;
-          Bitmap.Height := imagem.Height;
-          Bitmap.Canvas.StretchDraw(Rect(0, 0, imagem.Width, imagem.Height), Jpeg);
-          Imagem.Picture.Assign(Bitmap);
-        end
-        else begin
+//        Bitmap := TBitmap.Create;
+//        if (Jpeg.Width > imagem.Width) or (Jpeg.Height > imagem.Height) then
+//        begin
+//          // Redimensiona a imagem
+//          Bitmap.Width := imagem.Width;
+//          Bitmap.Height := imagem.Height;
+//          Bitmap.Canvas.StretchDraw(Rect(0, 0, imagem.Width, imagem.Height), Jpeg);
+//          Imagem.Picture.Assign(Bitmap);
+//        end
+//        else begin
           // Se a imagem já for menor que as dimensões desejadas, carrega-a diretamente
           Imagem.Picture.Assign(Jpeg);
-        end;
+        //end;
       end;
     except
-      Screen.Cursor := crDefault;
-      imagem.Picture := nil;
-      Result := false;
-      raise Exception.Create('Erro ao carregar o link da imagem');
+      on E : Exception do begin
+        Screen.Cursor := crDefault;
+        imagem.Picture := nil;
+        Result := false;
+        raise Exception.Create(E.Message);
+      end;
     end;
   finally
     Screen.Cursor := crDefault;
     Strm.Free;
-    if Bitmap <> nil then
-      Bitmap.Free;
-    ConWeb.Free;
+//    if Bitmap <> nil then
+//      Bitmap.Free;
     Jpeg.Free;
   end;
 end;
