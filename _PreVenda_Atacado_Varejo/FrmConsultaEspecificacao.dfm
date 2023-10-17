@@ -275,7 +275,6 @@ object FrmEspecificacao: TFrmEspecificacao
     Center = True
     ParentShowHint = False
     PopupMenu = PopupMenu1
-    Proportional = True
     ShowHint = True
     Stretch = True
     OnClick = Image1Click
