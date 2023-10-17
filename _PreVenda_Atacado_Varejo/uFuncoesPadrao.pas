@@ -3025,7 +3025,7 @@ begin
   end;
   try
     try
-      //url := StringReplace(url,'https','http',[]);
+      url := StringReplace(url,'https','http',[]);
       Screen.Cursor := crHourGlass;
       Jpeg := TJpegImage.Create;
       Strm := TMemoryStream.Create;
