@@ -17692,7 +17692,7 @@ begin
         prevenda.conferida := false;
         // prevenda.numeroPrevenda := StrtoInt(EdtLancto.Text);
         prevenda.dataEmissao := DtLancto.Date;
-        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked);
+        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked, true);
         if listaLiberacoes <> nil then
         begin
           for liberacao in listaLiberacoes do
