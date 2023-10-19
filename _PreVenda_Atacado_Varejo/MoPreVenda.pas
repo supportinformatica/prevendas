@@ -683,7 +683,7 @@ type
     procedure ImprimeEtiquetas_VivaFesta_Gondola; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_VivaFesta_MiniGondola; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_VivaFesta_3Colunas; //Elgin L42 Pro Full
-
+    procedure ImprimeEtiquetas_ShopFemme(StoreNameLine1, StoreNameLine2: string); //Elgin L42 DT
 
     procedure MountFlag_Cliente_De_Teste; // Elgins Printers
 
@@ -11761,6 +11761,8 @@ begin
       ImprimeEtiquetas_VivaFesta_3Colunas;
   end
 
+  else if UpperCase(vFlagEtiqueta) = 'SHOPFEMME' then
+    ImprimeEtiquetas_ShopFemme('Shop', 'FEMME!')
 
   else if UpperCase(vFlagEtiqueta) = 'CLIENTEDETESTE' then
     MountFlag_Cliente_De_Teste;
@@ -33137,6 +33139,111 @@ begin
 end;
 
 
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ShopFemme(StoreNameLine1, StoreNameLine2: string);
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+  // SalvaEtiquetas;
+
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q320,25');
+    Editor.Lines.Add('q696');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A110,20,0,2,2,2,N,"' +StoreNameLine1+ '"');
+    Editor.Lines.Add('A94,52,0,2,2,2,N,"' +StoreNameLine2+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A32,96,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A32,124,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A48,176,0,1,2,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B24,232,0,1,3,4,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A40,280,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A457,20,0,2,2,2,N,"' +StoreNameLine1+ '"');
+    Editor.Lines.Add('A441,52,0,2,2,2,N,"' +StoreNameLine2+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A376,96,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A376,124,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A391,176,0,1,2,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B368,232,0,1,3,4,40,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A384,280,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+
+
+
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
 begin
@@ -33208,6 +33315,7 @@ begin
 
   end;
 end;
+
 
 
 {
