@@ -16699,6 +16699,7 @@ begin
       20)) + '"');
     Editor.Lines.Add('A47,131,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A17,150,0,3,1,1,N,"R$ ' + SgDados.Cells[3, L] + '"');
+
     Editor.Lines.Add('B294,49,0,1,2,4,80,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A296,11,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
       19)) + '"');
@@ -16707,6 +16708,7 @@ begin
     Editor.Lines.Add('A335,131,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A305,150,0,3,1,1,N,"R$ ' + SgDados.Cells[3, L] + '"');
     Editor.Lines.Add('JF');
+
     Editor.Lines.Add('B581,49,0,1,2,4,80,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A583,11,0,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
       19)) + '"');
@@ -17094,9 +17096,12 @@ end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaGrandeLayeVictor;
 var
-  L: Integer;
+  L, y: Integer;
   Arq: TextFile;
   vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
@@ -17106,13 +17111,28 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
-    SalvaEtiquetas;
-  Editor.Lines.Clear;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 3) = 0.00 then
+    vqtd := cont / 3
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 3) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q460,24');
@@ -17126,42 +17146,40 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    //Editor.Lines.Add('S2');
 
     Editor.Lines.Add('A204,362,2,2,1,1,N,"' + nmEmpresa + '"');
     Editor.Lines.Add('A262,320,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
     Editor.Lines.Add('A262,302,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
-    Editor.Lines.Add('B240,224,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('B238,116,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
+    Editor.Lines.Add('B240,224,2,E30,2,4,43,B,"' + SgDados.Cells[0, L] + '"');
+    Editor.Lines.Add('B238,116,2,E30,2,4,55,B,"' + SgDados.Cells[0, L] + '"');
     Editor.Lines.Add('A264,342,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
     Editor.Lines.Add('A262,282,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A486,356,2,2,1,1,N,"' + nmEmpresa + '"');
-    Editor.Lines.Add('A544,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
-    Editor.Lines.Add('A544,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
-    Editor.Lines.Add('B514,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('B512,110,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('A546,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
-    Editor.Lines.Add('A544,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A770,356,2,2,1,1,N,"' + nmEmpresa + '"');
-    Editor.Lines.Add('A818,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1, 19)) + '"');
-    Editor.Lines.Add('A818,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20, 20)) + '"');
-    Editor.Lines.Add('B796,218,2,E30,2,4,43,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('B794,110,2,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-    Editor.Lines.Add('A820,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L] + '"');
-    Editor.Lines.Add('A818,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L] + '"');
-    Editor.Lines.Add('');
-
-    // Cálculo para imprimir a qtd de etiquetas certo
-    if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
-      vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
-    else
-      vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
-        div 3) + 1;
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Editor.Lines.Add('A486,356,2,2,1,1,N,"' + nmEmpresa + '"');
+      Editor.Lines.Add('A544,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L+1], 1, 19)) + '"');
+      Editor.Lines.Add('A544,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L+1], 20, 20)) + '"');
+      Editor.Lines.Add('B514,218,2,E30,2,4,43,B,"' + SgDados.Cells[0, L+1] + '"');
+      Editor.Lines.Add('B512,110,2,E30,2,4,55,B,"' + SgDados.Cells[0, L+1] + '"');
+      Editor.Lines.Add('A546,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L+1] + '"');
+      Editor.Lines.Add('A544,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L+1] + '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+    end;
+    if SgDados.Cells[0,L+2] <> '' then begin
+      Editor.Lines.Add('A770,356,2,2,1,1,N,"' + nmEmpresa + '"');
+      Editor.Lines.Add('A818,314,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L+2], 1, 19)) + '"');
+      Editor.Lines.Add('A818,296,2,2,1,1,N,"' + trim(Copy(SgDados.Cells[1, L+2], 20, 20)) + '"');
+      Editor.Lines.Add('B796,218,2,E30,2,4,43,B,"' + SgDados.Cells[0, L+2] + '"');
+      Editor.Lines.Add('B794,110,2,E30,2,4,55,B,"' + SgDados.Cells[0, L+2] + '"');
+      Editor.Lines.Add('A820,336,2,2,1,1,N,"' + 'Ref: ' + SgDados.Cells[7, L+2] + '"');
+      Editor.Lines.Add('A818,276,2,3,2,2,N,"' + 'R$' + SgDados.Cells[3, L+2] + '"');
+      Editor.Lines.Add('');
+    end;
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    L := L + 3;
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -17170,10 +17188,15 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
-    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
+  if Produto <> nil then
+    FreeAndNil(Produto);
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
@@ -30502,12 +30525,13 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_LayEVictorI;
-
 var
-  L: Integer;
+  L, y: Integer;
   Arq: TextFile;
   vqtd: Real;
-
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
@@ -30517,13 +30541,28 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
-    SalvaEtiquetas;
-  Editor.Lines.Clear;
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+
+  // SalvaEtiquetas;
+  cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
+    cont := cont + 1;
+  end;
+  if Frac(cont / 3) = 0.00 then
+    vqtd := cont / 3
+  else
+    vqtd := (StrToInt(FormatFloat('0000', cont)) div 3) + 1;
+  cont := Trunc(vqtd);
+  if cont <= 0 then
+    cont := 1;
+  Editor.Lines.Clear;
+  L := 1;
+  for y := 1 to cont do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q184,25');
@@ -30541,59 +30580,34 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
+
     Editor.Lines.Add('A32,8,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L],1,20) +'"');
     Editor.Lines.Add('A32,24,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L], 21,20) +'"');
-    Editor.Lines.Add('B8,48,0,1,2,4,40,N,"' +SgDados.Cells[6, L] +'"');
-    Editor.Lines.Add('A72,96,0,1,1,1,N,"' +SgDados.Cells[6, L] +'"');
+    Editor.Lines.Add('B8,48,0,1,2,4,40,N,"' +SgDados.Cells[0, L] +'"');
+    Editor.Lines.Add('A72,96,0,1,1,1,N,"' +SgDados.Cells[0, L] +'"');
     Editor.Lines.Add('A24,128,0,1,2,2,N,"R$ ' +SgDados.Cells[3, L] +'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A318,8,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L],1,20) +'"');
-    Editor.Lines.Add('A318,24,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L], 21,20) +'"');
-    Editor.Lines.Add('B294,48,0,1,2,4,40,N,"' +SgDados.Cells[6, L] +'"');
-    Editor.Lines.Add('A358,96,0,1,1,1,N,"' +SgDados.Cells[6, L] +'"');
-    Editor.Lines.Add('A310,128,0,1,2,2,N,"R$ ' +SgDados.Cells[3, L] +'"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A608,8,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L],1,20) +'"');
-    Editor.Lines.Add('A608,24,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L], 21,20) +'"');
-    Editor.Lines.Add('B584,48,0,1,2,4,40,N,"' +SgDados.Cells[6, L] +'"');
-    Editor.Lines.Add('A648,96,0,1,1,1,N,"' +SgDados.Cells[6, L] +'"');
-    Editor.Lines.Add('A600,128,0,1,2,2,N,"R$ ' +SgDados.Cells[3, L] +'"');
-    Editor.Lines.Add('');
+    if SgDados.Cells[0,L+1] <> '' then begin
+      Editor.Lines.Add('A318,8,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L+1],1,20) +'"');
+      Editor.Lines.Add('A318,24,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 21,20) +'"');
+      Editor.Lines.Add('B294,48,0,1,2,4,40,N,"' +SgDados.Cells[0, L+1] +'"');
+      Editor.Lines.Add('A358,96,0,1,1,1,N,"' +SgDados.Cells[0, L+1] +'"');
+      Editor.Lines.Add('A310,128,0,1,2,2,N,"R$ ' +SgDados.Cells[3, L+1] +'"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+    end;
+    if SgDados.Cells[0,L+2] <> '' then begin
+      Editor.Lines.Add('A608,8,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L+2],1,20) +'"');
+      Editor.Lines.Add('A608,24,0,1,1,1,N,"' +Copy(SgDados.Cells[1, L+2], 21,20) +'"');
+      Editor.Lines.Add('B584,48,0,1,2,4,40,N,"' +SgDados.Cells[0, L+2] +'"');
+      Editor.Lines.Add('A648,96,0,1,1,1,N,"' +SgDados.Cells[0, L+2] +'"');
+      Editor.Lines.Add('A600,128,0,1,2,2,N,"R$ ' +SgDados.Cells[3, L+2] +'"');
+      Editor.Lines.Add('');
+    end;
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-
-    // Cálculo para imprimir a qtd de etiquetas certo
-//    if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
-//      vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
-//    else
-//      vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
-//        div 3) + 1;
-//    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-
-
-//    Editor.Lines.Add('');
-//    Editor.Lines.Add('');
-//    Editor.Lines.Add('A296,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-//      19)) + '"');
-//    Editor.Lines.Add('A512,34,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-//      20)) + '"');
-//    Editor.Lines.Add('A298,126,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3, L] +
-//      '"');
-//    Editor.Lines.Add('B292,52,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-//    Editor.Lines.Add('');
-//    Editor.Lines.Add('');
-//    Editor.Lines.Add('A578,34,0,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 1,
-//      19)) + '"');
-//    Editor.Lines.Add('A796,34,1,1,1,1,N,"' + trim(Copy(SgDados.Cells[1, L], 20,
-//      20)) + '"');
-//    Editor.Lines.Add('A580,124,0,1,2,3,N,"' + 'R$ ' + SgDados.Cells[3,
-//      L] + '"');
-//    Editor.Lines.Add('B576,50,0,E30,2,4,55,B,"' + SgDados.Cells[6, L] + '"');
-//    Editor.Lines.Add('');
-
-
+    L := L + 3;
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -30602,10 +30616,15 @@ begin
     'print2.bat')), sw_ShowNormal);
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
-    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
+  if Produto <> nil then
+    FreeAndNil(Produto);
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
