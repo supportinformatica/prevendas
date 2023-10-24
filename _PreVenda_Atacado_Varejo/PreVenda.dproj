@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{11F4B1E4-01B6-4C97-9FEF-E29E75708DC3}</ProjectGuid>
         <MainSource>PreVenda.dpr</MainSource>
