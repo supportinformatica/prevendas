@@ -3134,7 +3134,7 @@ begin
   if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
     CbxAmbiente.Text := InputBox('Digite a data de validade','Data de Validade','');
   if ((UpperCase(vEmpresa) = 'JNUNES') AND (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or
-     (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or
+     (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or
      (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
@@ -3149,7 +3149,7 @@ begin
     FrmDescricao.EdtQtdSai.Text := FormatFloat('0.00000',
       StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtFator.Text := '1,00000';
-    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
+    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
     begin
       FrmDescricao.Panel2.Visible := false;
       FrmDescricao.height := 112;
@@ -3298,7 +3298,7 @@ begin
     itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('Código').AsInteger);
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
-       (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194')
+       (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194')
     then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
@@ -4232,7 +4232,7 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -4306,7 +4306,7 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
+  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -5647,7 +5647,7 @@ begin
     FrmRelOrcamentos.RlDescricao.width := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '26620942000166') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
+  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
