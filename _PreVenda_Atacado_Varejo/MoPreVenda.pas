@@ -3302,7 +3302,6 @@ begin
     then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
-
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
        (UpperCase(vEmpresa) = 'ANADRI') then
     begin
@@ -3314,10 +3313,8 @@ begin
       end;
       itemPrevenda.unidade := und;
     end;
-
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
       itemPrevenda.fatorConversao := vFatorGama;
-
     if (usarLoteValidade = True) and ((lote <> '') and (cdFabricanteLote <> ''))
     then
     begin
@@ -3328,7 +3325,6 @@ begin
       itemPrevenda.quantidade := 1
     else
       itemPrevenda.quantidade := quantidade;
-
     itemPrevenda.precoVenda := StrToFloat(EdtPreco.Text);
     itemPrevenda.precoBruto := SimpleRoundTo(getValorVendaProduto, vCasasPreco * -1);
     // RoundTo(ADOSPConsultaVALOR.AsFloat,vCasasPreco*-1);
@@ -3360,7 +3356,6 @@ begin
     end;
     if (UpperCase(vEmpresa) = 'AMBIENTE') then
       itemPrevenda.ambiente := TNEGAmbiente.getAmbiente(StrToIntDef(EdtCdAmbiente.Text, -1));
-
     if (UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO') then
     begin
       if ((StrToFloat(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsFloat)) >
@@ -5705,7 +5700,7 @@ begin
     Pchar(ExtractFilePath(Application.ExeName) +
     FrmRelOrcamentos.ADOSPRelDados.FieldByName('nrOrcamento').AsString
     + '.pdf');
-  if (UpperCase(vEmpresa) = 'ANADRI') or (UpperCase(vEmpresa) = 'GAMA') then
+  if (UpperCase(vEmpresa) = 'ANADRI') or (UpperCase(vEmpresa) = 'GAMA') or (FrmPrincipalPreVenda.dsCGC = '47305252000192') then
   begin
     FrmRelOrcamentos.RlDescricao.Visible := True;
     FrmRelOrcamentos.RlDescricao.Transparent := False;
@@ -5769,7 +5764,6 @@ begin
       FrmRelOrcamentos.QrlUf2.caption    := FieldByName('dsUf').AsString;
       FrmRelOrcamentos.QreRota2.caption  := FieldByName('dsRegiao').AsString;
     end;
-    // FrmRelOrcamentos.QRLabel21.Caption   := FormatFloat('0.00',StrToFloat(EdtTotal.Text) - StrToFloat(EdtSubTotal.Text));
     sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
       'Where cdPessoa = :CDPESSOA ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
@@ -5803,8 +5797,7 @@ begin
         FrmRelOrcamentos.RLLCNPJ_Dest.caption := 'CPF/CNPJ: ' +
           FieldByName('CGC').AsString;
     end;
-    if UpperCase(vEmpresa) = 'CARIOCA' then
-    // carioca n quer q imprima os dados do cliente
+    if UpperCase(vEmpresa) = 'CARIOCA' then  // carioca n quer q imprima os dados do cliente
     begin
       FrmRelOrcamentos.QrlCPF.caption := 'CPF/CNPJ: ';
       FrmRelOrcamentos.QrlRG.caption := 'RG/IE: ';
@@ -5816,8 +5809,7 @@ begin
     FrmRelOrcamentos.QrlDtHR.caption :=
       DateToStr(DateOf(FrmRelOrcamentos.AdoQryOrcamento.FieldByName('hrHora')
       .AsDateTime))
-  else if (SoNumeros(dsCGC) = '03643774000129') then
-  // esse cliente Torrone quer q a data fique aberta
+  else if (SoNumeros(dsCGC) = '03643774000129') then  // esse cliente Torrone quer q a data fique aberta
     FrmRelOrcamentos.QrlDtHR.caption :=
       FrmRelOrcamentos.AdoQryOrcamento.FieldByName('dtEmissao').AsString
   else
@@ -5838,8 +5830,7 @@ begin
       FrmRelOrcamentos.QRLblTitulo2.caption := 'Orçamento'
     else if RgOpcoes.ItemIndex = 4 then
       FrmRelOrcamentos.QRLblTitulo2.caption := 'Simples Remessa';
-  end
-  else
+  end else
   begin
     if RgOpcoes.ItemIndex = 0 then
       FrmRelOrcamentos.QRLblTitulo.caption := 'Pré-Venda'
@@ -6039,10 +6030,6 @@ begin
       FrmRelOrcamentos.Free;
     except
       exit;
-      // Application.OnMessage := FormPrincipal.ProcessaMsg;
-
-      // Limpar_Tela;
-      // RgOpcoes.ItemIndex := 0;
     end;
   end;
 end;
@@ -10582,8 +10569,10 @@ procedure TFrmPrincipalPreVenda.EdtConsultaKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key <> 13) and (Key <> VK_Down) and (Key <> VK_Up)
-    and (Key <> VK_Left) and (Key <> VK_Right)then begin
-    if vOtimiza = 'S' then begin
+    and (Key <> VK_Left) and (Key <> VK_Right)then
+  begin
+    if vOtimiza = 'S' then
+    begin
       Screen.Cursor := crHourGlass;
       TimerRealizarPesquisa.Enabled := true;
     end;
@@ -10606,8 +10595,8 @@ var
   parcelasCartao : string;
 begin
   Editor.Clear;
-  if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARIOCA')
-    OR (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS')) and (vImpressao_40 = 'S') then
+  if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS'))
+    and (vImpressao_40 = 'S') then
   begin
 
   end else if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
@@ -10680,8 +10669,8 @@ begin
         vtitulo := 'ORCAMENTO';
       // esta primeira impressão referente ao bloco abaixo é somente p a ELETRONICAf NACIONAL
       if (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Texto.txt'))) and FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print.bat'))) and
+        'Texto.txt'))) and FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+        'Print.bat'))) and
         ((UpperCase(vEmpresa) = 'NACIONAL') or (UpperCase(vEmpresa) = 'CICLOMOTOS')
         or (dsCGC = '03821965000133') or (dsCGC = '17111138000160')) // eletronica Campos
         and (RgOpcoes.ItemIndex <> 2) and (vOrcamento <> 'O')) then

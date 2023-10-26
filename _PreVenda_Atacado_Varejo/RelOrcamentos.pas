@@ -178,10 +178,8 @@ type
       var PrintIt: Boolean);
     procedure lblTotalBeforePrint(Sender: TObject; var AText: string;
       var PrintIt: Boolean);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure QREOrcamentoAfterPrint(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure RLDBResult3AfterPrint(Sender: TObject);
   private
     { Private declarations }
     totalLiquido, totalBruto : Real;
@@ -197,12 +195,6 @@ implementation
 uses DataModulo, MoPreVenda, NEGLoja, uFuncoesPadrao;
 
 {$R *.dfm}
-
-procedure TfrmRelOrcamentos.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-//
-end;
 
 procedure TfrmRelOrcamentos.FormCreate(Sender: TObject);
 var
@@ -242,8 +234,6 @@ begin
     QreUnidade.DataField := 'dsMetragem'
   else
     QreUnidade.DataField := 'dsUnidade';
-//  if (UpperCase(vEmpresa) = 'PTINTAS') then
-//    QREDescricao.DataField := 'dsServico';
   if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then
   begin
     RLPanel1.Top := RLPanel1.Top + 15;
@@ -349,24 +339,6 @@ begin
     RLBand2.Font.Size := 6
   else
     RLBand2.Font.Size := 7;
-{  if (UPPERCASE(vEmpresa) = 'MEGA')and(vOrcamento = 'O') then
-  begin
-    with AdoQuery1 do
-    begin
-      RlDescricao.Caption := ADOSPRelDados.FieldByName('nmProduto').AsString;
-      if (not TNEGProduto.possuiEstoqueReal(ADOSPRelDados.fieldbyname('cdProduto').asInteger)) then
-        RlDescricao.Caption:=  Chr(187) + ' ' + RlDescricao.Caption;
-    end
-  end else if UPPERCASE(vEmpresa) = 'CARIOCA' then
-  begin
-    with AdoQuery1 do
-    begin
-      Sql.Text := 'Select dsProdutoNota From produto WITH (NOLOCK) where cdproduto = :CD ';
-      parameters.parambyname('CD').Value := ADOSPRelDados.fieldbyname('cdProduto').asString;
-      Open;
-      RlDescricao.Caption := FieldByName('dsProdutoNota').asstring;
-    end;
-  end else }
   if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
     (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or (FrmPrincipalPreVenda.dsCGC = '47305252000192') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
     (FrmPrincipalPreVenda.dsCGC = '33185213000194') then
@@ -411,8 +383,6 @@ begin
   lblSubTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalLiquido,-2));
   lblValorDesconto.Caption := FloatToStr(StrtoFloat(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) - StrtoFloat(StringReplace(lblTotal.Caption,'.','',[rfReplaceAll])));
-//  if StrtoFloat(lblValorDesconto.Caption) < 0 then
-//      lblValorDesconto.Caption := FloatToStr(StrtoFloat(lblValorDesconto.Caption) * -1);
   if (lblPorcDesconto.Visible = True) and ((StrToFloatDef(lblValorDesconto.Caption, 0) > 0)) then
   begin
     lblPorcDesconto.Caption := FormatFloat('0.00',(1 - (StrtoFloat(lblTotal.Caption) / StrtoFloat(lblSubTotal.Caption)) )*100);
@@ -421,11 +391,6 @@ begin
   end;
   lblSubTotal.Caption := FormatFloat('###,##0.00',SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('###,##0.00',SimpleRoundTo(totalLiquido,-2));
-end;
-
-procedure TfrmRelOrcamentos.RLDBResult3AfterPrint(Sender: TObject);
-begin
-//
 end;
 
 procedure TfrmRelOrcamentos.RLDBResult3BeforePrint(Sender: TObject;

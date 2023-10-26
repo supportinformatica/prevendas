@@ -14,7 +14,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
   Position = poDefault
   PrintScale = poNone
   Scaled = False
-  OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
@@ -964,7 +963,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Font.Style = []
           ParentFont = False
           Text = ''
-          AfterPrint = RLDBResult3AfterPrint
           BeforePrint = RLDBResult3BeforePrint
         end
         object RLDBText2: TRLDBText
