@@ -2298,7 +2298,7 @@ begin
     Shape4.Visible := false;
   end;
   if (Empresas_UmaEtiqueta_porColuna = True) or (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
-  (UpperCase(vFlagEtiqueta) = 'YZLU') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
+  (UpperCase(vFlagEtiqueta) = 'LAYEVICTOR1') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
   (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
   (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
   (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
