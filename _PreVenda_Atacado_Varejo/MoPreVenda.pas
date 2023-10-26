@@ -684,6 +684,7 @@ type
     procedure ImprimeEtiquetas_VivaFesta_MiniGondola; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_VivaFesta_3Colunas; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_ShopFemme(StoreNameLine1, StoreNameLine2: string); //Elgin L42 DT
+    procedure ImprimeEtiquetas_MixContainerMinimercado; //Elgin L42 DT
 
     procedure MountFlag_Cliente_De_Teste; // Elgins Printers
 
@@ -2298,10 +2299,10 @@ begin
     Shape4.Visible := false;
   end;
   if (Empresas_UmaEtiqueta_porColuna = True) or (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
-  (UpperCase(vFlagEtiqueta) = 'LAYEVICTOR1') or (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
-  (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
-  (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
-  (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
+    (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
+    (UpperCase(vFlagEtiqueta) = 'ZANQUYSHOPPING') or (UpperCase(vFlagEtiqueta) = 'EQUILIBRIO') or
+    (UpperCase(vFlagEtiqueta) = 'AQUARELA') or (UpperCase(vFlagEtiqueta) = 'DOFF') or
+    (UpperCase(vFlagEtiqueta) = 'LORDKIDS') or (UpperCase(vFlagEtiqueta) = 'YZLUSANTANA') then
     chkbxEtiqueta.Visible := true;
   if (UpperCase(vEmpresa) = 'SANTANA')
   then // LIBERA P ALTERAR A QUANTIDADE NO PRODUTO DIRETO NA GRID
@@ -11753,6 +11754,9 @@ begin
   else if UpperCase(vFlagEtiqueta) = 'SHOPFEMME' then
     ImprimeEtiquetas_ShopFemme('Shop', 'FEMME!')
 
+  else if UpperCase(vFlagEtiqueta) = 'MIXCONTAINER' then
+    ImprimeEtiquetas_MixContainerMinimercado
+
   else if UpperCase(vFlagEtiqueta) = 'CLIENTEDETESTE' then
     MountFlag_Cliente_De_Teste;
 
@@ -16420,7 +16424,7 @@ begin
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
    or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
    or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA')
-   or (UpperCase(vFlagEtiqueta) = 'VALMOTOS') then
+   or (UpperCase(vFlagEtiqueta) = 'VALMOTOS') or (UpperCase(vFlagEtiqueta) = 'LAYEVICTOR1') then
     Result := True
   else
     Result := False;
@@ -33218,6 +33222,97 @@ begin
     Editor.Lines.Add('B368,232,0,1,3,4,40,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('A384,280,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+  begin
+    ShowMessage('Não foi encontrado o arquivo Print.bat');
+    exit;
+  end;
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+
+
+
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MixContainerMinimercado;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  cont: Integer;
+  pessoa : TPessoa;
+  Produto: TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
+  // SalvaEtiquetas;
+
+
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    // if SgDados.Cells[0,L] = '' then Break;
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q320,25');
+    Editor.Lines.Add('q696');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A132,96,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 30)+ '"');
+    Editor.Lines.Add('A132,140,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 31, 10)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A228,224,0,3,1,1,N,"R$"');
+    Editor.Lines.Add('A268,200,0,4,2,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A140,280,0,3,1,1,N,"COD: ' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('');
+
 
     vqtd := StrToFloat(SgDados.Cells[2, L]);
 
