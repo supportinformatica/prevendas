@@ -661,14 +661,16 @@ end;
 
 procedure TFrmFormaPag.preencherGridParcelas(numParcelas: integer; valor: Real; tipo : string);
 var
-  valorParcela, resto: Real;
+  valorParcela, resto: Currency;
   debito, parc1, parc2, parc3, parc4, parc5, parc6,
-  parc7, parc8, parc9, parc10, parc11, parc12 : Real;
+  parc7, parc8, parc9, parc10, parc11, parc12 : Currency;
+  soma_Aliquotas : Currency;
   i: integer;
   qry : TADOQuery;
 begin
   Limpa_Grid(gridParcelas);
   qry := TADOQuery.Create(nil);
+  soma_Aliquotas := 0;
   with qry do
   begin
     Connection := DModulo.Conexao;
@@ -678,19 +680,20 @@ begin
     'ISNULL(nrPgCartao8Vezes,0) oitoV, ISNULL(nrPgCartao9Vezes,0) noveV, ISNULL(nrPgCartao10Vezes,0) dezV, ISNULL(nrPgCartao11Vezes,0) onzeV,  '+
     'ISNULL(nrPgCartao12Vezes,0) dozeV From Configuracao with (nolock)';
     Open;
-    debito := FieldByName('Deb').AsFloat / 100;
-    parc1  := FieldByName('umV').AsFloat / 100;
-    parc2  := FieldByName('doisV').AsFloat / 100;
-    parc3  := FieldByName('tresV').AsFloat / 100;
-    parc4  := FieldByName('quatroV').AsFloat / 100;
-    parc5  := FieldByName('cincoV').AsFloat / 100;
-    parc6  := FieldByName('seisV').AsFloat / 100;
-    parc7  := FieldByName('seteV').AsFloat / 100;
-    parc8  := FieldByName('oitoV').AsFloat / 100;
-    parc9  := FieldByName('noveV').AsFloat / 100;
-    parc10 := FieldByName('dezV').AsFloat / 100;
-    parc11 := FieldByName('onzeV').AsFloat / 100;
-    parc12 := FieldByName('dozeV').AsFloat / 100;
+    debito := FieldByName('Deb').AsCurrency / 100;
+    parc1  := FieldByName('umV').AsCurrency / 100;
+    parc2  := FieldByName('doisV').AsCurrency / 100;
+    parc3  := FieldByName('tresV').AsCurrency / 100;
+    parc4  := FieldByName('quatroV').AsCurrency / 100;
+    parc5  := FieldByName('cincoV').AsCurrency / 100;
+    parc6  := FieldByName('seisV').AsCurrency / 100;
+    parc7  := FieldByName('seteV').AsCurrency / 100;
+    parc8  := FieldByName('oitoV').AsCurrency / 100;
+    parc9  := FieldByName('noveV').AsCurrency / 100;
+    parc10 := FieldByName('dezV').AsCurrency / 100;
+    parc11 := FieldByName('onzeV').AsCurrency / 100;
+    parc12 := FieldByName('dozeV').AsCurrency / 100;
+    soma_Aliquotas := debito + parc1 + parc2 + parc3 + parc4 + parc5 + parc6 + parc7 + parc8 + parc9 + parc10 + parc11 + parc12;
   end;
   if tipo = '' then
   begin
@@ -712,15 +715,8 @@ begin
       Cells[1, 0] := 'Valor';
       Cells[2, 0] := 'Valor Parcela';
       Cells[0, 1] := 'Deb';
-//      if (vAtacadoVarejo = 'A') then
-//      begin
       Cells[1, 1] := FormatFloatQ(2, valor * (1 + debito));
       Cells[2, 1] := FormatFloatQ(2, (valor * (1 + debito)));
-//      end else
-//      begin
-//        Cells[1, 1] := FormatFloatQ(2, valor);
-//        Cells[2, 1] := FormatFloatQ(2, valor);
-//      end;
     end;
   end else if (tipo = 'CARTAO') and (numParcelas = 1) then
   begin
@@ -730,15 +726,8 @@ begin
       Cells[1, 0] := 'Valor';
       Cells[2, 0] := 'Valor Parcela';
       Cells[0, 1] := '1x';
-//      if (vAtacadoVarejo = 'A') then
-//      begin
-        Cells[1, 1] := FormatFloatQ(2, valor * (1 + parc1));
-        Cells[2, 1] := FormatFloatQ(2, (valor * (1 + parc1)));
-//      end else
-//      begin
-//        Cells[1, 1] := FormatFloatQ(2, valor);
-//        Cells[2, 1] := FormatFloatQ(2, valor);
-//      end;
+      Cells[1, 1] := FormatFloatQ(2, valor * (1 + parc1));
+      Cells[2, 1] := FormatFloatQ(2, (valor * (1 + parc1)));
     end;
   end else
   begin
@@ -759,11 +748,10 @@ begin
       Cells[0, 9]  := '10x';
       Cells[0, 10] := '11x';
       Cells[0, 11] := '12x';
-//      Cells[0, 12] := '12x';
     end;
     for i := 2 to numParcelas do
     begin
-      if (vAtacadoVarejo = 'A') or (vAtacadoVarejo = 'V') then
+      if (soma_Aliquotas > 0) and ((vAtacadoVarejo = 'A') or (vAtacadoVarejo = 'V')) then // diferente de CONSTRUFORT
       begin
         with gridParcelas do
         begin
@@ -835,9 +823,9 @@ begin
       begin
         with gridParcelas do
         begin
-          Cells[1, i] := FormatFloatQ(2, valor );
-          Cells[2, i] := FormatFloatQ(2, (valor / i));
-          Cells[3, i] := ' ';
+          Cells[1, i-1] := FormatFloatQ(2, valor );
+          Cells[2, i-1] := FormatFloatQ(2, (valor / i));
+          Cells[3, i-1] := ' ';
         end;
       end;
     end;

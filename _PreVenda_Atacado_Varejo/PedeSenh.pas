@@ -402,22 +402,23 @@ begin
       'ISNULL(nrPgCartao8Vezes,0) oitoV, ISNULL(nrPgCartao9Vezes,0) noveV, ISNULL(nrPgCartao10Vezes,0) dezV, ISNULL(nrPgCartao11Vezes,0) onzeV,  '+
       'ISNULL(nrPgCartao12Vezes,0) dozeV, * From Configuracao WITH (NOLOCK)';
       Open;
-      if (ADOQryConfigurar.FieldByName('Deb').AsCurrency    +
-         ADOQryConfigurar.FieldByName('umV').AsCurrency     +
-         ADOQryConfigurar.FieldByName('doisV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('tresV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('quatroV').AsCurrency +
-         ADOQryConfigurar.FieldByName('cincoV').AsCurrency  +
-         ADOQryConfigurar.FieldByName('seisV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('seteV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('oitoV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('noveV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('dezV').AsCurrency    +
-         ADOQryConfigurar.FieldByName('onzeV').AsCurrency   +
-         ADOQryConfigurar.FieldByName('dozeV').AsCurrency) > 0 then
-        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True
-      else
-        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := False;
+//      if (ADOQryConfigurar.FieldByName('Deb').AsCurrency    +
+//         ADOQryConfigurar.FieldByName('umV').AsCurrency     +
+//         ADOQryConfigurar.FieldByName('doisV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('tresV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('quatroV').AsCurrency +
+//         ADOQryConfigurar.FieldByName('cincoV').AsCurrency  +
+//         ADOQryConfigurar.FieldByName('seisV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('seteV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('oitoV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('noveV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('dezV').AsCurrency    +
+//         ADOQryConfigurar.FieldByName('onzeV').AsCurrency   +
+//         ADOQryConfigurar.FieldByName('dozeV').AsCurrency) > 0 then
+//        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True
+//      else
+//        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := False;
+      FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True;
       if ADOQryConfigurar.FieldByName('dtExpiracopia').AsDateTime > (StrToDate(vData_Banco) + 120) then
       begin
         with DModulo.ADOQuery1 do
