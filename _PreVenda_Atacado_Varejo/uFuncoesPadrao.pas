@@ -25,6 +25,14 @@ const
    ERROR_USER_DISCONNECTION = RASBASE + 31;
    feriadosNacionais: array[0..7] of string = ('01/01','21/04','01/05','07/09','12/10','02/11','15/11','25/12');
 
+function NaoContribuinteDeICMS(cdPessoa: string): integer;
+
+function getAliqInternaDestinatario(UFDest: string): Currency;
+
+function isRegiao_Norte_Nordeste_CentroOeste(CONST UF: string): boolean;
+
+function getAliqInterestadual(UFDest, UFOrig, CST: string): Real;
+
 procedure Limpa_Grid(grid : TStringGrid );
 
 function BuscaCep(CEP : String) : ArrayRetorno;
@@ -1047,7 +1055,72 @@ begin
     //MessageDlg('Este CEP não é válido. Se não souber o CEP deixe o campo em branco.',mtInformation,[mbOK],0);
   end;
 end;
-{*******************************************************************************}
+
+function NaoContribuinteDeICMS(cdPessoa: string): integer;
+var
+  query: TADOQuery;
+begin
+  query := TADOQuery.Create(nil);
+  query.Connection := DModulo.Conexao;
+  try
+    with query do
+    begin
+      sql.Text :=
+        'Select dsIndIEDest as Ind From Pessoa WITH (NOLOCK) where cdPessoa = :CODIGO';
+      Parameters.ParamByName('CODIGO').Value := cdPessoa;
+      open;
+      Result := query.FieldByName('Ind').AsInteger;
+    end;
+  except
+    Result := 0;
+    Application.MessageBox
+      ('Campo dsIndIEDest ausente na tabela de pessoa. Entre em contato com a Support Informática.',
+      'Atenção Atualizar RodaScript', MB_OK + MB_ICONERROR + MB_APPLMODAL);
+  end;
+  FreeAndNil(query);
+end;
+
+function getAliqInternaDestinatario(UFDest: string): Currency;
+var
+  Query: TAdoQuery;
+begin
+  Query := TAdoQuery.Create(nil);
+  Query.Connection := DModulo.Conexao;
+  with Query do
+  begin
+    sql.text := 'Select nrICMS nrIcms From Estado With (nolock) where dsUF = :UF';
+    parameters.ParamByName('UF').Value := UFDest;
+    Open;
+  end;
+  result := Query.FieldByName('nrICMS').AsCurrency;
+  FreeAndNil(Query);
+end;
+
+function isRegiao_Norte_Nordeste_CentroOeste(CONST UF: string): boolean;
+begin
+  if (UF = 'AL') or (UF = 'BA') or (UF = 'CE') or (UF = 'MA') or (UF = 'PB') or
+    (UF = 'PI') or (UF = 'PE') or (UF = 'RN') or (UF = 'SE') then
+    result := True
+  else if (UF = 'AC') or (UF = 'AP') or (UF = 'AM') or (UF = 'PA') or
+    (UF = 'RO') or (UF = 'RR') or (UF = 'TO') then
+    result := True
+  else if (UF = 'ES') or (UF = 'DF') or (UF = 'GO') or (UF = 'MT') or
+    (UF = 'MS') or (UF = 'ES') then
+    result := True
+  else
+    result := False;
+end;
+
+function getAliqInterestadual(UFDest, UFOrig, CST: string): Real;
+begin
+  if StrToInt(Copy(CST, 1, 1)) in [1, 2, 3, 8] then // importado
+    result := 4
+  else if not(isRegiao_Norte_Nordeste_CentroOeste(UFOrig)) then // and (isRegiao_Norte_Nordeste_CentroOeste(UFOrig))
+    result := 7
+  else
+    result := 12;
+end;
+
 procedure Limpa_Grid(Grid:TStringGrid);
 var
   l,c,Lauxi : integer;

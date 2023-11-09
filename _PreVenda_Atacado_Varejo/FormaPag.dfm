@@ -15,6 +15,9 @@ object FrmFormaPag: TFrmFormaPag
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
+  DesignSize = (
+    661
+    327)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -58,7 +61,7 @@ object FrmFormaPag: TFrmFormaPag
     ParentFont = False
   end
   object Label4: TLabel
-    Left = 544
+    Left = 593
     Top = 4
     Width = 40
     Height = 13
@@ -97,6 +100,15 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object lblDifal: TLabel
+    Left = 541
+    Top = 4
+    Width = 21
+    Height = 13
+    Anchors = [akTop, akRight]
+    Caption = 'Difal'
+    Visible = False
   end
   object BtnConfirmar: TBitBtn
     Left = 98
@@ -344,7 +356,7 @@ object FrmFormaPag: TFrmFormaPag
     TabOrder = 5
   end
   object edtVolume: TEdit
-    Left = 544
+    Left = 593
     Top = 19
     Width = 68
     Height = 21
@@ -457,6 +469,19 @@ object FrmFormaPag: TFrmFormaPag
     ParentBackground = False
     ParentFont = False
     TabOrder = 14
+    Visible = False
+  end
+  object edtDifal: TEdit
+    Left = 541
+    Top = 19
+    Width = 65
+    Height = 21
+    TabStop = False
+    Anchors = [akTop, akRight]
+    Color = clInfoBk
+    ReadOnly = True
+    TabOrder = 15
+    Text = '0,00'
     Visible = False
   end
   object ADOSPLiberacao1: TADOStoredProc

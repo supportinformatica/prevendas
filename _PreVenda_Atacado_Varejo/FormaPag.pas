@@ -41,6 +41,8 @@ type
     chkbxEnviarCopiaEmail: TCheckBox;
     pnlAguardaEnvioEmail: TPanel;
     ImageList1: TImageList;
+    lblDifal: TLabel;
+    edtDifal: TEdit;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnConfirmarKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -453,6 +455,12 @@ procedure TFrmFormaPag.FormCreate(Sender: TObject);
 var
   texto: string;
 begin
+  if (UpperCase(vEmpresa) = 'TRESLEOES') then
+  begin
+    lblDifal.Visible := True;
+    edtDifal.Visible := True;
+    edtDifal.Text := FrmPrincipalPreVenda.calcularDIFAL;
+  end;
   if obrigarProfissional(FrmPrincipalPreVenda.dsCGC) then
     CBXSelecionaProfissionais.Checked := True;
   preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
