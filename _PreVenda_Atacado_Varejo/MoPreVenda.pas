@@ -779,6 +779,8 @@ type
     vTipoImpressora: string[01];
     vPreVisualizarPrevenda: string[01];
     vUF_Cliente: string; // estado do cliente para uso do SugereCFOP
+    vIE_Cliente: string;
+    clienteNaoContribuinteDeICMS : Boolean;
     vUF: string; // estado do cliente para uso do SugereCFOP
     vcidade: string;
     vDescricaoGama, vUndGama: string;
@@ -819,6 +821,7 @@ type
     formaPagamentoImp: string;
     // LblMensagem: Tletreiro;
     // procedure EnviaProdutosHospitalar;
+    function calcularDIFAL:string;
     function selecionarParcelasCartao : Boolean;
     function getValorVendaProduto: Real;
     procedure LimparPesquisa;
@@ -4555,19 +4558,15 @@ begin
         exit;
       end;
       if ((vOrcamento = 'O') and (RgOpcoes.ItemIndex = 1)) then
-        if transformarOrcamentoPrevenda then
-        // Indica que o orcamento agora irá se tornar uma prevenda
+        if transformarOrcamentoPrevenda then // Indica que o orcamento agora irá se tornar uma prevenda
           vOrcamento := 'N';
       vTime := getHoraServidor;
       if EdtLancto.Text <> '' then
         DesbloqueiaAlteracaoPreVenda(StrToInt(EdtLancto.Text));
-      if (UpperCase(vEmpresa) = 'COPYART') then
-      // se for copy art sempre pergunta o tipo da forração dos livros
+      if (UpperCase(vEmpresa) = 'COPYART') then // se for copy art sempre pergunta o tipo da forração dos livros
         Verifica_Livro_Forracao;
-
       if (entregaSelecionadaGrid = False) then
         Exit;
-
       if (vSelecionaForma = 'S') and (RgOpcoes.ItemIndex <> 3) then
       begin
         // if FrmFormaPag = nil then
@@ -4699,9 +4698,8 @@ begin
   end else
     EdtCdAmbiente.Clear;
 end;
-{
-  Preenche os edits relacionados após o usuário alterar o cliente na cbxCliente.
-}
+
+//  Preenche os edits relacionados após o usuário alterar o cliente na cbxCliente.
 procedure TFrmPrincipalPreVenda.PreencherCamposDoClienteSetadoNaCombo;
 begin
   if CbxCliente.ItemIndex <> -1 then
@@ -4709,9 +4707,9 @@ begin
     ADOQryCliente.open;
     if ADOQryCliente.Locate('cdPessoa', copy_campo(CbxCliente.Text, '|', 2), []) then
     begin
-      Label10.Caption := 'Observação';
+      Label10.Caption  := 'Observação';
       EdtCdCliente.Text := ADOQryCliente.FieldByName('cdPessoa').AsString;
-      cdTabelaPreco := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
+      cdTabelaPreco    := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
       EdtEndereco.Text := ADOQryCliente.FieldByName('nmLogradouro').AsString;
       if (UpperCase(vEmpresa) = 'CAMARATUBA') OR
         (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
@@ -4723,66 +4721,31 @@ begin
       end else
         EdtApelido.Text := ADOQryCliente.FieldByName('dsPreVenda').AsString;
       vUF_Cliente := ADOQryCliente.FieldByName('dsUF').AsString;
+      vIE_Cliente := ADOQryCliente.FieldByName('IE').AsString;
+      if (vIE_Cliente = '') and (ADOQryCliente.FieldByName('dsIndIEDest').AsInteger = 0) then
+        clienteNaoContribuinteDeICMS := True
+      else
+        clienteNaoContribuinteDeICMS := False;
     end else
     begin
       EdtCdCliente.Text := '';
       EdtEndereco.Text := '';
       EdtApelido.Text := ''; // apelido
       vUF_Cliente := '';
+      vIE_Cliente := '';
+      clienteNaoContribuinteDeICMS := False;
     end;
   end;
 end;
 
 procedure TFrmPrincipalPreVenda.CbxClienteChange(Sender: TObject);
 begin
-  // if possuiItensLançados then
-  // begin
-  // if Application.MessageBox('Alterar o cliente implica na perda dos produtos lançados na prevenda, deseja continuar',
-  // 'Confirmação',MB_ICONEXCLAMATION + Mb_YesNo) = IdYes
-  // then
-  // begin
-  // limparArrayBoolean(arrayLinhasDestacadas,0,299,False);
-  // for I := 1 to 180 do
-  // for J := 1 to 7 do
-  // vVetor[I,J] := '';
-  // EdtConsulta.Clear;
-  // EdtSubTotal.Text := '0,00';
-  // EdtDesconto.Text := LimpaEdtDesconto;
-  // EdtTotal.Text    := '0,00';
-  // edtValorBruto.text := '0,00';
-  // vObs := '';
-  // Limpa_Grid(SgDados);
-  // atualizaEditQtdItens;
-  // indiceClienteAtual:= CbxCliente.ItemIndex;
-  /// /      CbxCliente.ItemIndex:= indiceClienteAtual;
-  // end
-  // else
-  // begin
-  // CbxCliente.ItemIndex:= indiceClienteAtual;
-  // Exit;
-  // end;
-  // end
-  // else
-  // indiceClienteAtual:= CbxCliente.ItemIndex;
   if CbxCliente.ItemIndex <> -1 then
   begin
     PreencherCamposDoClienteSetadoNaCombo;
-    // LblVista.caption  := FormatFloat('0.00',ADOQryCliente.Fieldbyname('vldescVista').AsFloat);
-    // LblPrazo.caption  := FormatFloat('0.00',ADOQryCliente.Fieldbyname('vldescPrazo').AsFloat);
-    // if rgOpcoes.ItemIndex <> 1 then
-    // if (vAlteraCliente <> 'S') and (RgOpcoes.ItemIndex = 1) then // N IMPORTA O PREÇO DE ATACADO OU VAREJO ENTÃO N PRECISA LIMPAR A TELA DOS PRODUTOS    thiago
-    // begin
-    // LimpaGrid;
-    // EdtTotal.Text    := '0,00';
-    // edtValorBruto.text := '0,00';
-    // EdtSubTotal.Text := '0,00';
-    // EdtDesconto.Text := LimpaEdtDesconto;
-    // end;
   end
   else
   begin
-    // LblVista.caption   := '0,00';
-    // LblPrazo.caption   := '0,00';
     EdtCdCliente.Text := '';
     EdtEndereco.Text := '';
     EdtApelido.Text := ''; // apelido
@@ -9689,10 +9652,8 @@ var
   existeItemLancadoNaGrid, possuiPermissaoParaAlterarCliente: Boolean;
   codigoClienteNovo, textoConsulta_temp: string;
 begin
-
   // so testa a restrição se estiver incluindo ou alterando uma prevenda
   // vauxi := 'N';
-
   if ADOQryCliente.Active then
     CbxCliente.ItemIndex := CbxCliente.Items.IndexOf
       (ADOQryCliente.FieldByName('nmPessoa').AsString + ' | ' +
@@ -17473,17 +17434,21 @@ begin
       SQL.Add('Order By P.nmPessoa '); }
 
     sql.Text :=
-    'SELECT P.nmPessoa,P.cdPessoa,E.nmLogradouro,E.dsUF,C.dsPreVenda,  ' +
-    'C.vlDescVista,C.vlDescPrazo,C.dsVista,C.DSLIMCREDITO,             ' +
-    'case P.Existir                                                    ' +
-    '  when ''F'' then PF.dsNaturalidade                               ' +
-    '  when ''J'' then PJ.nmContato                                    ' +
-    'end as Apelido,C.cdTabelaPreco                                    ' +
-    'FROM Pessoa P WITH (NOLOCK) Inner Join Endereco E WITH (NOLOCK) ON P.cdPessoa = E.cdPessoa '
-    + 'INNER JOIN Cliente C WITH (NOLOCK)                                ' +
-    'ON P.cdPessoa = C.cdPessoa                                        ' +
-    'Left Join P_Fisica PF WITH (NOLOCK) ON P.cdpessoa = PF.cdPessoa   ' +
-    'Left Join P_Juridica PJ WITH (NOLOCK) ON P.cdpessoa = PJ.cdPessoa ' +
+    'SELECT P.nmPessoa, P.cdPessoa, E.nmLogradouro, E.dsUF, C.dsPreVenda,'+
+    'C.vlDescVista, C.vlDescPrazo, C.dsVista, C.DSLIMCREDITO,          '+
+    'case P.Existir                                                    '+
+    '  when ''F'' then PF.dsInscricaoEstadual                          '+
+    '  when ''J'' then PJ.dsInscricaoEstadual                          '+
+    'end as IE,                                                        '+
+    'case P.Existir                                                    '+
+    '  when ''F'' then PF.dsNaturalidade                               '+
+    '  when ''J'' then PJ.nmContato                                    '+
+    'end as Apelido, C.cdTabelaPreco, P.dsIndIEDest                    '+
+    'FROM Pessoa P WITH (NOLOCK) Inner Join Endereco E WITH (NOLOCK) ON P.cdPessoa = E.cdPessoa '+
+    'INNER JOIN Cliente C WITH (NOLOCK)                                '+
+    'ON P.cdPessoa = C.cdPessoa                                        '+
+    'Left Join P_Fisica PF WITH (NOLOCK) ON P.cdpessoa = PF.cdPessoa   '+
+    'Left Join P_Juridica PJ WITH (NOLOCK) ON P.cdpessoa = PJ.cdPessoa '+
     'Where P.ser = ''C'' and P.dsAtivo = ''S'' ';
     if (UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
       sql.Add('and C.cdCodigo <> 2 ');
@@ -17561,6 +17526,40 @@ begin
   FrmCadSerieEscola := TFrmCadSerieEscola.Create(Application);
   CadastrodeSrie1.Enabled := false;
   FrmCadSerieEscola.Show;
+end;
+
+function TFrmPrincipalPreVenda.calcularDIFAL: string;
+var
+  i : Integer;
+  difal, baseCalculo : Currency;
+  aliquotaICMSUFDest, aliquotaICMSInterna : Currency;
+begin
+  if (vUF = vUF_Cliente) or (Length(prevenda.itens[0].cst) > 3) or not clienteNaoContribuinteDeICMS then
+  begin  // simples não tem difal
+    Result := '0,00';
+  end else
+  begin
+    difal := 0;
+    baseCalculo := 0;
+    //Alíquota interestadual: é a alíquota aplicada pelo estado de origem na transação.
+    //Ela é definida pela legislação vigente e pode variar de acordo com o tipo de mercadoria.
+
+    //Alíquota interna: é a alíquota aplicada pelo estado de destino. Assim como a alíquota interestadual,
+    //ela também é estabelecida pela legislação e varia conforme o estado.
+    aliquotaICMSInterna := getAliqInternaDestinatario(vUF_Cliente);
+    for i := 0 to prevenda.itens.Count -1 do
+    begin
+      case StrToIntDef(Copy(prevenda.itens[i].cst, 2, 2), -1) of
+        0,20,51,60,90:
+        begin
+          baseCalculo := (prevenda.itens[i].precoVenda * prevenda.itens[i].quantidade);
+          aliquotaICMSUFDest := getAliqInterestadual(vUF_Cliente, vUF, prevenda.itens[i].cst);
+          difal := difal + (baseCalculo * ((aliquotaICMSInterna - aliquotaICMSUFDest) / 100));
+        end;
+      end;
+    end;
+    Result := FormatFloat('0.00' ,difal);
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.CadastrodeLista1Click(Sender: TObject);

@@ -5202,8 +5202,8 @@
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     ControlePorta = True
-    Left = 827
-    Top = 79
+    Left = 755
+    Top = 7
   end
   object TimerRealizarPesquisa: TTimer
     Enabled = False
