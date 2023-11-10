@@ -667,7 +667,6 @@ type
     procedure ImprimeEtiquetas_DmCasaDecor(StoreName: string); //Zebra TLP 2844
     procedure ImprimeEtiquetas_FenixSuperMercados; //Elgin L42 Pro
     procedure ImprimeEtiquetas_SenhorCoco; //Elgin L42 Pro
-    procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
     procedure ImprimeEtiquetas_MiniMercadoItabaiana; //Elgin L42 Pro
     procedure ImprimeEtiquetas_MiniMercadoItabaiana_Pequena; //Elgin L42 Pro
     procedure ImprimeEtiquetas_ResMercadinhoAcaua; //Argox OS 214 Plus
@@ -685,6 +684,8 @@ type
     procedure ImprimeEtiquetas_VivaFesta_3Colunas; //Elgin L42 Pro Full
     procedure ImprimeEtiquetas_ShopFemme(StoreNameLine1, StoreNameLine2: string); //Elgin L42 DT
     procedure ImprimeEtiquetas_MixContainerMinimercado; //Elgin L42 DT
+    procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
+    procedure ImprimeEtiquetas_Litoral655_NewZ(street: string); //Zebra ZD 220
 
     procedure MountFlag_Cliente_De_Teste; // Elgins Printers
 
@@ -11661,16 +11662,7 @@ begin
     ImprimeEtiquetas_FenixSuperMercados
   else if UpperCase(vFlagEtiqueta) = 'SENHORCOCO' then
     ImprimeEtiquetas_SenhorCoco
-  else if UpperCase(vFlagEtiqueta) = 'LITORAL655NEW' then begin // ELGIN
-    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
-    FrmDuasEtiquetas.BitBtn1.Caption := 'Laranjeiras';
-    FrmDuasEtiquetas.BitBtn3.Caption := 'Geru';
-    escolha := FrmDuasEtiquetas.ShowModal;
-    if escolha = mrOk then
-      ImprimeEtiquetas_Litoral655_New('Rua Laranjeiras')
-    else if escolha = mrCancel then
-      ImprimeEtiquetas_Litoral655_New('Rua Geru');
-  end
+
   else if (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA') or
    (UpperCase(vFlagEtiqueta) = 'OLIVEIRA') then begin
     FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
@@ -11717,6 +11709,30 @@ begin
 
   else if UpperCase(vFlagEtiqueta) = 'MIXCONTAINER' then
     ImprimeEtiquetas_MixContainerMinimercado
+
+  else if UpperCase(vFlagEtiqueta) = 'LITORAL655NEW' then begin // ZENBRA TP 2844
+    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Laranjeiras';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'Geru';
+    escolha := FrmDuasEtiquetas.ShowModal;
+    if escolha = mrOk then
+      ImprimeEtiquetas_Litoral655_New('Rua Laranjeiras')
+    else if escolha = mrCancel then
+      ImprimeEtiquetas_Litoral655_New('Rua Geru');
+  end
+
+    else if UpperCase(vFlagEtiqueta) = 'LITORAL655NEWZ' then begin // ZEBRA ZD220
+    FrmDuasEtiquetas := TFrmDuasEtiquetas.Create(Application);
+    FrmDuasEtiquetas.BitBtn1.Caption := 'Laranjeiras';
+    FrmDuasEtiquetas.BitBtn3.Caption := 'Geru';
+    escolha := FrmDuasEtiquetas.ShowModal;
+    if escolha = mrOk then
+      ImprimeEtiquetas_Litoral655_NewZ('Rua Laranjeiras')
+    else if escolha = mrCancel then
+      ImprimeEtiquetas_Litoral655_NewZ('Rua Geru');
+  end
+
+
 
   else if UpperCase(vFlagEtiqueta) = 'CLIENTEDETESTE' then
     MountFlag_Cliente_De_Teste;
@@ -31550,100 +31566,6 @@ end;
 
 
 
-procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_New(street: string);
-var
-  L: Integer;
-  Arq: TextFile;
-  vqtd: Real;
-  Produto : TDOMProduto;
-
-begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then
-  begin
-    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
-      mtWarning, [mbOK], 0);
-    EdtConsulta.Setfocus;
-    exit;
-  end;
-  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
-    SalvaEtiquetas;
-  Editor.Lines.Clear;
-  for L := 1 to SgDados.RowCount - 1 do
-  begin // Salvando os itens da pré-venda.
-    if SgDados.Cells[0, L] = '' then
-      Break;
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-      vqtd := StrToFloat(SgDados.Cells[2, L]);
-      Editor.Lines.Add('I8,A');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('Q560,25');
-      Editor.Lines.Add('q644');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('D13');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('O');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('JF');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('WN');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('ZB');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('N');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,14,0,3,2,2,N,"LITORAL 655"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
-      Editor.Lines.Add('A6,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B54,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A62,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B54,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A62,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('A183,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,14,0,3,2,2,N,"LITORAL 655"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
-      Editor.Lines.Add('A330,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B378,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A386,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B378,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A386,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('A507,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-      Editor.Lines.Add('');
-      FreeAndNil(Produto);
-  end;
-  Editor.Lines.SaveToFile
-    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'etiqueta.txt')));
-  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'print2.bat')), sw_ShowNormal);
-  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print2.bat'))) then
-    ShowMessage('Não foi encontrado o arquivo Print2.bat');
-  Application.OnMessage := FormPrincipal.ProcessaMsg;
-  Limpar_Tela;
-  RgOpcoes.ItemIndex := 0;
-  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
-end;
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoItabaiana;
 var
@@ -33371,6 +33293,279 @@ begin
 
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
+
+
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_New(street: string);
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+      vqtd := StrToFloat(SgDados.Cells[2, L]);
+      Editor.Lines.Add('I8,A');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('Q560,25');
+      Editor.Lines.Add('q644');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('D13');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('O');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('JF');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('WN');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('ZB');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('N');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,14,0,3,2,2,N,"LITORAL 655"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A6,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B54,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A62,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B54,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A62,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A6,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A183,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,14,0,3,2,2,N,"LITORAL 655"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+      Editor.Lines.Add('A330,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B378,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A386,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('B378,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('A386,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('A330,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+      Editor.Lines.Add('A507,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
+      Editor.Lines.Add('');
+      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+      Editor.Lines.Add('');
+      FreeAndNil(Produto);
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_NewZ(street: string);
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('^XA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^SZ2^JMA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^MCY^PMN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^PW620');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('~JSN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^JZY');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^LH0,0^LRN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^XZ');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^XA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT32,57');
+    Editor.Lines.Add('^CI0');
+    Editor.Lines.Add('^ADN,36,20^FDLITORAL655^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT6,128');
+    Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],1,24)+ '^FS');
+    Editor.Lines.Add('^FT6,160');
+    Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],25,16)+ '^FS');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^FO6,200');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+'^FS')
+    else
+      Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+'^FS');
+
+    Editor.Lines.Add('^FT38,282');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+'^FS')
+    else
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+'^FS');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT6,314');
+    Editor.Lines.Add('^ABN,11,7^FD' +street+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^FO6,384');
+
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+ '^FS')
+    else
+      Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+ '^FS');
+
+    Editor.Lines.Add('^FT38,466');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+ '^FS')
+    else
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+ '^FS');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT14,496');
+    Editor.Lines.Add('^AFN,26,13^FDR$' +SgDados.Cells[3, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT150,519');
+    Editor.Lines.Add('^ADN,18,10^FDCOD: '+SgDados.Cells[0,L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^FT352,57');
+    Editor.Lines.Add('^ADN,36,20^FDLITORAL655^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT326,128');
+    Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],1,24)+ '^FS');
+    Editor.Lines.Add('^^FT326,160');
+    Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],25,16)+ '^FS');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^FO326,200');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+'^FS')
+    else
+      Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+'^FS');
+
+    Editor.Lines.Add('^FT358,282');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+'^FS')
+    else
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+'^FS');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT326,314');
+    Editor.Lines.Add('^ABN,11,7^FD' +street+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^FO326,384');
+
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+ '^FS')
+    else
+      Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+ '^FS');
+
+    Editor.Lines.Add('^FT358,466');
+    if (SgDados.Cells[6,L] <> '') then
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+ '^FS')
+    else
+      Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+ '^FS');
+
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT318,496');
+    Editor.Lines.Add('^AFN,26,13^FDR$' +SgDados.Cells[3, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT470,519');
+    Editor.Lines.Add('^ADN,18,10^FDCOD: '+SgDados.Cells[0,L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^PQ' +FormatFloat('0', vqtd)+ ',0,1,Y');
+    Editor.Lines.Add('^XZ');
+    Editor.Lines.Add('');
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+
 
 
 
