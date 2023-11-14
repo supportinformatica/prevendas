@@ -32047,8 +32047,8 @@ begin
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
-    Editor.Lines.Add('Q200,16');
-    Editor.Lines.Add('q1080');
+    Editor.Lines.Add('Q200,24');
+    Editor.Lines.Add('q680');
     Editor.Lines.Add('');
     Editor.Lines.Add('O');
     Editor.Lines.Add('');
@@ -32060,34 +32060,34 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A88,2,0,4,1,1,N,"' +StoreName+ '"');
+    Editor.Lines.Add('A12,6,0,4,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A88,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-    Editor.Lines.Add('A88,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('A12,38,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A12,57,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A96,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('B88,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A20,163,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B12,98,0,1,3,5,61,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A88,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('A12,81,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A222,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+    Editor.Lines.Add('A146,161,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
-      Editor.Lines.Add('A435,2,0,4,1,1,N,"' +StoreName+ '"');
+      Editor.Lines.Add('A359,6,0,4,1,1,N,"' +StoreName+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A435,34,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-      Editor.Lines.Add('A435,53,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+      Editor.Lines.Add('A359,38,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+      Editor.Lines.Add('A359,57,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A443,159,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('B435,94,0,1,4,8,61,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('A367,163,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('B359,98,0,1,3,2,61,N,"' +SgDados.Cells[0, L]+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A435,77,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+      Editor.Lines.Add('A359,81,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A569,157,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      Editor.Lines.Add('A493,161,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
         StrToFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
     end;
