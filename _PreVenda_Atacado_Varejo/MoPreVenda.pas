@@ -9940,8 +9940,7 @@ end;
 procedure TFrmPrincipalPreVenda.Consultapedidodecompra1Click(Sender: TObject);
 begin
   // if (UpperCase(vEmpresa) = 'LAMARAO') or (UpperCase(vEmpresa) = 'AUTOCAR')or(UpperCase(vEmpresa) = 'TOPLINE') or (UpperCase(vEmpresa) = 'TREVO')  then  // nao fazer p autocar
-  if (TNEGLoja.getExibirQuantidadesReservadasPreVenda) and
-    (UpperCase(vEmpresa) = 'PTINTAS_') then
+  if (UpperCase(vEmpresa) = 'PTINTAS_') and (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
     exit;
   { With ADOSP_PEDIDO_GARANTIA do begin
     Close;
@@ -10327,22 +10326,16 @@ begin
   begin
     with ADOQuery1 do // Vou pegar o q está reservado  ( OU SEJA NAS OS )
     begin
-      // if (UpperCase(vEmpresa) = 'NACIONAL')
-      // or (UpperCase(vEmpresa) = 'REIDOFIAT')
-      // or (UpperCase(vEmpresa) = 'AUTOCAR')
-      // or (UpperCase(vEmpresa) = 'TOPLINE')
-      // or (UpperCase(vEmpresa) = 'TREVO')
-      // or (UpperCase(vEmpresa) = 'MECATTRON')
-      // or (UpperCase(vEmpresa) = 'LAMARAO')
-      // then
-      if ((TNEGLoja.getExibirQuantidadesReservadasPreVenda) OR
-        (UpperCase(vEmpresa) = 'NACIONAL') OR (UpperCase(vEmpresa) = 'RURALPET'))
+      if ((TNEGLoja.getExibirQuantidadesReservadasPreVenda) or
+        (UpperCase(vEmpresa) = 'NACIONAL') or (UpperCase(vEmpresa) = 'RURALPET'))
       then
       begin
         sql.Text :=
-          'SELECT Sum(I.nrQtd) as Qtd FROM Orcamento O WITH (NOLOCK) INNER JOIN IteOrcamento I '
-          + 'WITH (NOLOCK) ON O.nrOrcamento = I.nrOrcamento Where I.cdproduto = :CDPRODUTO '
-          + 'and I.dsSituacao <> ''C'' and O.dsImpresso <> ''S'' and O.nrObjeto <> 0 ';
+          'SELECT Sum(I.nrQtd) Qtd FROM Orcamento O WITH (NOLOCK) '+
+          'INNER JOIN IteOrcamento I WITH (NOLOCK)                '+
+          'ON O.nrOrcamento = I.nrOrcamento                       '+
+          'Where I.cdproduto = :CDPRODUTO and I.dsSituacao <> ''C''  '+
+          'and O.dsImpresso not in (''S'',''O'') and O.nrObjeto <> 0 ';
       end
       else
       begin
@@ -10362,17 +10355,15 @@ begin
           LblReserva.Text := FormatFloat('0.00', FieldByName('Qtd').AsFloat);
       end;
     end;
-    // if (UpperCase(vEmpresa) = 'AUTOCAR') or (UpperCase(vEmpresa) = 'TOPLINE') or
-    // (UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'MECATTRON') or (UpperCase(vEmpresa) = 'LAMARAO')
-    if (TNEGLoja.getExibirQuantidadesReservadasPreVenda) and
-      (UpperCase(vEmpresa) = 'PTINTAS_') then
+    if (UpperCase(vEmpresa) = 'PTINTAS_') and (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
     begin
       ConsultaPreVendas;
       Label11.Text := FormatFloat('0.00', ADOSPConsulta.FieldByName('estoque')
         .AsFloat - ADOQuery1.FieldByName('Qtd').AsFloat -
         StrToFloatDef(Label15.Text, 0));
     end
-    else if (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
+    else
+     if (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
     begin
       ConsultaPreVendas;
       edtDisponivel.Text := FormatFloat('0.00',
