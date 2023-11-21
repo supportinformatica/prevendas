@@ -32263,8 +32263,8 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('A12,-2,0,4,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A12,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
-    Editor.Lines.Add('A12,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
+    Editor.Lines.Add('A12,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
+    Editor.Lines.Add('A12,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 20, 20)+ '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('A20,155,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('B12,90,0,1,3,5,61,N,"' +SgDados.Cells[0, L]+ '"');
@@ -32280,8 +32280,8 @@ begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
       Editor.Lines.Add('A359,-2,0,4,1,1,N,"' +StoreName+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A359,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 1, 25)+ '"');
-      Editor.Lines.Add('A359,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 26, 15)+ '"');
+      Editor.Lines.Add('A359,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 1, 20)+ '"');
+      Editor.Lines.Add('A359,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 21, 20)+ '"');
       Editor.Lines.Add('');
       Editor.Lines.Add('A367,155,0,2,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
       Editor.Lines.Add('B359,90,0,1,3,2,61,N,"' +SgDados.Cells[0, L+1]+ '"');
