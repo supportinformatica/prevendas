@@ -193,7 +193,7 @@ object FrmFormaPag: TFrmFormaPag
     Left = 2
     Top = 8
     Width = 356
-    Height = 131
+    Height = 136
     Hint = 'Formas de pagamento'
     Caption = 'Forma de pagamento'
     Columns = 2
@@ -204,18 +204,18 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = []
     ItemIndex = 0
     Items.Strings = (
-      #192' Vista'
-      'A Prazo'
-      'Cart'#227'o a Vista (vencimento)'
-      'Cart'#227'o Parcelado'
-      'Cheque Pr'#233
+      'A vista'
+      'A prazo'
+      'Cart'#227'o a vista (vencimento)'
+      'Cart'#227'o parcelado'
+      'Cheque pr'#233'-datado'
       'Entrada + Prazo'
-      'Entrada + Cartao'
-      'Cr'#233'dito do Cliente'
-      'Cheque a Vista'
-      'Cart'#227'o D'#233'bito'
-      'Dep'#243'sito / Transferencia / Pix'
-      'Boleto Banc'#225'rio')
+      'Entrada + Cart'#227'o'
+      'Cr'#233'dito do cliente'
+      'Cheque a vista'
+      'Cart'#227'o c'#233'bito'
+      'Dep'#243'sito / Transfer'#234'ncia / Pix'
+      'Boleto banc'#225'rio')
     ParentFont = False
     ParentShowHint = False
     PopupMenu = PopupMenu1
