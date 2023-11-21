@@ -16391,7 +16391,7 @@ begin
   if (UpperCase(vFlagEtiqueta) = 'NOVOGARDEN') or (UpperCase(vFlagEtiqueta) = 'CONSTRUFORT') or (UpperCase(vFlagEtiqueta) = 'JAKIDS')
    or (UpperCase(vFlagEtiqueta) = 'TOKADASGRIFES') or (UpperCase(vFlagEtiqueta) = 'CARDOSO') or (UpperCase(vFlagEtiqueta) = 'FACABIJU')
    or (UpperCase(vFlagEtiqueta) = 'ACOGUITA') or (UpperCase(vFlagEtiqueta) = 'DMCASADECOR') or (UpperCase(vFlagEtiqueta) = 'MINEITABAIANA')
-   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA')
+   or (UpperCase(vFlagEtiqueta) = 'ESPACOCATOLICO') or (UpperCase(vFlagEtiqueta) = 'GRUPOAQUARELA') or (UpperCase(vFlagEtiqueta) = 'ZAVIXE')
    or (UpperCase(vFlagEtiqueta) = 'VALMOTOS') or (UpperCase(vFlagEtiqueta) = 'LAYEVICTOR1') or (UpperCase(vFlagEtiqueta) = 'SHOPFEMME') then
     Result := True
   else
@@ -32248,12 +32248,10 @@ begin
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
-    Editor.Lines.Add('Q200,25');
-    Editor.Lines.Add('q668');
+    Editor.Lines.Add('Q200,24');
+    Editor.Lines.Add('q680');
     Editor.Lines.Add('');
     Editor.Lines.Add('O');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('D12');
     Editor.Lines.Add('');
     Editor.Lines.Add('JF');
     Editor.Lines.Add('');
@@ -32263,36 +32261,42 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A66,8,0,1,1,2,N,"' +StoreName+ '"');
+    Editor.Lines.Add('A12,-2,0,4,1,1,N,"' +StoreName+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A46,42,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
-    Editor.Lines.Add('A46,70,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+    Editor.Lines.Add('A12,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 25)+ '"');
+    Editor.Lines.Add('A12,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B20,96,0,1,3,6,40,N,"' +SgDados.Cells[0, L]+ '"');
-    Editor.Lines.Add('A22,146,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('A20,155,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+    Editor.Lines.Add('B12,90,0,1,3,5,61,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A206,149,0,2,1,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('A12,73,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A146,153,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L]))+ '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
     if SgDados.Cells[0,L+1] <> '' then begin
+      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
+      Editor.Lines.Add('A359,-2,0,4,1,1,N,"' +StoreName+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A410,8,0,1,1,2,N,"' +StoreName+ '"');
+      Editor.Lines.Add('A359,30,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 1, 25)+ '"');
+      Editor.Lines.Add('A359,49,0,3,1,1,N,"' +Copy(SgDados.Cells[1, L+1], 26, 15)+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A390,42,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
-      Editor.Lines.Add('A390,70,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 21, 20)+ '"');
+      Editor.Lines.Add('A367,155,0,2,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
+      Editor.Lines.Add('B359,90,0,1,3,2,61,N,"' +SgDados.Cells[0, L+1]+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('B364,96,0,1,3,6,40,N,"' +SgDados.Cells[0, L]+ '"');
-      Editor.Lines.Add('A366,146,0,2,1,1,N,"' +SgDados.Cells[0, L]+ '"');
+      Editor.Lines.Add('A359,73,0,2,1,1,N,"' +Produto.referenciaInterna+ '"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A550,149,0,2,1,2,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('');
+      Editor.Lines.Add('A493,153,0,4,1,1,N,"R$ ' +FormatFloat('0.00',
+        StrToFloat(SgDados.Cells[3, L]))+ '"');
       Editor.Lines.Add('');
     end;
 
     Editor.Lines.Add('P1');
     L := L + 2;
   end;
+
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
