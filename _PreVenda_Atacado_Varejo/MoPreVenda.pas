@@ -10549,11 +10549,17 @@ var
   parcelasCartao : string;
 begin
   Editor.Clear;
-  if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS'))
-    and (vImpressao_40 = 'S') then
-  begin
-
-  end else if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
+  if (UpperCase(vEmpresa) = 'CAMARATUBA') and (prevenda.codigoFormaPagamento = '1') then
+  begin                       // prevenda A PRAZO (Kamarada)
+    ImprimeOrcamento(valor);
+    exit;
+  end;
+//  if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS'))
+//    and (vImpressao_40 = 'S') then
+//  begin
+//
+//  end else
+  if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
     (vOrcamento = 'O') then
   begin
     ImprimeOrcamento(valor);
