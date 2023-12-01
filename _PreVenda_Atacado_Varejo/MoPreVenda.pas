@@ -10747,7 +10747,7 @@ begin
         Finally
           CloseFile(Arq);
         end; // try
-        if ((UpperCase(vEmpresa) = 'TREVO') OR (UpperCase(vEmpresa) = 'LOCMAQ'))
+        if ((UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'LOCMAQ'))
           and (impressoraSelecionada) then
         begin
           WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print1.bat')), sw_ShowNormal)
@@ -10768,6 +10768,14 @@ begin
             FrmPrincipalPreVenda.ACBrPosPrinter.Buffer.Text := PAnsiChar(szTexto);
             FrmPrincipalPreVenda.ACBrPosPrinter.Imprimir;
             TNEGACBrPosPrint.fecharPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
+            if duasVias40Colunas  = 'S' then
+            begin
+              Sleep(1000);
+              TNEGACBrPosPrint.abrirPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
+              FrmPrincipalPreVenda.ACBrPosPrinter.Buffer.Text := PAnsiChar(szTexto);
+              FrmPrincipalPreVenda.ACBrPosPrinter.Imprimir;
+              TNEGACBrPosPrint.fecharPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
+            end;
           end else
           begin
             if (UpperCase(vEmpresa) = 'CAMARATUBA') and ((RgOpcoes.ItemIndex = 2) or (prevenda.codigoFormaPagamento <> '1'))  then  // orçamento, e prevenda diferente de A PRAZO (Kamarada), manda para outra impressora 40 colunas
@@ -10777,7 +10785,14 @@ begin
                 ShowMessage('Não foi encontrado o arquivo Print2.bat');
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print2.bat')), sw_ShowNormal)
             end else
+            begin
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
+//              if duasVias40Colunas  = 'S' then
+//              begin
+//                Sleep(500);
+//                WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
+//              end;
+            end;
           end;
         end;
         Sleep(3000);
