@@ -11479,7 +11479,7 @@ begin
     ImprimeEtiquetaDISSEMEDISSE_ELGIN
   else if (UpperCase(vFlagEtiqueta) = 'CLOSETMARIAFLOR') then
     ImprimeEtiquetaCLOSETMARIAFLOR_ELGIN
-  else if (UpperCase(vFlagEtiqueta) = 'FLORDLIS') then
+  else if (UpperCase(vFlagEtiqueta) = 'LISMODA') then
     ImprimeEtiquetaFlorDLis
   else if (UpperCase(vFlagEtiqueta) = 'NUTRIMIX') then
   // ARGOX OS 214 PPLA 300 dpi
@@ -27906,34 +27906,34 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A8,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,19)+'"');
-    Editor.Lines.Add('A8,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 20,19)+'"');
+    Editor.Lines.Add('A24,-8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,20)+'"');
+    Editor.Lines.Add('A24,20,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 21,20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('LO8,60,232,36');
-    Editor.Lines.Add('A64,68,0,4,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('LO16,52,248,28');
+    Editor.Lines.Add('A64,62,0,3,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B8,96,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('A32,142,0,4,1,1,N,"'+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('A296,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,19)+'"');
-    Editor.Lines.Add('A296,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 20,19)+'"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('LO288,60,232,36');
-    Editor.Lines.Add('A344,68,0,4,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
-    Editor.Lines.Add('');
-    Editor.Lines.Add('B288,96,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('A312,142,0,4,1,1,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B24,78,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('A32,118,0,3,1,1,N,"'+SgDados.Cells[0, L]+'"');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A576,0,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,19)+'"');
-    Editor.Lines.Add('A576,28,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 20,19)+'"');
+    Editor.Lines.Add('A312,-8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,20)+'"');
+    Editor.Lines.Add('A312,20,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 21,20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('LO568,60,224,36');
-    Editor.Lines.Add('A624,68,0,4,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('LO304,52,248,28');
+    Editor.Lines.Add('A352,62,0,3,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('B568,96,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
-    Editor.Lines.Add('A592,142,0,4,1,1,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('B312,78,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('A320,118,0,3,1,1,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A600,-8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1,20)+'"');
+    Editor.Lines.Add('A600,20,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 21,20)+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('LO592,52,248,28');
+    Editor.Lines.Add('A640,62,0,3,1,1,R,"R$ '+SgDados.Cells[3, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B600,78,0,1,3,5,36,N,"'+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('A608,118,0,3,1,1,N,"'+SgDados.Cells[0, L]+'"');
     Editor.Lines.Add('');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
