@@ -1114,9 +1114,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLblEmpresa2: TRLLabel
-        Left = 339
-        Top = 78
-        Width = 174
+        Left = 335
+        Top = 80
+        Width = 178
         Height = 15
         Alignment = taCenter
         AutoSize = False
@@ -1147,7 +1147,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLblPrevisao: TRLLabel
-        Left = 339
+        Left = 335
         Top = 48
         Width = 106
         Height = 14
@@ -1174,9 +1174,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel18: TRLLabel
-        Left = 552
-        Top = 78
-        Width = 164
+        Left = 524
+        Top = 80
+        Width = 193
         Height = 15
         Alignment = taCenter
         AutoSize = False
@@ -1238,8 +1238,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel21: TRLLabel
-        Left = 343
-        Top = 96
+        Left = 341
+        Top = 101
         Width = 369
         Height = 13
         Caption = 
