@@ -5989,6 +5989,8 @@ begin
             end;
           end else
             FrmRelOrcamentos.QrMdRel.Print;
+          if (UpperCase(vEmpresa) = 'CAMARATUBA') and (prevenda.codigoFormaPagamento = '1') then // a prazo ela quer que imprima duas vias
+            FrmRelOrcamentos.QrMdRel.Print;
         end;
       end;
       DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
@@ -10555,11 +10557,6 @@ begin
     ImprimeOrcamento(valor);
     exit;
   end;
-//  if ((UpperCase(vEmpresa) = 'CAMARATUBA') or (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS'))
-//    and (vImpressao_40 = 'S') then
-//  begin
-//
-//  end else
   if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
     (vOrcamento = 'O') then
   begin

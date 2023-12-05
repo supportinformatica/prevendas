@@ -444,102 +444,45 @@ begin
 
       if (UPPERCASE(editUsuario.Text) <> 'ADM') and (ValidaComputadorSupport(FrmPrincipalPreVenda.dsCGC) = false) then
       begin
-        //if vInternet = true then begin
-          //        showMessage('A internet está conectada');
-          //verifico se o usuario possui a permissão gerencial para exibir o boleto bancario
-          vOpcao := 0;
-          vTag := '25';
-          // Localiza opção no vetor
-          for I := 1 to 900 do
-          begin // 150 número máximo de opções do menu
-            // Acesso Total na opção
-            case vOpcao of
-              0: if  vVetor[I,1] = vTag  then vPermissao := 'S';
-              1: if (vVetor[I,1] = vTag) and (vVetor[I,2] = 'X') then vPermissao := 'S';
-              2: if (vVetor[I,1] = vTag) and (vVetor[I,3] = 'X') then vPermissao := 'S';
-              3: if (vVetor[I,1] = vTag) and (vVetor[I,4] = 'X') then vPermissao := 'S';
-              4: if (vVetor[I,1] = vTag) and (vVetor[I,5] = 'X') then vPermissao := 'S';
-              5: if (vVetor[I,1] = vTag) and (vVetor[I,6] = 'X') then vPermissao := 'S';
-              6: if (vVetor[I,1] = vTag) and (vVetor[I,7] = 'X') then vPermissao := 'S';
-            end; //Case
-          end;   // for
+        //verifico se o usuario possui a permissão gerencial para exibir o boleto bancario
+        vOpcao := 0;
+        vTag := '25';
+        // Localiza opção no vetor
+        for I := 1 to 900 do
+        begin // 150 número máximo de opções do menu
+          // Acesso Total na opção
+          case vOpcao of
+            0: if  vVetor[I,1] = vTag  then vPermissao := 'S';
+            1: if (vVetor[I,1] = vTag) and (vVetor[I,2] = 'X') then vPermissao := 'S';
+            2: if (vVetor[I,1] = vTag) and (vVetor[I,3] = 'X') then vPermissao := 'S';
+            3: if (vVetor[I,1] = vTag) and (vVetor[I,4] = 'X') then vPermissao := 'S';
+            4: if (vVetor[I,1] = vTag) and (vVetor[I,5] = 'X') then vPermissao := 'S';
+            5: if (vVetor[I,1] = vTag) and (vVetor[I,6] = 'X') then vPermissao := 'S';
+            6: if (vVetor[I,1] = vTag) and (vVetor[I,7] = 'X') then vPermissao := 'S';
+          end; //Case
+        end;   // for
 
-          with AdoQryAutorizar do
+        with AdoQryAutorizar do
+        begin
+          sql.text := 'select top 1 nrTag from permissao where dsNome = :dsNome and nrTag = 621';
+          parameters.paramByName('dsNome').value := editUsuario.Text;
+          open;
+          //se o usuario tiver acesso ao contas a pagar então ele pode ver o boleto
+          if ((vPermissao = 'S') and (recordCount = 0)) then
           begin
-            sql.text := 'select top 1 nrTag from permissao where dsNome = :dsNome and nrTag = 621';
+            close;
+            senhac := Senha(EditSenha.Text,'C');
+            sql.text := 'insert into permissao(dsNome,dsSenha,nrTag,dsIncluir,dsAlterar,dsExcluir,dsBaixa,dsVisualizar,dsSemAcesso,dsImprimir) '+
+                        ' values (:dsNome, :dsSenha, 621,null,null,null,null,''X'',null,null)';
             parameters.paramByName('dsNome').value := editUsuario.Text;
-            open;
-            //se o usuario tiver acesso ao contas a pagar então ele pode ver o boleto
-            if ((vPermissao = 'S') and (recordCount = 0)) then
-            begin
-              close;
-              senhac := Senha(EditSenha.Text,'C');
-              sql.text := 'insert into permissao(dsNome,dsSenha,nrTag,dsIncluir,dsAlterar,dsExcluir,dsBaixa,dsVisualizar,dsSemAcesso,dsImprimir) '+
-                          ' values (:dsNome, :dsSenha, 621,null,null,null,null,''X'',null,null)';
-              parameters.paramByName('dsNome').value := editUsuario.Text;
-              parameters.paramByName('dsSenha').value := senhac;
-              execSql;
-            end;
-      //        //se o usuario ja tiver a permissao
+            parameters.paramByName('dsSenha').value := senhac;
+            execSql;
           end;
-        //end;
-      end;
-      //atendimento 11679
-//      if UPPERCASE(FrmPrincipalPreVenda.vEmpresa) = 'RILDON' then
-//        FormPrincipal.MiSaidasV.Visible := True
-//      else
-//        FormPrincipal.MiSaidasV.Visible := False;
-    end;
-//    if (FrmPrincipalPreVenda.vTipoNF = '1') and (FrmPrincipalPreVenda.vLogon = false) then begin
-//      CreateMutex( nil, False, 'Saef' );
-//      if GetLastError = ERROR_ALREADY_EXISTS then begin
-//        MessageDlg('Já existe uma cópia deste programa sendo executada neste coputador!' +#13+
-//                   'Neste caso, como você é usuário de Nota Fiscal Eletrônica, não será possível abrir dois programas simutaneamente.' +#13+
-//                   'Clique no botão OK para sair.',mtError,[mbOK],0);
-//        Application.Terminate;  //TESTE
-//        FormPrincipal.Close;
-//        FormPrincipal := nil;
-//        FormPrincipal.Free;
-//        exit;
-//      end;
-//      FrmPrincipalPreVenda.vLogon := True;
-//    end;
-
-    {  SetLength(NomeVol,255);
-    SetLength(SisArq,255);
-    GetVolumeInformation('c:\',PChar(NomeVol), 255, @NumSerial,
-    TamMax, Flags, PChar(SisArq), 255);
-    with ADOQryAutorizar do begin
-      Sql.Clear;
-      Sql.Text := 'Select * From NR_HD where ds_hd = :DS_HD';
-      Parameters.ParamByName('DS_HD').Value := IntToStr(NumSerial);
-      Open;
-      if ADOQryAutorizar.RecordCount < 1 then begin
-        if (EditUsuario.Text = 'adm') and (EditSenha.Text = '0424') then begin
-          Sql.Clear;
-          Sql.Text := 'Insert Into NR_HD (ds_Hd)'+
-                      'Values (:DS_HD)          ';
-          Parameters.ParamByName('DS_HD').Value := IntToStr(NumSerial);
-          ExecSql;
-        end else begin
-          ShowMessage('O programa não está autorizado para trabalhar nesta máquina');
-          formPrincipal.Close;
         end;
       end;
     end;
-    ADOQryAutorizar.Close;}
     ADOQuery1.close;
     ADOQuery2.Close;
-
-    //Resumo de Vendas Por Vendedor só mostra para Rildon
-    { TODO -oClaudioo -c : Desconmentar abaixo 16/02/2012 14:36:40 }
-//    if UPPERCASE(FrmPrincipalPreVenda.vEmpresa) = 'RILDON' then
-//      FormPrincipal.MiSaidasV.Visible := true
-//    else
-//      FormPrincipal.MiSaidasV.Visible := false;
-
-    //CarregaNoticias;
-    //ChamaFormMensagensAtualizacao;
     FrmPrincipalPreVenda.UltimoLancamento;
     FrmPedeSenha.close;
     FrmPrincipalPreVenda.cbxUsuario.Text := editUsuario.Text;
