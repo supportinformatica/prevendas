@@ -686,6 +686,7 @@ type
     procedure ImprimeEtiquetas_MixContainerMinimercado; //Elgin L42 DT
     procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
     procedure ImprimeEtiquetas_Litoral655_NewZ(street: string); //Zebra ZD 220
+    procedure ImprimeEtiquetas_MercadinhoCarregosa; //Zebra ZD 220
 
     procedure MountFlag_Cliente_De_Teste; // Elgins Printers
 
@@ -11743,6 +11744,10 @@ begin
     else if escolha = mrCancel then
       ImprimeEtiquetas_Litoral655_NewZ('Rua Geru');
   end
+
+
+  else if UpperCase(vFlagEtiqueta) = 'MERCADINHOCARREGOSA' then
+    ImprimeEtiquetas_MercadinhoCarregosa
 
 
 
@@ -33591,6 +33596,102 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
+
+
+
+
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MercadinhoCarregosa;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+  Produto : TDOMProduto;
+
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+
+  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+
+    Editor.Lines.Add('^XA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^SZ2^JMA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^MCY^PMN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^PW811');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('~JSN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^JZY');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^LH0,0^LRN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^XZ');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^XA');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT6,59');
+    Editor.Lines.Add('^CI0');
+    Editor.Lines.Add('^A0N,51,34^FD' +SgDados.Cells[1, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT6,108');
+    Editor.Lines.Add('^A0N,51,34^FD' +SgDados.Cells[10, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FO6,128');
+    Editor.Lines.Add('^BY2^BCN,48,N,N^FD' +SgDados.Cells[6, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT93,203');
+    Editor.Lines.Add('^A0N,23,31^FD' +SgDados.Cells[6, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('^FT455,167');
+    Editor.Lines.Add('^A0N,102,69^FDR$' +SgDados.Cells[3, L]+ '^FS');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+
+    Editor.Lines.Add('^PQ' +FormatFloat('0', vqtd)+ ',0,1,Y');
+    Editor.Lines.Add('^XZ');
+    Editor.Lines.Add('');
+
+    FreeAndNil(Produto);
+  end;
+
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
+
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
 
 
 
