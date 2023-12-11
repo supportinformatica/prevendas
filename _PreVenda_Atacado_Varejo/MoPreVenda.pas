@@ -3236,7 +3236,9 @@ begin
           ((StrToCurr(EdtPreco.Text) < FloatToCurr(produtoLancado.nrCustoFinal_a)) and (vAtacadoVarejo = 'A')) OR
           ((StrToCurr(EdtPreco.Text) < FloatToCurr(produtoLancado.nrCustoFinal_v)) and (vAtacadoVarejo <> 'A'));
     end;
-    if vAtacadoVarejo = 'A' then
+    if (UpperCase(vEmpresa) = 'TRESLEOES') then
+      custoFinal := FormatFloat('0.000', FloatToCurr(produtoLancado.nrCustoAquisicao))
+    else if vAtacadoVarejo = 'A' then
       custoFinal := FormatFloat('0.000', FloatToCurr(produtoLancado.nrCustoFinal_a))
     else
       custoFinal := FormatFloat('0.000', FloatToCurr(produtoLancado.nrCustoFinal_v));
@@ -3252,7 +3254,10 @@ begin
     begin
       if (possuiPermissaoVenderAbaixoDoCusto = True) or FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text, EdtUsuario.Text, False) then
       begin
-        Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+        if (UpperCase(vEmpresa) = 'TRESLEOES') then
+          Application.MessageBox(Pchar('O custo de aquisição desse item é R$ '+ custoFinal), 'Venda abaixo do custo de aquisição', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL)
+        else
+          Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
         possuiPermissaoVenderAbaixoDoCusto := True;
       end else
       begin
@@ -3260,8 +3265,15 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
-          FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo final';
-          FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item é R$ '+ custoFinal;
+          if (UpperCase(vEmpresa) = 'TRESLEOES') then
+          begin
+            FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo de aquisição';
+            FrmCancelamentoVenda.Copyright.caption := ' O custo de aquisição desse item é R$ '+ custoFinal;
+          end else
+          begin
+            FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo final';
+            FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item é R$ '+ custoFinal;
+          end;
           FrmCancelamentoVenda.ShowModal;
           FreeAndNil(FrmCancelamentoVenda);
         except
