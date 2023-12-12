@@ -3246,53 +3246,52 @@ begin
         ((StrToCurr(EdtPreco.Text) > FloatToCurr(produtoLancado.vlPreco)) and (vAtacadoVarejo <> 'A'));
     produtoLancado.destruir;
   end;
-
 //  if TNEGLoja.getBloquearVendaAbaixoDoCustoFinal then  // o q importa é a senha
 //  begin
-    if abaixoDoCustoFinal and (StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsCurrency)) =
-       StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsCurrency))) then  // produto em promoção não é p analisar o preço de venda abaixo do preço de custo
+  if abaixoDoCustoFinal and (StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsCurrency)) =
+     StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsCurrency))) then  // produto em promoção não é p analisar o preço de venda abaixo do preço de custo
+  begin
+    if (possuiPermissaoVenderAbaixoDoCusto = True) or FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text, EdtUsuario.Text, False) then
     begin
-      if (possuiPermissaoVenderAbaixoDoCusto = True) or FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text, EdtUsuario.Text, False) then
-      begin
+      if (UpperCase(vEmpresa) = 'TRESLEOES') then
+        Application.MessageBox(Pchar('O custo de aquisição desse item é R$ '+ custoFinal), 'Venda abaixo do custo de aquisição', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL)
+      else
+        Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
+      possuiPermissaoVenderAbaixoDoCusto := True;
+    end else
+    begin
+      try
+        if FrmCancelamentoVenda <> nil then
+          FreeAndNil(FrmCancelamentoVenda);
+        FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
         if (UpperCase(vEmpresa) = 'TRESLEOES') then
-          Application.MessageBox(Pchar('O custo de aquisição desse item é R$ '+ custoFinal), 'Venda abaixo do custo de aquisição', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL)
-        else
-          Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
-        possuiPermissaoVenderAbaixoDoCusto := True;
-      end else
-      begin
-        try
-          if FrmCancelamentoVenda <> nil then
-            FreeAndNil(FrmCancelamentoVenda);
-          FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
-          if (UpperCase(vEmpresa) = 'TRESLEOES') then
-          begin
-            FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo de aquisição';
-            FrmCancelamentoVenda.Copyright.caption := ' O custo de aquisição desse item é R$ '+ custoFinal;
-          end else
-          begin
-            FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo final';
-            FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item é R$ '+ custoFinal;
-          end;
-          FrmCancelamentoVenda.ShowModal;
-          FreeAndNil(FrmCancelamentoVenda);
-        except
-          FreeAndNil(FrmCancelamentoVenda);
+        begin
+          FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo de aquisição';
+          FrmCancelamentoVenda.Copyright.caption := ' O custo de aquisição desse item é R$ '+ custoFinal;
+        end else
+        begin
+          FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo final';
+          FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item é R$ '+ custoFinal;
         end;
+        FrmCancelamentoVenda.ShowModal;
+        FreeAndNil(FrmCancelamentoVenda);
+      except
+        FreeAndNil(FrmCancelamentoVenda);
       end;
-      if (not possuiPermissaoVenderAbaixoDoCusto) then
-      begin
-//        if (UpperCase(vEmpresa) <> 'DELUC') then
-          EdtQtd.Text := '0,00';
-        EdtDescUnit.Text := '0,00';
-        setLabel23(0);
-        CbLote.ItemIndex := -1;
-        EdtConsulta.Setfocus;
-        Application.OnMessage := ProcessaMsg;
-        exit;
-      end else
-        possuiPermissaoVenderAbaixoDoCusto := False;
     end;
+    if (not possuiPermissaoVenderAbaixoDoCusto) then
+    begin
+//        if (UpperCase(vEmpresa) <> 'DELUC') then
+        EdtQtd.Text := '0,00';
+      EdtDescUnit.Text := '0,00';
+      setLabel23(0);
+      CbLote.ItemIndex := -1;
+      EdtConsulta.Setfocus;
+      Application.OnMessage := ProcessaMsg;
+      exit;
+    end else
+      possuiPermissaoVenderAbaixoDoCusto := False;
+  end;
 //  end else if abaixoDoCustoFinal then
 //  begin
 //    Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
@@ -3306,7 +3305,6 @@ begin
     EdtDesconto.Text := '0,00000';
     EdtDesconto.ReadOnly := True;
   end;
-
   if (UpperCase(vFlagEtiqueta) = 'KARIB') or ((Empresas_UmaEtiqueta_porColuna = True)and(chkbxEtiqueta.Checked = True)) or (UpperCase(vFlagEtiqueta) = 'DIJU') or (UpperCase(vFlagEtiqueta) = 'DONASANTA') or (UpperCase(vFlagEtiqueta) = 'JOALHERIAFONTES') then
     T := 1
   else
@@ -3360,8 +3358,7 @@ begin
       // ADOSPConsulta.FieldByName('valor').AsFloat)))
       or (vOcultaDesconto = 'S')) or
       ((UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS')) then
-    // nao mostrar desconto na venda
-    begin
+    begin // nao mostrar desconto na venda
       // Se houver aumento no preço, esse será o novo preço bruto (claudio 18-09-2015)
       itemPrevenda.vlPreco := StrToFloat(EdtPreco.Text);
       itemPrevenda.vlAtacado := StrToFloat(EdtPreco.Text);
@@ -3391,7 +3388,6 @@ begin
         itemPrevenda.itemPromocao := false;
       end;
     end;
-
     // INDICO NO ARRAY SE ESSA LINHA FICARÁ DESTACADA OU NÃO
     if (vDestacarItensOcupados) and
       ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
@@ -3405,7 +3401,6 @@ begin
         itemPrevenda.itemLinhaDestacada := True
       else
         itemPrevenda.itemLinhaDestacada := false;
-
     prevenda.itens.Add(itemPrevenda);
     if produtoComAcrescimo then
     begin
@@ -3413,8 +3408,6 @@ begin
         listaProdutosAcrescimo := TList<Integer>.Create;
       listaProdutosAcrescimo.Add(itemPrevenda.cdProduto);
     end;
-    // CarregarItensGrid(prevenda);
-
     if (UpperCase(vFlagEtiqueta) <> 'KARIB') and ((Empresas_UmaEtiqueta_porColuna = False)or(chkbxEtiqueta.Checked = false)) and (UpperCase(vFlagEtiqueta) <> 'DIJU') and (UpperCase(vFlagEtiqueta) <> 'DONASANTA') and (UpperCase(vFlagEtiqueta) <> 'JOALHERIAFONTES') then
     begin
       CarregarItensGrid(prevenda, false);
@@ -3422,49 +3415,12 @@ begin
       exit; // EVITA REPETIR O ITENS NA GRID SE NAO FOR KARIB
     end;
   end;
-
   if (UpperCase(vFlagEtiqueta) = 'KARIB') or
    ((Empresas_UmaEtiqueta_porColuna = True)and(chkbxEtiqueta.Checked = true)) or
    (UpperCase(vFlagEtiqueta) = 'DIJU') or (UpperCase(vFlagEtiqueta) = 'DONASANTA') or
    (UpperCase(vFlagEtiqueta) = 'JOALHERIAFONTES') then
     CarregarItensGrid(prevenda, true);
 end;
-
-// Procedure TFrmPrincipalPreVenda.EnviaProdutosHospitalar;
-// var
-// quantidade, qtdTotalLote, qtdLoteAtual, qtdLancada: real;
-// sequencialLote, cdproduto: integer;
-// lote: string;
-// begin
-// quantidade:= strToFloatDef(EdtQtd.Text,0);
-// qtdTotalLote:= strToFloatDef(copy_campo(Label23.Caption,':',2),0);
-// if quantidade > qtdTotalLote then
-// begin
-// MessageDlg('Quantidade disponível em lotes --> ' + formatFloat('0.000',qtdTotalLote) + ' ',mtWarning,[mbOk],0);
-// EdtConsulta.SetFocus;
-// EdtConsulta.Clear;
-// EdtQtd.Text           := '0,000';
-// EdtDescUnit.Text      := '0,00';
-// setLabel23(0);
-// CbLote.ItemIndex := -1;
-// Application.OnMessage := ProcessaMsg;
-// exit;
-// end;
-// sequencialLote:= 0;
-// while quantidade > 0 do // DISTRIBUO A QUANTIDADE DO PRODUTO ENTRE OS LOTES QUE JÁ ESTÃO ORDENADOS PELA VALIDADE;
-// begin
-// lote:= copy_campo(cbLote.Items[sequencialLote],'|',1);
-// cdproduto:= ADOSPConsulta.FieldByName('Código').AsInteger;
-// qtdLoteAtual:= QuantidadeDispNoLote(lote, cdproduto);
-// if (quantidade > qtdLoteAtual) then  // SE A QUANTIDADE DE PRODUTOS QUE RESTA PARA SER LANÇADA FOR MAIOR QUE A QUANTIDADE DISPONÍVEL NO LOTE
-// qtdLancada:= qtdLoteAtual        // EU LANÇO APENAS A QUANTIDADE DISPONÍVEL NO LOTE
-// else
-// qtdLancada:= quantidade;
-// LancaProdutos(qtdLancada, lote);
-// quantidade:= quantidade - qtdLancada;
-// sequencialLote:= sequencialLote + 1;
-// end;
-// end;
 
 procedure TFrmPrincipalPreVenda.ImprimeOrcamentoExterno
   (enviar_email: Boolean = false);
@@ -3474,10 +3430,7 @@ var
   email: string;
   envioOK: Boolean;
 begin
-  // Imprime o Orçamento
-  // vIdent := InputBox('Aos Cuidados de','Digite o nome da pessoa responsável pelo orçamento!', '');
   FrmRel_Orcamento_Novo := TFrmRel_Orcamento_Novo.Create(self);
-  // Cria o formulário
   With FrmRel_Orcamento_Novo.ADOqryreldados do
   begin
     sql.Text :=
@@ -10791,29 +10744,24 @@ begin
             if (UpperCase(vEmpresa) = 'CAMARATUBA') and ((RgOpcoes.ItemIndex = 2) or (prevenda.codigoFormaPagamento <> '1'))  then  // orçamento, e prevenda diferente de A PRAZO (Kamarada), manda para outra impressora 40 colunas
             begin
               if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print2.bat'))) then
+                'Print2.bat'))) then
                 ShowMessage('Não foi encontrado o arquivo Print2.bat');
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print2.bat')), sw_ShowNormal)
             end else
             begin
               WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
-//              if duasVias40Colunas  = 'S' then
-//              begin
-//                Sleep(500);
-//                WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
-//              end;
             end;
           end;
         end;
         Sleep(3000);
         if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print.bat'))) then
+          'Print.bat'))) then
           ShowMessage('Não foi encontrado o arquivo Print.bat');
       end;
       if (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Texto3.txt')))) or (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print3.bat')))) or (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print4.bat')))) then
+        'Texto3.txt')))) or (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+        'Print3.bat')))) or (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+        'Print4.bat')))) then
       begin // Caso encontre o arquivo manda p impressora and (RgOpcoes.ItemIndex <> 2) and (vtitulo <> 'ORCAMENTO')
         vnumero_invertido :=
           Copy(FormatFloat('000000', StrToFloat(EdtLancto.Text)), 1, 4);
