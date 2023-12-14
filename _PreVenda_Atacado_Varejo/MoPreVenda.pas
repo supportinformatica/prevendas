@@ -3220,7 +3220,6 @@ begin
     CbLote.ItemIndex := -1;
     exit;
   end;
-
   if chkbxEtiqueta.Checked = false then
   begin
     produtoLancado := TNEGProduto.buscarProduto(ADOSPConsulta.FieldByName('Código').AsInteger);
@@ -3232,7 +3231,10 @@ begin
         ((valorItemBruto < FloatToCurr(produtoLancado.nrCustoFinal_v)) and (vAtacadoVarejo <> 'A'));
     end else
     begin
-      abaixoDoCustoFinal :=
+      if (UpperCase(vEmpresa) = 'TRESLEOES') then
+        abaixoDoCustoFinal := StrToCurr(EdtPreco.Text) < FloatToCurr(produtoLancado.nrCustoAquisicao)
+      else
+        abaixoDoCustoFinal :=
           ((StrToCurr(EdtPreco.Text) < FloatToCurr(produtoLancado.nrCustoFinal_a)) and (vAtacadoVarejo = 'A')) OR
           ((StrToCurr(EdtPreco.Text) < FloatToCurr(produtoLancado.nrCustoFinal_v)) and (vAtacadoVarejo <> 'A'));
     end;
