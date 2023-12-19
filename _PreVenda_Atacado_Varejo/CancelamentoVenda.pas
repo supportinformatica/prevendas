@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Db, DBTables, Menus, Variants, ADODB, System.Generics.Collections;
+  StdCtrls, Db, DBTables, Menus, Variants, ADODB, System.Generics.Collections,
+  Vcl.ExtCtrls;
 
 type
   TFrmCancelamentoVenda = class(TForm)
@@ -17,6 +18,7 @@ type
     Label3: TLabel;
     ADOQuery1: TADOQuery;
     edtUsuario: TComboBox;
+    Shape1: TShape;
     procedure EdtSenhaKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure F1Ajuda1Click(Sender: TObject);

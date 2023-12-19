@@ -373,7 +373,7 @@ begin
     else if (ADOSPRelDados.fieldbyname('dscaminho').AsString <> '') then         
       Image1.Picture.LoadFromFile(ADOSPRelDados.fieldbyname('dscaminho').AsString);
   except
-    //MessageDlg('Erro ao buscar a foto!',mtInformation,[mbOK],0);
+
   end;
 end;
 

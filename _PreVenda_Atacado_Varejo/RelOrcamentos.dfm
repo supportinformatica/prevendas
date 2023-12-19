@@ -1853,6 +1853,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Value = Null
       end>
     Left = 504
+    Top = 8
   end
   object ADOQuery1: TADOQuery
     Connection = DModulo.Conexao
@@ -1931,7 +1932,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       'ortes Inform'#225'tica'
     FileName = 'C:\Teste\_Atacado_Varejo\teste.pdf'
     DisplayName = 'Documento PDF'
-    Left = 384
-    Top = 16
+    Left = 368
+    Top = 8
   end
 end

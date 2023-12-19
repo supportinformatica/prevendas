@@ -3,8 +3,8 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   Top = 300
   AutoSize = True
   BorderIcons = []
-  ClientHeight = 81
-  ClientWidth = 315
+  ClientHeight = 107
+  ClientWidth = 317
   Color = clSkyBlue
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   TextHeight = 13
   object Label1: TLabel
     Left = 184
-    Top = 23
+    Top = 43
     Width = 107
     Height = 13
     Caption = 'Entre com a senha'
@@ -36,13 +36,14 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   end
   object Copyright: TLabel
     Left = 0
-    Top = 0
-    Width = 289
-    Height = 19
+    Top = 10
+    Width = 317
+    Height = 21
     Alignment = taCenter
-    Caption = '<<<<   Desconto acima do permitido    >>>>'
+    AutoSize = False
+    Caption = ' Desconto acima do permitido'
     Font.Charset = ANSI_CHARSET
-    Font.Color = clBlue
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'Comic Sans MS'
     Font.Style = [fsBold]
@@ -53,7 +54,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   end
   object Label2: TLabel
     Left = 6
-    Top = 23
+    Top = 43
     Width = 44
     Height = 13
     Caption = 'Usu'#225'rio'
@@ -66,21 +67,28 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   end
   object Label3: TLabel
     Left = 193
-    Top = 68
+    Top = 91
     Width = 122
     Height = 13
     Caption = 'Pressione ESC para sair   '
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
   end
+  object Shape1: TShape
+    Left = 0
+    Top = 0
+    Width = 5
+    Height = 107
+    Visible = False
+  end
   object EdtSenha: TEdit
     Tag = 1
     Left = 184
-    Top = 37
+    Top = 57
     Width = 124
     Height = 28
     Hint = 'Digite a senha e press. ENTER, ou press. ESC para retornar'
@@ -100,7 +108,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   end
   object edtUsuario: TComboBox
     Left = 6
-    Top = 37
+    Top = 57
     Width = 135
     Height = 28
     BevelInner = bvNone
@@ -129,7 +137,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   object ADOQuery1: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
-    Left = 73
+    Left = 89
     Top = 34
   end
 end

@@ -18,14 +18,10 @@ uses
   IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
   ACBrBase, ACBrPosPrinter,
-
   Prevenda.TagsGondola.G001,
   Prevenda.Tagsgondola.AtacadoVarejo001,
   Prevenda.Tagsgondola.G003,
-
   Prevenda.Utils.FirstImpression;
-
-
 type
   VetorPermissao = Array [1 .. 900, 1 .. 7] of String;
   TAuxDBGrid = class(TDBGrid);
@@ -3829,7 +3825,6 @@ end;
 // vUndGama := '';
 // vFatorGama := 0;
 // end;
-
 procedure TFrmPrincipalPreVenda.DesativarCamposDescontoTotal;
 begin
   EdtDesconto.ReadOnly := True;
@@ -3888,7 +3883,6 @@ begin
   if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and (vDescontoClienteAuto = True)
     and (TNEGCliente.getPercentualDoPrecoComDescontoDecimal
     (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
-  // (UpperCase(vEmpresa) = 'CAMARATUBA')or
   begin
     Application.OnMessage := NaoProcessaMsg;
     MessageDlg('Desconto já é automático para este cliente.', mtWarning,
@@ -3907,15 +3901,11 @@ begin
     EdtDesconto.Setfocus;
     exit;
   end;
-
-  // temp := StrToFloat(edtTotal.Text)-((StrToFloat(EdtDesconto.Text)/100)*StrToFloat(edtTotal.Text));
-  // temp := SimpleRoundTo(temp,-2);
-  // temp2 := StrToFloat(edtSubTotal.Text);
   if UpperCase(vEmpresa) = 'PROAUTO' then
   begin
-    // if (temp < temp2) then
     if StrToFloat(FormatFloat('0.0000000', prevenda.descontoPercentual)) <
-      StrToFloat(FormatFloat('0.0000000', StrToFloat(EdtDesconto.Text))) then
+       StrToFloat(FormatFloat('0.0000000', StrToFloat(EdtDesconto.Text))) then
+    begin
       if (((StrToFloat(EdtDesconto.Text) > vlDescontoVendedor) and
         ((StrToFloat(EdtDesconto.Text) - vlDescontoVendedor) > 0.01)) and
         (vDescontoCliente = 0)) OR ((StrToFloat(EdtDesconto.Text) > 0) and
@@ -3926,18 +3916,19 @@ begin
         EdtDesconto.Setfocus;
         Application.OnMessage := FormPrincipal.ProcessaMsg;
       end;
-  end else if StrToFloat(FormatFloat('0.0000000', prevenda.descontoPercentual)) <
-    StrToFloat(FormatFloat('0.0000000', StrToFloat(EdtDesconto.Text))) then
-  // end else if (temp < temp2) then
+    end;
+//  end else if StrToFloat(FormatFloat('0.0000000', prevenda.descontoPercentual)) <
+//              StrToFloat(FormatFloat('0.0000000', StrToFloat(EdtDesconto.Text))) then
+  end else if FloatToCurr(prevenda.descontoPercentual) < StrToCurr(EdtDesconto.Text) then
   begin
     if ((TNEGCliente.getDescontoPercentual(StrToIntDef(EdtCdCliente.Text, -1)) >
       0) AND (TNEGLoja.getConfiguracaoDescontoAutomaticoPorCliente) AND
-      (StrToFloat(EdtDesconto.Text) > 0) AND (PERMISSAO('615', 'V',false) = 'N')) OR
-      (((StrtoFloat(FormatFloat('0.00',StrToFloatDef(EdtDesconto.Text, 0))) > vPorcDesconto) AND
-      ((StrtoFloat(FormatFloat('0.00',StrToFloatDef(EdtDesconto.Text, 0))) - vPorcDesconto) > 0.01)) and
+      (StrToCurr(EdtDesconto.Text) > 0) AND (PERMISSAO('615', 'V',false) = 'N')) OR
+      (((StrToFloatDef(EdtDesconto.Text, 0) > vPorcDesconto) AND
+      ((StrToFloatDef(EdtDesconto.Text, 0) - vPorcDesconto) > 0.01)) and
       (PERMISSAO('615', 'V',false) = 'N')) OR ((StrToFloat(EdtDesconto.Text) > 0) and
       (bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')) OR
-      (((StrToFloat(EdtDesconto.Text)) > 0) and (PERMISSAO('613', 'V',false) = 'N')) then // usuário não tem permissão para dar desconto até o limite
+      (((StrToCurr(EdtDesconto.Text)) > 0) and (PERMISSAO('613', 'V',false) = 'N')) then // usuário não tem permissão para dar desconto até o limite
     begin
       if (StrToCurrDef(EdtDesconto.Text, 0) > 0) and (liberouVenda = False) and
          (StrToCurrDef(EdtDesconto.Text, 0) <= vPorcDesconto) and
@@ -3947,7 +3938,7 @@ begin
         LiberaVanda;
       end else
       // valor total abaixo da soma do custo final
-      if (StrToFloat(EdtDesconto.Text) > 0) AND  (StrToFloat(EdtSubTotal.Text) < getSomaCustoFinal) AND
+      if (StrToCurr(EdtDesconto.Text) > 0) AND  (StrToCurr(EdtSubTotal.Text) < getSomaCustoFinal) AND
         TNEGLoja.getBloquearVendaAbaixoDoCustoFinal AND (PERMISSAO('631', 'V') = 'N') then
       begin
         if (possuiPermissaoVenderAbaixoDoCusto = True) or (FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text,
@@ -3964,8 +3955,10 @@ begin
               FreeAndNil(FrmCancelamentoVenda);
             FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V',
               possuiPermissaoVenderAbaixoDoCusto);
-            FrmCancelamentoVenda.Copyright.caption :=
-              '<<<<   Venda abaixo do custo final    >>>>';
+            if (UpperCase(vEmpresa) = 'TRESLEOES') then
+              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+            else
+              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
             FrmCancelamentoVenda.ShowModal;
             FreeAndNil(FrmCancelamentoVenda);
           except
@@ -3990,7 +3983,7 @@ begin
         EdtDesconto.Setfocus;
         Application.OnMessage := FormPrincipal.ProcessaMsg;
       end
-    end else if (StrToFloat(EdtDesconto.Text) > 0) AND (StrToFloat(EdtSubTotal.Text) < getSomaCustoFinal) AND TNEGLoja.getBloquearVendaAbaixoDoCustoFinal AND (PERMISSAO('631', 'V') = 'N') then
+    end else if (StrToCurr(EdtDesconto.Text) > 0) AND (StrToCurr(EdtSubTotal.Text) < getSomaCustoFinal) AND TNEGLoja.getBloquearVendaAbaixoDoCustoFinal AND (PERMISSAO('631', 'V') = 'N') then
     begin
       if (possuiPermissaoVenderAbaixoDoCusto = True) or (FrmCancelamentoVenda.Possui_Permissao('631', 'V', cbxUsuario.Text,
         EdtUsuario.Text, False)) then
@@ -4002,8 +3995,10 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
-          FrmCancelamentoVenda.Copyright.caption :=
-            '<<<<   Venda abaixo do custo final    >>>>';
+          if (UpperCase(vEmpresa) = 'TRESLEOES') then
+              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+          else
+            FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
           FrmCancelamentoVenda.ShowModal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -4019,7 +4014,6 @@ begin
       Application.OnMessage := FormPrincipal.ProcessaMsg;
     end
   end;
-
   // só é permitido aplicar desconto nos itens que não estão em promoção
   vlBruto := 0;
   vlLiquido := 0;
@@ -4148,7 +4142,10 @@ begin
     begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, i]));
       quantidade := StrToFloat(SgDados.Cells[2, i]);
-      if vAtacadoVarejo = 'A' then
+      if (UpperCase(vEmpresa) = 'TRESLEOES') then
+      begin
+        soma := soma + (Produto.nrCustoAquisicao * quantidade)
+      end else if vAtacadoVarejo = 'A' then
         soma := soma + (Produto.nrCustoFinal_a * quantidade)
       else
         soma := soma + (Produto.nrCustoFinal_v * quantidade);
@@ -4643,6 +4640,7 @@ begin
   if MoPreVenda.vCasasPreco > MoPreVenda.vLimiteCasasPreco then
     result := '0,00000'
   else
+  begin
     case vCasasPreco of // preco de venda
       1:
         result := '0,0';
@@ -4652,9 +4650,10 @@ begin
         result := '0,000';
       4:
         result := '0,0000';
-      5:
-        result := '0,00000';
-    end; // case
+    else
+      result := '0,00000';
+    end;
+  end;
 end;
 
 procedure TFrmPrincipalPreVenda.CbxAmbienteChange(Sender: TObject);
@@ -5142,11 +5141,11 @@ begin
     Corrige_Desconto;
   // recalcula o desconto % e recalcula o preço com desconto,
   // para não dar diferença na hora de puxar no SPDV100 e no CUPOM
-  diminuiuTotal := (StrToFloat(FormatFloat('0.00', vlTotalAnterior)) >
-    StrToFloat(EdtSubTotal.Text));
+  diminuiuTotal := (StrToCurr(FormatFloat('0.00', vlTotalAnterior)) >
+    StrToCurr(EdtSubTotal.Text));
   if diminuiuTotal then
   begin
-    if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and (vAtacadoVarejo = 'A') then
+    if (StrToCurrDef(EdtDesconto.Text, 0) > 0) and (vAtacadoVarejo = 'A') then
     // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
     begin
       if vBloquearDescontoAtacado = True then
@@ -5161,9 +5160,8 @@ begin
         exit;
       end
     end // claudio: comentei de acordo com o atend 33920
-    else if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and
+    else if (StrToCurrDef(EdtDesconto.Text, 0) > 0) and
       ((UpperCase(vEmpresa) = 'CARDOSOACESSORIOS')) then
-    // (UpperCase(vEmpresa) = 'CAMARATUBA')or
     begin
       if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
       begin
@@ -5177,7 +5175,7 @@ begin
         exit;
       end;
     end
-    else if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and
+    else if (StrToCurrDef(EdtDesconto.Text, 0) > 0) and
       (vDescontoClienteAuto = True) and
       (TNEGCliente.getPercentualDoPrecoComDescontoDecimal
       (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
@@ -5210,11 +5208,10 @@ begin
     else
     begin
       if ((StrtoFloat(FormatFloat('0.00',StrToFloatDef(EdtDesconto.Text, 0))) > vPorcDesconto) and
-        (PERMISSAO('615', 'V') = 'N')) OR
-        ((bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')) OR
+        (PERMISSAO('615', 'V') = 'N')) or
+        ((bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')) or
         (PERMISSAO('613', 'V') = 'N') then
       begin
-
         // valor total abaixo da soma do custo final
         if (StrToFloat(EdtDesconto.Text) > 0) AND
           (StrToFloat(EdtSubTotal.Text) < getSomaCustoFinal) AND
@@ -5226,16 +5223,17 @@ begin
           begin
             Application.MessageBox(Pchar('Vendendo abaixo do custo final'),
               'Atenção', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
-          end
-          else
+          end else
           begin
             try
               if FrmCancelamentoVenda <> nil then
                 FreeAndNil(FrmCancelamentoVenda);
               FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631',
                 'V', possuiPermissaoVenderAbaixoDoCusto);
-              FrmCancelamentoVenda.Copyright.caption :=
-                '<<<<   Venda abaixo do custo final    >>>>';
+              if (UpperCase(vEmpresa) = 'TRESLEOES') then
+                FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+              else
+                FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
               FrmCancelamentoVenda.ShowModal;
               FreeAndNil(FrmCancelamentoVenda);
             except
@@ -5274,8 +5272,10 @@ begin
               FreeAndNil(FrmCancelamentoVenda);
             FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V',
               possuiPermissaoVenderAbaixoDoCusto);
-            FrmCancelamentoVenda.Copyright.caption :=
-              '<<<<   Venda abaixo do custo final    >>>>';
+            if (UpperCase(vEmpresa) = 'TRESLEOES') then
+              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+            else
+              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
             FrmCancelamentoVenda.ShowModal;
             FreeAndNil(FrmCancelamentoVenda);
           except
@@ -5297,8 +5297,9 @@ end;
 
 procedure TFrmPrincipalPreVenda.Recalcula_Desconto;
 var
-  varvdesc, varvlComDesc, varvlSemDesc: Real;
-  vlBruto, vlLiquido, vlProdutos, vlDescPorc, temp: Real;
+//  varvdesc, varvlComDesc, varvlSemDesc: Real;
+  vlDescPorc: Real;
+  vlBruto, vlProdutos, vlLiquido : Currency;
   i: Integer;
   x, y, T: Real;
   vlTemp: Currency;
@@ -5323,10 +5324,10 @@ begin
     vlLiquido := vlLiquido + prevenda.itens[i].SubTotal;
   end;
   vlLiquido := SimpleRoundTo(vlLiquido, -2);
-  // vlBruto    := TNEGPrevenda.GetValorItensComPromocao(prevenda); //StrToFloat(EdtTotal.Text);
-  if ((vlLiquido - StrToFloat(EdtSubTotal.Text)) > 0.005) or
-    ((vlLiquido - StrToFloat(EdtSubTotal.Text)) < -0.005) then
-    vlLiquido := StrToFloat(EdtSubTotal.Text);
+//  if ((vlLiquido - StrToCurr(EdtSubTotal.Text)) > 0.005) or
+//    ((vlLiquido - StrToCurr(EdtSubTotal.Text)) < -0.005) then
+  if vlLiquido <> StrToCurr(EdtSubTotal.Text) then
+    vlLiquido := StrToCurr(EdtSubTotal.Text);
   vlLiquido := SimpleRoundTo(vlLiquido + GetValorIPILiquido(prevenda), -2);
   vlProdutos := TNEGPrevenda.GetValorItensSemPromocao(prevenda) +
     GetValorIPIBruto(prevenda);
@@ -5374,8 +5375,8 @@ begin
       EdtSubTotal.Text := FormatFloat('0.000', vPreco_Desconto);
     4:
       EdtSubTotal.Text := FormatFloat('0.0000', vPreco_Desconto);
-    5:
-      EdtSubTotal.Text := FormatFloat('0.00000', vPreco_Desconto);
+  else
+    EdtSubTotal.Text := FormatFloat('0.00000', vPreco_Desconto);
   end;
 end;
 
@@ -5502,6 +5503,8 @@ begin
     if (UpperCase(vEmpresa) <> 'JNUNES') and (MessageDlg('Imprimir o campo OBSERVAÇÃO?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
       vMemo.Clear;
   end;
+  if FrmRelOrcamentos <> nil then
+    FreeAndNil(FrmRelOrcamentos);
   FrmRelOrcamentos := TFrmRelOrcamentos.Create(self); // Cria o formulário
   qry := TADOQuery.Create(nil);
   with qry do
@@ -5555,9 +5558,9 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
-    FrmRelOrcamentos.RLDBText6.Visible := True;
-    FrmRelOrcamentos.RLLabel11.Visible := True;
-    FrmRelOrcamentos.QRLabel6.Visible  := True;
+    FrmRelOrcamentos.RLDBText6.Visible  := True;
+    FrmRelOrcamentos.RLLabel11.Visible  := True;
+    FrmRelOrcamentos.QRLabel6.Visible   := True;
     FrmRelOrcamentos.QreUnidade.Visible := false;
     FrmRelOrcamentos.RLLabel14.Visible := false;
     FrmRelOrcamentos.QRLabel12.Visible := false;
@@ -5569,10 +5572,10 @@ begin
   end else
   begin
     FrmRelOrcamentos.RLLabel24.Left := FrmRelOrcamentos.QRLabel6.Left + 22;
-    FrmRelOrcamentos.RlDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
+    FrmRelOrcamentos.RlDescricao.Left  := FrmRelOrcamentos.RLDBText6.Left + 22;
     FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
     FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLDBText6.Left + 22; // FrmRelOrcamentos.RLLabel11.Left;
-    FrmRelOrcamentos.RlDescricao.width := 262;
+    FrmRelOrcamentos.RlDescricao.width  := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
   if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') then
@@ -5611,7 +5614,6 @@ begin
   end;
   varQtdItens := StrToIntDef(edtQtdItens.Text, 0);
   if (varQtdItens > 13) then
-    // if MessageDlg('Imprimir em meia folha?',mtConfirmation,[mbYes,mbNo],0) = mrNo then
     FrmRelOrcamentos.QrMdRel.PageSetup.PaperHeight := 297;
   // FrmRelOrcamentos.QryRelDados.Active := True;
   With FrmRelOrcamentos.ADOSPRelDados do
@@ -5688,8 +5690,8 @@ begin
         FieldByName('nmLogradouro').AsString;
       if FieldByName('nrNumero').AsString <> '' then
         FrmRelOrcamentos.QrlEndereco.caption :=
-          FrmRelOrcamentos.QrlEndereco.caption + ', ' +
-          FieldByName('nrNumero').AsString;
+        FrmRelOrcamentos.QrlEndereco.caption + ', ' +
+        FieldByName('nrNumero').AsString;
       FrmRelOrcamentos.QrlCep.caption    := FieldByName('dsCep').AsString;
       FrmRelOrcamentos.QrlCidade.caption := FieldByName('dsCidade').AsString;
       FrmRelOrcamentos.QrlBairro.caption := FieldByName('dsBairro').AsString;
@@ -5881,7 +5883,7 @@ begin
     end;
     DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
       + '.pdf'));
-    FrmRelOrcamentos.Free;
+    FreeAndNil(FrmRelOrcamentos);
   end else
   begin
     try
@@ -5962,11 +5964,13 @@ begin
       end;
       DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
         + '.pdf'));
-      FrmRelOrcamentos.Free;
+      FreeAndNil(FrmRelOrcamentos);
     except
       exit;
     end;
   end;
+  if FrmRelOrcamentos <> nil then
+    FreeAndNil(FrmRelOrcamentos);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeOrcamento2(valor: Integer);
@@ -6489,35 +6493,33 @@ begin
   end; // case
   case vCasasPreco of // preco de venda
     1:
-      begin
-        frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.0';
-        frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.0';
-      end;
+    begin
+      frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.0';
+      frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.0';
+    end;
     2:
-      begin
-        frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.00';
-        frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.00';
-      end;
+    begin
+      frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.00';
+      frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.00';
+    end;
     3:
-      begin
-        frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.000';
-        frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.000';
-      end;
+    begin
+      frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.000';
+      frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.000';
+    end;
     4:
-      begin
-        frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.0000';
-        frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.0000';
-      end;
-    5:
-      begin
-        frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.00000';
-        frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.00000';
-      end;
+    begin
+      frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.0000';
+      frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.0000';
+    end;
+  else
+    begin
+      frmRelOrcamentosAmbiente.QREPreco.DisplayMask := '#,##0.00000';
+      frmRelOrcamentosAmbiente.RLDBResult3.DisplayMask := '#,##0.00000';
+    end;
   end; // case
-  // if valor <> 10 then  //só imprime o campo memo se vir a impressão a partir do formulário q solicita forma de pagamento
   if (vMemo <> nil) then
     frmRelOrcamentosAmbiente.RLMemo1.Lines := vMemo.Lines;
-
   if vTipoImp = '' then
   begin
     frmRelOrcamentosAmbiente.RLReport1.Print;
@@ -7734,7 +7736,7 @@ begin
               FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '820',
                 'A', possuiPermissaoParaAlterarPrevenda);
               FrmCancelamentoVenda.Copyright.caption :=
-                '<<<<   Alteração de pré-venda    >>>>';
+                'Alteração de pré-venda';
               FrmCancelamentoVenda.ShowModal;
               FreeAndNil(FrmCancelamentoVenda);
             except
@@ -8080,7 +8082,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  ' <<< Transformar Orçamento em Pré-venda >>>';
+          FrmCancelamentoVenda.Copyright.Caption :=  'Transformar Orçamento em Pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -8097,7 +8099,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Alteração de pré-venda    >>>>';
+          FrmCancelamentoVenda.Copyright.Caption :=  'Alteração de pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -9686,7 +9688,7 @@ begin
         FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '821', 'V',
           possuiPermissaoParaAlterarCliente);
         FrmCancelamentoVenda.Copyright.caption :=
-          '<<<<   Alteração de Cliente    >>>>';
+          'Alteração de Cliente';
         FrmCancelamentoVenda.ShowModal;
         FreeAndNil(FrmCancelamentoVenda);
       except
@@ -10523,8 +10525,7 @@ begin
   begin                       // prevenda A PRAZO (Kamarada)
     ImprimeOrcamento(valor);
     exit;
-  end;
-  if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
+  end else if (UpperCase(vEmpresa) = 'TREVO') and (vImpressao_80 = 'S') and
     (vOrcamento = 'O') then
   begin
     ImprimeOrcamento(valor);
