@@ -1511,7 +1511,6 @@ begin
     alignment := dbGrid.Columns[ToIndex].alignment;
     fieldName := dbGrid.Columns[ToIndex].fieldName;
     Title := dbGrid.Columns[ToIndex].Title;
-    // width:= DBGrid.Columns[toIndex].Width;
   end;
   with dbGrid.Columns[ToIndex] do
   begin
@@ -1528,7 +1527,6 @@ begin
     alignment := coluna.alignment;
     fieldName := coluna.fieldName;
     Title := coluna.Title;
-    // width:= Coluna.Width;
   end;
   FreeAndNil(coluna);
 end;
@@ -1615,7 +1613,6 @@ begin
         ' ADD FOREIGN KEY (CdLista) ' + ' REFERENCES ListaEscolar  (CdLista) ' +
         ' ON DELETE NO ACTION ' + ' ON UPDATE NO ACTION ' + 'END   ';
       Execute;
-
       CommandText :=
         'DECLARE @TESTE AS INTEGER                                        ' +
         'SET @TESTE =                                                     ' +
@@ -1627,7 +1624,6 @@ begin
         'ALTER TABLE Profissional ADD PRIMARY KEY (cdPessoa ASC)          ' +
         'END                                                              ';
       Execute;
-
       CommandText :=
         'DECLARE @TESTE AS INTEGER                                          ' +
         'SET @TESTE =                                                       ' +
@@ -1637,7 +1633,6 @@ begin
         ' ALTER TABLE ITEORCAMENTO ADD dsCFOP varchar(4)                    ' +
         'END                                                                ';
       Execute;
-
       CommandText :=
         'DECLARE @TESTE AS INTEGER                                               '
         + 'SET @TESTE =                                                            '
@@ -1647,13 +1642,6 @@ begin
         + ' ALTER TABLE ORCAMENTO ADD cdProfissional int Null                      '
         + 'END                                                                     ';
       Execute;
-
-      // ' ALTER TABLE ORCAMENTO                                                  '+
-      // ' ADD FOREIGN KEY (cdPessoa)                                             '+
-      // ' REFERENCES Pessoa (cdPessoa)                                           '+
-      // ' ON DELETE NO ACTION                                                    '+
-      // ' ON UPDATE NO ACTION                                                    '+
-
     end;
   except
     on e: Exception do
@@ -1665,79 +1653,6 @@ begin
   end;
 end;
 
-// procedure TFrmPrincipalPreVenda.RodaScripts2;
-// begin
-// try
-// with DModulo.ADOCommand1 do begin
-// if (UpperCase(vEmpresa) = 'JP LIVROS') then begin
-// CommandText :='ALTER      PROCEDURE SUP_Imp_Pedido_Prevenda        '+
-// '@DSLANCAMENTO VarChar(10) = Null,@CODIGO Int = Null,'+
-// '@FLAG Int = Null   '+
-// 'As                 '+
-// 'If @FLAG = 1 Begin '+
-// 'SELECT P.nmProduto,P.dsUnidade,P.cdFabricante,I.cdProduto,L.cdPessoa,I.nrQtd,I.vlUnitario,'+
-// 'I.vlUnitario_Bruto,L.vlValor,L.vlDesconto,L.vlAcrescimo,P.dsReferencia,P.dsPrateleira   '+
-// 'FROM Produto P WITH (NOLOCK),IteLcto I WITH (NOLOCK),Lancto L WITH (NOLOCK)  '+
-// 'WHERE L.dsStatus = ''F'' And L.dsLancamento = I.dsLancamento And             '+
-// 'I.cdProduto = P.cdProduto And L.dsStatus = I.dsStatus And                    '+
-// 'I.dsCancelado Is Null And                                                    '+
-// 'I.dsLancamento = @DSLANCAMENTO And I.cdPessoa = @CODIGO ORDER BY P.nmProduto '+
-// 'End                                                                          '+
-// 'If @FLAG = 2 Begin                                                           '+
-// 'SELECT P.nmPessoa,T.nmProduto,T.dsProdutoNota,T.dsReferencia,O.cdPessoa,     '+
-// 'O.nrOrcamento,O.cdCliente,I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,         '+
-// 'O.nrDesconto,T.dsUnidade,T.dsPrateleira                                      '+
-// 'FROM Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),Produto T WITH (NOLOCK),IteOrcamento I WITH (NOLOCK) '+
-// 'WHERE P.cdPessoa = O.cdPessoa And T.cdProduto = I.cdProduto And '+
-// 'O.cdPessoa = P.cdPessoa And I.dsSituacao = '''' And             '+
-// 'O.nrOrcamento = I.nrOrcamento And O.nrOrcamento = @DSLANCAMENTO '+
-// 'order by T.nmProduto                                            '+
-// 'End Else Begin                                                  '+
-// 'SELECT P.nmPessoa,T.nmProduto,T.dsProdutoNota,T.dsReferencia,O.cdPessoa,O.nrOrcamento,O.cdCliente,'+
-// 'I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,T.dsUnidade,T.dsPrateleira       '+
-// 'FROM Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),Produto T WITH (NOLOCK),IteOrcamento I WITH (NOLOCK) '+
-// 'WHERE P.cdPessoa = O.cdPessoa And T.cdProduto = I.cdProduto And      '+
-// 'O.cdPessoa = P.cdPessoa And I.cdProduto <> 1 And I.dsSituacao = '''' '+
-// 'And                                                                  '+
-// 'O.nrOrcamento = I.nrOrcamento And O.nrOrcamento = @DSLANCAMENTO      '+
-// 'order by T.nmProduto                                                 '+
-// 'End                                                                  ';
-// Execute;
-// end else begin
-// CommandText:= 'Alter PROCEDURE SUP_Imp_Pedido_Prevenda                                                                                                                   '+
-// '@DSLANCAMENTO VarChar(10) = Null, @CODIGO Int = Null, @FLAG Int = Null  As                                                                                '+
-// 'If @FLAG = 1 Begin                                                                                                                                        '+
-// ' SELECT P.nmProduto,P.dsUnidade,P.cdFabricante,P.cdProduto,L.cdPessoa,I.nrQtd,I.vlUnitario,I.vlUnitario_Bruto,L.vlValor,L.vlDesconto,L.vlAcrescimo,       '+
-// ' P.dsReferencia,P.dsPrateleira FROM Produto P WITH (NOLOCK),IteLcto I WITH (NOLOCK),Lancto L WITH (NOLOCK)  WHERE L.dsStatus = ''F'' And L.dsLancamento = '+
-// ' I.dsLancamento and I.cdProduto = P.cdProduto And L.dsStatus = I.dsStatus And I.dsCancelado Is Null And I.dsLancamento = @DSLANCAMENTO And I.cdPessoa = @CODIGO '+
-// 'End                                                                                                                                                       '+
-// 'If @FLAG = 2 Begin                                                                                                                                        '+
-// ' SELECT P.nmPessoa,T.nmProduto,T.dsReferencia,O.cdPessoa,I.nrLote,O.nrOrcamento,O.cdCliente,I.cdProduto,I.vlDesconto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,   '+
-// ' T.dsUnidade,T.dsPrateleira,I.dsMetragem FROM Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),Produto T WITH (NOLOCK),IteOrcamento I WITH (NOLOCK) WHERE P.cdPessoa = O.cdPessoa '+
-// ' And T.cdProduto = I.cdProduto And O.cdPessoa = P.cdPessoa And I.dsSituacao = '''' And O.nrOrcamento = I.nrOrcamento And O.nrOrcamento = @DSLANCAMENTO    '+
-// ' order by T.dsPrateleira '+
-// 'End                                                                                                                                                       '+
-// 'Else Begin                                                                                                                                                '+
-// ' SELECT P.nmPessoa,T.nmProduto,T.dsReferencia,O.cdPessoa,O.nrOrcamento,O.cdCliente,I.cdProduto,I.vlDesconto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,   '+
-// ' T.dsUnidade,T.dsPrateleira,I.dsMetragem,I.dsServico FROM Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),Produto T WITH (NOLOCK),IteOrcamento I WITH (NOLOCK) WHERE P.cdPessoa = O.cdPessoa '+
-// ' And T.cdProduto = I.cdProduto And O.cdPessoa = P.cdPessoa And I.cdProduto <> 1 And I.dsSituacao = '''' And O.nrOrcamento = I.nrOrcamento                 '+
-// ' And O.nrOrcamento = @DSLANCAMENTO                                                                                                                        '+
-// ' order by T.dsPrateleira '+
-// 'End                                                                                                                                                       ';
-// Execute;
-// end;
-// end;
-// except
-// on e:Exception do
-// begin
-// Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA', 'TFrmPrincipalPreVenda.RodaScripts2', e.Message);
-// ShowMessage('Errou ao GERAR TABELAS MOTIVO :'+ e.Message);
-// end;
-// end;
-// end;
-
-{ ...Esta procedure redimensiona o form de acordo com a resolução do monitor,
-  ... }
 procedure TFrmPrincipalPreVenda.adicionarLocalEntrega;
 var
   i : Integer;
@@ -5522,7 +5437,7 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible   := False;
     end;
   end;
-  if dsCGC = '10305634000106' then      // d rios
+  if dsCGC = '10305634000106' then // d rios
   begin
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
     FrmRelOrcamentos.RLLabel1.Caption    := 'C. Barras';
@@ -5675,17 +5590,16 @@ begin
     else
       FrmRelOrcamentos.QrlCliente.caption := FieldByName('cdPessoa').AsString +
         ' - ' + FieldByName('nmPessoa').AsString;
-    if UpperCase(vEmpresa) = 'CARIOCA' then
-    // carioca n quer q imprima os dados do cliente
-    begin
-      FrmRelOrcamentos.QrlEndereco.caption := ' ';
-      FrmRelOrcamentos.QrlCep.caption := ' ';
-      FrmRelOrcamentos.QrlCidade.caption := ' ';
-      FrmRelOrcamentos.QrlBairro.caption := ' ';
-      FrmRelOrcamentos.QrlComp.caption := ' ';
-      FrmRelOrcamentos.QrlUf.caption := 'UF: ';
-    end else
-    begin
+//    if UpperCase(vEmpresa) = 'CARIOCA' then // carioca n quer q imprima os dados do cliente
+//    begin
+//      FrmRelOrcamentos.QrlEndereco.caption := ' ';
+//      FrmRelOrcamentos.QrlCep.caption := ' ';
+//      FrmRelOrcamentos.QrlCidade.caption := ' ';
+//      FrmRelOrcamentos.QrlBairro.caption := ' ';
+//      FrmRelOrcamentos.QrlComp.caption := ' ';
+//      FrmRelOrcamentos.QrlUf.caption := 'UF: ';
+//    end else
+//    begin
       FrmRelOrcamentos.QrlEndereco.caption :=
         FieldByName('nmLogradouro').AsString;
       if FieldByName('nrNumero').AsString <> '' then
@@ -5698,7 +5612,7 @@ begin
       FrmRelOrcamentos.QrlComp.caption   := FieldByName('dsComplemento').AsString;
       FrmRelOrcamentos.QrlUf2.caption    := FieldByName('dsUf').AsString;
       FrmRelOrcamentos.QreRota2.caption  := FieldByName('dsRegiao').AsString;
-    end;
+//    end;
     sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
       'Where cdPessoa = :CDPESSOA ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
@@ -5732,11 +5646,11 @@ begin
         FrmRelOrcamentos.RLLCNPJ_Dest.caption := 'CPF/CNPJ: ' +
           FieldByName('CGC').AsString;
     end;
-    if UpperCase(vEmpresa) = 'CARIOCA' then  // carioca n quer q imprima os dados do cliente
-    begin
-      FrmRelOrcamentos.QrlCPF.caption := 'CPF/CNPJ: ';
-      FrmRelOrcamentos.QrlRG.caption := 'RG/IE: ';
-    end;
+//    if UpperCase(vEmpresa) = 'CARIOCA' then  // carioca n quer q imprima os dados do cliente
+//    begin
+//      FrmRelOrcamentos.QrlCPF.caption := 'CPF/CNPJ: ';
+//      FrmRelOrcamentos.QrlRG.caption := 'RG/IE: ';
+//    end;
   end;
   FrmRelOrcamentos.AdoQryOrcamento.Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
   FrmRelOrcamentos.AdoQryOrcamento.open;
@@ -5890,10 +5804,10 @@ begin
       // FrmRelOrcamentos.QrMdRel.Print
       // FrmRelOrcamentos.QRMdRel.Printdialog := True;
       // coloca a impressao como default DOS para as empresas que imprime em matricial
-      if vTipoImpressora = '' then
-        FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Qualidade_Dos
-      else
-        FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Padrao;
+//      if vTipoImpressora = '' then
+//        FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Qualidade_Dos
+//      else
+      FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Padrao;
       // imprime na impressora jato e lase ou matricial
       if vTipoImpressora = 'S' then
       begin
@@ -5953,24 +5867,28 @@ begin
             for i := 1 to StrToInt(vQtdPrint) do
             begin
               FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Padrao;
-              FrmRelOrcamentos.QrMdRel.PrintDialog := false;
+              FrmRelOrcamentos.QrMdRel.PrintDialog := False;
               FrmRelOrcamentos.QrMdRel.Print;
             end;
           end else
             FrmRelOrcamentos.QrMdRel.Print;
           if (UpperCase(vEmpresa) = 'CAMARATUBA') and (prevenda.codigoFormaPagamento = '1') then // a prazo ela quer que imprima duas vias
+          begin
+            Sleep(1000);
+            FrmRelOrcamentos.QrMdRel.PrintDialog := False;
             FrmRelOrcamentos.QrMdRel.Print;
+          end;
         end;
       end;
       DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
         + '.pdf'));
       FreeAndNil(FrmRelOrcamentos);
     except
-      exit;
+      if FrmRelOrcamentos <> nil then
+        FreeAndNil(FrmRelOrcamentos);
+//      exit;
     end;
   end;
-  if FrmRelOrcamentos <> nil then
-    FreeAndNil(FrmRelOrcamentos);
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeOrcamento2(valor: Integer);

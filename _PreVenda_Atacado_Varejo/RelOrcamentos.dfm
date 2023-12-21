@@ -1815,6 +1815,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
   end
   object ADOSPRelDados: TADOStoredProc
     Connection = DModulo.Conexao
+    CommandTimeout = 60
     ProcedureName = 'SUP_Imp_Pedido_Prevenda;1'
     Parameters = <
       item
@@ -1853,7 +1854,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Value = Null
       end>
     Left = 504
-    Top = 8
   end
   object ADOQuery1: TADOQuery
     Connection = DModulo.Conexao

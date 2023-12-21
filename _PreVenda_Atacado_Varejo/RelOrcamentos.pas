@@ -182,7 +182,7 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    totalLiquido, totalBruto : Real;
+    totalLiquido, totalBruto : Currency;
   public
     { Public declarations }
   end;
@@ -320,14 +320,14 @@ end;
 
 procedure TfrmRelOrcamentos.RLBand2AfterPrint(Sender: TObject);
 var
-  temp : String;
+  temp : Currency;
 begin
-  temp := FloattoStr(SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat,MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlDesconto').asFloat,MoPreVenda.vCasasPreco*-1));
-  temp := FloattoStr(SimpleRoundTo(StrToFloat(temp),-2));
-  totalBruto := totalBruto + StrToFloat(temp);
-  temp := FloattoStr(SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat,MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat,MoPreVenda.vCasasPreco*-1));
-  temp := FloattoStr(SimpleRoundTo(StrToFloat(temp),-2));
-  totalLiquido := totalLiquido + StrToFloat(temp);
+  temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlDesconto').asFloat, MoPreVenda.vCasasPreco*-1));
+  temp := SimpleRoundTo(temp, -2);
+  totalBruto := totalBruto + temp;
+  temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
+  temp := SimpleRoundTo(temp, -2);
+  totalLiquido := totalLiquido + temp;
 end;
 
 procedure TfrmRelOrcamentos.RLBand2BeforePrint(Sender: TObject;
