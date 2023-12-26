@@ -180,6 +180,7 @@ type
       var PrintIt: Boolean);
     procedure QREOrcamentoAfterPrint(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure RLBand3AfterPrint(Sender: TObject);
   private
     { Private declarations }
     totalLiquido, totalBruto : Currency;
@@ -218,8 +219,6 @@ begin
     qrImage.Picture.LoadFromFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Logo_Cupom.JPG')));
   adoQryCabecalho.Open;
-
-  //FrmPrincipalPreVenda.RodaScripts2;
   ADOQryConfig.Open;
   QRLblPrograma.Caption := ADOQryConfig.FieldByName('dsEndereco').AsString;
   QRLblEmpresa.Caption  := AdoQryConfig.FieldByName('nmEmpresa').AsString;
@@ -366,7 +365,8 @@ begin
     end;
   end;
   try
-    if Image1.visible = False then exit;    
+    if Image1.visible = False then
+      exit;
     Image1.Picture := nil;
     if Pos('http',ADOSPRelDados.fieldbyname('dscaminho').AsString) > 0 then
       CarregarImagemURL(Image1, ADOSPRelDados.fieldbyname('dscaminho').AsString)
@@ -375,6 +375,12 @@ begin
   except
 
   end;
+end;
+
+procedure TfrmRelOrcamentos.RLBand3AfterPrint(Sender: TObject);
+begin
+  totalLiquido := 0;
+  totalBruto := 0;
 end;
 
 procedure TfrmRelOrcamentos.RLBand3BeforePrint(Sender: TObject;
@@ -411,7 +417,6 @@ begin
     4 : RLLblUnitario.Caption := FormatFloat('###,##0.0000',strtofloat(AText));
     5 : RLLblUnitario.Caption := FormatFloat('###,##0.00000',strtofloat(AText));
   end;
-
 end;
 
 end.

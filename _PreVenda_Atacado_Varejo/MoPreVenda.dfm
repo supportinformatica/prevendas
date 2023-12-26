@@ -1750,7 +1750,6 @@
       Top = 72
       Width = 126
       Height = 17
-      Hint = 'Imprimir prazo de entrega?'
       Anchors = [akTop, akRight]
       Caption = 'Orcamento Externo'
       Color = clBtnFace

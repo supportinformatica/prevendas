@@ -861,9 +861,9 @@ type
     procedure Limpar_Tela;
     function SoNumeros(Const Texto: String): String;
     procedure Recalcula_Desconto;
-    Procedure ImprimeOrcamento(valor: Integer; enviar_email: Boolean = false);
+    Procedure ImprimeOrcamento(valor: Integer; fazerPergntaPDF : Boolean = True);
     procedure ImprimeOrcamento2(valor: Integer);
-    Procedure ImprimeOrcamentoExterno(enviar_email: Boolean = false);
+    Procedure ImprimeOrcamentoExterno(enviar_email: Boolean = False);
     Procedure UltimoLancamento;
     function UltimoLancamentoBloqueandoTabela(qry: TADOQuery): string;
     Function SystemDateTime(tDate: TDateTime; tTime: TDateTime): Boolean;
@@ -3394,10 +3394,6 @@ begin
       (FrmRel_Orcamento_Novo.ADOqryreldados.FieldByName('Observacao').AsString)
   else
     FrmRel_Orcamento_Novo.QRMemo1.Lines.Add('(Nenhuma observação informada)');
-  // FrmRel_Orcamento.RLImage1.Picture.LoadFromFile('Logo_Cupom.jpg');
-  // FrmRelOrcamentos.QryCliente.Active := True;
-
-  // FrmRel_Orcamento.quickrep1.ExportToFilter(TQRPDFDocumentFilter.Create(Pchar(ExtractFilePath(Application.ExeName)+ EdtLancto.Text+'.pdf')));
   FrmRel_Orcamento_Novo.qrlblPag.caption := formaPagamentoImp;
   FrmRel_Orcamento_Novo.QuickRep1.PreviewModal;
   if enviar_email = True then
@@ -3446,7 +3442,8 @@ begin
   if (vEstqNegativo <> 'S') or (UpperCase(vEmpresa) = 'ODONTO') then
   begin // não vende com estoque negativo
     Produto := TNEGProduto.buscarProduto(cdProduto);
-    if Produto.dsTIPO_ITEM = '09' then begin
+    if Produto.dsTIPO_ITEM = '09' then
+    begin
       result := resultado;
       exit; // servico
     end;
@@ -3457,7 +3454,6 @@ begin
         vqtd := vqtd + StrToFloat(SgDados.Cells[2, L]);
     end;
     estoqueFisico := getNrQtdReal(DModulo.Conexao.ConnectionString, cdProduto);
-
     { nesse caso, a nova quantidade já está em [vqtd] }
     if alterandoQuantidadeNaGrid then
     begin
@@ -5401,14 +5397,15 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.ImprimeOrcamento(valor: Integer;
-  enviar_email: Boolean = false);
+  fazerPergntaPDF : Boolean = True);
 var
   vcdpessoa: String[01];
   i: Integer;
   varQtdItens: Integer;
   email: string;
-  envioOK: Boolean;
+  envioOK, Impdf: Boolean;
   qry: TADOQuery;
+  diretorio : string;
 begin
   // Imprime Somente o Orçamento
   if vPAFECF and ((vOrcamento = 'N') or (RgOpcoes.ItemIndex in [0, 4])) then
@@ -5546,10 +5543,6 @@ begin
       TNEGLoja.getConfiguracaoOrdemImpressaoPreVenda;
     open;
   end;
-  FrmRelOrcamentos.RLPDFFilter1.FileName :=
-    Pchar(ExtractFilePath(Application.ExeName) +
-    FrmRelOrcamentos.ADOSPRelDados.FieldByName('nrOrcamento').AsString
-    + '.pdf');
   if (UpperCase(vEmpresa) = 'ANADRI') or (UpperCase(vEmpresa) = 'GAMA') or (FrmPrincipalPreVenda.dsCGC = '47305252000192') then
   begin
     FrmRelOrcamentos.RlDescricao.Visible := True;
@@ -5590,29 +5583,18 @@ begin
     else
       FrmRelOrcamentos.QrlCliente.caption := FieldByName('cdPessoa').AsString +
         ' - ' + FieldByName('nmPessoa').AsString;
-//    if UpperCase(vEmpresa) = 'CARIOCA' then // carioca n quer q imprima os dados do cliente
-//    begin
-//      FrmRelOrcamentos.QrlEndereco.caption := ' ';
-//      FrmRelOrcamentos.QrlCep.caption := ' ';
-//      FrmRelOrcamentos.QrlCidade.caption := ' ';
-//      FrmRelOrcamentos.QrlBairro.caption := ' ';
-//      FrmRelOrcamentos.QrlComp.caption := ' ';
-//      FrmRelOrcamentos.QrlUf.caption := 'UF: ';
-//    end else
-//    begin
+    FrmRelOrcamentos.QrlEndereco.caption :=
+      FieldByName('nmLogradouro').AsString;
+    if FieldByName('nrNumero').AsString <> '' then
       FrmRelOrcamentos.QrlEndereco.caption :=
-        FieldByName('nmLogradouro').AsString;
-      if FieldByName('nrNumero').AsString <> '' then
-        FrmRelOrcamentos.QrlEndereco.caption :=
-        FrmRelOrcamentos.QrlEndereco.caption + ', ' +
-        FieldByName('nrNumero').AsString;
-      FrmRelOrcamentos.QrlCep.caption    := FieldByName('dsCep').AsString;
-      FrmRelOrcamentos.QrlCidade.caption := FieldByName('dsCidade').AsString;
-      FrmRelOrcamentos.QrlBairro.caption := FieldByName('dsBairro').AsString;
-      FrmRelOrcamentos.QrlComp.caption   := FieldByName('dsComplemento').AsString;
-      FrmRelOrcamentos.QrlUf2.caption    := FieldByName('dsUf').AsString;
-      FrmRelOrcamentos.QreRota2.caption  := FieldByName('dsRegiao').AsString;
-//    end;
+      FrmRelOrcamentos.QrlEndereco.caption + ', ' +
+      FieldByName('nrNumero').AsString;
+    FrmRelOrcamentos.QrlCep.caption    := FieldByName('dsCep').AsString;
+    FrmRelOrcamentos.QrlCidade.caption := FieldByName('dsCidade').AsString;
+    FrmRelOrcamentos.QrlBairro.caption := FieldByName('dsBairro').AsString;
+    FrmRelOrcamentos.QrlComp.caption   := FieldByName('dsComplemento').AsString;
+    FrmRelOrcamentos.QrlUf2.caption    := FieldByName('dsUf').AsString;
+    FrmRelOrcamentos.QreRota2.caption  := FieldByName('dsRegiao').AsString;
     sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
       'Where cdPessoa = :CDPESSOA ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
@@ -5646,11 +5628,6 @@ begin
         FrmRelOrcamentos.RLLCNPJ_Dest.caption := 'CPF/CNPJ: ' +
           FieldByName('CGC').AsString;
     end;
-//    if UpperCase(vEmpresa) = 'CARIOCA' then  // carioca n quer q imprima os dados do cliente
-//    begin
-//      FrmRelOrcamentos.QrlCPF.caption := 'CPF/CNPJ: ';
-//      FrmRelOrcamentos.QrlRG.caption := 'RG/IE: ';
-//    end;
   end;
   FrmRelOrcamentos.AdoQryOrcamento.Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
   FrmRelOrcamentos.AdoQryOrcamento.open;
@@ -5768,47 +5745,47 @@ begin
     FrmRelOrcamentos.RLLblUnitario.Font.Size := 6;
     FrmRelOrcamentos.QREQtd.Font.Size := 6;
   end;
-  if (vTipoImp = '1') then // or (RgOpcoes.ItemIndex = 2) then // ou orcamento
+  if (fazerPergntaPDF = False) or ((RgOpcoes.ItemIndex = 2) and
+    (MessageDlg('Deseja gerar este lançamento no formato PDF?', mtConfirmation, [mbYes, mbNo], 0) = mrYes)) then
   begin
-    FrmRelOrcamentos.QrMdRel.PreviewModal;
-    if enviar_email = True then
-    begin
-      FrmRelOrcamentos.RLPDFFilter1.ShowProgress := false;
-      FrmRelOrcamentos.RLPDFFilter1.FilterPages(FrmRelOrcamentos.QrMdRel.Pages);
-      Repeat
-        FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
-        email := InputBox('Envio por e-mail',
-          'Digite o e-mail do destinatário', '');
-        if trim(email) <> '' then
+    FrmRelOrcamentos.RLPDFFilter1.ShowProgress := false;
+    FrmRelOrcamentos.RLPDFFilter1.FilterPages(FrmRelOrcamentos.QrMdRel.Pages);
+    diretorio := ExtractFileDir(Application.ExeName) + '\PdfOrc';
+    try
+      if not DirectoryExists(PChar(diretorio)) then
+        ForceDirectories(PChar(diretorio));
+      sleep(1000);
+      i := 0;
+      while not DirectoryExists(PChar(diretorio)) do
+      begin
+        ForceDirectories(PChar(diretorio));
+        Inc(i);
+        if i = 5 then
         begin
-          FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
-          FrmFormaPag.pnlAguardaEnvioEmail.Refresh;
-          envioOK := Envia_Email(vOrcamento,
-            Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text +
-            '.pdf'), email, EdtLancto.Text);
-          FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
-        end else
-          envioOK := True;
-        if envioOK = false then
-          if MessageDlg('Deseja tentar enviar o e-mail novamente?',
-            mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-            envioOK := True;
-      Until envioOK = True;
+          Application.MessageBox(Pchar('Não foi possível criar a pasta: ' +
+            diretorio), 'Atenção',
+            MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+          Exit;
+        end;
+        sleep(4000);
+      end;
+    except
+      Application.MessageBox(Pchar('Não foi possível criar a pasta: ' +
+         diretorio), 'Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
     end;
-    DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
-      + '.pdf'));
-    FreeAndNil(FrmRelOrcamentos);
+    diretorio := ExtractFileDir(Application.ExeName) + '\PdfOrc\';
+//    ShowMessage(diretorio);
+    FrmRelOrcamentos.RLPDFFilter1.FileName :=
+    Pchar(diretorio + EdtLancto.Text + '.pdf');
+    email := diretorio;
+    FrmRelOrcamentos.QRMdRel.Prepare;
+    FrmRelOrcamentos.QRMdRel.SaveToFile(diretorio + EdtLancto.Text + '.pdf');
+    ShellExecute(handle, 'open', PChar(diretorio), '', '', SW_SHOWMAXIMIZED);
+    FrmRelOrcamentos.QRMdRel.PreviewModal;
   end else
   begin
     try
-      // FrmRelOrcamentos.QrMdRel.Print
-      // FrmRelOrcamentos.QRMdRel.Printdialog := True;
-      // coloca a impressao como default DOS para as empresas que imprime em matricial
-//      if vTipoImpressora = '' then
-//        FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Qualidade_Dos
-//      else
       FrmRelOrcamentos.QrMdRel.DefaultFilter := FrmRelOrcamentos.Padrao;
-      // imprime na impressora jato e lase ou matricial
       if vTipoImpressora = 'S' then
       begin
         FrmRelOrcamentos.QrMdRel.PageSetup.PaperHeight := 297;
@@ -5820,31 +5797,33 @@ begin
       end;
       if vPreVisualizarPrevenda = 'S' then
         FrmRelOrcamentos.QrMdRel.PreviewModal;
-      if enviar_email = True then
-      begin
-        FrmRelOrcamentos.RLPDFFilter1.ShowProgress := false;
-        FrmRelOrcamentos.RLPDFFilter1.FilterPages
-          (FrmRelOrcamentos.QrMdRel.Pages);
-        Repeat
-          FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
-          email := InputBox('Envio por e-mail',
-            'Digite o e-mail do destinatário', '');
-          if trim(email) <> '' then
-          begin
-            FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
-            FrmFormaPag.pnlAguardaEnvioEmail.Refresh;
-            envioOK := Envia_Email(vOrcamento,
-              Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text +
-              '.pdf'), email, EdtLancto.Text);
-            FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
-          end else
-            envioOK := True;
-          if envioOK = false then
-            if MessageDlg('Deseja tentar enviar o e-mail novamente?',
-              mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-              envioOK := True;
-        Until envioOK = True;
-      end;
+//      if enviar_email = True then
+//      begin
+//        FrmRelOrcamentos.RLPDFFilter1.ShowProgress := false;
+//        FrmRelOrcamentos.RLPDFFilter1.FilterPages
+//          (FrmRelOrcamentos.QrMdRel.Pages);
+//        Repeat
+//          FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
+//          email := InputBox('Envio por e-mail',
+//            'Digite o e-mail do destinatário', '');
+//          if trim(email) <> '' then
+//          begin
+//            FrmFormaPag.pnlAguardaEnvioEmail.Visible := True;
+//            FrmFormaPag.pnlAguardaEnvioEmail.Refresh;
+//            envioOK := Envia_Email(vOrcamento,
+//              Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text +
+//              '.pdf'), email, EdtLancto.Text);
+//            FrmFormaPag.pnlAguardaEnvioEmail.Visible := false;
+//          end else
+//            envioOK := True;
+//          if envioOK = false then
+//            if MessageDlg('Deseja tentar enviar o e-mail novamente?',
+//              mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+//              envioOK := True;
+//        Until envioOK = True;
+//      end;
+//      DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
+//        + '.pdf'));
       if vPreVisualizarPrevenda = 'N' then
       begin
         if (vPrintSetup = 'S') then
@@ -5880,13 +5859,10 @@ begin
           end;
         end;
       end;
-      DeleteFile(Pchar(ExtractFilePath(Application.ExeName) + EdtLancto.Text
-        + '.pdf'));
       FreeAndNil(FrmRelOrcamentos);
     except
       if FrmRelOrcamentos <> nil then
         FreeAndNil(FrmRelOrcamentos);
-//      exit;
     end;
   end;
 end;
@@ -10439,7 +10415,11 @@ var
   parcelasCartao : string;
 begin
   Editor.Clear;
-  if (UpperCase(vEmpresa) = 'CAMARATUBA') and (prevenda.codigoFormaPagamento = '1') then
+  if (vOrcamento = 'O') and (MessageDlg('Deseja gerar este lançamento no formato PDF?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+  begin
+    ImprimeOrcamento(valor, False);
+    exit;
+  end else if (UpperCase(vEmpresa) = 'CAMARATUBA') and (prevenda.codigoFormaPagamento = '1') then
   begin                       // prevenda A PRAZO (Kamarada)
     ImprimeOrcamento(valor);
     exit;
@@ -17750,7 +17730,7 @@ begin
                   if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
-                    FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento), enviar_email);
+                    FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                 end;
                 // if FrmPrincipalPreVenda.vImpressao_80 = 'S' then begin
                 // if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '+ FrmPrincipalPreVenda.EdtLancto.Text + ' em 80 colunas ?',
@@ -17762,7 +17742,7 @@ begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') or (UpperCase(vEmpresa) = 'PROAUTO') then
                   FrmPrincipalPreVenda.ImprimeComprovante(StrToInt(prevenda.codigoFormaPagamento));
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
-                  FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento), enviar_email);
+                  FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
               end;
               // if RgOpcoes.ItemIndex <> 2 then // diferente de orcamento
               // MessageDlg('Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 + 'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,[mbOk],0);

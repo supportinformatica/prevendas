@@ -1099,6 +1099,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       Borders.DrawTop = True
       Borders.DrawRight = False
       Borders.DrawBottom = False
+      AfterPrint = RLBand3AfterPrint
       BeforePrint = RLBand3BeforePrint
       object QrlSub: TRLLabel
         Left = 24
@@ -1930,7 +1931,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
     DocumentInfo.Creator = 
       'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
       'ortes Inform'#225'tica'
-    FileName = 'C:\Teste\_Atacado_Varejo\teste.pdf'
+    FileName = 'teste.pdf'
     DisplayName = 'Documento PDF'
     Left = 368
     Top = 8
