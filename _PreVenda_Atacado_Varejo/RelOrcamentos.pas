@@ -182,10 +182,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure RLBand3AfterPrint(Sender: TObject);
   private
-    { Private declarations }
     totalLiquido, totalBruto : Currency;
   public
-    { Public declarations }
+
   end;
 
 var
@@ -321,9 +320,11 @@ procedure TfrmRelOrcamentos.RLBand2AfterPrint(Sender: TObject);
 var
   temp : Currency;
 begin
+  temp := 0;
   temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlDesconto').asFloat, MoPreVenda.vCasasPreco*-1));
   temp := SimpleRoundTo(temp, -2);
   totalBruto := totalBruto + temp;
+  temp := 0;
   temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
   temp := SimpleRoundTo(temp, -2);
   totalLiquido := totalLiquido + temp;

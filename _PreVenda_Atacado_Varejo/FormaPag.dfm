@@ -213,7 +213,7 @@ object FrmFormaPag: TFrmFormaPag
       'Entrada + Cart'#227'o'
       'Cr'#233'dito do cliente'
       'Cheque a vista'
-      'Cart'#227'o c'#233'bito'
+      'Cart'#227'o d'#233'bito'
       'Dep'#243'sito / Transfer'#234'ncia / Pix'
       'Boleto banc'#225'rio')
     ParentFont = False
