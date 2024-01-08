@@ -15351,24 +15351,24 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A796,153,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],1,22)+'"');
-    Editor.Lines.Add('A796,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L],23,18)+'"');
+    Editor.Lines.Add('A796,153,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 1, 20)+'"');
+    Editor.Lines.Add('A796,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L], 21, 20)+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A666,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L]+'"');
+    Editor.Lines.Add('A748,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L]+'"');
     Editor.Lines.Add('');
-    Editor.Lines.Add('A666,35,2,1,1,2,N,"CONSTRUFORT"');
+    Editor.Lines.Add('A748,35,2,1,1,2,N,"CONSTRUFORT"');
 
 
     if (SgDados.Cells[0, L+1] <> '') then begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A503,153,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,22)+'"');
-      Editor.Lines.Add('A503,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],23,18)+'"');
+      Editor.Lines.Add('A503,153,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1], 1, 20)+'"');
+      Editor.Lines.Add('A503,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1], 21, 20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A373,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L+1]+'"');
+      Editor.Lines.Add('A455,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L+1]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A373,35,2,1,1,2,N,"CONSTRUFORT"');
+      Editor.Lines.Add('A455,35,2,1,1,2,N,"CONSTRUFORT"');
     end;
 
 
@@ -15377,11 +15377,11 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
       Editor.Lines.Add('A210,153,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,22)+'"');
-      Editor.Lines.Add('A210,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],23,18)+'"');
+      Editor.Lines.Add('A210,127,2,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A80,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L+2]+'"');
+      Editor.Lines.Add('A162,81,2,1,1,2,N,"COD: '+SgDados.Cells[0, L+2]+'"');
       Editor.Lines.Add('');
-      Editor.Lines.Add('A80,35,2,1,1,2,N,"CONSTRUFORT"');
+      Editor.Lines.Add('A162,35,2,1,1,2,N,"CONSTRUFORT"');
     end;
 
 
