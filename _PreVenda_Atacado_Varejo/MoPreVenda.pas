@@ -4346,7 +4346,7 @@ begin
       EdtCdCliente.Text := ADOQryCliente.FieldByName('cdPessoa').AsString;
       cdTabelaPreco    := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
       EdtEndereco.Text := ADOQryCliente.FieldByName('nmLogradouro').AsString;
-      if (UpperCase(vEmpresa) = 'CAMARATUBA') OR
+      if (UpperCase(vEmpresa) = 'CAMARATUBA') or
         (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
         EdtApelido.Text := ADOQryCliente.FieldByName('dsPreVenda').AsString
       else if ADOQryCliente.FieldByName('apelido').AsString <> '' then
@@ -5488,10 +5488,8 @@ begin
       'WHERE O.nrOrcamento = :NRORCAMENTO ';
     Parameters.ParamByName('NRORCAMENTO').Value := EdtLancto.Text;
     open;
-    if RecordCount > 0 then
-      if FieldByName('NOME').AsString <> '' then
-        FrmRelOrcamentos.RLMemo1.Lines.Add('Profissional: ' +
-          FieldByName('NOME').AsString);
+    if (RecordCount > 0) and (FieldByName('NOME').AsString <> '') then
+      FrmRelOrcamentos.RLMemo1.Lines.Add('Profissional: ' + FieldByName('NOME').AsString);
     Close;
   end;
   if StrToFloat(EdtSubTotal.Text) > 999999 then
@@ -5504,6 +5502,13 @@ begin
   if (fazerPergntaPDF = False) or ((RgOpcoes.ItemIndex = 2) and
     (MessageDlg('Deseja gerar este lançamento no formato PDF?', mtConfirmation, [mbYes, mbNo], 0) = mrYes)) then
   begin
+    if (UpperCase(vEmpresa) = 'CAMARATUBA') then  // não quer que apareca a referencia
+    begin
+      FrmRelOrcamentos.RLDBText1.Enabled := False;
+      FrmRelOrcamentos.RLDBText1.Visible := False;
+      FrmRelOrcamentos.RLDBText6.Enabled := False;
+      FrmRelOrcamentos.RLDBText6.Visible := False;
+    end;
     FrmRelOrcamentos.RLPDFFilter1.ShowProgress := false;
     FrmRelOrcamentos.RLPDFFilter1.FilterPages(FrmRelOrcamentos.QrMdRel.Pages);
     diretorio := ExtractFileDir(Application.ExeName) + '\PdfOrc';
