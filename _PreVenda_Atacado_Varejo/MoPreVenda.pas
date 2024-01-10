@@ -2745,7 +2745,6 @@ begin
     if (Length(EdtQtd.Text) < 1) or (StrToFloat(EdtQtd.Text) <= 0) or
       (ADOSPConsulta.RecordCount = 0) then
     begin
-      // LimparPesquisa;
       exit;
     end
     else
@@ -2753,7 +2752,6 @@ begin
       EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
       // É obrigatório escolher o cliente antes de lançar produtos
       if (CbxCliente.ItemIndex < 0) then
-      // and (UPPERCASE(vEmpresa) <> 'CAMARATUBA')
       begin
         Application.MessageBox('Informe o cliente', 'Atenção',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
@@ -3254,6 +3252,7 @@ begin
       itemPrevenda.quantidade := 1
     else
       itemPrevenda.quantidade := quantidade;
+    itemPrevenda.nrQtdAtacarejo := ADOSPConsulta.FieldByName('nrQtdAtacarejo').AsCurrency;
     itemPrevenda.precoVenda := StrToFloat(EdtPreco.Text);
     itemPrevenda.precoBruto := SimpleRoundTo(getValorVendaProduto, vCasasPreco * -1);
     // RoundTo(ADOSPConsultaVALOR.AsFloat,vCasasPreco*-1);
@@ -4264,16 +4263,12 @@ begin
   // remove o valor cancelado do edit do valor total
   if SgDados.EditorMode = True then
     SgDados.EditorMode := false;
-
   prevenda.itens.Delete(SgDados.Row - 1);
   if prevenda.itens.Count = 0 then
   begin
     possuiPermissaoVenderAbaixoDoCusto := False;
     liberouVenda := False;
   end;
-  // EdtTotal.Text := FormatFloat('0.00',StrToFloat(EdtTotal.Text) - (StrToFloat(SgDados.Cells[9,SgDados.Row]) * StrToFloat(SgDados.Cells[2,SgDados.Row])));
-  // edtValorBruto.Text := FormatFloat('0.00',StrToFloat(edtValorBruto.Text) -
-  // (StrToFloat(SgDados.Cells[9,SgDados.Row])*StrToFloat(SgDados.Cells[2,SgDados.Row])));
   if StrToFloat(EdtTotal.Text) = 0 then
   begin
     EdtDesconto.Text := LimpaEdtDesconto;
@@ -4561,40 +4556,21 @@ begin
       end;
     end;
   end;
-  // Não pode da desconto num produto em promoção
-  // if (UpperCase(vEmpresa) = 'REZENDE') and
-  // if (StrToFloat(EdtPreco.Text) < ADOSPConsulta.FieldByName('Valor').AsFloat - 0.1) and ((UPPERCASE(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or (UPPERCASE(vEmpresa) = 'PROAUTO')) then
   if (StrToFloat(EdtPreco.Text) < getValorVendaProduto - 0.1) and
     ((UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTOOLD')) then
   begin
-    // if (StrToFloat(EdtDescUnit.text) > 0.1) and ((ADOSPConsulta.FieldByName('dsPromocao').AsString = 'S') or
-    // (ADOSPConsulta.FieldByName('dsPromocaoVarejo').AsString = 'S')) then begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
     // ShowMessage('Este item encontra-se em promoção. Portanto não é liberado nenhum desconto para o mesmo!');
     ShowMessage
       ('Não é possível vender este produto com preço menor do que o cadastro!');
     EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
-    // ADOSPConsulta.FieldByName('Valor').AsFloat);
     EdtDescUnit.Text := '0,00';
     EdtPreco.SelectAll;
     EdtPreco.Setfocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     exit;
   end;
-  // if (StrToFloat(EdtDescUnit.Text) > 0) and (bloquearDescontoAtacado) and (vAtacadoVarejo = 'A')  then begin
-  // //if (StrToFloat(EdtDescUnit.text) > 0.1) and ((ADOSPConsulta.FieldByName('dsPromocao').AsString = 'S') or
-  // //                                             (ADOSPConsulta.FieldByName('dsPromocaoVarejo').AsString = 'S')) then begin
-  // Application.OnMessage :=  FrmPrincipalPreVenda.NaoProcessaMsg;
-  // //ShowMessage('Este item encontra-se em promoção. Portanto não é liberado nenhum desconto para o mesmo!');
-  // Application.messagebox('Desconto não permitido: cliente atacado!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
-  // EdtPreco.Text:= FormatFloat('0.00',ADOSPConsulta.FieldByName('Valor').AsFloat);
-  // EdtDescUnit.Text:= '0,00';
-  // EdtPreco.SelectAll;
-  // EdtPreco.SetFocus;
-  // Application.OnMessage:=  FrmPrincipalPreVenda.ProcessaMsg;
-  // exit;
-  // end;
   // se o produto estiver em promoção, não pode dar desconto por item
   if ((ADOSPConsultaPRECO.AsCurrency <> ADOSPConsultaVALOR.AsCurrency) and
     (StrToFloat(EdtDescUnit.Text) > 0)) and (UpperCase(vEmpresa) <> 'KADU') then
@@ -4620,8 +4596,6 @@ begin
     end;
   end else
   begin // existe o desconto no cadastro do cliente E está configurado para dar o desconto automático E o usuário está tentando dar mais desconto SEM permissão
-//    if StrToCurrDef(EdtDescUnit.Text, 0) > 0 then
-//      permissao615 := PERMISSAO('615', 'V');
     descontoAcimaLimite :=
       ((TNEGCliente.getDescontoPercentual(StrToInt(EdtCdCliente.Text)) > 0) AND
       (TNEGLoja.getConfiguracaoDescontoAutomaticoPorCliente) AND
@@ -4652,7 +4626,6 @@ begin
         exit;
       end;
     end else
-  //  (descontoAcimaLimite OR descontoSemPermissao OR descontoEmClienteAtacado)
     if (descontoAcimaLimite OR descontoSemPermissao OR descontoEmClienteAtacado)
       and (TestaFinanceiroNaConfirmacao = false) then
     begin
@@ -4670,13 +4643,10 @@ begin
           mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     end;
   end;
-
   EdtPreco.Text := FormatFloatQ(vCasasPreco, StrToFloat(EdtPreco.Text));
   EnviaProdutos;
-
   HabilitaDesabilitaDesconto;
   EdtConsulta.SelectAll;
-  // EdtConsulta.Clear;
 end;
 
 procedure TFrmPrincipalPreVenda.HabilitaDesabilitaDesconto;
@@ -4695,8 +4665,7 @@ begin
       EdtDesconto.Text := '0,00000';
       EdtDesconto.ReadOnly := True;
     end;
-  end
-  else
+  end else
   begin
     existeProdutoSemPromocaoEDesconto := false;
     for i := 0 to prevenda.itens.Count - 1 do
@@ -8304,34 +8273,30 @@ begin
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       exit;
     end
-  end else // claudio: comentei de acordo com o atend 33920
-    if (StrToFloatDef(EdtDescUnit.Text, 0) > 0) and
+  end else if (StrToFloatDef(EdtDescUnit.Text, 0) > 0) and
       ((UpperCase(vEmpresa) = 'CARDOSOACESSORIOS')) then
-    // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
-    begin
-      if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
-      begin
-        EdtDescUnit.Text := '0,00';
-        Application.OnMessage := NaoProcessaMsg;
-        MessageDlg('Desconto já é automático para clientes de crediário.',
-          mtWarning, [mbOK], 0);
-        Application.OnMessage := ProcessaMsg;
-        EdtDescUnit.Setfocus;
-      end
-    end
-    else if (StrToFloatDef(EdtDescUnit.Text, 0) > 0) and
-      (vDescontoClienteAuto = True) and
-      (TNEGCliente.getPercentualDoPrecoComDescontoDecimal
-      (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
-    // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
+  begin
+    if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
     begin
       EdtDescUnit.Text := '0,00';
       Application.OnMessage := NaoProcessaMsg;
-      MessageDlg('Desconto já é automático para este cliente.', mtWarning,
-        [mbOK], 0);
+      MessageDlg('Desconto já é automático para clientes de crediário.',
+        mtWarning, [mbOK], 0);
       Application.OnMessage := ProcessaMsg;
       EdtDescUnit.Setfocus;
-    end;
+    end
+  end else if (StrToFloatDef(EdtDescUnit.Text, 0) > 0) and
+      (vDescontoClienteAuto = True) and
+      (TNEGCliente.getPercentualDoPrecoComDescontoDecimal
+      (StrToIntDef(EdtCdCliente.Text, 0)) < 1) then
+  begin
+    EdtDescUnit.Text := '0,00';
+    Application.OnMessage := NaoProcessaMsg;
+    MessageDlg('Desconto já é automático para este cliente.', mtWarning,
+      [mbOK], 0);
+    Application.OnMessage := ProcessaMsg;
+    EdtDescUnit.Setfocus;
+  end;
   if vLimitarDescontoFornecedor then
   begin
     if StrToFloatDef(EdtDescUnit.Text, 0) > GetLimiteDescontoFornecedor
@@ -8348,19 +8313,6 @@ begin
       EdtDescUnit.Setfocus;
     end;
   end;
-  // EdtDescUnit.Text := FormatFloat('0.00',StrToFloat(EdtDescUnit.Text));
-  // EdtPreco.Text    := FormatFloat('0.000',StrToFloat(EdtPreco.Text) - (StrToFloat(EdtPreco.Text) * StrToFloat(EdtDescUnit.Text)/100));
-  { if UPPERCASE(vEmpresa) = 'PROAUTO' then begin
-    if StrToFloat(EdtDescUnit.Text) > vlDescontoVendedor then begin //vPorcDesconto
-    vFlag := '0';
-    LiberaVanda;
-    end;
-    end else begin
-    if StrToFloat(EdtDescUnit.Text) > vPorcDesconto then begin
-    vFlag := '0';
-    LiberaVanda;
-    end;
-    end; }
 end;
 
 procedure TFrmPrincipalPreVenda.EdtDescUnitKeyPress(Sender: TObject;
@@ -8820,7 +8772,6 @@ begin
         indexGridAux] + '].', mtWarning, [mbOK], 0);
       SgDados.Row := indexGridAux;
       SgDados.Col := 2;
-//      SgDadosSelectCell(self, indexGridAux, 2, cansel);
       SgDados.Setfocus;
       exit;
     end;
@@ -8828,11 +8779,10 @@ begin
   end;
   ocultarExclamacao;
   { A Discabos libera p alterar a quantidade do produto direto na grid, por isso tem que atualizar os totais. }
-  if (UpperCase(vEmpresa) = 'DISCABOS') OR (UpperCase(vEmpresa) = 'SANTANA')
-  then
+  if UpperCase(vEmpresa) = 'SANTANA' then
   begin
     EdtSubTotal.Text := '0,00';
-    EdtTotal.Text := '0,00';
+    EdtTotal.Text    := '0,00';
     edtValorBruto.Text := '0,00';
     EdtDesconto.Text := LimpaEdtDesconto;
     if Label15.Visible = True then
@@ -8858,7 +8808,7 @@ begin
             (StrToInt(SgDados.Cells[0, i]), 1) <= 0)) then
             ArraylinhasDestacadas[i] := True
           else
-            ArraylinhasDestacadas[i] := false;
+            ArraylinhasDestacadas[i] := False;
         end;
         if (ArraylinhasDestacadas[i]) or
           (StrToFloatDef(SgDados.Cells[2, i], 0) >
@@ -8875,7 +8825,6 @@ begin
         StrToFloat(SgDados.Cells[3, i])); // preco de venda
       SgDados.Cells[4, i] := FormatFloatQ(vCasasPreco,
         StrToFloat(SgDados.Cells[2, i]) * StrToFloat(SgDados.Cells[3, i]));
-      // total
       if not item_cancelado(i) then
       begin // atualiza o valor total da venda
         EdtTotal.Text := FormatFloat('0.00', StrToFloat(EdtTotal.Text) +
@@ -8883,7 +8832,6 @@ begin
         edtValorBruto.Text := FormatFloat('0.00', StrToFloat(edtValorBruto.Text)
           + (StrToFloat(SgDados.Cells[9, i]) * StrToFloat(SgDados.Cells
           [2, i])));
-        // EdtSubTotal.Text := EdtTotal.Text;
       end;
     end;
     SgDados.Refresh;
@@ -8928,15 +8876,11 @@ begin
     qtdDisponivel) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    // if tipoCompos <> composto then
     MessageDlg('Quantidade disponível no estoque --> ' + FormatFloat('0.00',
       qtdDisponivel) + ' ', mtWarning, [mbOK], 0);
-    // else
-    // MessageDlg('Quantidade disponível no estoque --> ' + FormatFloat('0.00', TNEGProduto.getEstoquePossivelProdutoComposto(cdProduto)-vQtd) + ' ', mtWarning,[mbOk],0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-//    if (UpperCase(vEmpresa) <> 'DELUC') then
-      EdtQtd.Text := '0,000';
+    EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
     CbLote.ItemIndex := -1;
@@ -8945,7 +8889,6 @@ begin
       quantidadeAnterior);
     quantidade := quantidadeAnterior;
   end;
-  // begin
   if Frac(quantidade) <> 0 then
   begin // a quantidade está fracionada, logo, termos que testar se o produto esta definido como fracionado
     if not validarQuantidadeItemFracionado(SgDados.Cells[10, SgDados.Row]) then
@@ -8961,6 +8904,23 @@ begin
   end;
   With SgDados do
   begin
+    // verificar preco atacarejo
+    if (vAtacarejo = True) and (vAtacadoVarejo = 'V') and
+      (FloatToCurr(prevenda.itens[SgDados.Row - 1].nrQtdAtacarejo) > 0) and
+      (StrToCurrDef(SgDados.Cells[2, SgDados.Row], 0) >= FloatToCurr(prevenda.itens[SgDados.Row - 1].nrQtdAtacarejo)) then
+    begin
+      prevenda.itens[SgDados.Row - 1].precoVenda := TNEGProduto.getValorAtacadoPreVenda
+        (StrToInt(SgDados.Cells[0, Row]));
+      prevenda.itens[SgDados.Row - 1].precoBruto := prevenda.itens[SgDados.Row - 1].precoVenda;
+      SgDados.Cells[3, Row] := FloatToStr(prevenda.itens[SgDados.Row - 1].precoVenda);
+      SgDados.Cells[9, Row] := FloatToStr(prevenda.itens[SgDados.Row - 1].precoVenda);
+    end else if (vAtacarejo = True) and (vAtacadoVarejo = 'V') and (FloatToCurr(prevenda.itens[SgDados.Row - 1].nrQtdAtacarejo) > 0) then
+    begin
+      prevenda.itens[SgDados.Row - 1].precoVenda := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, Row])).vlPreco;
+      prevenda.itens[SgDados.Row - 1].precoBruto := prevenda.itens[SgDados.Row - 1].precoVenda;
+      SgDados.Cells[3, Row] := FloatToStr(prevenda.itens[SgDados.Row - 1].precoVenda);
+      SgDados.Cells[9, Row] := FloatToStr(prevenda.itens[SgDados.Row - 1].precoVenda);
+    end;
     prevenda.itens[SgDados.Row - 1].quantidade :=
       StrToFloat(SgDados.Cells[2, SgDados.Row]);
     prevenda.itens[SgDados.Row - 1].SubTotal := prevenda.itens[SgDados.Row - 1]
@@ -8968,6 +8928,7 @@ begin
     { INDICO NO ARRAY SE ESSA LINHA FICARÁ DESTACADA OU NÃO }
     if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
       (RgOpcoes.ItemIndex = 1))) then
+    begin
       if ((vEstqNegativo <> 'S') and
         (qtdInsuficienteParaPrevend(StrToInt(Cells[0, Row]),
         StrToFloatDef(Cells[2, Row], 0)) > 0) and
@@ -8980,34 +8941,26 @@ begin
         ArraylinhasDestacadas[Row] := True
       else
         ArraylinhasDestacadas[Row] := false;
-    // prevenda.itens[Row-1].quantidade:= StrToFloat(Cells[2,Row]);
-
+    end;
     { Abato o valor bruto anterior do item alterado e adiciono o novo valor bruto }
     edtValorBruto.Text := FormatFloat('0.00', StrToFloat(edtValorBruto.Text) -
       (StrToFloat(Cells[9, Row]) * quantidadeAnterior));
     edtValorBruto.Text := FormatFloat('0.00', StrToFloat(edtValorBruto.Text) +
       (StrToFloat(Cells[9, Row]) * quantidade));
-
     { abato o valor líquido anterior do item alterado }
     EdtTotal.Text := FormatFloat('0.00', StrToFloat(EdtTotal.Text) -
       (StrToFloat(Cells[9, Row]) * StrToFloat(Cells[2, Row])));
-
     { corrijo o valor líquido do item }
     Cells[4, Row] := FormatFloatQ(vCasasPreco, StrToFloat(Cells[2, Row]) *
       StrToFloat(Cells[3, Row]));
-
     { adiciono o novo valor líquido }
     EdtTotal.Text := FormatFloat('0.00', StrToFloat(EdtTotal.Text) +
       (StrToFloat(Cells[9, Row]) * StrToFloat(Cells[2, Row])));
     Refresh;
-    // EdtSubTotal.Text := EdtTotal.Text;
     EdtDescontoExit(self);
   end;
   quantidadeAnterior := quantidade;
   atualizaEditQtdItens;
-  // end
-  // else
-  // SgDados.Cells[2, SgDados.Row]:= FormatFloatQ(vCasasQtd, qtdAnteriorNaGrid);
 end;
 
 procedure TFrmPrincipalPreVenda.chkbxEtiquetaClick(Sender: TObject);
@@ -9846,7 +9799,6 @@ begin
     Key := #0
   else
     ValidarNumero(Key);
-  // quantidade := StrToFloatDef(SgDados.Cells[2, sgdados.Row],0);
 end;
 
 procedure TFrmPrincipalPreVenda.SgDadosKeyUp(Sender: TObject; var Key: Word;
@@ -9856,20 +9808,20 @@ var
 begin
   if (SgDados.Col = 2) and (SgDados.Cells[0, SgDados.Row] <> '') then
   begin
-    // quantidade:= StrToFloatDef(SgDados.Cells[2, sgdados.Row],0);
     cdProduto := StrToInt(SgDados.Cells[0, SgDados.Row]);
+//    if (vAtacarejo = True) and (TNEGProduto.buscarProduto(cdProduto).nrQtdAtacarejo > 0) then
+//    begin
+//      MessageDlg('Produto de atacarejo não é permitido alterar sua quantidade aqui. Exclua essa linha e adicione novamente com a quantidade desejada.', mtWarning, [mbOK], 0);
+//      SgDados.Cells[2, SgDados.Row] := FormatFloatQ(vCasasQtd, qtdAnteriorNaGrid);
+//      exit;
+//    end;
     if (StrToFloatDef(SgDados.Cells[2, SgDados.Row], 0) > 0) then
     begin
-      // quantidade:= StrToFloatDef(SgDados.Cells[2, sgdados.Row], 0);
       atualizarQuantidadeNaGrid(cdProduto,
         StrToFloatDef(SgDados.Cells[2, SgDados.Row], 0), quantidade);
-    end
-    else
+    end else
     begin
       indexGridAux := SgDados.Row;
-      // SgDados.Cells[2, SgDados.Row]:= FormatFloatQ(vCasasQtd, quantidade);
-      // atualizarQuantidadeNaGrid(cdproduto, StrToFloatDef(SgDados.Cells[2, sgdados.Row],0), quantidade);
-      // sgDados.Repaint;
     end;
   end else if (SgDados.Col = 14) and (SgDados.Cells[0, SgDados.Row] <> '') then
     cbxEntrega.Visible := True;
@@ -14938,50 +14890,35 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ConstruFort_Gondola;
 var
   L, M, Cont: Integer;
   Arq: TextFile;
   vqtd: Real;
-
 begin
-
   if SgDados.Cells[0, 1] = '' then begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
-
     EdtConsulta.Setfocus;
-
     exit;
-
   end;
-
   Cont := 0;
-
-  for L := 1 to Pred(SgDados.RowCount) do begin
+  for L := 1 to Pred(SgDados.RowCount) do
+  begin
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Inc(Cont);
   end;
-
   if Frac(cont / 2) = 0.00 then
     vqtd := Cont / 2
   else
     vqtd := (StrToInt(FormatFloat('0', Cont)) div 2) + 1;
-
   Cont := Trunc(vqtd);
-
   if cont <= 0 then
     cont := 1;
   Editor.Lines.Clear;
-
   L := 1;
-
   for M := 1 to Cont do begin
-
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q240,25');
@@ -15006,10 +14943,6 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('B86,152,0,E30,2,2,40,N,"'+SgDados.Cells[6, L]+'"');
     Editor.Lines.Add('A120,195,0,2,1,1,N,"'+SgDados.Cells[6, L]+'"');
-
-
-
-
     if SgDados.Cells[0,L+1] <> '' then begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
@@ -15024,34 +14957,23 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('A540,195,0,2,1,1,N,"'+SgDados.Cells[6, L+1]+'"');
     end;
-
     Editor.Lines.Add('');
     Editor.Lines.Add('P1');
-
     L := L + 2;
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
-
   Limpar_Tela;
-
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ConstruFort_3_Colunas;
 var
@@ -15897,9 +15819,6 @@ begin
     Editor.Lines.Add('1e6301900660017C'+SgDados.Cells[0, L]);
     Editor.Lines.Add('1911A1400280017R$ ' + SgDados.Cells[3, L] + '');
     Editor.Lines.Add('1912A0600040014'+Produto.referenciaInterna);
-    //Editor.Lines.Add('1X1100000330208B189041001001');
-    //Editor.Lines.Add('1X1100000340300L001039');
-
     if SgDados.Cells[0,L+1] <> '' then begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
       Editor.Lines.Add('1912A0601320166DI JU SHOES');
@@ -15911,7 +15830,6 @@ begin
       Editor.Lines.Add('1911A1400280148R$ ' + SgDados.Cells[3, L+1] + '');
       Editor.Lines.Add('1912A0600040145'+Produto.referenciaInterna);
     end;
-
     if SgDados.Cells[0,L+2] <> '' then begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+2]));
       Editor.Lines.Add('1912A0601320298DI JU SHOES');
@@ -16284,11 +16202,8 @@ begin
     Editor.Lines.Add('JF');
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
-
-
     //Editor.Lines.Add('D9');
     //Editor.Lines.Add('S2');
-
     // Editor.Lines.Add('B36,40,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');
     // Editor.Lines.Add('B320,36,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');  // Cod. Produto
     // Editor.Lines.Add('B594,38,0,2,3,6,37,B,"'+SgDados.Cells[0,L]+'"');
