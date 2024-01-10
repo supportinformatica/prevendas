@@ -5644,19 +5644,17 @@ begin
       vMemo.Clear;
   end;
   frmRelOrcamentos40 := TfrmRelOrcamentos40.Create(self); // Cria o formulário
-  if TNEGLoja.ImprimirComprovantePreVendaDetalhado = False then
-  begin
-//    frmRelOrcamentos40.RLBand2.height := 27;
-  end;
+//  if TNEGLoja.ImprimirComprovantePreVendaDetalhado = False then
+//  begin
+////    frmRelOrcamentos40.RLBand2.height := 27;
+//  end;
   if TNEGLoja.getdsOcultaReferenciaConfiguracao = True then
   begin
     frmRelOrcamentos40.RLDBText2.Visible := False;
     frmRelOrcamentos40.RLLabel7.Visible  := False;
-    frmRelOrcamentos40.RLDBText2.Visible := False;
-    frmRelOrcamentos40.RLLabel6.Visible  := False;
-    frmRelOrcamentos40.RLDBText1.Visible := False;
+//    frmRelOrcamentos40.RLLabel6.Visible  := False;
+//    frmRelOrcamentos40.RLDBText1.Visible := False;
   end;
-//  frmRelOrcamentos40.QrMdRel.PageSetup.PaperHeight := 280;
   if (vOcultaDesconto = 'S') then
   begin
     frmRelOrcamentos40.RLDBResult3.DataField := '';
