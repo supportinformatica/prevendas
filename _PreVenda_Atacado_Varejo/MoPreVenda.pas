@@ -2255,7 +2255,7 @@ begin
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
      (dsCGC = '21597412000120') or (dsCGC = '36056673000100') or
      (dsCGC = '15066244000144') or (dsCGC = '51276698000103') or
-     (dsCGC = '32256187000185')
+     (dsCGC = '32256187000185') or (dsCGC = '40484448000142')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -4410,9 +4410,7 @@ end;
 
 function TFrmPrincipalPreVenda.selecionarParcelasCartao: Boolean;
 begin
-//  if (dsCGC = '17111138000160') or (dsCGC = '03821965000133') or
-//     (dsCGC = '40484448000142') or (dsCGC = '39805209000168') then
-    Result := acrescimoParcelamentoCartao;
+  Result := acrescimoParcelamentoCartao;
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoExit(Sender: TObject);
