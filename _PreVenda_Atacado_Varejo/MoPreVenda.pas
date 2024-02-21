@@ -683,6 +683,7 @@ type
     procedure ImprimeEtiquetas_Litoral655_New(street: string); //Zebra TP 2844
     procedure ImprimeEtiquetas_Litoral655_NewZ(street: string); //Zebra ZD 220
     procedure ImprimeEtiquetas_MercadinhoCarregosa; //Zebra ZD 220
+    procedure ImprimeEtiquetasMAISON;
 
     procedure MountFlag_Cliente_De_Teste; // Elgins Printers
 
@@ -3466,6 +3467,9 @@ begin
     end;
     // produto:= TNEGProduto.buscarProduto(cdproduto);
     tipoComposicao := Produto.tipoComposicao;
+    if dsCGC = '37887672000170' then //KADU
+      if Produto.tipoComposicao = fabricado then
+        Produto.tipoComposicao := composto;
     // claudio, quanddo for orçamento não importa o estoque
     if (RgOpcoes.ItemIndex <> 2) and (vOrcamento <> 'O') and
       (((estoqueFisico < estoqueNecessario) and (Produto.tipoComposicao <>
@@ -10743,6 +10747,10 @@ begin
       ImprimeEtiquetasJALVES_Gondola
     else if escolha = mrAbort then
       ImprimeEtiquetasJALVES_Pequena;
+  end;
+  if UpperCase(vFlagEtiqueta) = 'MAISON' then
+  begin // ARGOX  OS-214
+    ImprimeEtiquetasMAISON;
   end;
   if UpperCase(vFlagEtiqueta) = 'ANADRI' then
   begin // ARGOX  OS-214
@@ -21457,6 +21465,96 @@ begin
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
   GetAndAddLogomarca('ONE');
+  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'print2.bat')), sw_ShowNormal);
+  if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'Print2.bat'))) then
+    ShowMessage('Não foi encontrado o arquivo Print2.bat');
+  Application.OnMessage := FormPrincipal.ProcessaMsg;
+  Limpar_Tela;
+  RgOpcoes.ItemIndex := 0;
+  MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
+end;
+
+procedure TFrmPrincipalPreVenda.ImprimeEtiquetasMAISON;
+var
+  L: Integer;
+  Arq: TextFile;
+  vqtd: Real;
+begin
+  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
+  if SgDados.Cells[0, 1] = '' then
+  begin
+    MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
+      mtWarning, [mbOK], 0);
+    EdtConsulta.Setfocus;
+    exit;
+  end;
+  if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
+    SalvaEtiquetas;
+  Editor.Lines.Clear;
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
+    if SgDados.Cells[0, L] = '' then
+      Break;
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('c0000');
+    Editor.Lines.Add('KI503');
+    Editor.Lines.Add('O0220');
+    Editor.Lines.Add('f220');
+    Editor.Lines.Add('KW0475');
+    Editor.Lines.Add('KI7');
+    Editor.Lines.Add('V0');
+    Editor.Lines.Add('L');
+    Editor.Lines.Add('H09');
+    Editor.Lines.Add('PC');
+    Editor.Lines.Add('A2');
+    Editor.Lines.Add('D11');
+
+    Editor.Lines.Add('121100000600006' + trim(Copy(SgDados.Cells[1, L], 1, 19))
+      + ''); // descricao
+    Editor.Lines.Add('121100000490006' + trim(Copy(SgDados.Cells[1, L], 20, 40))
+      + ''); // descricao
+    Editor.Lines.Add('121100000610150' + trim(Copy(SgDados.Cells[1, L], 1, 19))
+      + ''); // descricao
+    Editor.Lines.Add('121100000510150' + trim(Copy(SgDados.Cells[1, L], 20, 40))
+      + ''); // descricao
+    Editor.Lines.Add('121100000610293' + trim(Copy(SgDados.Cells[1, L], 1, 19))
+      + ''); // descricao
+    Editor.Lines.Add('121100000510293' + trim(Copy(SgDados.Cells[1, L], 20, 40))
+      + ''); // descricao
+    Editor.Lines.Add('1F2201500050011' + SgDados.Cells[6, L] + ''); // barra
+    Editor.Lines.Add('1F2201500050151' + SgDados.Cells[6, L] + ''); // barra
+    Editor.Lines.Add('1F2201500050295' + SgDados.Cells[6, L] + ''); // barra
+    Editor.Lines.Add('121100000380005' + 'R$' + FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L])) + ''); // valor
+    Editor.Lines.Add('121100000390150' + 'R$' + FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L])) + ''); // valor
+    Editor.Lines.Add('121100000390293' + 'R$' + FormatFloat('0.00',
+      StrToFloat(SgDados.Cells[3, L])) + ''); // valor
+    Editor.Lines.Add('111100000300006' + 'Cod.' + SgDados.Cells[0, L] + '');
+    // codigo
+    Editor.Lines.Add('111100000310150' + 'Cod.' + SgDados.Cells[0, L] + '');
+    // codigo
+    Editor.Lines.Add('111100000300293' + 'Cod.' + SgDados.Cells[0, L] + '');
+    // codigo
+    Editor.Lines.Add('121100000750015' + 'MAISON EVIDENCIA'); // codigo
+    Editor.Lines.Add('121100000750160' + 'MAISON EVIDENCIA'); // codigo
+    Editor.Lines.Add('121100000750304' + 'MAISON EVIDENCIA'); // codigo
+    // Cálculo para imprimir a qtd de etiquetas certo
+    if Frac(StrToFloat(SgDados.Cells[2, L]) / 3) = 0.00 then
+      vqtd := StrToFloat(SgDados.Cells[2, L]) / 3
+    else
+      vqtd := (StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])))
+        div 3) + 1;
+    Editor.Lines.Add('^' + FormatFloat('0', vqtd));
+    Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
+    Editor.Lines.Add('E');
+  end;
+  Editor.Lines.SaveToFile
+    (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+    'etiqueta.txt')));
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
