@@ -9899,8 +9899,8 @@ var
 begin
   query := TADOQuery.Create(self);
   query.Connection := DModulo.Conexao;
-  if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
-    LblReserva.Text := '0';
+//  if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
+  LblReserva.Text := '0';
   if ADOSPConsulta.RecordCount > 0 then
   begin
     with ADOQuery1 do // Vou pegar o q está reservado  ( OU SEJA NAS OS )
@@ -9910,27 +9910,25 @@ begin
       then
       begin
         sql.Text :=
-          'SELECT Sum(I.nrQtd) Qtd FROM Orcamento O WITH (NOLOCK) '+
-          'INNER JOIN IteOrcamento I WITH (NOLOCK)                '+
-          'ON O.nrOrcamento = I.nrOrcamento                       '+
-          'Where I.cdproduto = :CDPRODUTO and I.dsSituacao <> ''C''  '+
-          'and O.dsImpresso not in (''S'',''O'') and O.nrObjeto <> 0 ';
-      end
-      else
+        'SELECT Sum(I.nrQtd) Qtd FROM Orcamento O WITH (NOLOCK) '+
+        'INNER JOIN IteOrcamento I WITH (NOLOCK)                '+
+        'ON O.nrOrcamento = I.nrOrcamento                       '+
+        'Where I.cdproduto = :CDPRODUTO and I.dsSituacao <> ''C''  '+
+        'and O.dsImpresso not in (''S'',''O'',''C'') and O.nrObjeto <> 0 ';
+      end else
       begin
         sql.Text :=
-          'SELECT Sum(I.nrQtd) as Qtd FROM Orcamento O WITH (NOLOCK) INNER JOIN IteOrcamento '
-          + 'I WITH (NOLOCK) ON O.nrOrcamento = I.nrOrcamento Where I.cdproduto = :CDPRODUTO '
-          + 'and I.dsSituacao <> ''C'' and O.dsImpresso = ''N'' ';
+        'SELECT Sum(I.nrQtd) as Qtd FROM Orcamento O WITH (NOLOCK) INNER JOIN IteOrcamento '+
+        'I WITH (NOLOCK) ON O.nrOrcamento = I.nrOrcamento Where I.cdproduto = :CDPRODUTO   '+
+        'and I.dsSituacao <> ''C'' and O.dsImpresso = ''N'' ';
       end;
-      Parameters.ParamByName('CDPRODUTO').Value :=
-        ADOSPConsulta.FieldByName('Código').AsString;
+      Parameters.ParamByName('CDPRODUTO').Value := ADOSPConsulta.FieldByName('Código').AsString;
       open;
       if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
       begin
         if ADOQuery1.FieldByName('Qtd').AsString = '' then
           LblReserva.Text := '0,00'
-        else // if (UpperCase(vEmpresa) <> 'AUTOCAR') then
+        else
           LblReserva.Text := FormatFloat('0.00', FieldByName('Qtd').AsFloat);
       end;
     end;
@@ -9940,8 +9938,7 @@ begin
       Label11.Text := FormatFloat('0.00', ADOSPConsulta.FieldByName('estoque')
         .AsFloat - ADOQuery1.FieldByName('Qtd').AsFloat -
         StrToFloatDef(Label15.Text, 0));
-    end
-    else
+    end else
      if (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
     begin
       ConsultaPreVendas;
@@ -9949,11 +9946,10 @@ begin
         ADOSPConsulta.FieldByName('estoque').AsFloat - ADOQuery1.FieldByName
         ('Qtd').AsFloat - StrToFloatDef(Label15.Text, 0));
     end;
-  end
-  else
+  end else
   begin
-    if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
-      LblReserva.Text := '0,00';
+//    if NOT(UpperCase(vEmpresa) = 'PTINTAS') then
+    LblReserva.Text := '0,00';
   end;
 end;
 
@@ -9964,22 +9960,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.EdtCdNomeExit(Sender: TObject);
 begin
-
   // claudio 10-09-2015
-  // if (Length(EdtCdNome.Text) > 0) then begin
-  // ADOQryNome.Open;
-  // if (ADOQryNome.Locate('cdPessoa',EdtCdNome.Text,[])) then begin
-  // CbxNome.Text := ADOQryNome.FieldByName('nmPessoa').AsString;
-  // vlDescontoVendedor := ADOQryNome.FieldByName('vlDesconto').AsFloat;
-  // end else begin
-  // CbxNome.ItemIndex := -1;
-  // CbxNome.Text := '';
-  // ADOQryNome.Close;
-  // end;
-  // end else begin
-  // CbxNome.ItemIndex := -1;
-  // CbxNome.Text := '';
-  // end;
 end;
 
 procedure TFrmPrincipalPreVenda.Cancelar;
@@ -9997,7 +9978,6 @@ begin
   edtValorBruto.Text := '0,00';
   edtTotalIPI.Text := '0,00';
   CbxCliente.ItemIndex := 0;
-  // edtLogin.Clear;
   CbxCliente.Enabled := True;
   CbxClienteChange(self);
   if EdtLancto.Text <> '' then
@@ -10021,17 +10001,13 @@ begin
     EdtLancto.ReadOnly := True;
   end;
   EdtCFOP.Clear;
-  // CbxCLiente.SetFocus;
-  // if RgOpcoes.ItemIndex = 1 then
-  // RgOpcoes.ItemIndex := 0;
   if UpperCase(vEmpresa) <> 'TREVO' then
   begin
     if (UpperCase(vEmpresa) = 'SANTANA') or (dsCGC = '39805209000168') then
       RgOpcoes.ItemIndex := 2
     else
       RgOpcoes.ItemIndex := 0;
-  end
-  else
+  end else
   begin
     if RgOpcoes.ItemIndex = 1 then
     begin
@@ -10041,15 +10017,12 @@ begin
   end;
   CbxNome.Text := '';
   EdtCdNome.Text := '';
-  // edtusuario.Text := '';
   edtcdLista.Text := '';
   BtnAprazo.Enabled := True;
   vlTotalAnterior := 0;
   ListBox1.Clear;
   ListBox1.Visible := false;
   EdtUsuarioExit(self);
-  // FrmPedeSenha.editUsuario.SetFocus;
-  // FrmPedeSenha.editUsuario.SelectAll;
 end;
 
 procedure TFrmPrincipalPreVenda.Cancelaraprvenda1Click(Sender: TObject);
@@ -10062,16 +10035,6 @@ begin
   finally
     FrmPrincipalPreVenda.Enabled := True;
   end;
-
-  // FrmRelSaida := TFrmRelSaida.Create(Application);
-  // try
-  // FrmPrincipalPreVenda.Enabled := False;
-  // FrmRelSaida.Position := poMainFormCenter;
-  // FrmRelSaida.Show;
-  // except
-  // FrmRelSaida.Free;
-  // FrmPrincipalPreVenda.Enabled := True;
-  // end;
 end;
 
 procedure TFrmPrincipalPreVenda.CdigoAdicional1Click(Sender: TObject);
@@ -10082,7 +10045,7 @@ end;
 procedure TFrmPrincipalPreVenda.EdtConsultaKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if RadioGroup1.ItemIndex = 0 then // CODIGO
+  if RadioGroup1.ItemIndex = 0 then
     ValidarNumero(Key);
   if (Key = Char(13)) and (RadioGroup1.ItemIndex = 4) then
   begin
@@ -17783,13 +17746,11 @@ begin
       end;
       open;
     end;
-    // if (UpperCase(vEmpresa) = 'PTINTAS') then
-    // Label15.Text := FormatFloat('0.00',ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat)
-    if (UpperCase(vEmpresa) <> 'PBFARMA') and (UpperCase(vEmpresa) <> 'PTINTAS')
-    then
-      Label11.Text := FormatFloat('0.00',
-        ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat)
-    else
+//    if (UpperCase(vEmpresa) <> 'PBFARMA') and (UpperCase(vEmpresa) <> 'PTINTAS')
+//    then
+//      Label11.Text := FormatFloat('0.00',
+//        ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat)
+//    else
       LblReserva.Text := FormatFloat('0.00',
         ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat); // PBFARMA
   end
