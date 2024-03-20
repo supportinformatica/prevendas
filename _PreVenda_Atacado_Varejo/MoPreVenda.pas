@@ -4235,12 +4235,12 @@ var
   existeItemLancadoNaGrid: Boolean;
 begin
   if (SgDados.Row = 0) or (SgDados.Cells[0, SgDados.Row] = '') then
-  // SgDados.RowCount -1 then
     exit;
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-    if FrmPrincipalPreVenda.dsCGC = '28028513000120' then begin
+    if (FrmPrincipalPreVenda.dsCGC = '28028513000120') or (FrmPrincipalPreVenda.dsCGC = '46077693000111') then // DELIJARDINS
+    begin
       frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
       frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
       frmAlterProdutoPosAdded.edtUnidade.Text := SgDados.Cells[10, SgDados.Row];
@@ -4259,8 +4259,7 @@ begin
         prevenda.itens[SgDados.Row - 1].Promocao_desconto_Item := False;
       CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
       SgDadosExit(self);
-    end
-    else
+    end else
       EdtConsulta.Setfocus;
     exit;
   end;
