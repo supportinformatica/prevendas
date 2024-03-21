@@ -4239,7 +4239,7 @@ begin
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-    if (FrmPrincipalPreVenda.dsCGC = '28028513000120') or (FrmPrincipalPreVenda.dsCGC = '46077693000111') then // DELIJARDINS
+    if (FrmPrincipalPreVenda.dsCGC = '28028513000120') or (FrmPrincipalPreVenda.dsCGC = '38030572000196') then // DELIJARDINS
     begin
       frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
       frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
