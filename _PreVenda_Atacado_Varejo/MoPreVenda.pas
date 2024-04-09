@@ -1984,8 +1984,7 @@ begin
     vDescontoClienteAuto := FieldByName('DescontoCliente').AsBoolean;
     duasVias40Colunas := FieldByName('Campo_30').AsString;
     imprimeImpressora40Windows := FieldByName('Campo_31').AsString;
-    vLimitarDescontoFornecedor := FieldByName('LimitarDescontoFornecedor')
-      .AsBoolean;
+    vLimitarDescontoFornecedor := False; // não existe mais essa funcionalidade FieldByName('LimitarDescontoFornecedor').AsBoolean;
     vQtdPrint := FieldByName('nrPrintsPrevenda').AsString;
     vTipoDescontoNF := FieldByName('Campo_38').AsString;
     vGerarSpedFiscal := FieldByName('campo_52').AsString = 'S';
