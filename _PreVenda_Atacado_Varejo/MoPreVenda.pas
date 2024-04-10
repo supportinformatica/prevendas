@@ -3203,15 +3203,10 @@ begin
     end else
       possuiPermissaoVenderAbaixoDoCusto := False;
   end;
-//  end else if abaixoDoCustoFinal then
-//  begin
-//    Application.MessageBox(Pchar('O custo final desse item é R$ '+ custoFinal), 'Venda abaixo do custo final', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
-//  end;
   if (trim(EdtDescUnit.Text) <> '') and (StrToFloat(EdtDescUnit.Text) > 0) and
     ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and
-    (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO')) then
+    (UpperCase(vEmpresa) <> 'PROAUTO')) then //(UpperCase(vEmpresa) <> 'MOTOPECAS') and
   begin
-    // and (UPPERCASE(vEmpresa) <> 'LLPARAFUSOS') then
     BtnAprazo.Enabled := false;
     EdtDesconto.Text := '0,00000';
     EdtDesconto.ReadOnly := True;
@@ -3269,7 +3264,7 @@ begin
       StrToFloat(FormatFloatQ(vCasasPreco, getValorVendaProduto)))and(1=1)) //!(1 = 1) sera substituido por algum flag ou cnpj q queira exibir acrescimos
       // ADOSPConsulta.FieldByName('valor').AsFloat)))
       or (vOcultaDesconto = 'S')) or
-      ((UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS')) then
+      ((UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU')) then // or (UpperCase(vEmpresa) = 'MOTOPECAS')
     begin // nao mostrar desconto na venda
       // Se houver aumento no preço, esse será o novo preço bruto (claudio 18-09-2015)
       itemPrevenda.vlPreco := StrToFloat(EdtPreco.Text);
@@ -3283,7 +3278,7 @@ begin
     end;
     if (UpperCase(vEmpresa) = 'AMBIENTE') then
       itemPrevenda.ambiente := TNEGAmbiente.getAmbiente(StrToIntDef(EdtCdAmbiente.Text, -1));
-    if (UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO') then
+    if (UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'PROAUTO') then //and (UpperCase(vEmpresa) <> 'MOTOPECAS')
     begin
       if ((StrToFloat(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsFloat)) >
         StrToFloat(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsFloat))) or
@@ -3696,7 +3691,7 @@ begin
     if i = 27 then
       Sleep(1);
     if (prevenda.itens[i].Promocao_desconto_Item = false) or
-      (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS') or (UpperCase(vEmpresa) = 'PROAUTO')) and
+      (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'PROAUTO')) and //or (UpperCase(vEmpresa) = 'MOTOPECAS')
       (prevenda.descontoPercentual > 0)) then
     // and (prevenda.descontoPercentual <> 0) then
     begin
@@ -4681,8 +4676,8 @@ begin
     // se teve algum produto que não está em promoção ou nao teve desconto por item então libero o campo de desconto no total
     // só libero o campo de desconto no total se
     if ((existeProdutoSemPromocaoEDesconto) and
-      ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'MOTOPECAS') and (UpperCase(vEmpresa) <> 'PROAUTO') and (UpperCase(vEmpresa) <> 'CAMARATUBA')))
-      or (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'MOTOPECAS') or (UpperCase(vEmpresa) = 'PROAUTO'))
+      ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'PROAUTO') and (UpperCase(vEmpresa) <> 'CAMARATUBA'))) //and (UpperCase(vEmpresa) <> 'MOTOPECAS')
+      or (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'PROAUTO')) //or (UpperCase(vEmpresa) = 'MOTOPECAS')
       and (prevenda.descontoPercentual = 0)) then
     begin
       BtnAprazo.Enabled := True;
