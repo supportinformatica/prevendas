@@ -452,6 +452,7 @@ type
       Shift: TShiftState);
 
   private
+    versaoEXE : string;
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
     qtdAnteriorNaGrid: Real;
@@ -749,6 +750,7 @@ type
     procedure ColResize(Sender: TObject);
     function Empresas_UmaEtiqueta_porColuna : Boolean;
   public
+    idLiberacaoRestrincaoVenda : integer;
     prevenda: TPrevenda;
     acrescimoParcelamentoCartao : Boolean;
     listaLiberacoes : Tlist<TLiveracao>;
@@ -4607,8 +4609,9 @@ begin
     begin
       vFlag := '6';
       try
-        if FrmCancelamentoVenda = nil then
-          FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
+        if FrmCancelamentoVenda <> nil then
+          FreeAndNil(FrmCancelamentoVenda);
+        FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
         FrmCancelamentoVenda.ShowModal;
         FrmPrincipalPreVenda.possuiPermissaoVenderAbaixoDoCusto := False;
         FreeAndNil(FrmCancelamentoVenda);
@@ -8218,8 +8221,9 @@ begin
   begin
     try
       FrmPrincipalPreVenda.Enabled := false;
-      if FrmCancelamentoVenda = nil then
-        FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+      FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
       // Cria o formulário
       if vFlag = '2' then
         FrmCancelamentoVenda.Position := poDefaULTPosOnly;
@@ -8233,8 +8237,9 @@ begin
   begin // se o valor total atual for menor que o anterior então tem que liberar o desconto
     FrmPrincipalPreVenda.Enabled := false;
     try
-      if FrmCancelamentoVenda = nil then
-        FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+      FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
       // Cria o formulário
       FrmCancelamentoVenda.ShowModal;
       FreeAndNil(FrmCancelamentoVenda);
@@ -9958,6 +9963,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.Cancelar;
 begin
+  idLiberacaoRestrincaoVenda := 0;
   cbxEntrega.Visible := False;
   DtLancto.Date := Date;
   EdtConsulta.Clear;
@@ -17099,10 +17105,10 @@ begin
   With DModulo.ADOQuery1 do
   begin
     sql.Text :=
-      'INSERT INTO LogEventos(dtEvento,hrEvento,dsEvento,dsLancamento,  ' +
-      'dsDocumento,vlValor,cdUsuario,cdOpcao)                            ' +
-      'VALUES (:dtEvento,:hrEvento,:dsEvento,:dsLancamento,:dsDocumento,' +
-      ':vlValor,:cdUsuario,:cdOpcao)                                    ';
+      'INSERT INTO LogEventos(dtEvento, hrEvento, dsEvento, dsLancamento,'+
+      'dsDocumento, vlValor, cdUsuario, cdOpcao, versao)                 '+
+      'VALUES (:dtEvento,:hrEvento,:dsEvento,:dsLancamento, :dsDocumento,'+
+      ':vlValor, :cdUsuario, :cdOpcao, :versao)';
     Parameters.ParamByName('dtEvento').Value := dtEvento;
     Parameters.ParamByName('hrEvento').Value := hrEvento;
     Parameters.ParamByName('dsEvento').Value := Copy(dsEvento, 1, 50);
@@ -17111,6 +17117,7 @@ begin
     Parameters.ParamByName('vlValor').Value := vlvalor;
     Parameters.ParamByName('cdUsuario').Value := cdUsuario;
     Parameters.ParamByName('cdOpcao').Value := cdOpcao;
+    Parameters.parambyname('versao').Value  := versaoEXE;
     ExecSQL;
   end;
 end;
@@ -24281,6 +24288,7 @@ begin
     versao := versao + '.' + intToStr(dwFileVersionLS shr 16);
     versao := versao + '.' + intToStr(dwFileVersionLS and $FFFF);
   end;
+  versaoEXE := 'PV '+ versao;
   result := (versao);
   FreeMem(VerInfo, VerInfoSize);
 end;

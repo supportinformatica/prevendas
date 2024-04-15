@@ -611,10 +611,11 @@ function TFrmFormaPag.verificaLimieteCredito: Boolean;
 begin
   verificaLimieteCredito := True;
   Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-  if FrmCancelamentoVenda = nil then
-    FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-  // Cria o formulário
   vFlag := '7';
+  if FrmCancelamentoVenda <> nil then
+    FreeAndNil(FrmCancelamentoVenda);
+  FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
+  // Cria o formulário
   FrmCancelamentoVenda.Position := poDefaULTPosOnly;
   try
     FrmCancelamentoVenda.ShowModal;
@@ -939,9 +940,11 @@ begin
   then
   begin
     FrmFormaPag.Enabled := False;
+    vFlag := '9';
+    if FrmCancelamentoVenda <> nil then
+      FreeAndNil(FrmCancelamentoVenda);
     FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
     // Cria o formulário
-    vFlag := '9';
     FrmCancelamentoVenda.ShowModal;
     BtnConfirmar.Enabled := True;
   end
@@ -974,9 +977,10 @@ begin
     (FrmPrincipalPreVenda.Permissao('615', 'V') = 'N')) then
   begin
     FrmFormaPag.Enabled := False;
-    FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-    // Cria o formulário
     vFlag := '6';
+    if FrmCancelamentoVenda <> nil then
+      FreeAndNil(FrmCancelamentoVenda);
+    FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
     FrmCancelamentoVenda.ShowModal;
     BtnConfirmar.Enabled := True;
   end
@@ -1010,10 +1014,8 @@ begin
   end;
 end;
 
-{
-  * Após alterar a quantidade de dias em uma linha, o campo do vencimento precisa ser corrigido
-  * e as parcelas reordenadas de acordo com a data de vencimento.
-}
+{ * Após alterar a quantidade de dias em uma linha, o campo do vencimento precisa ser corrigido
+  * e as parcelas reordenadas de acordo com a data de vencimento. }
 procedure TFrmFormaPag.atualizarLinhasGridParcelas;
 var
   novoVencimento: TDateTime;

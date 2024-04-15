@@ -140,4 +140,10 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
     Left = 89
     Top = 34
   end
+  object tmr1: TTimer
+    Interval = 8000
+    OnTimer = tmr1Timer
+    Left = 273
+    Top = 7
+  end
 end
