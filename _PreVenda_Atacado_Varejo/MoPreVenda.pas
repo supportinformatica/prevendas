@@ -3180,11 +3180,11 @@ begin
         if (UpperCase(vEmpresa) = 'TRESLEOES') then
         begin
           FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo de aquisição';
-          FrmCancelamentoVenda.Copyright.caption := ' O custo de aquisição desse item é R$ '+ custoFinal;
+          FrmCancelamentoVenda.caption := 'O custo de aquisição desse item é R$ '+ custoFinal;
         end else
         begin
           FrmCancelamentoVenda.Caption := 'Atenção: Venda abaixo do custo final';
-          FrmCancelamentoVenda.Copyright.caption := ' O custo final desse item é R$ '+ custoFinal;
+          FrmCancelamentoVenda.caption := 'O custo final desse item é R$ '+ custoFinal;
         end;
         FrmCancelamentoVenda.ShowModal;
         FreeAndNil(FrmCancelamentoVenda);
@@ -3194,8 +3194,7 @@ begin
     end;
     if (not possuiPermissaoVenderAbaixoDoCusto) then
     begin
-//        if (UpperCase(vEmpresa) <> 'DELUC') then
-        EdtQtd.Text := '0,00';
+      EdtQtd.Text := '0,00';
       EdtDescUnit.Text := '0,00';
       setLabel23(0);
       CbLote.ItemIndex := -1;
@@ -3622,9 +3621,9 @@ begin
             FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V',
               possuiPermissaoVenderAbaixoDoCusto);
             if (UpperCase(vEmpresa) = 'TRESLEOES') then
-              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+              FrmCancelamentoVenda.caption := 'Venda abaixo do custo de aquisição'
             else
-              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
+              FrmCancelamentoVenda.caption := 'Venda abaixo do custo final';
             FrmCancelamentoVenda.ShowModal;
             FreeAndNil(FrmCancelamentoVenda);
           except
@@ -3662,9 +3661,9 @@ begin
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V', possuiPermissaoVenderAbaixoDoCusto);
           if (UpperCase(vEmpresa) = 'TRESLEOES') then
-              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+              FrmCancelamentoVenda.caption := 'Venda abaixo do custo de aquisição'
           else
-            FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
+            FrmCancelamentoVenda.caption := 'Venda abaixo do custo final';
           FrmCancelamentoVenda.ShowModal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -4865,9 +4864,9 @@ begin
               FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631',
                 'V', possuiPermissaoVenderAbaixoDoCusto);
               if (UpperCase(vEmpresa) = 'TRESLEOES') then
-                FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+                FrmCancelamentoVenda.caption := 'Venda abaixo do custo de aquisição'
               else
-                FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
+                FrmCancelamentoVenda.caption := 'Venda abaixo do custo final';
               FrmCancelamentoVenda.ShowModal;
               FreeAndNil(FrmCancelamentoVenda);
             except
@@ -4907,9 +4906,9 @@ begin
             FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '631', 'V',
               possuiPermissaoVenderAbaixoDoCusto);
             if (UpperCase(vEmpresa) = 'TRESLEOES') then
-              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo de aquisição'
+              FrmCancelamentoVenda.caption := 'Venda abaixo do custo de aquisição'
             else
-              FrmCancelamentoVenda.Copyright.caption := 'Venda abaixo do custo final';
+              FrmCancelamentoVenda.caption := 'Venda abaixo do custo final';
             FrmCancelamentoVenda.ShowModal;
             FreeAndNil(FrmCancelamentoVenda);
           except
@@ -4920,7 +4919,6 @@ begin
         begin
           prevenda.descontoPercentual := 0;
           EdtDesconto.Text := '0,000';
-          // EdtSubTotal.Text := EdtTotal.Text;
         end;
         Application.OnMessage := FormPrincipal.ProcessaMsg;
       end
@@ -7273,9 +7271,6 @@ begin
   begin
     CbxCliente.Enabled := True;
     Limpar_Tela;
-    // CbxCliente.SetFocus;
-    // CbxCliente.SetFocus;
-    // CbxCliente.SelectAll;
   end else
   begin
     case RgOpcoes.ItemIndex of
@@ -7290,21 +7285,6 @@ begin
             exit;
           end;
         end;
-//        if FrmCancelamentoVenda.Possui_Permissao('820','A',cbxUsuario.Text,EdtUsuario.Text) then
-//           possuiPermissaoParaAlterarPrevenda := True
-//        else
-//        begin
-//          try
-//            if FrmCancelamentoVenda <> nil then
-//              FreeAndNil(FrmCancelamentoVenda);
-//            FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-//            FrmCancelamentoVenda.Copyright.Caption :=  '<<<<   Alteração de pré-venda    >>>>';
-//            FrmCancelamentoVenda.showmodal;
-//            FreeAndNil(FrmCancelamentoVenda);
-//          except
-//            FreeAndNil(FrmCancelamentoVenda);
-//          end;
-//        end;
         possuiPermissaoParaAlterarPrevenda := True;
         if not possuiPermissaoParaAlterarPrevenda and (UpperCase(vEmpresa) <> 'SANTANA') then
         begin
@@ -7314,9 +7294,6 @@ begin
           EdtCdNome.Text     := '';
           CbxNome.ItemIndex  := -1;
           CbxNome.Text       := '';
-          //EdtCdCliente.Text  := '';
-          //CbxCliente.ItemIndex := -1;
-          //CbxCliente.Text    := '';
           CbxCliente.Enabled := false;
           LimpaGrid(prevenda);
           EdtSubTotal.Text   := '0,00';
@@ -7333,7 +7310,6 @@ begin
       end;
       0, 2, 4:
       begin
-        // EdtConsulta.SetFocus;
         CbxCliente.Enabled := True;
         if (RgOpcoes.ItemIndex = 0) and (clienteComRestricaoFinanceira(restrincaoFinanceira, EdtSubTotal.Text)) then
           CbxCliente.Setfocus
@@ -7355,8 +7331,7 @@ begin
                 FreeAndNil(FrmCancelamentoVenda);
               FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '820',
                 'A', possuiPermissaoParaAlterarPrevenda);
-              FrmCancelamentoVenda.Copyright.caption :=
-                'Alteração de pré-venda';
+              FrmCancelamentoVenda.caption := 'Alteração de pré-venda';
               FrmCancelamentoVenda.ShowModal;
               FreeAndNil(FrmCancelamentoVenda);
             except
@@ -7364,9 +7339,7 @@ begin
             end;
           end;
           if (possuiPermissaoParaAlterarPrevenda) then
-          // if (vSenha_Alteracao = 'X') then
           begin
-            // vTexto := InputBox('Liberação para alteração', 'Digite senha que permite alterar as pré-vendas', '#');
             FrmPrincipalPreVenda.Enabled := True;
             FrmPrincipalPreVenda.vUltimo_USUARIO := cbxUsuario.Text;
             FrmPrincipalPreVenda.Enabled := True;
@@ -7403,9 +7376,6 @@ begin
           CbxCliente.Enabled := false;
           EdtUsuario.SelectAll;
           CbxCliente.Setfocus;
-          // CbxCliente.Enabled := True;
-          // CbxCliente.SetFocus;
-          // CbxCliente.SelectAll;
         end;
       end;
     end;
@@ -7702,7 +7672,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  'Transformar Orçamento em Pré-venda';
+          FrmCancelamentoVenda.Caption :=  'Transformar Orçamento em Pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -7719,7 +7689,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Copyright.Caption :=  'Alteração de pré-venda';
+          FrmCancelamentoVenda.Caption :=  'Alteração de pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -9293,8 +9263,7 @@ begin
           FreeAndNil(FrmCancelamentoVenda);
         FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '821', 'V',
           possuiPermissaoParaAlterarCliente);
-        FrmCancelamentoVenda.Copyright.caption :=
-          'Alteração de Cliente';
+        FrmCancelamentoVenda.caption := 'Alteração de Cliente';
         FrmCancelamentoVenda.ShowModal;
         FreeAndNil(FrmCancelamentoVenda);
       except
@@ -9303,7 +9272,6 @@ begin
     end;
     if (not possuiPermissaoParaAlterarCliente) then
     begin
-
       // VOLTA PARA O CLIENTE ORIGINAL DA PRÉ-VENDA
       SetarClienteNaCombo(codigoClienteAtual);
     end;
@@ -17300,8 +17268,7 @@ begin
             sql.Text := 'Update Sequencial Set nrPedidos = nrPedidos + 1';
             ExecSQL;
           end;
-        end
-        else
+        end else
           prevenda.numeroPrevenda := StrToInt(EdtLancto.Text);
         prevenda.dsReferencia := edtReferencia.Text;
         prevenda.isDescontoOculto := vOcultaDesconto;
@@ -17335,7 +17302,7 @@ begin
           DModulo.Conexao.RollbackTrans;
           ShowMessage(e.Message);
         end;
-      End;
+      end;
     finally
       try
         DModulo.Conexao.BeginTrans;
@@ -17372,10 +17339,6 @@ begin
               [mbOK], 0);
             if (chkbxOrcamentoExterno.Checked = True) then
               ImprimeOrcamentoExterno(enviar_email)
-//            else if (UpperCase(vEmpresa) = 'DELUC') then
-//              Application.MessageBox(PWideChar('Prevenda: ' + EdtLancto.Text +
-//                #13#10 + 'Valor: R$ ' + EdtSubTotal.Text), 'Atenção',
-//                mb_Ok + MB_ICONWARNING + MB_APPLMODAL)
             else if (UpperCase(vEmpresa) = 'COPYART') then
             begin
               if nrOrcamentoDia > 0 then

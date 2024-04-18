@@ -3,9 +3,9 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   Top = 300
   AutoSize = True
   BorderIcons = []
-  ClientHeight = 107
-  ClientWidth = 317
-  Color = clSkyBlue
+  ClientHeight = 112
+  ClientWidth = 316
+  Color = 15638785
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -21,8 +21,8 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 184
-    Top = 43
+    Left = 183
+    Top = 27
     Width = 107
     Height = 13
     Caption = 'Entre com a senha'
@@ -34,27 +34,9 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
     ParentFont = False
     PopupMenu = PopupMenu
   end
-  object Copyright: TLabel
-    Left = 0
-    Top = 10
-    Width = 317
-    Height = 21
-    Alignment = taCenter
-    AutoSize = False
-    Caption = ' Desconto acima do permitido'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
-    Font.Name = 'Comic Sans MS'
-    Font.Style = [fsBold]
-    ParentFont = False
-    PopupMenu = PopupMenu
-    Transparent = True
-    IsControl = True
-  end
   object Label2: TLabel
-    Left = 6
-    Top = 43
+    Left = 9
+    Top = 27
     Width = 44
     Height = 13
     Caption = 'Usu'#225'rio'
@@ -66,29 +48,31 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 193
-    Top = 91
-    Width = 122
+    Left = 171
+    Top = 92
+    Width = 145
     Height = 13
-    Caption = 'Pressione ESC para sair   '
+    Alignment = taRightJustify
+    Caption = 'Pressione ESC para sair  '
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
-    Font.Style = []
+    Font.Style = [fsBold]
     ParentFont = False
   end
   object Shape1: TShape
     Left = 0
     Top = 0
-    Width = 5
-    Height = 107
-    Visible = False
+    Width = 6
+    Height = 112
+    Brush.Color = 15638785
+    Pen.Color = 15638785
   end
   object EdtSenha: TEdit
     Tag = 1
-    Left = 184
-    Top = 57
+    Left = 183
+    Top = 42
     Width = 124
     Height = 28
     Hint = 'Digite a senha e press. ENTER, ou press. ESC para retornar'
@@ -107,8 +91,8 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
     OnKeyPress = EdtSenhaKeyPress
   end
   object edtUsuario: TComboBox
-    Left = 6
-    Top = 57
+    Left = 9
+    Top = 42
     Width = 135
     Height = 28
     BevelInner = bvNone
@@ -126,7 +110,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
   end
   object PopupMenu: TPopupMenu
     Left = 44
-    Top = 34
+    Top = 19
     object F1Ajuda1: TMenuItem
       Caption = 'Ajuda...'
       Hint = 'Arquivo de Help'
@@ -138,7 +122,7 @@ object FrmCancelamentoVenda: TFrmCancelamentoVenda
     Connection = DModulo.Conexao
     Parameters = <>
     Left = 89
-    Top = 34
+    Top = 19
   end
   object tmr1: TTimer
     Interval = 8000

@@ -11,7 +11,6 @@ type
   TFrmCancelamentoVenda = class(TForm)
     EdtSenha: TEdit;
     Label1: TLabel;
-    Copyright: TLabel;
     PopupMenu: TPopupMenu;
     F1Ajuda1: TMenuItem;
     Label2: TLabel;
@@ -35,7 +34,6 @@ type
     procedure inserirNoLog(texto : string; valor : Real);
     Function Pesquisa_Permissao(vTag : String) : String;
   public
-    { Public declarations }
     PodeFechar : Boolean;
     constructor Create(AOwner: TComponent; codigoDaPermissao:string; letraDaOperacao:string; var possuiPermissao:Boolean); overload;
     Function Possui_Permissao(vTag:String; letraDaOperacao:string; _usuario, _senha : string; exibirMensagem : boolean = true) : boolean;
@@ -54,8 +52,9 @@ uses DataModulo,uFuncoesPadrao,FrmPrincipal, MoPreVenda, FormaPag,
 constructor TFrmCancelamentoVenda.Create(AOwner: TComponent; codigoDaPermissao:string; letraDaOperacao:string; var possuiPermissao:Boolean);
 begin
   inherited Create(AOwner);
-  resultadoPossuiPermissao:= @possuiPermissao;
-  self.codigoDaPermissao:= codigoDaPermissao;
+  resultadoPossuiPermissao := @possuiPermissao;
+  self.codigoDaPermissao := codigoDaPermissao;
+
   Self.letraDaOperacao:= letraDaOperacao;
   EdtSenha.Clear;
 end;
@@ -207,7 +206,6 @@ begin
         Application.OnMessage := FormPrincipal.ProcessaMsg;
         FrmPrincipalPreVenda.vUltimo_USUARIO := EdtUsuario.Text;
         FrmPrincipalPreVenda.possuiPermissaoVenderAbaixoDoCusto := True;
-//        FrmPrincipalPreVenda.liberouVenda := True;
         PodeFechar := True;
         Close;
         exit;
@@ -470,8 +468,10 @@ begin
               Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.pegaHoraBanco, 'PREVENDA', 'TFrmCancelamentoVenda.EdtSenhaKeyPress', e.Message);
               vTeste  := 2; // o orcamento nao foi salvo
               vSalvar := vSalvar + 1;
-              if vSalvar <= 4 then FrmFormaPag.BtnConfirmarClick(Self)
-              else begin
+              if vSalvar <= 4 then
+                FrmFormaPag.BtnConfirmarClick(Self)
+              else
+              begin
                 Messagedlg('Não foi possível salvar esta Pré-Venda \ Orçamento!', mterror, [mbOk], 0);
                 vSalvar := 0;
               end;
@@ -553,15 +553,15 @@ begin
         end else
         begin
           try
-             if FormCredito = nil then
-               FormCredito := TFormCredito.Create(Application); // Cria o formulário
-             FormCredito.Label3.caption := ADOQuery1.Fieldbyname('nmPessoa').asstring;
-             FormCredito.cdVendedor     := ADOQuery1.Fieldbyname('cdPessoa').asInteger;
-             FormCredito.monta_creditos;
-             FormCredito.ShowModal;
-             FreeAndNil(FormCredito);
-             PodeFechar := true;
-             Close;
+            if FormCredito = nil then
+              FormCredito := TFormCredito.Create(Application); // Cria o formulário
+            FormCredito.Label3.caption := ADOQuery1.Fieldbyname('nmPessoa').asstring;
+            FormCredito.cdVendedor     := ADOQuery1.Fieldbyname('cdPessoa').asInteger;
+            FormCredito.monta_creditos;
+            FormCredito.ShowModal;
+            FreeAndNil(FormCredito);
+            PodeFechar := true;
+            Close;
           except
             FreeAndNil(FormCredito);
             PodeFechar := true;
@@ -720,10 +720,11 @@ end;
 
 function TFrmCancelamentoVenda.Possui_Permissao(vTag,
   letraDaOperacao: string;  _usuario, _senha : string; exibirMensagem : boolean = true): boolean;
-var I,J : Integer;
-    vSenha     : String[06];
-    vPermissao : Boolean;
-    qry : TADOQuery;
+var
+  I,J : Integer;
+  vSenha     : String[06];
+  vPermissao : Boolean;
+  qry : TADOQuery;
 begin
   qry := TADOQuery.Create(nil);
   qry.Connection := DModulo.Conexao;
@@ -731,10 +732,8 @@ begin
   with qry do
   begin
     Sql.Text := 'Select * From Senha S WITH (NOLOCK) INNER JOIN Permissao P WITH (NOLOCK) '+
-                 'ON S.dsNome = P.dsNome                                                   '+
-                 'Where P.dsnome = :dsnome                                                 '+
-                 'and S.dsSenha = :dsSenha                                                 '+
-                 'and P.nrTag = :tag                                                       ';
+                 'ON S.dsNome = P.dsNome                                                  '+
+                 'Where P.dsnome = :dsnome and S.dsSenha = :dsSenha and P.nrTag = :tag    ';
     Parameters.ParamByName('dsnome').Value  := _usuario;
     Parameters.ParamByName('dsSenha').Value := vSenha;
     Parameters.ParamByName('tag').Value := vTag;
@@ -779,36 +778,55 @@ begin
       Open;
       if qry.RecordCount > 0 then
       begin
-        case StrToIntDef(vFlag, 0) of
-          0 : // 'Desconto até o limite';
-          begin
-            FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
-            FrmPrincipalPreVenda.Enabled := True;
-            FrmPrincipalPreVenda.liberouVenda := True;
-            if StrToFloatDef(FrmPrincipalPreVenda.EdtQtd.Text, 0) > 0 then
-              FrmPrincipalPreVenda.EnviaProdutos;
-            PodeFechar := True;
-            FreeAndNil(qry);
-            FrmCancelamentoVenda.Close;
-          end;
-          6 : // 'Desconto acima do limite';
-          begin
-            FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
-            FrmPrincipalPreVenda.Enabled := True;
-            FrmPrincipalPreVenda.liberouVenda := True;
-            PodeFechar := True;
-            Application.OnMessage := FormPrincipal.ProcessaMsg;
-            FreeAndNil(qry);
-            FrmCancelamentoVenda.Close;
-          end;
-          9: // 'Liberação de restrição financeira';
-          begin
-            FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
-            FrmPrincipalPreVenda.Enabled := True;
-            FrmPrincipalPreVenda.auxiLiberacao := True;
-            PodeFechar := True;
-            FreeAndNil(qry);
-            FrmCancelamentoVenda.Close;
+        if codigoDaPermissao = '631' then  // venda abaixo do preço de custo
+        begin
+          FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
+          FrmPrincipalPreVenda.possuiPermissaoVenderAbaixoDoCusto := True;
+          FrmPrincipalPreVenda.Enabled := True;
+          PodeFechar := True;
+          FreeAndNil(qry);
+          FrmCancelamentoVenda.Close;
+        end else if (codigoDaPermissao = '831') or (codigoDaPermissao = '820') then  // transformar orçamento em pre-venda / alterar pre-venda
+        begin
+          FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
+          FrmPrincipalPreVenda.Enabled := True;
+          PodeFechar := True;
+          resultadoPossuiPermissao^ := True;
+          FreeAndNil(qry);
+          FrmCancelamentoVenda.Close;
+        end else
+        begin
+          case StrToIntDef(vFlag, 0) of
+            0 : // 'Desconto até o limite';
+            begin
+              FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
+              FrmPrincipalPreVenda.Enabled := True;
+              FrmPrincipalPreVenda.liberouVenda := True;
+              if StrToFloatDef(FrmPrincipalPreVenda.EdtQtd.Text, 0) > 0 then
+                FrmPrincipalPreVenda.EnviaProdutos;
+              PodeFechar := True;
+              FreeAndNil(qry);
+              FrmCancelamentoVenda.Close;
+            end;
+            6 : // 'Desconto acima do limite';
+            begin
+              FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
+              FrmPrincipalPreVenda.Enabled := True;
+              FrmPrincipalPreVenda.liberouVenda := True;
+              PodeFechar := True;
+              Application.OnMessage := FormPrincipal.ProcessaMsg;
+              FreeAndNil(qry);
+              FrmCancelamentoVenda.Close;
+            end;
+            9: // 'Liberação de restrição financeira';
+            begin
+              FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := -1;
+              FrmPrincipalPreVenda.Enabled := True;
+              FrmPrincipalPreVenda.auxiLiberacao := True;
+              PodeFechar := True;
+              FreeAndNil(qry);
+              FrmCancelamentoVenda.Close;
+            end;
           end;
         end;
       end;
@@ -946,6 +964,7 @@ procedure TFrmCancelamentoVenda.FormCreate(Sender: TObject);
 var
   qry : TADOQuery;
   descricao : string;
+  desconto, valor : Currency;
 begin
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   if Length(FrmPrincipalPreVenda.vUltimo_USUARIO) > 0 then
@@ -956,14 +975,39 @@ begin
     SQL.Text := 'Select dsnome From senha WITH (NOLOCK) Order by dsnome ';
     MontaComboListADO(ADOQuery1, edtUsuario);
   end;
-  if (StrToIntDef(MoPreVenda.vFlag, 0) in [0,6,9]) then
+  if (StrToIntDef(MoPreVenda.vFlag, 200) in [0,6,9]) or
+     (codigoDaPermissao = '631') or (codigoDaPermissao = '831') or (codigoDaPermissao = '820') then
   begin
-    case StrToIntDef(vFlag, 0) of
-      0 : descricao := 'Desconto até o limite';
-      6 : descricao := 'Desconto acima do limite';
-      9 : descricao := 'Liberação de restrição financeira';
+    if codigoDaPermissao = '631' then //venda acima do preço de custo não mostra o valor nem desconto
+    begin
+      valor    := 0;
+      desconto := 0;
+    end else
+    begin
+      valor    := StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0);
+      desconto := StrToCurrDef(FrmPrincipalPreVenda.EdtDesconto.Text, 0);
+    end;
+    label3.Caption := 'Pressione ESC para sair ou aguarde liberação  ';
+    if codigoDaPermissao = '631' then  // venda abaixo do preço de custo
+      descricao := 'Liberação de preço abaixo do custo final'
     else
-      descricao := '';
+    begin
+      case StrToIntDef(vFlag, 2000) of
+        0 : descricao := 'Desconto até o limite';
+        6 : descricao := 'Desconto acima do limite';
+        9 : descricao := 'Liberação de restrição financeira';
+      else
+        if codigoDaPermissao = '820' then  // alteracao de pre-venda
+        begin
+          descricao := 'Alteração de pré-venda';
+          desconto := 0;
+        end else if codigoDaPermissao = '831' then  // transformar pre-venda em orçamento
+        begin
+          descricao := 'Trnasformar orçamento em pré-venda';
+          desconto := 0;
+        end else
+          descricao := '';
+      end;
     end;
     qry := TADOQuery.Create(nil);
     qry.Connection := DModulo.Conexao;
@@ -984,10 +1028,10 @@ begin
         Parameters.ParamByName('numero').Value   := FrmPrincipalPreVenda.EdtLancto.Text;
         Parameters.ParamByName('cdPessoa').Value := copy_campo(FrmPrincipalPreVenda.CbxCliente.Text, '|', 2);
         Parameters.ParamByName('cdVendedor').Value := FrmPrincipalPreVenda.EdtCdNome.Text;
-        Parameters.ParamByName('data').Value := dateOf(FrmPrincipalPreVenda.DtLancto.Date);
+        Parameters.ParamByName('data').Value := StrToDateTime(DateToStr(FrmPrincipalPreVenda.PegaDatabanco) + FrmPrincipalPreVenda.pegaHoraBanco);
         Parameters.ParamByName('descricao').Value := descricao;
-        Parameters.ParamByName('valor').Value := StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0);
-        Parameters.ParamByName('desconto').Value := StrToCurrDef(FrmPrincipalPreVenda.EdtDesconto.Text, 0);
+        Parameters.ParamByName('valor').Value     := valor;
+        Parameters.ParamByName('desconto').Value  := desconto;
         open;
         FrmPrincipalPreVenda.idLiberacaoRestrincaoVenda := qry.FieldByName('id').AsInteger;
       end;
@@ -1038,26 +1082,26 @@ begin
   if (codigoDaPermissao = '') then
   begin
     case StrToInt(vFlag) of
-      0: Copyright.Caption := 'Desconto até limite permitido';
-      1: Copyright.Caption := 'Alteração da pré-venda';
-      2: Copyright.Caption := 'Restrição no financeiro';
+      0: FrmCancelamentoVenda.Caption := 'Desconto até limite permitido';
+      1: FrmCancelamentoVenda.Caption := 'Alteração da pré-venda';
+      2: FrmCancelamentoVenda.Caption := 'Restrição no financeiro';
       3:
       begin
-        Copyright.Caption := 'Cadastrar Cliente';
+        FrmCancelamentoVenda.Caption := 'Cadastrar Cliente';
         FrmcdCliente.Label10.Caption := 'Cliente:';
         FrmcdCliente.RgTpVencimento.ItemIndex := 0;
         FrmcdCliente.Enabled := False;
       end;
       4:
       begin
-        Copyright.Caption    := 'Alteração Cliente';
+        FrmCancelamentoVenda.Caption    := 'Alteração Cliente';
         FrmcdCliente.Enabled := False;
       end;
-      5: Copyright.Caption := 'Consulta de crédito do  cliente';
-      6: Copyright.Caption := 'Desconto acima do permitido';
-      7,9: Copyright.Caption := 'Restrição no financeiro';
-      8: Copyright.Caption   := 'Consulta crédito vendedor';
-      10: Copyright.Caption  := 'Liberação do preço do produto';
+      5: FrmCancelamentoVenda.Caption := 'Consulta de crédito do  cliente';
+      6: FrmCancelamentoVenda.Caption := 'Desconto acima do permitido';
+      7,9: FrmCancelamentoVenda.Caption := 'Restrição no financeiro';
+      8: FrmCancelamentoVenda.Caption   := 'Consulta crédito vendedor';
+      10: FrmCancelamentoVenda.Caption  := 'Liberação do preço do produto';
     end;
     EdtUsuario.SelectAll;
     EdtUsuario.SetFocus;
