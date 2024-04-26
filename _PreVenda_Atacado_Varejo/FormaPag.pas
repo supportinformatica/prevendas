@@ -194,7 +194,7 @@ begin
     if (FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1) and  // Se for alteração de um orçamento
        (FrmPrincipalPreVenda.Verifica_PREVENDA_SALVANOCAIXA = False) then
     begin
-      MessageDlg('Esta pre-venda já está confirmada no caixa então não será possível salva-la!',
+      MessageDlg('Esta pré venda já está confirmada no caixa então não será possível salva-la!',
         mtWarning, [mbOk], 0);
       BtnConfirmar.Enabled := True;
       exit;
@@ -206,9 +206,7 @@ begin
       // como alteramos o valor por conta das parcelas do cartão,
       // tenho que mudar essa proproedade para reclacular o acrescimo desses items que tiveram desconto no valor
       for i := 0 to FrmPrincipalPreVenda.prevenda.itens.Count - 1 do
-      begin
         FrmPrincipalPreVenda.prevenda.itens[i].Promocao_desconto_Item := False;
-      end;
       FrmPrincipalPreVenda.Recalcula_Desconto;
     end;
     if vOrcamento = 'O' then
@@ -608,22 +606,27 @@ begin
 end;
 
 function TFrmFormaPag.verificaLimieteCredito: Boolean;
+var
+  permitido : Boolean;
 begin
-  verificaLimieteCredito := True;
-  Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-  vFlag := '7';
-  if FrmCancelamentoVenda <> nil then
-    FreeAndNil(FrmCancelamentoVenda);
-  FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-  // Cria o formulário
-  FrmCancelamentoVenda.Position := poDefaULTPosOnly;
-  try
-    FrmCancelamentoVenda.ShowModal;
-    FreeAndNil(FrmCancelamentoVenda);
-  except
-    FreeAndNil(FrmCancelamentoVenda);
+  if TestaFinanceiroNaConfirmacao then
+  begin
+    verificaLimieteCredito := True;
+    Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
+    vFlag := '7';
+    try
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+      FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '614', 'V', permitido);
+      FrmCancelamentoVenda.Caption := 'Restrição no financeiro';
+      FrmCancelamentoVenda.ShowModal;
+      FreeAndNil(FrmCancelamentoVenda);
+    except
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+    end;
+    Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   end;
-  Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
 end;
 
 procedure TFrmFormaPag.CBXSelecionaProfissionaisClick(Sender: TObject);
@@ -893,7 +896,7 @@ end;
 function TFrmFormaPag.ValidarCliente: Boolean;
 var
   restricaoFinanceira: TListaRestricao;
-  clienteComRestricaoFinanceira: Boolean;
+  clienteComRestricaoFinanceira, permissao: Boolean;
   limiteDeCredito: currency;
   codigoCliente: integer;
 begin
@@ -905,59 +908,61 @@ begin
   begin
     MessageDlg
       ('Não é possível fazer uma venda a prazo para um cliente não cadastrado!',
-      mtWarning, [mbOk], 0); // KENNETH
+      mtWarning, [mbOk], 0);
+    Result := False;
     exit;
   end;
   if (not(RadioGroup1.ItemIndex in [0, 2, 3, 6, 7, 9, 10])) and
-    (FrmPrincipalPreVenda.ADOQryCliente.FieldByName('dsVista').AsString = 'S')
-  then
+    (FrmPrincipalPreVenda.ADOQryCliente.FieldByName('dsVista').AsString = 'S') then
   begin
     MessageDlg
       ('Está definido para este cliente em seu cadastro, para venda somente A VISTA!',
       mtWarning, [mbOk], 0);
+    Result := False;
     exit;
   end;
-  codigoCliente :=
-    StrToInt(copy_campo(FrmPrincipalPreVenda.CbxCliente.text, '|', 2));
-
-  clienteComRestricaoFinanceira :=
-    FrmPrincipalPreVenda.clienteComRestricaoFinanceira(restricaoFinanceira,
+  codigoCliente := StrToInt(copy_campo(FrmPrincipalPreVenda.CbxCliente.text, '|', 2));
+  clienteComRestricaoFinanceira := FrmPrincipalPreVenda.clienteComRestricaoFinanceira(restricaoFinanceira,
     FrmPrincipalPreVenda.EdtSubTotal.text);
   limiteDeCredito := TNegcliente.getLimiteCredito(codigoCliente);
-
   { Se tiver restrição financeira e não for a vista, pede senha }
-  if ((clienteComRestricaoFinanceira) AND
-    (FrmPrincipalPreVenda.auxiLiberacao = False) AND
-    (RadioGroup1.ItemIndex IN [1, 5, 11]) AND
+  if TestaFinanceiroNaConfirmacao and ((clienteComRestricaoFinanceira) and
+//    (FrmPrincipalPreVenda.auxiLiberacao = False) and
+    (RadioGroup1.ItemIndex in [1, 5, 11]) and
     (FrmPrincipalPreVenda.vTeste_do_Financeiro = '1')
     // testar na prevenda = 1, testar na baixa = 0
-    OR ((limiteDeCredito = 0) AND (RadioGroup1.ItemIndex in [1, 5, 11]) AND
-    (FrmPrincipalPreVenda.auxiLiberacao = False)) OR
-    ((MoPreVenda.TestaFinanceiroNaConfirmacao) AND (RadioGroup1.ItemIndex in [1,
-    5, 11]) AND (clienteComRestricaoFinanceira) AND
+    or ((limiteDeCredito = 0) and (RadioGroup1.ItemIndex in [1, 5, 11]) and
+    (FrmPrincipalPreVenda.auxiLiberacao = False)) or
+    ((MoPreVenda.TestaFinanceiroNaConfirmacao) and (RadioGroup1.ItemIndex in [1,
+    5, 11]) and (clienteComRestricaoFinanceira) and
     (FrmPrincipalPreVenda.auxiLiberacao = False))) and
     (FrmPrincipalPreVenda.RgOpcoes.ItemIndex <> 2) // se não for orçamento
   then
   begin
-    FrmFormaPag.Enabled := False;
     vFlag := '9';
-    if FrmCancelamentoVenda <> nil then
+    try
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+      FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '614', 'V', FrmPrincipalPreVenda.auxiLiberacao);
+      FrmCancelamentoVenda.Caption := 'Restrição no financeiro';
+      FrmCancelamentoVenda.ShowModal;
       FreeAndNil(FrmCancelamentoVenda);
-    FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-    // Cria o formulário
-    FrmCancelamentoVenda.ShowModal;
-    BtnConfirmar.Enabled := True;
-  end
-  else
+    except
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+    end;
+  end else
     FrmPrincipalPreVenda.auxiLiberacao := True;
   Result := FrmPrincipalPreVenda.auxiLiberacao;
 end;
 
 function TFrmFormaPag.ValidarDesconto(prevenda: TPrevenda): Boolean;
 var
-  pDesconto: Real;
-  item: TItemPrevenda;
+  pDesconto : Real;
+  item : TItemPrevenda;
+  testaPermissao : boolean;
 begin
+  testaPermissao := False;
   if prevenda.descontoPercentual > 0 then
     pDesconto := prevenda.descontoPercentual
   else
@@ -976,15 +981,19 @@ begin
     (pDesconto > FrmPrincipalPreVenda.vPorcDesconto) and
     (FrmPrincipalPreVenda.Permissao('615', 'V') = 'N')) then
   begin
-    FrmFormaPag.Enabled := False;
-    vFlag := '6';
-    if FrmCancelamentoVenda <> nil then
+    try
+      vFlag := '6';
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+      FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(self, '615', 'V', testaPermissao);
+      FrmCancelamentoVenda.Caption := 'Desconto de ' + FormatCurr('0.00', pDesconto) + ' está ACIMA do permitido';
+      FrmCancelamentoVenda.ShowModal;
       FreeAndNil(FrmCancelamentoVenda);
-    FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Application);
-    FrmCancelamentoVenda.ShowModal;
-    BtnConfirmar.Enabled := True;
-  end
-  else
+    except
+      if FrmCancelamentoVenda <> nil then
+        FreeAndNil(FrmCancelamentoVenda);
+    end;
+  end else
     FrmPrincipalPreVenda.liberouVenda := True;
   if FrmPrincipalPreVenda.liberouVenda = False then
   begin

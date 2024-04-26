@@ -340,8 +340,9 @@ begin
   else
     RLBand2.Font.Size := 7;
   if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-    (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or (FrmPrincipalPreVenda.dsCGC = '47305252000192') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
-    (FrmPrincipalPreVenda.dsCGC = '33185213000194') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or
+    (FrmPrincipalPreVenda.dsCGC = '47305252000192') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
+    (FrmPrincipalPreVenda.dsCGC = '33185213000194') or (FrmPrincipalPreVenda.dsCGC = '52961019000106') then
   begin
     with AdoQuery1 do
     begin

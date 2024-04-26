@@ -49,7 +49,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure Definirimpressora40colunas1Click(Sender: TObject);
   private
-    { Private declarations }
     isLoginInicial : Boolean;
     Procedure Confirma;
     function BancoEmUsoPorOutroSaef: Boolean;
@@ -57,7 +56,6 @@ type
     procedure atualizarSenhaADM;
     procedure ChamaFormMensagensAtualizacao;
   public
-    { Public declarations }
     vCasasQtd : integer;
     ThreadConexao2 : TConexao2;
     function RetornaWS(UF : string) : string;
@@ -70,7 +68,6 @@ type
 
 var
   FrmPedeSenha: TFrmPedeSenha;
-  //vqtd : Integer;
 
 implementation
 
@@ -87,13 +84,9 @@ begin
   EditUsuario.SelectAll;
 end;
 
-
 procedure TFrmPedeSenha.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  //FormPrincipal.StBPrincipal.Panels[0].Text := EditUsuario.Text;
-  //atualizo executável do server
-  //FormPrincipal.atualizaExecutavel;
   FrmPedeSenha := nil;
   Action := CaFree;
 end;
@@ -156,7 +149,8 @@ begin
   senha1 := senha1 + FormatFloat('00',Min);
   senha1 := senha1 + copy_campo(GetVersaoArq,'.',4);
   DModulo.Conexao.BeginTrans;
-  with ADOQuery1 do begin
+  with ADOQuery1 do
+  begin
     sql.Text := 'UPDATE SENHA SET DSSENHA = :SENHA WHERE DSNOME = :NOME';
     Parameters.ParamByName('SENHA').Value := Senha(senha1,'C');
     Parameters.ParamByName('NOME').Value := editUsuario.Text;
@@ -166,10 +160,10 @@ begin
 end;
 
 function TFrmPedeSenha.BancoEmUsoPorOutroSaef:Boolean;
-var
-  arquivo: TIniFile;
-  path, banco, bancoEmUso: string;
-  resultado: Boolean;
+//var
+//  arquivo: TIniFile;
+//  path, banco, bancoEmUso: string;
+//  resultado: Boolean;
 Begin
 //  banco:= getDataBaseName(DModulo.Conexao.ConnectionString); // BANCO QUE ESTOU TENTANDO ACESSAR
 //  SetCurrentDir(ExtractFileDir(Application.ExeName));
@@ -240,14 +234,12 @@ var
 begin
   if FrmPrincipalPreVenda.ValidarVersaoExeVersaoBAnco = false then
     exit;
-  //Pega o nome da empresa do Support.ini
   DIniDias := TIniFile.Create(ExtractFilePath(Application.ExeName)+'Support.ini');
   FrmPrincipalPreVenda.modeloImpressora := UpperCase(DIniDias.ReadString('IMP_PREVENDA','flag',''));
   FrmPrincipalPreVenda.portaImp := UpperCase(DIniDias.ReadString('PORTAIMP_PREVENDA','Porta',''));
   FrmPrincipalPreVenda.driveSpooler := DIniDias.ReadInteger('PosPrinter_PREVENDA','Modelo', Integer(FrmPrincipalPreVenda.ACBrPosPrinter.Modelo)); // usado no compnente ACBr para impressão de NFCe via spooler
   // EdtMensagem.Text := 'Aguarde... Verificando o acesso do usuário';
   DIniDias.Free; // Destrói o arquivo
-
   if (FrmPrincipalPreVenda.modeloImpressora = 'SPOOLER') then
   begin
 //    TNEGABCrNFe.congigurarACBrPosPrinter(FrmPrincipalPreVenda.ACBrPosPrinter, FrmPrincipalPreVenda.modeloImpressora, FrmPrincipalPreVenda.portaImp, 38400, True, FrmPrincipalPreVenda.driveSpooler);
@@ -257,8 +249,6 @@ begin
     if FrmPrincipalPreVenda.modeloImpressora = 'SPOOLER' then // O CODIGO ESTAVA PRONTO PARA ELGINI9
       FrmPrincipalPreVenda.modeloImpressora := 'ELGINI9';
   end;
-
-
   Application.ProcessMessages;
  // limpar vetor
   for I := 1 to 900 do for J := 1 to 7 do vVetor[I,J] := '';
@@ -288,12 +278,9 @@ begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       MessageDlg ('Você não possui permissao para fazer prevenda. Socicite ao gestor que conceda permissão lá no menu Utilitarios\Senhas do Saef.',mtError,[mbOk],0);
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
-//      FrmPedeSenha.Close;
-//      Application.Terminate;
       exit;
     end;
   end;
-
   with ADOQuery1 do
   begin
     Sql.Text := 'Select * From Senha S WITH (NOLOCK) INNER JOIN Permissao P WITH (NOLOCK) '+
@@ -306,7 +293,6 @@ begin
     begin // Acesso negado
       if FrmPrincipalPreVenda.vQtd >= 9999 then
       begin //pediram para tirar eu so aumentei o limite Thiago
-  //      EdtMensagem.Clear;
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
         MessageDlg ('Você expirou a quantidade de tentativas!',mtError,[mbOk],0);
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -315,16 +301,12 @@ begin
         Application.Terminate;
         exit;
       end;
-  //    EdtMensagem.Clear;
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       MessageDlg('Acesso Negado!',mtInformation,[mbOk],0);
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       EditSenha.SelectAll;
-  //    EditSenha.SetFocus;
       exit;
     end; // if
-    //FrmPrincipalPreVenda.cdOperador := FieldByName('cdPessoa').AsString;
-    //FrmPrincipalPreVenda.vCaixa := 'N';
   end; // qry1
     // Testa autorização de acesso
   if ADOQuery1.RecordCount <> 0 then
@@ -356,41 +338,6 @@ begin
     end; // with query2
     //PESQUISA SE TEM PRODUTOS PARA ENTRAR EM PROMOÇÃO
     Verifica_Existencia_Promocao(Dateof(strToDate(vData_Banco)));
-
-   { With ADOQuery1 do begin
-      Sql.Text := 'Select cdProduto from ItePromocao WITH (NOLOCK) '+
-                  'Where dtInicio <= :DATA and vlPreco > 0 and dsPromocao = ''N'' ';
-      Parameters.ParamByName('DATA').Value := DateToStr(Date);
-      Open;
-      if RecordCount > 0 then
-        MessageDlg('Atenção!!!! Existem produtos que precisam ser lançados em promoção (varejo) a partir dessa data!',mtWarning,[mbOk],0);
-      //PESQUISA SE TEM PRODUTOS PARA SAIR DA PROMOÇÃO
-      Sql.Text := 'Select cdProduto from ItePromocao WITH (NOLOCK) '+
-                  'Where dtFim < :DATA               '+
-                  'and vlPreco > 0 and dsPromocao = ''S''   ';
-      Parameters.ParamByName('DATA').Value := DateToStr(Date);
-      Open;
-      if RecordCount > 0 then
-        MessageDlg('Atenção!!!! Existem produtos que precisam sair da promoção (varejo) a partir dessa data!',mtWarning,[mbOk],0);
-      Close;
-      Sql.Text := 'Select cdProduto from ItePromocao WITH (NOLOCK) '+
-                  'Where dtInicioAtacado <= :DATA and          '+
-                  'vlAtacado > 0 and dsPromocaoAtacado = ''N'' ';
-      Parameters.ParamByName('DATA').Value := DateToStr(Date);
-      Open;
-      if RecordCount > 0 then
-        MessageDlg('Atenção!!!! Existem produtos que precisam ser lançados em promoção (atacado) a partir dessa data!',mtWarning,[mbOk],0);
-      //PESQUISA SE TEM PRODUTOS PARA SAIR DA PROMOÇÃO
-      Sql.Text := 'Select cdProduto from ItePromocao WITH (NOLOCK) '+
-                  'Where dtFimAtacado < :DATA        '+
-                  'and vlAtacado > 0 and dsPromocaoAtacado = ''S'' ';
-      Parameters.ParamByName('DATA').Value := DateToStr(Date);
-      Open;
-      if RecordCount > 0 then
-        MessageDlg('Atenção!!!! Existem produtos que precisam sair da promoção (atacado) a partir dessa data!',mtWarning,[mbOk],0);
-      Close;
-    end;  }
-    //Ativa formulário principal
     FrmPrincipalPreVenda.Enabled := True;
     //vnome_usuario_logado := EditUsuario.Text;
     // variaveis de configuracao de ambiente
@@ -402,22 +349,6 @@ begin
       'ISNULL(nrPgCartao8Vezes,0) oitoV, ISNULL(nrPgCartao9Vezes,0) noveV, ISNULL(nrPgCartao10Vezes,0) dezV, ISNULL(nrPgCartao11Vezes,0) onzeV,  '+
       'ISNULL(nrPgCartao12Vezes,0) dozeV, * From Configuracao WITH (NOLOCK)';
       Open;
-//      if (ADOQryConfigurar.FieldByName('Deb').AsCurrency    +
-//         ADOQryConfigurar.FieldByName('umV').AsCurrency     +
-//         ADOQryConfigurar.FieldByName('doisV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('tresV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('quatroV').AsCurrency +
-//         ADOQryConfigurar.FieldByName('cincoV').AsCurrency  +
-//         ADOQryConfigurar.FieldByName('seisV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('seteV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('oitoV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('noveV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('dezV').AsCurrency    +
-//         ADOQryConfigurar.FieldByName('onzeV').AsCurrency   +
-//         ADOQryConfigurar.FieldByName('dozeV').AsCurrency) > 0 then
-//        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True
-//      else
-//        FrmPrincipalPreVenda.acrescimoParcelamentoCartao := False;
       FrmPrincipalPreVenda.acrescimoParcelamentoCartao := True;
       if ADOQryConfigurar.FieldByName('dtExpiracopia').AsDateTime > (StrToDate(vData_Banco) + 120) then
       begin
@@ -433,15 +364,11 @@ begin
           end;
         end;
       end;
-//      if (EditUsuario.Text = 'ADM') or (EditUsuario.Text = 'adm') then
-//        ShowMessage(FieldByName('dtExpiracopia').AsString);
       Close;
-
       if (ValidaComputadorSupport(FrmPrincipalPreVenda.dsCGC) = false) then
       begin
         FrmPrincipalPreVenda.RegistraCliente;
       end;
-
       if (UPPERCASE(editUsuario.Text) <> 'ADM') and (ValidaComputadorSupport(FrmPrincipalPreVenda.dsCGC) = false) then
       begin
         //verifico se o usuario possui a permissão gerencial para exibir o boleto bancario
@@ -461,7 +388,6 @@ begin
             6: if (vVetor[I,1] = vTag) and (vVetor[I,7] = 'X') then vPermissao := 'S';
           end; //Case
         end;   // for
-
         with AdoQryAutorizar do
         begin
           sql.text := 'select top 1 nrTag from permissao where dsNome = :dsNome and nrTag = 621';
@@ -511,25 +437,12 @@ var
   NomeUsuario : string;
   BufLen : DWord;
   Buffer : string;
-//  Util : NFe_Util_2G_Interface;
   arquivo : string[100];
   saefs_rodando: integer;
 begin
   inherited;
-//  with DModulo.ADOQuery1 do begin   // avisa ao usuário a quantidade de dias que o backup não é realizado
-//    SQL.Text := 'select isnull(DATEDIFF(DAY, max(L.dtEvento), getdate()),0) as Quantd_Dias '+
-//                'From logEventos L Where L.cdOpcao = ''24''                                ';
-//    Open;
-//    if DModulo.ADOQuery1.FieldByName('Quantd_Dias').AsInteger > 3 then begin
-//      Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-//      Application.MessageBox( PChar('Já faz ' + DModulo.ADOQuery1.FieldByName('Quantd_Dias').AsString +' dias que o backup deste sistema não é executado no servidor!'),'Atenção, quanto vale seu banco de dados?',MB_OK + MB_ICONWARNING + mb_applModal);
-//      Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
-//    end;
-//  end;
   isLoginInicial := True;
   arquivo := ExtractFilePath(Application.ExeName)+'novidade.txt';
-//  if FileExists(arquivo) then
-//    BitBtn1.Visible := True;
   LblNomeCliente.Caption := getNomeEmpresa;
   with ADOQuery1 do
   begin
@@ -540,34 +453,10 @@ begin
   SetLength(NomeUsuario,BufLen);
   GetUserName(PChar(NomeUsuario), BufLen);
   SetLength(NomeUsuario,BufLen);
-
   LblData.Caption := DateTimeToStr(PegaDataDoExecutavel(ExtractFileName(Application.ExeName)));
   ExibeLabelResgistro;
-//  with Adoquery1 do begin
-//    sql.text := 'select TOP 1 dtEvento from logEventos                       '+
-//                'where cdOpcao = 14 and substring(dsEvento,1,6) = ''backup'' '+
-//             //   'and getdate() - dtEvento >= 2                               '+
-//                'order by dtEvento desc                                      ';
-//    open;
-//    if fieldByName('dtEvento').asDatetime <= date() - 2 then begin
-//      Application.MessageBox(PChar('Verificamos que o último backup foi realizado no dia '+
-//                              formatDateTime('DD/MM/YYYY',Adoquery1.fieldByName('dtEvento').asdatetime)+'.'+ #13#10+
-//                             'Para a segurança dos seus dados, recomendamos que esta operação seja realizada com uma maior frequência!' +#13#10 + #13#10+
-//                             'OBS: Somente é possível realizar o backup no servidor.'), 'Atenção', mb_ok + mb_iconwarning + mb_applModal);
-//    end;
-//    close;
-//  end;
-
   ThreadConexao2 := Tconexao2.Create(true);
-  //ThreadConexao.FreeOnTerminate := true;
   ThreadConexao2.Resume;
-//  EditUsuario.Text := NomeUsuario;
-{  if Time > StrToTime('17:00:00') then
-    MessageDlg('Tire diariamente o backup dos dados deste sistema.' + #13'' +
-    ' '+ #13'' +
-    'Um dia você poderá precisar desta copia de seguraça!!!' + #13'' +
-    ' '+ #13'' +
-    'Acesse o menu de utilitários e selecione a opção Backup.', mtInformation, [mbOk], 0); }
 end;
 
 procedure TFrmPedeSenha.Definirimpressora40colunas1Click(Sender: TObject);
@@ -583,47 +472,22 @@ begin
 end;
 
 procedure TFrmPedeSenha.ChamaFormMensagensAtualizacao;
-var qry: TAdoQuery;
+//var
+//  qry: TAdoQuery;
 begin
 //  qry := TADOQuery.Create(nil);
-//  qry.Connection := DModulo.Conexao;
-//  with qry do
-//  begin
-//    sql.Text := 'select * from MensagemUsuarios where lido = 0 and cdUsuario = :cdUsuario';
-//    parameters.ParamByName('cdUsuario').Value := cdOperador;
-//    open;
-//  end;
-//  if qry.recordCount > 0 then
-//  begin
-//    FormMudancasSistema := TFormMudancasSistema.Create(Application);
-//    with FormMudancasSistema.AdoQryConsulta do
-//    begin
-//      sql.Text := 'select cdMensagemUsuarios, dsSistema, dtAlteracao, dsAlteracao, lido, MU.cdUsuario, M.cdMensagem '+
-//                  'from Mensagem M inner join MensagemUsuarios MU on M.cdMensagem = MU.cdMensagem '+
-//                  'where MU.cdUsuario = :cdUsuario and MU.lido = 0 order by 3 ASC                 ';  //AS MAIS VELHAS ANTIGAS SOMENTE NESSA TELA INICIAL (ADRIANA Q PEDIU)
-//
-//      parameters.ParamByName('cdUsuario').Value := cdOperador;
-//      open;
-//      if recordCount > 0 then
-//      begin
-//        FormMudancasSistema.Show;
-//      end;
-//    end;
-//  end;
-//  close;
-//  FreeAndNil(qry);
 end;
 
 procedure TFrmPedeSenha.Cancelar1Click(Sender: TObject);
 begin
-  if isLoginInicial then begin
+  if isLoginInicial then
+  begin
     FrmPrincipalPreVenda.Close;
-  end
-  else begin
+  end else
+  begin
     FrmPrincipalPreVenda.Enabled := True;
     Close;
   end;
-//   frmPedeSenha.show;
 end;
 
 
@@ -675,20 +539,6 @@ begin
     35 : Result := 'SP';
   end;
 end;
-
-{
-procedure TFrmPedeSenha.Label7Click(Sender: TObject);
-var
-  arquivo : string[100];
-begin
-  arquivo := ExtractFilePath(Application.ExeName)+'novidade.txt';
-  if FileExists(arquivo) then
-    DeleteFile(arquivo);
-  FrmConfigurar.retornarHistoricoDeAlteracoes(FrmPedeSenha).Lines.SaveToFile(arquivo);
-  Sleep(250);
-  WinExec('c:\windows\NOTEPAD.EXE novidade.txt',SW_SHOWMAXIMIZED);
-end;
-}
 
 end.
 

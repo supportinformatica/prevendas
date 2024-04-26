@@ -2,9 +2,9 @@ object Consulta_prevenca: TConsulta_prevenca
   Left = 265
   Top = 240
   BorderIcons = [biHelp]
-  Caption = 'Consulta Pr'#233' Venda'
+  Caption = 'Consulta de pr'#233' vendas e or'#231'amentos'
   ClientHeight = 436
-  ClientWidth = 714
+  ClientWidth = 710
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,19 +14,19 @@ object Consulta_prevenca: TConsulta_prevenca
   FormStyle = fsStayOnTop
   KeyPreview = True
   OldCreateOrder = False
-  Position = poDesigned
+  Position = poScreenCenter
   OnActivate = FormActivate
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   DesignSize = (
-    714
+    710
     436)
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
-    Left = 590
+    Left = 582
     Top = 423
     Width = 123
     Height = 13
@@ -40,22 +40,22 @@ object Consulta_prevenca: TConsulta_prevenca
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 0
+    Left = 4
     Top = 231
-    Width = 108
+    Width = 29
     Height = 13
-    Caption = 'Itens da pr'#233'-venda'
+    Caption = 'Itens'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object GroupBox2: TGroupBox
-    Left = 298
+    Left = 311
     Top = 0
-    Width = 416
+    Width = 394
     Height = 95
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Filtrar por'
@@ -87,7 +87,7 @@ object Consulta_prevenca: TConsulta_prevenca
       Height = 13
       Caption = 'Itens da pr'#233'-venda'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = clNavy
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -206,9 +206,9 @@ object Consulta_prevenca: TConsulta_prevenca
     end
   end
   object GroupBox1: TGroupBox
-    Left = 164
+    Left = 179
     Top = 0
-    Width = 129
+    Width = 125
     Height = 95
     Caption = 'Per'#237'odo'
     Font.Charset = DEFAULT_CHARSET
@@ -243,15 +243,15 @@ object Consulta_prevenca: TConsulta_prevenca
     end
     object Label6: TLabel
       Left = 48
-      Top = 41
+      Top = 43
       Width = 8
       Height = 13
       Caption = 'a'
     end
     object DtIni: TDateTimePicker
-      Left = 6
+      Left = 4
       Top = 22
-      Width = 116
+      Width = 114
       Height = 21
       Date = 38280.000000000000000000
       Time = 0.713727604168525400
@@ -260,9 +260,9 @@ object Consulta_prevenca: TConsulta_prevenca
       OnKeyDown = DtIniKeyDown
     end
     object DtFim: TDateTimePicker
-      Left = 6
+      Left = 4
       Top = 61
-      Width = 116
+      Width = 114
       Height = 21
       Date = 38280.000000000000000000
       Time = 0.713727604168525400
@@ -272,30 +272,30 @@ object Consulta_prevenca: TConsulta_prevenca
     end
   end
   object RgTipo: TRadioGroup
-    Left = 4
+    Left = 1
     Top = 0
-    Width = 157
+    Width = 171
     Height = 95
     Caption = 'Listar'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
-    Font.Style = []
+    Font.Style = [fsBold]
     ItemIndex = 0
     Items.Strings = (
-      'Pr'#233'-&vendas n'#227'o lan'#231'adas'
-      'Pr'#233'-&vendas j'#225' lan'#231'adas'
-      'Somente &or'#231'amentos'
+      'Pr'#233' &vendas n'#227'o lan'#231'adas'
+      '&Pr'#233' vendas j'#225' lan'#231'adas'
+      '&Or'#231'amentos'
       'Exibir to&dos')
     ParentFont = False
     TabOrder = 0
     OnClick = RgTipoClick
   end
   object DBGrid1: TDBGrid
-    Left = 0
+    Left = 2
     Top = 99
-    Width = 712
+    Width = 703
     Height = 128
     TabStop = False
     Anchors = [akLeft, akTop, akRight]
@@ -321,10 +321,10 @@ object Consulta_prevenca: TConsulta_prevenca
     OnKeyUp = DBGrid1KeyUp
   end
   object SgDados: TStringGrid
-    Left = 0
+    Left = 2
     Top = 246
-    Width = 712
-    Height = 160
+    Width = 703
+    Height = 176
     Hint = 'Itens da pr'#233' venda'
     TabStop = False
     Anchors = [akLeft, akTop, akRight, akBottom]

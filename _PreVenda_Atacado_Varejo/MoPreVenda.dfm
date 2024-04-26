@@ -1787,7 +1787,9 @@
     Top = 15
     Width = 78
     Height = 21
-    Hint = 'N'#250'mero do or'#231'amento'
+    Hint = 
+      'N'#250'mero do or'#231'amento ou pressione a tecla * (asterisco) para cons' +
+      'ultar.'
     Color = clInfoBk
     Enabled = False
     Font.Charset = ANSI_CHARSET
@@ -2110,6 +2112,7 @@
     Height = 26
     Hint = 'Valor a Faturar'
     Anchors = [akLeft, akBottom]
+    Color = clWhite
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -15
@@ -2151,8 +2154,6 @@
     ParentFont = False
     PopupMenu = PopupMenu1
     TabOrder = 6
-    OnChange = EdtCdNomeChange
-    OnExit = EdtCdNomeExit
   end
   object RadioGroup1: TRadioGroup
     Left = 1

@@ -339,7 +339,7 @@ begin
       FrmPrincipalPrevenda.EdtCdNome.Text  := FrmPrincipalPrevenda.ADOQryProcura.FieldByName('cdVendedor').AsString;
       FrmPrincipalPrevenda.EdtUsuario.text := FrmPrincipalPrevenda.ADOQryProcura.FieldByName('cdVendedor').AsString;
       FrmPrincipalPrevenda.EdtCdNome.Refresh;
-      FrmPrincipalPrevenda.EdtCdNomeExit(Sender);
+//      FrmPrincipalPrevenda.EdtCdNomeExit(Sender);
       // Pega o cliente
       FrmPrincipalPrevenda.EdtCdCliente.Text := FieldByName('cdPessoa').AsString;
       FrmPrincipalPrevenda.EdtCdCliente.Refresh;
