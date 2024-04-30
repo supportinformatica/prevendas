@@ -2998,7 +2998,7 @@
       OnClick = Voltarparaotemaoriginal1Click
     end
     object DesbloquearPrVenda1: TMenuItem
-      Caption = 'Desbloquear Pr'#233' Venda / OS para uso no caixa'
+      Caption = 'Desbloquear Pr'#233' Venda / O.S. para uso no caixa'
       ShortCut = 16464
       OnClick = DesbloquearPrVenda1Click
     end
@@ -3018,12 +3018,12 @@
       OnClick = ro1Click
     end
     object Conferncia1: TMenuItem
-      Caption = 'Confer'#234'ncia'
+      Caption = 'Confer'#234'ncia...'
       ShortCut = 16471
       OnClick = Conferncia1Click
     end
     object LucronaVenda1: TMenuItem
-      Caption = 'Lucratividade'
+      Caption = 'Lucratividade...'
       ShortCut = 16457
       OnClick = LucronaVenda1Click
     end

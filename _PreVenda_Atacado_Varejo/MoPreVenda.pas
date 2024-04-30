@@ -8405,39 +8405,6 @@ begin
     ADOSPConsulta.FieldByName('DESCRIÇÃO').AsString);
   FrmLancaVendaPerdida.ShowModal;
   EdtConsulta.Setfocus;
-
-  // if ( ADOSPConsulta.RecordCount = 0 ) or ( Length(EdtCdNome.Text) = 0) then exit;
-  // Application.OnMessage := NaoProcessaMsg;
-  // vtexto := InputBox('Registro de venda perdida',
-  // 'Entre com a quantidade que o cliente solicitou do produto?', '');
-  // Application.OnMessage := ProcessaMsg;
-  // vtexto := RemoveChar(vtexto);
-  // if Length(vTexto) = 0 then exit;
-  // vtexto := VirgPonto(vTexto);
-  // With ADOQrySalvar do begin
-  // Try
-  // DModulo.Conexao.BeginTrans;
-  // Sql.Text := 'Insert Into VendasPerdidas (cdProduto,nrQtd,data,cdPessoa) '+
-  // 'Values (:CODIGO,:QUANTD,:DATA,:CDPESSOA)                   ';
-  // Parameters.ParamByName('CODIGO').Value   :=  ADOSPConsulta.FieldByName('Código').AsInteger;
-  // Parameters.ParamByName('QUANTD').Value   :=  vTexto;
-  // Parameters.ParamByName('DATA').Value     :=  vdata_banco;
-  // Parameters.ParamByName('CDPESSOA').Value :=  EdtCdNome.Text;
-  // ExecSQL;
-  // DModulo.Conexao.CommitTrans;
-  // Except
-  // on ER: EDBEngineError do begin
-  // DModulo.Conexao.RollbackTrans;
-  // Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA', 'TFrmPrincipalPreVenda.Registraperdadevemdaporestoqueinsuficiente1Click', ER.Message,EdtLancto.Text);
-  // Messagedlg('Não foi possível salvar!', mterror, [mbOk], 0);
-  // end;
-  // on E: Exception do begin
-  // DModulo.Conexao.RollbackTrans;
-  // Salvar_erro(vData_Banco + ' | ' + pegaHoraBanco, 'PREVENDA', 'TFrmPrincipalPreVenda.Registraperdadevemdaporestoqueinsuficiente1Click', e.Message,EdtLancto.Text);
-  // Messagedlg('Não foi possível salvar!', mterror, [mbOk], 0);
-  // end;
-  // end;  // except
-  // end;
 end;
 
 procedure TFrmPrincipalPreVenda.Consultadecrditodocliente1Click
@@ -8462,23 +8429,19 @@ end;
 
 procedure TFrmPrincipalPreVenda.AjustarAposConsultaProduto;
 begin
-  if (SoNumeros(dsCGC) = '11411925000141') then
-  // lojão acricola do joao alves
+  if (SoNumeros(dsCGC) = '11411925000141') then // lojão acricola do joao alves
   begin
     ADOSPConsultavlComissao.Visible := True;
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].width := 70;
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := True;
     ADOSPConsultavlComissao.DisplayFormat := '#0.00';
-  end
-  else
+  end else
   begin
     ADOSPConsultavlComissao.Visible := false;
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'vlComissao')].Visible := false;
   end;
   if (UpperCase(vEmpresa) <> 'MOTOBOX') then
-  begin
     DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'GRUPO')].Visible := false;
-  end;
   if (ADOSPConsulta.RecordCount > 0) and (RadioGroup1.ItemIndex = 4) and
     (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo barras balança
   begin
@@ -8516,7 +8479,6 @@ begin
     begin
       if (auxiLiberacao = False) and ((ATRASO in restricaoFinanceira) or (CHEQUE in restricaoFinanceira)) then
       begin
-//        Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
         vFlag := '7';
         try
           if FrmCancelamentoVenda <> nil then
@@ -8529,7 +8491,6 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
         end;
-//        Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
         if auxiLiberacao then
           BtnConfirmarClick(self)
         else

@@ -87,27 +87,28 @@ begin
       Exit
     else if (FrmPrincipalPreVenda.vConferencia = true) then
       FrmPrincipalPreVenda.DesbloqueiaAlteracaoPreVenda(prevenda.numeroPrevenda);
-  if (edtPreVenda.Text = '') then begin
+  if (edtPreVenda.Text = '') then
+  begin
     Cancelar;
     Exit;
   end;
   try
     prevenda := TNEGPrevenda.getPrevenda(StrToInt(edtPreVenda.Text), true, true);
-    if prevenda.conferida then begin
-      Messagedlg('Pré-Venda já passou pela conferência.', mtWarning, [mbOk], 0);
+    if prevenda.conferida then
+    begin
+      Messagedlg('Pré Venda já passou pela conferência.', mtWarning, [mbOk], 0);
       Cancelar;
       edtPreVenda.SetFocus;
       Exit;
     end;
     if ((prevenda.emUso = 'S') and (FrmPrincipalPreVenda.vConferencia = true)) then
     begin
-      Application.messageBox('Pré-Venda/Orçamento já está em uso no caixa!','Atenção', mb_ok + MB_ICONWARNING + MB_APPLMODAL);
+      Application.messageBox('Pré Venda/Orçamento já está em uso no caixa!','Atenção', mb_ok + MB_ICONWARNING + MB_APPLMODAL);
       FreeAndNil(prevenda);
       Cancelar;
       edtPreVenda.SetFocus;
       Exit;
-    end
-    else if FrmPrincipalPreVenda.vConferencia = true then
+    end else if FrmPrincipalPreVenda.vConferencia = true then
       FrmPrincipalPreVenda.BloqueiaAlteracaoPreVenda(StrToInt(edtPreVenda.text));
     btnSalvar.Enabled := False;
     TMenuItem(PopupMenu1.Items.Items[0]).Enabled := False;
@@ -133,7 +134,8 @@ end;
 
 procedure TfrmConferencia.FormCreate(Sender: TObject);
 begin
-  with sgitens do begin
+  with sgitens do
+  begin
     Cells[0,0] := 'Cód Barras';
     Cells[1,0] := 'Descrição';
     Cells[4,0] := 'Qtd Solicitada';
@@ -171,20 +173,21 @@ begin
     if (FrmPrincipalPreVenda.vConferencia = true) then
       FrmPrincipalPreVenda.DesbloqueiaAlteracaoPreVenda(StrToInt(edtPreVenda.text));
     DModulo.Conexao.BeginTrans;
-    with adoSalvar do begin
+    with adoSalvar do
+    begin
       SQL.Text := 'UPDATE ORCAMENTO SET CONFERIDO = 1 WHERE NRORCAMENTO = :NUMERO';
       Parameters.ParamByName('NUMERO').Value := edtPreVenda.Text;
       ExecSQL;
       DModulo.Conexao.CommitTrans;
       TNEGLoja.SalvaLogEventos('Realização de conferência',
-            edtPreVenda.Text, '', 0, StrtoInt(edtcdFuncionario.Text),'16');
-      MessageDlg('Conferencia realizada com sucesso.',mtInformation,[mbOK],0);
+            edtPreVenda.Text, '', 0, StrtoInt(edtcdFuncionario.Text), '16');
+      MessageDlg('Conferência realizada com sucesso.', mtInformation, [mbOK], 0);
       Cancelar;
       edtPreVenda.SetFocus;
     end;
   except
     DModulo.Conexao.RollbackTrans;
-    MessageDlg('Erro ao salvar a conferencia.',mtError,[mbOK],0);
+    MessageDlg('Erro ao salvar a conferência.',mtError,[mbOK],0);
   end;
 end;
 
@@ -218,8 +221,8 @@ begin
    begin
      Key := #0;
 //     MessageDlg('Não é possível editar uma parcela já paga.',mtWarning,[mbOK],0);
-   end
-   else begin
+   end else
+   begin
      ValidarNumero(Key);
    end;
 end;
@@ -236,18 +239,22 @@ var
   resultado : Boolean;
 begin
   resultado := true;
-  for x := 1 to sgitens.RowCount do  begin
-    if sgitens.Cells[1,x] = '' then continue;
-    if not (strtoFloatDef(sgitens.Cells[4, x],0) = strtoFloatDef(sgitens.Cells[2, x],0)) then begin
+  for x := 1 to sgitens.RowCount do
+  begin
+    if sgitens.Cells[1,x] = '' then
+      continue;
+    if not (strtoFloatDef(sgitens.Cells[4, x],0) = strtoFloatDef(sgitens.Cells[2, x],0)) then
+    begin
       resultado := false;
       break;
     end;
   end;
-  if resultado = true then begin
+  if resultado = true then
+  begin
     btnSalvar.Enabled := True;
     TMenuItem(PopupMenu1.Items.Items[0]).Enabled := True;
-  end
-  else begin
+  end else
+  begin
     btnSalvar.Enabled := False;
     TMenuItem(PopupMenu1.Items.Items[0]).Enabled := False;
   end;
@@ -260,7 +267,8 @@ end;
 
 procedure TfrmConferencia.BitBtn2Click(Sender: TObject);
 begin
-  if MessageDlg('Deseja realmente sair da tela de conferência?',mtConfirmation,[mbYes,mbNo],0) = mrYes then begin
+  if MessageDlg('Deseja realmente sair da tela de conferência?',mtConfirmation,[mbYes,mbNo],0) = mrYes then
+  begin
     if (FrmPrincipalPreVenda.vConferencia = true) and (prevenda <> nil) then
       FrmPrincipalPreVenda.DesbloqueiaAlteracaoPreVenda(prevenda.numeroPrevenda);
     close;
@@ -269,7 +277,8 @@ end;
 
 procedure TfrmConferencia.btnCancelarClick(Sender: TObject);
 begin
-  if MessageDlg('Deseja realmente cancelar esta conferência?',mtConfirmation,[mbYes,mbNo],0) = mrYes then begin
+  if MessageDlg('Deseja realmente cancelar esta conferência?',mtConfirmation,[mbYes,mbNo],0) = mrYes then
+  begin
     Cancelar;
     edtPreVenda.SetFocus;
   end;
@@ -293,14 +302,11 @@ begin
     FrmPrincipalPreVenda.DesbloqueiaAlteracaoPreVenda(prevenda.numeroPrevenda);
   FreeAndNil(funcionario);
   FreeAndNil(prevenda);
-  //edtcdFuncionario.Clear;
-  //edtnmFuncionario.Clear;
   edtPreVenda.Clear;
   edtcdBarrasProduto.Clear;
   Limpa_Grid(sgitens);
   btnSalvar.Enabled := false;
   TMenuItem(PopupMenu1.Items.Items[0]).Enabled := False;
-  //edtPreVenda.SetFocus;
 end;
 
 procedure TfrmConferencia.CarregarItensGrid(prevenda: TPrevenda; ponteiro: string = '');
@@ -310,7 +316,7 @@ var
 begin
   adoItens.SQL.Text :=
   'SELECT I.cdProduto,T.nmproduto,T.cdFabricante,T.dsReferencia,T.dsPrateleira,MIN(I.cdIteLcto),SUM(I.nrQtd) Qtd' + #13#10 +
-  'FROM Orcamento O WITH (NOLOCK) left join memoOrcamento M on O.nrOrcamento = M.nrOrcamento,' + #13#10 +
+  'FROM Orcamento O WITH (NOLOCK) left join memoOrcamento M WITH (NOLOCK) on O.nrOrcamento = M.nrOrcamento,' + #13#10 +
   'Pessoa P WITH (NOLOCK),' + #13#10 +
   'Pessoa CLI WITH(NOLOCK),' + #13#10 +
   'Produto T WITH (NOLOCK),' + #13#10 +
@@ -319,8 +325,7 @@ begin
   'AND O.cdCliente = CLI.cdPessoa' + #13#10 +
   'AND I.dsSituacao not in (''C'',''T'') and O.nrOrcamento = I.nrOrcamento and O.nrOrcamento = :nrOrcamento' + #13#10 +
   'AND O.nrobjeto = 0' + #13#10 +
-  'GROUP BY I.cdProduto,T.nmProduto,T.cdFabricante,T.dsPrateleira,T.dsReferencia'; //+ #13#10 +
-//  'ORDER BY I.cdIteLcto';
+  'GROUP BY I.cdProduto,T.nmProduto,T.cdFabricante,T.dsPrateleira,T.dsReferencia';
   adoItens.Parameters.ParamByName('NRORCAMENTO').Value := prevenda.numeroPrevenda;
   ordemImpressao := TNEGLoja.getConfiguracaoOrdemImpressaoPreVenda;
   case ordemImpressao of
@@ -344,7 +349,6 @@ begin
     end;
     adoItens.Next;
   end;
-  //if (prevenda.itens.Count + 1) = 1 then
   if (adoItens.recordCount + 1) = 1 then
     sgItens.RowCount := 2
   else
@@ -355,7 +359,8 @@ function TfrmConferencia.ConferirItem(linha: integer): boolean;
 begin
   if linha <= 0 then
   begin
-    raise Exception.Create('Produto não encontrado.');
+//    raise Exception.Create('Produto não encontrado.');
+    Messagedlg('Produto não encontrado.', mtWarning, [mbOk], 0);
     Result := False;
     Exit;
   end;
