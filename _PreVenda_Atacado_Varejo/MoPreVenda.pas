@@ -1817,7 +1817,7 @@ begin
   if prevenda.itens.Count = 0 then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Não foi lançado nenhum item para essa pré venda \ orçamento!',
+    MessageDlg('Não foi lançado nenhum item para essa Pré-Venda \ orçamento!',
       mtWarning, [mbOK], 0);
     EdtDesconto.Text := '0,00000';
     EdtSubTotal.Text := '0,00';
@@ -1915,7 +1915,7 @@ begin
   if GetLastError = ERROR_ALREADY_EXISTS then
   begin
     if MessageDlg
-      ('Este programa já está sendo executado neste computador! Deseja abrir outra pré venda mesmo assim?',
+      ('Este programa já está sendo executado neste computador! Deseja abrir outra Pré-Venda mesmo assim?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     begin
       Application.Terminate; // TESTE
@@ -2141,12 +2141,12 @@ begin
   end;
   if TNEGLoja.getExibirQuantidadesReservadasPreVenda then
   begin
-    Label14.caption := 'PRÉ VENDA';
+    Label14.caption := 'PRÉ-VENDA';
     Label14.Visible := True;
     Shape3.Visible := True;
     Label15.Visible := True;
     Label15.Hint :=
-      'Quantidades do item selecionado que estão em outras pré vendas';
+      'Quantidades do item selecionado que estão em outras pré-vendas';
     LblReserva.Hint :=
       'Quantidades do item selecionado que estão em Ordens de Serviço';
     Shape2.Visible := True;
@@ -2169,7 +2169,7 @@ begin
   end;
   Label11.Hint := 'Informações do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
-    'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de pré vendas';
+    'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de pré-vendas';
   if (UpperCase(vEmpresa) = 'LLPARAFUSOS') or
     (UpperCase(vEmpresa) = 'BIJOUARTS') or
     (UpperCase(vEmpresa) = 'BIJOUARTSOS214') or
@@ -2356,7 +2356,7 @@ begin
     EdtDescUnit.Left := EdtDescUnit.Left - 190;
     EdtPreco.Left := EdtPreco.Left - 190;
   end;
-  self.caption := 'Pré Venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
+  self.caption := 'Pré-Venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
 end;
@@ -2581,7 +2581,7 @@ begin
     exit;
   if StrToFloat(EdtSubTotal.Text) <= 0 then
   begin
-    MessageDlg('Esta pré venda não possui itens lançados.', mtWarning, [mbOK], 0);
+    MessageDlg('Esta pré-venda não possui itens lançados.', mtWarning, [mbOK], 0);
     exit;
   end;
   frmLucroVenda := TfrmLucroVenda.Create(nil);
@@ -2905,7 +2905,7 @@ begin
   if (StrToFloat(edtQtdItens.Text) > 500) then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Esta pré venda alcançou o limite máximo de 500 itens!',
+    MessageDlg('Esta pré-venda alcançou o limite máximo de 500 itens!',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     EdtConsulta.Setfocus;
@@ -2976,7 +2976,7 @@ begin
         // "hospitalar" permite lançar o produto mais de uma vez, por causa dos lotes
         begin
           Application.OnMessage := NaoProcessaMsg;
-          MessageDlg('Aviso: Esse produto já está incluso nessa pré venda!',
+          MessageDlg('Aviso: Esse produto já está incluso nessa pré-venda!',
             mtInformation, [mbOK], 0);
           Application.OnMessage := ProcessaMsg;
           Break;
@@ -2984,7 +2984,7 @@ begin
         else
         begin
           Application.OnMessage := NaoProcessaMsg;
-          MessageDlg('Esse produto já está incluso nessa pré venda!', mtWarning,
+          MessageDlg('Esse produto já está incluso nessa pré-venda!', mtWarning,
             [mbOK], 0);
 //          if (UpperCase(vEmpresa) <> 'DELUC') then
             EdtQtd.Text := '0,00';
@@ -3736,7 +3736,7 @@ procedure TFrmPrincipalPreVenda.BtnCancelarClick(Sender: TObject);
 var
   query: TADOQuery;
 begin
-  if MessageDlg('Cancelar esta pré venda?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg('Cancelar esta pré-venda?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
     // Limpar_Tela;
     Cancelar;
@@ -6547,7 +6547,7 @@ var
   wndHandle: THandle;
   wndClass: array [0 .. 50] of Char;
 begin
-  if MessageDlg('Tem certeza que deseja sair da Pré Venda?', mtConfirmation,
+  if MessageDlg('Tem certeza que deseja sair da Pré-Venda?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   begin
     // ********* esconde a barra
@@ -7161,7 +7161,7 @@ begin
   begin // alterou o itemIndex de orçamento para prevenda
     Application.OnMessage := NaoProcessaMsg;
     MessageDlg
-      ('Por conta da diretiva de segurança definada no sistema, a grade com os ítens vai ser apagada para obedecer validações de pré venda!',
+      ('Por conta da diretiva de segurança definada no sistema, a grade com os ítens vai ser apagada para obedecer validações de pré-venda!',
       mtWarning, [mbOK], 0);
     Application.OnMessage := ProcessaMsg;
     LimpaGrid(prevenda);
@@ -7373,7 +7373,7 @@ begin
       prevenda := TNEGPrevenda.getPrevenda(StrToInt(EdtLancto.Text), True);
       prevenda.isAlteracao := True;
     except
-      MessageDlg('Pré Venda/Orçamento não encontrado!', mtInformation,
+      MessageDlg('Pré-Venda/Orçamento não encontrado!', mtInformation,
         [mbOK], 0);
       EdtLancto.Enabled := True;
       EdtLancto.Color := clWindow;
@@ -7390,7 +7390,7 @@ begin
       ((vConferencia = True) or (vBloqueioPreVenda = True)) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      Application.MessageBox('Pré Venda/Orçamento já está em uso no caixa!',
+      Application.MessageBox('Pré-Venda/Orçamento já está em uso no caixa!',
         'Atenção', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       prevenda := nil;
       EdtLancto.Setfocus;
@@ -7402,7 +7402,7 @@ begin
     begin
       Application.OnMessage := NaoProcessaMsg;
       Application.MessageBox
-        ('A conferência desta Pré Venda/Orçamento será cancelada automaticamente ao salvar a alteração!',
+        ('A conferência desta Pré-Venda/Orçamento será cancelada automaticamente ao salvar a alteração!',
         'Atenção', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       // EdtLancto.SetFocus;
       // EdtLancto.SelectAll;
@@ -7455,7 +7455,7 @@ begin
     if (vOrcamento = 'O') then
     begin // se for orcamento preguntar se ele vai transormar em pre-venda
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      if MessageDlg('Deseja transformar esse orçamento em Pré Venda?',
+      if MessageDlg('Deseja transformar esse orçamento em Pré-Venda?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
         vOrcamento := 'N';
@@ -7487,7 +7487,7 @@ begin
             ' está com a quantidade ' + FormatFloat('0.00', qtdDisponivel) +
             // prevenda.itens[I].nrQtdReal) +
             ' disponível em estoque.' + #13 + #13 +
-            'Portanto, será excluído desta pré venda!', mtWarning, [mbOK], 0);
+            'Portanto, será excluído desta pré-venda!', mtWarning, [mbOK], 0);
           edtQtdItens.Text :=
             FormatFloat('0', StrToFloat(edtQtdItens.Text) - 1);
         end;
@@ -7512,7 +7512,7 @@ begin
             ' está com a quantidade ' + FormatFloat('0.00', qtdTotalLote) +
             // prevenda.itens[I].nrQtdReal) +
             ' disponível nos lotes.' + #13 + #13 +
-            'Portanto, será excluído desta pré venda!', mtWarning, [mbOK], 0);
+            'Portanto, será excluído desta pré-venda!', mtWarning, [mbOK], 0);
         prevenda.itens.Delete(i);
       end else if QuantidadeDispNoLote(prevenda.itens[i].lote, prevenda.itens[i].cdProduto,
             StrToInt(cdFabricanteLote),EdtLancto.Text) >= prevenda.itens[i].quantidade then
@@ -7562,7 +7562,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Caption :=  'Transformar Orçamento em Pré venda';
+          FrmCancelamentoVenda.Caption :=  'Transformar Orçamento em Pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -7580,7 +7580,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Caption :=  'Alteração de pré venda';
+          FrmCancelamentoVenda.Caption :=  'Alteração de pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -7719,7 +7719,7 @@ begin
               ('cdProduto').AsString + ' está com a quantidade ' +
               FormatFloat('0.00', ADOQryProduto.FieldByName('nrqtdreal')
               .AsFloat) + ' disponível em estoque.' + #13 + #13 +
-              'Portanto, será excluído desta pré venda!', mtWarning, [mbOK], 0);
+              'Portanto, será excluído desta pré-venda!', mtWarning, [mbOK], 0);
             edtQtdItens.Text := FormatFloat('0', StrToFloat(edtQtdItens.Text) - 1);
           end;
           Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -9356,7 +9356,7 @@ begin
     if UpperCase(FieldByName('dsrestricao').AsString) = 'S' then
     begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      ShowMessage('Restrição para pré venda: ' + FieldByName('dsMotivo')
+      ShowMessage('Restrição para pré-venda: ' + FieldByName('dsMotivo')
         .AsString);
       TestaRestricao := True;
       if (RgOpcoes.ItemIndex = 0) or (RgOpcoes.ItemIndex = 2) then
@@ -9994,7 +9994,7 @@ begin
   begin // antes if (vOrcamento <> 'O') and (vImpressao_40 = 'S') then begin
     if (UpperCase(vEmpresa) = 'SODUCATO') then
     begin
-      if MessageDlg('Deseja imprimir o Comprovante Pequeno da Pré Venda \ Orçamento de nº '
+      if MessageDlg('Deseja imprimir o Comprovante Pequeno da Pré-Venda \ Orçamento de nº '
         + EdtLancto.Text + ' ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         exit;
     end;
@@ -17244,7 +17244,7 @@ begin
             end;
             Application.OnMessage := FormPrincipal.NaoProcessaMsg;
             // if RgOpcoes.ItemIndex = 2 then //Orcamento
-            MessageDlg('Pré Venda/Orçamento salvo com sucesso! ' + #13#10 +
+            MessageDlg('Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 +
               'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,
               [mbOK], 0);
             if (chkbxOrcamentoExterno.Checked = True) then
@@ -17252,17 +17252,17 @@ begin
             else if (UpperCase(vEmpresa) = 'COPYART') then
             begin
               if nrOrcamentoDia > 0 then
-                Msg := 'Pré Venda/Orçamento salvo com sucesso! ' + #13#10 +
+                Msg := 'Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 +
                   'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text + #13#10 + #13#10
                   + 'Sequencial: ' + intToStr(nrOrcamentoDia)
               else
-                Msg := 'Pré Venda/Orçamento salvo com sucesso! ' + #13#10 +
+                Msg := 'PréVenda/Orçamento salvo com sucesso! ' + #13#10 +
                   'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text;
               if FrmPrincipalPreVenda.vPergunta_Apos_Comprovante = '1' then
               begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº '
+                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                     + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                     [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeComprovante
@@ -17273,13 +17273,13 @@ begin
                 begin
                   if nrOrcamentoDia > 0 then
                   begin
-                    if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
+                    if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
                       #13#10 + 'Sequencial: ' + intToStr(nrOrcamentoDia), mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                   end else
                   begin
                     if MessageDlg
-                      ('Deseja imprimir a Pré Venda \ Orçamento de nº ' +
+                      ('Deseja imprimir a Pré-Venda \ Orçamento de nº ' +
                       FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento
@@ -17295,7 +17295,7 @@ begin
                 begin
                   if FrmPrincipalPreVenda.vPergunta_Apos_Comprovante = '1' then
                   begin
-                    if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº '
+                    if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -17310,14 +17310,14 @@ begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') or
                   (UpperCase(vEmpresa) = 'PROAUTO') then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº '
+                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                     + FrmPrincipalPreVenda.EdtLancto.Text + ' em 40 colunas ?',
                     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeComprovante(StrToInt(prevenda.codigoFormaPagamento));
                 end;
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº '
+                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -18226,7 +18226,7 @@ begin
     and (TNEGLoja.getVersaoBanco < 9.21) then
   begin // ATACAREJO
     MessageDlg
-      ('Favor entrar em contato com a Support Informática solicitando a atualização do RodaScript para continuar utilizando a Pré Venda.',
+      ('Favor entrar em contato com a Support Informática solicitando a atualização do RodaScript para continuar utilizando a Pré-Venda.',
       mtWarning, [mbOK], 0);
     result := false;
   end;
@@ -18264,7 +18264,7 @@ begin
         Application.MessageBox
           (PWideChar('O produto ' + prevenda.itens[i].descricao +
           ' está com a quantidade zerada ou negativa.' + #13#10 +
-          'Para excluí-lo da pré venda dê dois cliques no item!'), 'Atenção',
+          'Para excluí-lo da pré-venda dê dois cliques no item!'), 'Atenção',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         resultado := True;
         Break;
@@ -18354,7 +18354,7 @@ begin
   end;
   if SgDados.Cells[0, 1] = '' then
   begin
-    MessageDlg('Não foi lançado nenhum item para essa pré venda \ orçamento!',
+    MessageDlg('Não foi lançado nenhum item para essa pré-venda \ orçamento!',
       mtWarning, [mbOK], 0);
     EdtDesconto.Text := '0,00000';
     EdtSubTotal.Text := '0,00';
@@ -23120,7 +23120,7 @@ var
 begin
   if EdtLancto.Text = '' then
   begin
-    Application.MessageBox('Digite o número da Pré Venda / OS!', 'Atenção',
+    Application.MessageBox('Digite o número da Pré-Venda / OS!', 'Atenção',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     EdtLancto.Setfocus;
     exit;
@@ -23138,7 +23138,7 @@ begin
       Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
       ExecSQL;
       DModulo.Conexao.CommitTrans;
-      Application.MessageBox('Pré Venda / OS desbloqueada com sucesso!',
+      Application.MessageBox('Pré-Venda / OS desbloqueada com sucesso!',
         'Informação', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     except
       DModulo.Conexao.RollbackTrans;
@@ -23891,7 +23891,7 @@ procedure TFrmPrincipalPreVenda.Importarvendasexternas1Click(Sender: TObject);
 begin
   if StrToFloat(EdtTotal.Text) > 0 then
   begin
-    ShowMessage('Existe um orçamento ou uma pré venda em andamento!');
+    ShowMessage('Existe um orçamento ou uma pré-venda em andamento!');
     exit;
   end;
   FrmListaPedidos := TFrmListaPedidos.Create(Application); // Cria o formulário
@@ -23938,7 +23938,7 @@ begin
         Application.MessageBox
           (PWideChar('O produto ' + prevenda.itens[i].descricao +
           ' está com a quantidade zerada ou negativa.' + #13#10 +
-          'Para excluí-lo da pré venda dê dois cliques no item!'), 'Atenção',
+          'Para excluí-lo da pré-venda dê dois cliques no item!'), 'Atenção',
           mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
         resultado := false;
         Break;
