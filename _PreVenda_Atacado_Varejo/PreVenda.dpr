@@ -114,7 +114,8 @@ uses
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceVarejoAxis.pas',
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas',
-  NEGPrevenda in '..\..\support\NEG\NEGPrevenda.pas';
+  NEGPrevenda in '..\..\support\NEG\NEGPrevenda.pas',
+  NEGTipoCliente in '..\..\support\NEG\NEGTipoCliente.pas';
 
 {$R *.RES}
 var

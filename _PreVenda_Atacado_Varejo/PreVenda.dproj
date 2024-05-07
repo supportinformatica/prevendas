@@ -372,6 +372,7 @@
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas"/>
         <DCCReference Include="SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas"/>
         <DCCReference Include="..\..\support\NEG\NEGPrevenda.pas"/>
+        <DCCReference Include="..\..\support\NEG\NEGTipoCliente.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
