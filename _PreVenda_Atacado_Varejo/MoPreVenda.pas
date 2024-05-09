@@ -5076,14 +5076,14 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end;
-  if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and (dsCGC = '04041252000110') then // Bat Auto oculta os preços para esse tipo de cliente
+  if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and ((dsCGC = '04217440000156') or
+     (dsCGC = '04217440000237') or (dsCGC = '33903814000195')) then // Bat Auto oculta os preços para esse tipo de cliente
   begin
     FrmRelOrcamentos.QREPreco.Visible  := False;
     FrmRelOrcamentos.QRETotal.Visible  := False;
     FrmRelOrcamentos.QRLabel8.Visible  := False;
     FrmRelOrcamentos.RLLabel2.Visible  := False;
     FrmRelOrcamentos.QRLabel9.Visible  := False;
-//    FrmRelOrcamentos.RLLabel18.Enabled := false;
     FrmRelOrcamentos.RLLabel18.Visible := False;
     FrmRelOrcamentos.RLLabel19.Visible := False;
     FrmRelOrcamentos.RLLabel20.Visible := False;
