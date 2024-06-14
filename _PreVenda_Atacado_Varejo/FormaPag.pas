@@ -666,7 +666,7 @@ end;
 
 function TFrmFormaPag.obrigarProfissional(cnpj: string): Boolean;
 begin
-  if (cnpj = '01655446000206') then  // construfort
+  if (cnpj = '40484448000142') then  // construfort
     Result := True
   else
     Result := False;

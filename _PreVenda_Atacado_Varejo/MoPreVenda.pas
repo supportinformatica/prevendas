@@ -3395,7 +3395,6 @@ begin
   else // senão fica com duas casas decimais
     EdtDesconto.Text := FormatFloat('0.00', StrToFloatDef(EdtDesconto.Text, 0));
   if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and (vAtacadoVarejo = 'A') then
-  // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
   begin
     if vBloquearDescontoAtacado = True then
     begin
@@ -3411,7 +3410,6 @@ begin
   end;
   if (StrToFloatDef(EdtDesconto.Text, 0) > 0) and
     ((UpperCase(vEmpresa) = 'CARDOSOACESSORIOS')) then
-  // (UpperCase(vEmpresa) = 'CAMARATUBA')or
   begin
     if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
     begin
@@ -3447,7 +3445,20 @@ begin
     exit;
   end;
   vlTotalAnterior := SimpleRoundTo(StrToCurrDef(EdtSubTotal.Text, 0), -2);
-  EdtSubTotal.Text := FormatCurr('0.00', StrToCurrDef(EdtTotal.Text, 0) - (StrToCurrDef(EdtTotal.Text, 0) * (StrToCurrDef(EdtDesconto.Text, 0) / 100)));
+  if StrToCurrDef(EdtDesconto.Text, 0) > 0 then
+  begin
+    vlSubTotal := 0;
+    for i := 0 to prevenda.itens.Count - 1 do
+    begin
+      if prevenda.itens[i].Promocao_desconto_Item = True then
+        vlSubTotal := vlSubTotal + prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda
+      else
+        vlSubTotal := vlSubTotal + prevenda.itens[i].quantidade * (prevenda.itens[i].precoBruto * (1 - (StrToCurrDef(EdtDesconto.Text, 0) / 100)));
+    end;
+    EdtSubTotal.Text := FormatCurr('0.00', vlSubTotal);
+  end else
+    EdtSubTotal.Text := FormatCurr('0.00', StrToCurrDef(EdtTotal.Text, 0) - (StrToCurrDef(EdtTotal.Text, 0) * (StrToCurrDef(EdtDesconto.Text, 0) / 100)));
+  EdtSubTotal.Refresh;
   liberouVenda := False;
   if UpperCase(vEmpresa) = 'PROAUTO' then
   begin
@@ -3602,36 +3613,23 @@ begin
     if i = 27 then
       Sleep(1);
     if (prevenda.itens[i].Promocao_desconto_Item = false) or
-      (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'PROAUTO')) and //or (UpperCase(vEmpresa) = 'MOTOPECAS')
+      (((UpperCase(vEmpresa) = 'BG') or (UpperCase(vEmpresa) = 'KADU') or (UpperCase(vEmpresa) = 'PROAUTO')) and
       (prevenda.descontoPercentual > 0)) then
-    // and (prevenda.descontoPercentual <> 0) then
     begin
-      // and (prevenda.itens[i].precoVenda = prevenda.itens[i].precoBruto) then begin
       if SgDados.Cells[0, i + 1] <> '' then
-      begin
-        // aplico o desconto em cada item
+      begin  // aplico o desconto em cada item
         if prevenda.descontoPercentual <> 0 then
         begin
-          // vlSubTotal := prevenda.itens[i].quantidade * prevenda.itens[i].precoBruto;
-          // vlSubTotal := SimpleRoundTo(vlSubTotal,-2);
           prevenda.itens[i].precoVenda := prevenda.itens[i].precoBruto *
             (1 - (prevenda.descontoPercentual / 100));
-
           if i = 0 then
             prevenda.itens[i].precoVenda := prevenda.itens[i].precoVenda -
               (valorAjustar / prevenda.itens[i].quantidade);
-          // prevenda.itens[i].precoVenda :=
-          // ((vlSubTotal)
-          // -
-          // (vlSubTotal * (prevenda.descontoPercentual/100)))
-          // / prevenda.itens[i].quantidade;
           prevenda.itens[i].precoVenda :=
             SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1);
         end
         else
           prevenda.itens[i].precoVenda := (prevenda.itens[i].precoBruto);
-        // prevenda.itens[i].precoVenda := prevenda.itens[i].precoBruto - ((prevenda.itens[i].precoBruto * prevenda.descontoPercentual) / 100);
-        // prevenda.itens[i].precoVenda := prevenda.itens[i].precoBruto - (prevenda.itens[i].precoBruto * (prevenda.descontoPercentual / 100));
       end;
     end;
     // prevenda.itens[i].SubTotal := prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda;
@@ -3668,7 +3666,6 @@ begin
   prevenda.descontoPercentual := StrToFloat(EdtDesconto.Text);
   EdtTotal.Text := FormatFloatQ(2, SimpleRoundTo(vlBruto, -2) +
     GetValorIPIBruto(prevenda));
-  //vlTotalAnterior := SimpleRoundTo(StrToFloatDef(EdtSubTotal.Text, 0), -2);
   EdtSubTotal.Text := FormatFloatQ(2,
     (vlLiquido + GetValorIPILiquido(prevenda)));
   edtTotalIPI.Text := FormatFloatQ(2, (GetValorIPILiquido(prevenda)));
@@ -6836,7 +6833,7 @@ end;
 procedure TFrmPrincipalPreVenda.EdtConsultaChange(Sender: TObject);
 begin
   if vOtimiza = 'S' then
-    TimerRealizarPesquisa.Enabled := false
+    TimerRealizarPesquisa.Enabled := False
   else begin
     if (RadioGroup1.ItemIndex <> 4) then // DIFERENTE DE CODIGO DE BARRAS
       AtualizaQryConsulta;
@@ -7842,8 +7839,7 @@ begin
     open;
     for i := 0 to RecordCount - 1 do
     begin
-      FrmEspecificacao.SgCodigos.Cells[i, 1] :=
-        FieldByName('cdAdicional').AsString;
+      FrmEspecificacao.SgCodigos.Cells[i, 1] := FieldByName('cdAdicional').AsString;
       Next;
     end;
     sql.Text :=
@@ -7900,7 +7896,12 @@ begin
   end;
   FrmEspecificacao.Position := poMainFormCenter;
   Ativa := 'N';
-  FrmEspecificacao.ShowModal;
+  try
+    FrmEspecificacao.ShowModal;
+    FreeAndNil(FrmEspecificacao);
+  except
+    FreeAndNil(FrmEspecificacao);
+  end;
   EdtConsulta.Setfocus;
 end;
 
@@ -9403,7 +9404,7 @@ procedure TFrmPrincipalPreVenda.TimerRealizarPesquisaTimer(Sender: TObject);
 begin
   AtualizaQryConsulta;
   Screen.Cursor := crDefault;
-  TimerRealizarPesquisa.Enabled := false;
+  TimerRealizarPesquisa.Enabled := False;
   if DBGrid1.Color = clBtnHighlight then;
   DBGrid1.Color := clInfoBk;
   if ADOSPConsulta.RecordCount > 0 then
@@ -9413,8 +9414,7 @@ begin
       montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
       or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
-      OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
-    then
+      or (UpperCase(vEmpresa) = 'RURALPET') then
       Consulta_Deposito
     else if Label12.Visible = True then
       Consultapedidodecompra1.Click;
@@ -9963,13 +9963,13 @@ end;
 procedure TFrmPrincipalPreVenda.EdtConsultaKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if (Key <> 13) and (Key <> VK_Down) and (Key <> VK_Up)
-    and (Key <> VK_Left) and (Key <> VK_Right)then
+  if (Key <> 13) and (Key <> 27) and (Key <> VK_Down) and (Key <> VK_Up)
+    and (Key <> VK_Left) and (Key <> VK_Right) then
   begin
     if vOtimiza = 'S' then
     begin
       Screen.Cursor := crHourGlass;
-      TimerRealizarPesquisa.Enabled := true;
+      TimerRealizarPesquisa.Enabled := True;
     end;
   end;
 end;
