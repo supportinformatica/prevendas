@@ -64,9 +64,9 @@ type
     procedure FormShow(Sender: TObject);
 
   private
-    { Private declarations }
+
   public
-    { Public declarations }
+
   end;
 
 var
@@ -80,7 +80,8 @@ uses MoPreVenda, FrmPrincipal, imagemAmpliadaProduto;
 
 procedure TFrmEspecificacao.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Key = Char(27) ) then  Close;
+  if Key = Char(27)then
+    Close;
 end;
 
 procedure TFrmEspecificacao.FormShow(Sender: TObject);
@@ -94,12 +95,14 @@ end;
 
 procedure TFrmEspecificacao.Memo1KeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Key = Char(27) ) then  Close;
+  if Key = Char(27) then
+    Close;
 end;
 
 procedure TFrmEspecificacao.FotoKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Key = Char(27) ) then  Close;
+  if Key = Char(27) then
+    Close;
 end;
 
 procedure TFrmEspecificacao.btnNextClick(Sender: TObject);
@@ -144,22 +147,6 @@ begin
     FrmEspecificacao.Close;
     ConsultaEspecificacao1.Click;
   end;
-{  FrmPrincipalPreVenda.ADOSPConsulta.Next;
-  FrmPrincipalPreVenda.EdtPreco.Text := FormatFloat('0.00',FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Valor').AsFloat);
-  Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-  With FrmPrincipalPreVenda.ADOQryEspecificacao do begin
-     Sql.Clear;
-     Sql.Text := 'Select dsEspecificacao from Produto '+
-                 'Where cdProduto = :CDPRODUTO        ';
-     Parameters.ParamByName('CDPRODUTO').Value := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código').AsString;
-     Open;
-  end;
-  Memo1.Text := FrmPrincipalPreVenda.ADOQryEspecificacao.FieldByName('dsEspecificacao').AsString;
-  LblProduto.Caption   := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Descrição').AsString;
-  LblcdBarras.Caption  := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código_Barras').AsString;
-  LblFab.Caption       := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Fabricante').AsString;
-  LblRefer.Caption     := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Referência').AsString;
-  Lblcod.Caption       := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código').AsString;}
 end;
 
 procedure TFrmEspecificacao.BtnMdAnteriorClick(Sender: TObject);
@@ -170,23 +157,6 @@ begin
     FrmEspecificacao.Close;
     ConsultaEspecificacao1.Click;
   end;
-
-  {FrmPrincipalPreVenda.ADOSPConsulta.Prior;
-  FrmPrincipalPreVenda.EdtPreco.Text := FormatFloat('0.00',FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Valor').AsFloat);
-  Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-  With FrmPrincipalPreVenda.ADOQryEspecificacao do begin
-     Sql.Clear;
-     Sql.Text := 'Select dsEspecificacao from Produto '+
-                 'Where cdProduto = :CDPRODUTO        ';
-     Parameters.ParamByName('CDPRODUTO').Value := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código').AsString;
-     Open;
-  end;
-  Memo1.Text := FrmPrincipalPreVenda.ADOQryEspecificacao.FieldByName('dsEspecificacao').AsString;
-  LblProduto.Caption   := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Descrição').AsString;
-  LblcdBarras.Caption  := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código_Barras').AsString;
-  LblFab.Caption       := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Fabricante').AsString;
-  LblRefer.Caption     := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Referência').AsString;
-  Lblcod.Caption       := FrmPrincipalPreVenda.ADOSPConsulta.FieldByName('Código').AsString;}
 end;
 
 

@@ -164,7 +164,7 @@ begin
     if (obrigarProfissional(SoNumeros(FrmPrincipalPreVenda.dsCGC))) and
       (EdtCdProfissional.text = '') then
     begin
-      Application.MessageBox('Obrigatório selecionar um profissional', 'Atenção',
+      Application.MessageBox('Obrigatório selecionar um profissional.', 'Atenção',
         MB_OK + MB_ICONWARNING + MB_APPLMODAL);
       BtnConfirmar.Enabled := True;
       exit;
@@ -490,19 +490,20 @@ begin
   end;
   if vObs <> '' then
     Memo1.text := vObs
-  else if (UpperCase(vEmpresa) = 'SEMPRE') then
-  begin // SOMENTE PARA SEMPRE MATERIAIS DE CONSTRUÇÃO E CAMARATUBA
-    with DModulo.ADOQuery1 do
-    begin
-      SQL.text :=
-        'Select dsMemo From Pessoa P with (nolock) Where cdPessoa = :CODIGO';
-      Parameters.ParamByName('CODIGO').Value :=
-        FrmPrincipalPreVenda.EdtCdCliente.text;
-      open;
-      Memo1.text := DModulo.ADOQuery1.FieldByName('dsMemo').AsString;
-      DModulo.ADOQuery1.Close;
-    end;
-  end else
+//  else if (UpperCase(vEmpresa) = 'SEMPRE') then
+//  begin // SOMENTE PARA SEMPRE MATERIAIS DE CONSTRUÇÃO E CAMARATUBA
+//    with DModulo.ADOQuery1 do
+//    begin
+//      SQL.text :=
+//        'Select dsMemo From Pessoa P with (nolock) Where cdPessoa = :CODIGO';
+//      Parameters.ParamByName('CODIGO').Value :=
+//        FrmPrincipalPreVenda.EdtCdCliente.text;
+//      open;
+//      Memo1.text := DModulo.ADOQuery1.FieldByName('dsMemo').AsString;
+//      DModulo.ADOQuery1.Close;
+//    end;
+//  end
+  else
   begin
     with DModulo.ADOQuery1 do
     begin
@@ -665,7 +666,7 @@ end;
 
 function TFrmFormaPag.obrigarProfissional(cnpj: string): Boolean;
 begin
-  if cnpj = '26388902000130' then
+  if (cnpj = '40484448000142') then  // construfort
     Result := True
   else
     Result := False;

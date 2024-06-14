@@ -2810,7 +2810,7 @@
         OnClick = Alteraquantidade1Click
       end
       object Registraperdadevemdaporestoqueinsuficiente1: TMenuItem
-        Caption = 'Registra perda de venda por estoque insuficiente'
+        Caption = 'Registrar perda de venda por estoque insuficiente'
         ShortCut = 121
         OnClick = Registraperdadevemdaporestoqueinsuficiente1Click
       end
@@ -2820,7 +2820,7 @@
         OnClick = Desconto1Click
       end
       object ConsultaEspecificacao1: TMenuItem
-        Caption = 'ConsultaEspecificacao'
+        Caption = 'Consultar Especifica'#231#245'es do Produto...'
         ShortCut = 123
         OnClick = ConsultaEspecificacao1Click
       end
@@ -3556,7 +3556,7 @@
   end
   object TimerRealizarPesquisa: TTimer
     Enabled = False
-    Interval = 500
+    Interval = 600
     OnTimer = TimerRealizarPesquisaTimer
     Left = 127
     Top = 471
