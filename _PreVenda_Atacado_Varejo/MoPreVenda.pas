@@ -17646,7 +17646,7 @@ begin
 //      Label11.Text := FormatFloat('0.00',
 //        ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat)
 //    else
-      LblReserva.Text := FormatFloat('0.00',
+      Label11.Text := FormatFloat('0.00',
         ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat); // PBFARMA
   end
   else
