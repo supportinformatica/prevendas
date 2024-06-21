@@ -853,7 +853,7 @@ begin
   if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     case RadioGroup1.ItemIndex of
-      0,1,4,5,7,8,10,11 :
+      0,1,4,5,6,7,8,10,11 :
         preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
       2 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'CARTAO');
       9 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'DEBITO');
