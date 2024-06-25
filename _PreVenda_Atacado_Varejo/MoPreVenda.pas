@@ -2225,7 +2225,8 @@ begin
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
      (dsCGC = '21597412000120') or (dsCGC = '36056673000100') or
      (dsCGC = '15066244000144') or (dsCGC = '51276698000103') or
-     (dsCGC = '32256187000185') or (dsCGC = '40484448000142')
+     (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
+     (dsCGC = '08219676000182') or (dsCGC = '22517010000131')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -7599,7 +7600,7 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Caption :=  'Alteração de pré-venda';
+          FrmCancelamentoVenda.Caption := 'Alteração de pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
@@ -7615,7 +7616,6 @@ begin
     begin
       if not liberaDigitacaoLancamento then
         EdtLancto.ReadOnly := True;
-//      CbxClienteExit(self);
       if clienteComRestricaoFinanceira(restricaoFinanceira, EdtSubTotal.Text) then
       begin // restricaoFinanceira in [ATRASO,CHEQUE]
         if ((ATRASO in restricaoFinanceira) or (CHEQUE in restricaoFinanceira)) and TestaFinanceiroNaConfirmacao then
@@ -7625,7 +7625,7 @@ begin
             (PWideChar('Restrição: ' + getMensagemRestricao(restricaoFinanceira) +
             #13#10 + #13#10 +
             'Pode ser necessária liberação por senha na confirmação, deseja continuar a prevenda?'),
-            'Confirmação', mb_IconExclamation + Mb_YesNo) = IdNo then
+            'Confirmação', mb_IconExclamation + Mb_YesNo) = IdYes then
           begin
             CbxCliente.Setfocus;
             Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
