@@ -2,8 +2,8 @@ object FrmFormaPag: TFrmFormaPag
   Left = 453
   Top = 252
   BorderIcons = []
-  Caption = 'Defini'#231#227'o da forma de pagamento'
-  ClientHeight = 327
+  Caption = 'Forma de pagamento'
+  ClientHeight = 357
   ClientWidth = 661
   Color = clSkyBlue
   Font.Charset = DEFAULT_CHARSET
@@ -17,17 +17,17 @@ object FrmFormaPag: TFrmFormaPag
   OnKeyPress = FormKeyPress
   DesignSize = (
     661
-    327)
+    357)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 1
-    Top = 188
+    Left = 2
+    Top = 220
     Width = 89
     Height = 13
     Caption = 'Obs.: Max 3 linhas'
     Font.Charset = ANSI_CHARSET
-    Font.Color = clRed
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
@@ -111,17 +111,17 @@ object FrmFormaPag: TFrmFormaPag
     Visible = False
   end
   object BtnConfirmar: TBitBtn
-    Left = 98
-    Top = 281
-    Width = 83
-    Height = 46
+    Left = 415
+    Top = 316
+    Width = 104
+    Height = 38
     Hint = 'Confirmar forma de pagamento'
     Caption = 'F9 Confirmar'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    Font.Style = [fsBold]
     Glyph.Data = {
       F6060000424DF606000000000000360000002800000018000000180000000100
       180000000000C0060000C40E0000C40E00000000000000000000FFFFFFFFFFFF
@@ -179,7 +179,6 @@ object FrmFormaPag: TFrmFormaPag
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-    Layout = blGlyphTop
     ParentFont = False
     ParentShowHint = False
     PopupMenu = PopupMenu1
@@ -191,7 +190,7 @@ object FrmFormaPag: TFrmFormaPag
   end
   object RadioGroup1: TRadioGroup
     Left = 2
-    Top = 8
+    Top = 4
     Width = 356
     Height = 136
     Hint = 'Formas de pagamento'
@@ -224,17 +223,17 @@ object FrmFormaPag: TFrmFormaPag
     OnClick = RadioGroup1Click
   end
   object BtnCancelar: TBitBtn
-    Left = 187
-    Top = 281
-    Width = 83
-    Height = 46
+    Left = 534
+    Top = 316
+    Width = 104
+    Height = 38
     Hint = 'Retornar para a pr'#233'-venda'
     Caption = 'F10 &Cancelar'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    Font.Style = [fsBold]
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -248,7 +247,6 @@ object FrmFormaPag: TFrmFormaPag
       399377FF3333777FF7733993333339993933373FF3333777F7F3399933333399
       99333773FF3333777733339993333339933333773FFFFFF77333333999999999
       3333333777333777333333333999993333333333377777333333}
-    Layout = blGlyphTop
     NumGlyphs = 2
     ParentFont = False
     ParentShowHint = False
@@ -260,8 +258,8 @@ object FrmFormaPag: TFrmFormaPag
     OnKeyPress = BtnCancelarKeyPress
   end
   object Memo1: TMemo
-    Left = 1
-    Top = 202
+    Left = 2
+    Top = 235
     Width = 357
     Height = 77
     Font.Charset = ANSI_CHARSET
@@ -277,8 +275,8 @@ object FrmFormaPag: TFrmFormaPag
     OnKeyPress = Memo1KeyPress
   end
   object CBXSelecionaProfissionais: TCheckBox
-    Left = 0
-    Top = 145
+    Left = 2
+    Top = 142
     Width = 153
     Height = 17
     Caption = 'Selecionar Profissional'
@@ -293,7 +291,7 @@ object FrmFormaPag: TFrmFormaPag
   end
   object CBXProfissional: TComboBox
     Left = 57
-    Top = 161
+    Top = 158
     Width = 301
     Height = 21
     Font.Charset = ANSI_CHARSET
@@ -307,9 +305,9 @@ object FrmFormaPag: TFrmFormaPag
     OnChange = CBXProfissionalChange
   end
   object EdtCdProfissional: TEdit
-    Left = 1
-    Top = 161
-    Width = 51
+    Left = 2
+    Top = 158
+    Width = 50
     Height = 21
     Color = clInfoBk
     Font.Charset = ANSI_CHARSET
@@ -409,7 +407,7 @@ object FrmFormaPag: TFrmFormaPag
     Left = 386
     Top = 46
     Width = 274
-    Height = 270
+    Height = 266
     Hint = 
       'Clique para selecionar a quantidade de parcelas para o cart'#227'o de' +
       ' cr'#233'dito parcelado.'
@@ -441,7 +439,7 @@ object FrmFormaPag: TFrmFormaPag
   end
   object chkbxEnviarCopiaEmail: TCheckBox
     Left = 183
-    Top = 145
+    Top = 142
     Width = 153
     Height = 17
     Caption = 'Enviar c'#243'pia por email'
@@ -484,6 +482,33 @@ object FrmFormaPag: TFrmFormaPag
     Text = '0,00'
     Visible = False
   end
+  object ckbPrevEntrega: TCheckBox
+    Left = 2
+    Top = 182
+    Width = 153
+    Height = 17
+    Caption = 'Previs'#227'o de entrega'
+    Enabled = False
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 16
+    OnClick = ckbPrevEntregaClick
+  end
+  object dtPrevEntrega: TDateTimePicker
+    Left = 2
+    Top = 198
+    Width = 103
+    Height = 21
+    Date = 45478.000000000000000000
+    Time = 0.709504861108143800
+    Enabled = False
+    TabOrder = 17
+    OnChange = dtPrevEntregaChange
+  end
   object ADOSPLiberacao1: TADOStoredProc
     Connection = DModulo.Conexao
     ProcedureName = 'SP_LIBERACAOVENDAS01;1'
@@ -502,8 +527,8 @@ object FrmFormaPag: TFrmFormaPag
         Size = 5
         Value = Null
       end>
-    Left = 4
-    Top = 240
+    Left = 44
+    Top = 8
   end
   object ADOSPLiberacao2: TADOStoredProc
     Connection = DModulo.Conexao
@@ -529,8 +554,8 @@ object FrmFormaPag: TFrmFormaPag
         Size = 5
         Value = Null
       end>
-    Left = 41
-    Top = 240
+    Left = 81
+    Top = 8
   end
   object ADOSPLiberacao3: TADOStoredProc
     Connection = DModulo.Conexao
@@ -550,8 +575,8 @@ object FrmFormaPag: TFrmFormaPag
         Size = 5
         Value = Null
       end>
-    Left = 76
-    Top = 245
+    Left = 124
+    Top = 5
   end
   object ADOSPLiberacao4: TADOStoredProc
     Connection = DModulo.Conexao
@@ -571,12 +596,12 @@ object FrmFormaPag: TFrmFormaPag
         Size = 5
         Value = Null
       end>
-    Left = 112
-    Top = 245
+    Left = 168
+    Top = 5
   end
   object PopupMenu1: TPopupMenu
-    Left = 209
-    Top = 242
+    Left = 289
+    Top = 2
     object Consultadecrditodocliente1: TMenuItem
       Caption = 'Confimar venda'
       ShortCut = 120
@@ -598,14 +623,12 @@ object FrmFormaPag: TFrmFormaPag
       
         'inner join profissional PR on P.cdPessoa = PR.cdPessoa where P.d' +
         'sAtivo = '#39#39'S'#39#39' ')
-    Left = 144
-    Top = 240
+    Left = 208
   end
   object ADOQryProcura: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
-    Left = 176
-    Top = 240
+    Left = 248
   end
   object ImageList1: TImageList
     Left = 339

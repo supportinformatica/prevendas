@@ -362,8 +362,6 @@ begin
       parameters.parambyname('Lote').Value := ADOSPRelDados.fieldbyname('nrLote').asString;
       Open;
       RLDBText2.Text := AdoQuery1.FieldByName('validade').asString + '  ';
-      //QREDescricao.Width := 252; //190
-      //QREDescricao.Left := 178;
     end;
   end;
   try

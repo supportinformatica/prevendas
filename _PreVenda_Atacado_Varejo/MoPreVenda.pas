@@ -447,6 +447,7 @@ type
       Shift: TShiftState);
     procedure SgDadosKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure DtLanctoChange(Sender: TObject);
 
   private
     versaoEXE : string;
@@ -747,6 +748,7 @@ type
     procedure ColResize(Sender: TObject);
     function Empresas_UmaEtiqueta_porColuna : Boolean;
   public
+    previsaoEntrega : TDateTime;
     idLiberacaoRestrincaoVenda : integer;
     prevenda: TPrevenda;
     acrescimoParcelamentoCartao : Boolean;
@@ -819,6 +821,7 @@ type
     formaPagamentoImp: string;
     // LblMensagem: Tletreiro;
     // procedure EnviaProdutosHospitalar;
+    function habilitarPrevisaoEntrega(cnpj : string) : Boolean;
     function calcularDIFAL:string;
     function selecionarParcelasCartao : Boolean;
     function getValorVendaProduto: Real;
@@ -2317,8 +2320,6 @@ begin
   vAtacadoVarejo := 'V'; // já começa recebendo o valor de varejo
   cdTabelaPreco := 0;
   vDescontoCliente := 0;
-//  if (UpperCase(vEmpresa) = 'AMBIENTAR') then
-//    RgOpcoes.Items.Add('F4 NF-e');
   RodaScripts;
   persistirUltimoEstadoForm;
   AtualizaQryConsulta;
@@ -2328,14 +2329,6 @@ begin
   possuiPermissaoVenderAbaixoDoCusto := False;
   listaProdutosAcrescimo := TList<Integer>.Create;
   nomePc := pubNomeComputador;
-//  if ((nomePc <> 'DESENV01') and (nomePc <> 'DESENV02') and
-//    (nomePc <> 'DESENV03') and (nomePc <> 'NOTEANDRE') and (nomePc <> 'ADM01')
-//    and (nomePc <> 'DESENV04')) then
-//  begin // and (nomePC <> 'DESENV04')
-//    // ThreadConexao3 := Tconexao3.Create(true);
-//    // ThreadConexao.FreeOnTerminate := true;
-//    // ThreadConexao3.Resume;
-//  end;
   if (UpperCase(vEmpresa) = 'AMBIENTE') then
   begin
     MontaComboAmbiente;
@@ -2360,8 +2353,8 @@ begin
   self.caption := 'Pré-Venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
+  previsaoEntrega := StrToDate(vdata_banco);
 end;
-
 
 procedure TFrmPrincipalPreVenda.FormShow(Sender: TObject);
 begin
@@ -4614,6 +4607,14 @@ begin
   end;
 end;
 
+function TFrmPrincipalPreVenda.habilitarPrevisaoEntrega(cnpj: string): Boolean; // habilita no formulario de forma de pagamento
+begin
+  if (cnpj = '04041252000110') or (cnpj = '10588415000181') then // JNunes (Ramon)
+    Result := True
+  else
+    Result := False;
+end;
+
 procedure TFrmPrincipalPreVenda.EdtQtdKeyPress(Sender: TObject; var Key: Char);
 var
   Texto: string;
@@ -5095,7 +5096,6 @@ begin
     FrmRelOrcamentos.QRLD.Visible := False;
     FrmRelOrcamentos.lblValorDesconto.Visible := False;
     FrmRelOrcamentos.RLLblUnitario.Visible := False;
-
   end;
   if (UpperCase(vEmpresa) = 'MOSR') then
   begin
@@ -5316,9 +5316,11 @@ begin
       FrmRelOrcamentos.QRLblTitulo.caption := 'Orçamento'
     else if RgOpcoes.ItemIndex = 4 then
       FrmRelOrcamentos.QRLblTitulo.caption := 'Simples Remessa';
+    FrmRelOrcamentos.QRLblPrevisao.Enabled := CbPrevisao.Checked;
+    FrmRelOrcamentos.QRLblPrevisao.Visible := CbPrevisao.Checked;
     if CbPrevisao.Checked = True then
       FrmRelOrcamentos.QRLblPrevisao.caption := 'Previsão de Entrega: ' +
-        DateToStr(DtLancto.Date)
+        DateToStr(previsaoEntrega)
     else
       FrmRelOrcamentos.QRLblPrevisao.Enabled := false;
   end;
@@ -5974,9 +5976,11 @@ begin
   end
   else if RgOpcoes.ItemIndex = 2 then
     frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Orçamento';
+  FrmRelOrcamentos.QRLblPrevisao.Enabled := CbPrevisao.Checked;
+  FrmRelOrcamentos.QRLblPrevisao.Visible := CbPrevisao.Checked;
   if CbPrevisao.Checked = True then
     frmRelOrcamentosAmbiente.QRLblPrevisao.caption := 'Previsão de Entrega: ' +
-      DateToStr(DtLancto.Date)
+      DateToStr(previsaoEntrega)
   else
     frmRelOrcamentosAmbiente.QRLblPrevisao.Enabled := false;
   // end;
@@ -6301,9 +6305,11 @@ begin
     end
     else if RgOpcoes.ItemIndex = 2 then
       frmRelOrcamentosPB.QRLblTitulo.caption := 'Orçamento';
+    FrmRelOrcamentos.QRLblPrevisao.Enabled := CbPrevisao.Checked;
+    FrmRelOrcamentos.QRLblPrevisao.Visible := CbPrevisao.Checked;
     if CbPrevisao.Checked = True then
       frmRelOrcamentosPB.QRLblPrevisao.caption := 'Previsão de Entrega: ' +
-        DateToStr(DtLancto.Date)
+        DateToStr(previsaoEntrega)
     else
       frmRelOrcamentosPB.QRLblPrevisao.Enabled := false;
   end;
@@ -7433,6 +7439,7 @@ begin
     if (vBloqueioPreVenda = True) or (vConferencia = True) then
       BloqueiaAlteracaoPreVenda(StrToInt(EdtLancto.Text));
     vOrcamento := prevenda.dsImpresso;
+    previsaoEntrega := prevenda.previsaoEntrega;
     if (vOrcamento <> 'O') then // (vSenha_Alteracao = 'X')and
     begin
       LimpaGrid;
@@ -7758,6 +7765,11 @@ begin
       UltimoLancamento;
     end;
   end;
+end;
+
+procedure TFrmPrincipalPreVenda.DtLanctoChange(Sender: TObject);
+begin
+  previsaoEntrega := DtLancto.Date;
 end;
 
 procedure TFrmPrincipalPreVenda.tiraLinhasVazias(Grid: TStringGrid);
@@ -8124,7 +8136,7 @@ begin
     if UpperCase(vEmpresa) = 'ODONTO' then
       Label15.Text := FormatFloat('0.00',
         PegaValorAtacado(ADOSPConsulta.FieldByName('código').AsInteger));
-    LblListados.caption := 'Listados--> ' + intToStr(RecordCount);
+    LblListados.caption := 'Listados: ' + intToStr(RecordCount);
   end;
 end;
 
@@ -8477,7 +8489,7 @@ begin
         StrToFloat(Copy(EdtConsulta.Text, 8, 2) + ',' +
         Copy(EdtConsulta.Text, 10, 3)));
   end;
-  LblListados.caption := 'Listados--> ' + intToStr(ADOSPConsulta.RecordCount);
+  LblListados.caption := 'Listados: ' + intToStr(ADOSPConsulta.RecordCount);
   EdtPreco.Text := FormatFloatQ(vCasasPreco, ADOSPConsulta.FieldByName('Valor').AsFloat);
   if EdtCFOP.Visible = True then
     EdtCFOP.Text := SugereCFOP;
@@ -9860,6 +9872,8 @@ end;
 
 procedure TFrmPrincipalPreVenda.Cancelar;
 begin
+  previsaoEntrega := StrToDate(vdata_banco);
+  CbPrevisao.Checked := True;
   idLiberacaoRestrincaoVenda := 0;
   cbxEntrega.Visible := False;
   possuiPermissaoVenderAbaixoDoCusto := False;
@@ -17216,13 +17230,13 @@ begin
         prevenda.conferida := false;
         // prevenda.numeroPrevenda := StrtoInt(EdtLancto.Text);
         prevenda.dataEmissao := DtLancto.Date;
-        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked, true);
+        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked, True);
         if listaLiberacoes <> nil then
         begin
           for liberacao in listaLiberacoes do
           begin
             TNEGLoja.SalvaLogEventos(liberacao._descricao, IntToStr(prevenda.numeroPrevenda),
-                  '', liberacao._valor , liberacao._operador, '16');
+                  '', liberacao._valor, liberacao._operador, '16');
           end;
         end;
         DModulo.Conexao.CommitTrans;

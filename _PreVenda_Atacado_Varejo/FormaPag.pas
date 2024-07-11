@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   NEGCliente, DOMPrevenda,
   Dialogs, StdCtrls, Buttons, ExtCtrls, Menus, Db, ADODB, Vcl.Grids,
-  System.Math, System.DateUtils, System.ImageList, Vcl.ImgList;
+  System.Math, System.DateUtils, System.ImageList, Vcl.ImgList, Vcl.ComCtrls;
 
 type
   TFrmFormaPag = class(TForm)
@@ -43,6 +43,8 @@ type
     ImageList1: TImageList;
     lblDifal: TLabel;
     edtDifal: TEdit;
+    ckbPrevEntrega: TCheckBox;
+    dtPrevEntrega: TDateTimePicker;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnConfirmarKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +69,8 @@ type
       Rect: TRect; State: TGridDrawState);
     procedure gridParcelasMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure dtPrevEntregaChange(Sender: TObject);
+    procedure ckbPrevEntregaClick(Sender: TObject);
   private
     { Private declarations }
     vSalvar: integer;
@@ -174,6 +178,13 @@ begin
       BtnConfirmar.Enabled := True;
       exit;
     end;
+    if ckbPrevEntrega.Checked and (dtPrevEntrega.Date < StrToDateDef(vdata_banco, Date)) then
+    begin
+      Application.MessageBox('Data de entrega menor que a data atual.', 'Atenção',
+        MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+      BtnConfirmar.Enabled := True;
+      exit;
+    end;
     if not ValidarCliente then
     begin
       BtnConfirmar.Enabled := True;
@@ -213,6 +224,10 @@ begin
       FrmPrincipalPreVenda.prevenda.isOrcamento := True
     else
       FrmPrincipalPreVenda.prevenda.isOrcamento := False;
+    if ckbPrevEntrega.Checked then
+      FrmPrincipalPreVenda.prevenda.previsaoEntrega := dtPrevEntrega.Date
+    else
+      FrmPrincipalPreVenda.prevenda.previsaoEntrega := FrmPrincipalPreVenda.DtLancto.Date;
     FrmPrincipalPreVenda.formaPagamentoImp := RadioGroup1.Items.Strings
       [RadioGroup1.ItemIndex];
     FrmPrincipalPreVenda.prevenda.codigoFormaPagamento := getCodigoFormaPagamento;
@@ -433,6 +448,11 @@ begin
   gridParcelas.Enabled := False;
 end;
 
+procedure TFrmFormaPag.dtPrevEntregaChange(Sender: TObject);
+begin
+  FrmPrincipalPreVenda.previsaoEntrega := dtPrevEntrega.Date;
+end;
+
 procedure TFrmFormaPag.habilitarFinanceiro;
 begin
   edtEspecie.Clear;
@@ -467,17 +487,21 @@ begin
     RadioGroup1.ItemIndex := 0;
     edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
     edtParcelas.Text := '1x';
-  end
-  else
+  end else
   begin
     desabilitarFinanceiro;
     alterarLarguraForm(370); // width normal = 686
     BtnConfirmar.Left := 94;
     BtnCancelar.Left := 183;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') then
+  ckbPrevEntrega.Checked := FrmPrincipalPreVenda.CbPrevisao.Checked;
+  dtPrevEntrega.Date := FrmPrincipalPreVenda.previsaoEntrega;
+  if ckbPrevEntrega.Checked or FrmPrincipalPreVenda.habilitarPrevisaoEntrega(FrmPrincipalPreVenda.dsCGC) then
   begin
     chkbxEnviarCopiaEmail.Visible := True;
+    ckbPrevEntrega.Checked := True;
+    ckbPrevEntrega.Enabled := True;
+    dtPrevEntrega.Enabled  := True;
   end;
   texto := FrmPrincipalPreVenda.ADOQryProcura.SQL.text;
   if FrmPrincipalPreVenda.RgOpcoes.ItemIndex = 1 then
@@ -490,19 +514,6 @@ begin
   end;
   if vObs <> '' then
     Memo1.text := vObs
-//  else if (UpperCase(vEmpresa) = 'SEMPRE') then
-//  begin // SOMENTE PARA SEMPRE MATERIAIS DE CONSTRUÇÃO E CAMARATUBA
-//    with DModulo.ADOQuery1 do
-//    begin
-//      SQL.text :=
-//        'Select dsMemo From Pessoa P with (nolock) Where cdPessoa = :CODIGO';
-//      Parameters.ParamByName('CODIGO').Value :=
-//        FrmPrincipalPreVenda.EdtCdCliente.text;
-//      open;
-//      Memo1.text := DModulo.ADOQuery1.FieldByName('dsMemo').AsString;
-//      DModulo.ADOQuery1.Close;
-//    end;
-//  end
   else
   begin
     with DModulo.ADOQuery1 do
@@ -515,7 +526,6 @@ begin
       DModulo.ADOQuery1.Close;
     end;
   end;
-  // montando a combo dos profissionais
   with AdoQryProfissional do
   begin
     SQL.text :=
@@ -643,6 +653,11 @@ begin
     EdtCdProfissional.Visible := False;
     EdtCdProfissional.Clear;
   end;
+end;
+
+procedure TFrmFormaPag.ckbPrevEntregaClick(Sender: TObject);
+begin
+  FrmPrincipalPreVenda.CbPrevisao.Checked := ckbPrevEntrega.Checked;
 end;
 
 procedure TFrmFormaPag.CBXProfissionalChange(Sender: TObject);

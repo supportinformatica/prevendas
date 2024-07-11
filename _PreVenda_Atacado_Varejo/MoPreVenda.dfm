@@ -1321,9 +1321,9 @@
     object LblListados: TLabel
       Left = 6
       Top = 74
-      Width = 69
+      Width = 50
       Height = 13
-      Caption = 'Listados--> '
+      Caption = 'Listados:'
       Color = clBtnFace
       Font.Charset = ANSI_CHARSET
       Font.Color = clNavy
@@ -1595,13 +1595,13 @@
       OnKeyPress = EdtPrecoKeyPress
     end
     object CbPrevisao: TCheckBox
-      Left = 406
+      Left = 388
       Top = 72
-      Width = 126
+      Width = 130
       Height = 17
-      Hint = 'Imprimir prazo de entrega?'
+      Hint = 'Imprimir previs'#227'o de entrega?'
       Anchors = [akTop, akRight]
-      Caption = 'Prazo de &entrega?'
+      Caption = 'Previs'#227'o de &entrega'
       Checked = True
       Color = clBtnFace
       Font.Charset = ANSI_CHARSET
@@ -1745,7 +1745,7 @@
       Visible = False
     end
     object chkbxOrcamentoExterno: TCheckBox
-      Left = 277
+      Left = 254
       Top = 72
       Width = 126
       Height = 17
@@ -1840,6 +1840,7 @@
     PopupMenu = PopupMenu1
     ShowHint = True
     TabOrder = 10
+    OnChange = DtLanctoChange
   end
   object BtnAprazo: TBitBtn
     Left = 806
