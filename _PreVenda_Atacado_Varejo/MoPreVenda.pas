@@ -450,6 +450,7 @@ type
     procedure DtLanctoChange(Sender: TObject);
 
   private
+
     versaoEXE : string;
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
@@ -463,7 +464,7 @@ type
     QuantidadeGridMaiorQueZero: Boolean;
     // indica se a quantidade setada diretamente na grid é maior quer zero
     listaProdutosAcrescimo : TList<Integer>;  // adiciona os produtos q tiveram acrescimo
-
+    function orgaoPublicoBatAuto : Boolean;
     procedure gerarEtiquetasProdutosSelecionados;
     function entregaSelecionadaGrid : Boolean;
     procedure adicionarLocalEntrega;
@@ -1008,7 +1009,7 @@ var
   // nao mostra valor com desconto na impressao da pre-venda
   vendereco: String[100]; // Pega o nome da empresa do Support.ini
   vOrcamento: String[01]; // indica se é uma prevenda ou orcamento
-  vConferencia: Boolean;
+//  vConferencia: Boolean;
   vMatrizFilial: String[50];
   duasVias40Colunas: String[1];
   // indica se limpa ou nao limpa a grid ao trocar de cliente
@@ -2009,7 +2010,6 @@ begin
     vPrintSetup := FieldByName('CAMPO_29').AsString;
     // S --> sobe o print setup na hora de imprimir a pre-venda p o usuario escolher a qtd de copias
     usarLoteValidade := FieldByName('habilitaLoteValidade').AsBoolean;
-    vConferencia := FieldByName('ConferenciaPrevenda').AsBoolean;
     vAtacarejo := FieldByName('boAtacarejo').AsBoolean;
     vIpFTP := FieldByName('IpFTP').AsString;
     vDsUsuarioFTP := FieldByName('DsUsuarioFTP').AsString;
@@ -5075,8 +5075,7 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end;
-  if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and ((dsCGC = '04217440000156') or
-     (dsCGC = '04217440000237') or (dsCGC = '33903814000195')) then // Bat Auto oculta os preços para esse tipo de cliente
+  if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
     FrmRelOrcamentos.QREPreco.Visible  := False;
     FrmRelOrcamentos.QRETotal.Visible  := False;
@@ -9778,6 +9777,15 @@ begin
   RgOpcoes.ItemIndex := 2;
 end;
 
+function TFrmPrincipalPreVenda.orgaoPublicoBatAuto: Boolean;
+begin
+  if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and ((dsCGC = '04217440000156') or
+     (dsCGC = '04217440000237') or (dsCGC = '33903814000195')) then
+    Result := True
+  else
+    Result := False;
+end;
+
 procedure TFrmPrincipalPreVenda.ConsultaPreVendas;
 var
   query: TADOQuery;
@@ -10084,7 +10092,7 @@ begin
       if (FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
         'Texto.txt'))) and FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
         'Print.bat'))) and
-        ((UpperCase(vEmpresa) = 'NACIONAL') or (UpperCase(vEmpresa) = 'CICLOMOTOS')
+        ((UpperCase(vEmpresa) = 'NACIONAL') or (UpperCase(vEmpresa) = 'CICLOMOTOS') or (UpperCase(vEmpresa) = 'BATAUTO')
         or (dsCGC = '03821965000133') or (dsCGC = '17111138000160')) // eletronica Campos
         and (RgOpcoes.ItemIndex <> 2) and (vOrcamento <> 'O')) then
       begin
@@ -10094,11 +10102,12 @@ begin
         Editor.Lines.Add('Vendedor:    ' + CbxNome.Text);
         Editor.Lines.Add('Data:        ' + DateToStr(Date) + '  ' +
           TimeToStr(Time));
-        Editor.Lines.Add('Valor:       ' + EdtSubTotal.Text);
+        if not orgaoPublicoBatAuto then
+          Editor.Lines.Add('Valor:       ' + EdtSubTotal.Text);
         if (StrToInt(prevenda.codigoFormaPagamento) in [3,6]) and
            (FrmPrincipalPreVenda.selecionarParcelasCartao) then
           Editor.Lines.Add(vformapag)
-        else if (UpperCase(vEmpresa) <> 'NACIONAL') then
+        else if (UpperCase(vEmpresa) <> 'NACIONAL') and (vformapag <> '') then
           Editor.Lines.Add(vformapag);
         if (vMemo <> nil) then
           for i := 0 to vMemo.Lines.Count - 1 do
@@ -10161,20 +10170,19 @@ begin
             WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
             Sleep(6000);
             if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print.bat'))) then
+              'Print.bat'))) then
               ShowMessage('Não foi encontrado o arquivo Print.bat');
           end;
         end;
       end;
-      if (UpperCase(vEmpresa) = 'CICLOMOTOS') then
-      // ciclomotos n imprime os ítens
+      if (UpperCase(vEmpresa) = 'CICLOMOTOS') then // ciclomotos n imprime os ítens
         exit;
       if (UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'LOCMAQ') then
       begin
         if MessageDlg('Imprimir na impressora do estoque?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
           impressoraSelecionada := True // imprime no estoque ( padrao )
         else
-          impressoraSelecionada := false; // imprime na outra impressora
+          impressoraSelecionada := False; // imprime na outra impressora
       end;
       numeroLancamento := StrToInt(EdtLancto.Text);
       isPrevendaOuOrcamento := (RgOpcoes.ItemIndex <> 3);
@@ -10184,13 +10192,16 @@ begin
         FrmPrincipalPreVenda.ImprimeOrcamento2(StrToInt(prevenda.codigoFormaPagamento))
       else
       begin
-        if (modeloImpressora = 'ELGINI9') then
+        if (UpperCase(vEmpresa) <> 'BATAUTO') then  // BATAUTO NÃO IMPRIME OS ITNES
         begin
-          Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora, parcelasCartao));
-        end else
-          Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, parcelasCartao));
+          if (modeloImpressora = 'ELGINI9') then
+          begin
+            Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
+              (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora, parcelasCartao));
+          end else
+            Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
+              (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, parcelasCartao));
+        end;
         try
           if (TNEGLoja.CortarPapel40ColunasPreVenda) and (modeloImpressora <> 'ELGINI9') then
             Editor.Lines.Add(CHR(27) + 'm');
@@ -10199,11 +10210,10 @@ begin
           Writeln(Arq, Editor.Text);
         Finally
           CloseFile(Arq);
-        end; // try
-        if ((UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'LOCMAQ'))
-          and (impressoraSelecionada) then
+        end;
+        if ((UpperCase(vEmpresa) = 'TREVO') or (UpperCase(vEmpresa) = 'LOCMAQ')) and (impressoraSelecionada) and not (UpperCase(vEmpresa) = 'BATAUTO') then
         begin
-          WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print1.bat')), sw_ShowNormal)
+          WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print1.bat')), sw_ShowNormal);
         end else
         begin
           if (modeloImpressora = 'ELGINI9') then
@@ -10271,14 +10281,13 @@ begin
         With AdoQryLocaliza do
         begin
           sql.Text :=
-            'Select P.nmPessoa,T.nmProduto,T.dsReferencia,T.cdFabricante,O.cdPessoa,O.nrOrcamento,' +
-          // monta a query para a impressao do orcamento
-            'I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,O.dsImpresso,O.dtEmissao,     '
-            + 'O.cdCliente,T.dsUnidade,T.dsPrateleira,T.dsProdutoNota                               '
-            + 'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),Produto T WITH (NOLOCK),       '
-            + 'IteOrcamento I WITH (NOLOCK) Where P.cdPessoa = O.cdPessoa and T.cdProduto = I.cdProduto '
-            + 'and I.dsSituacao not in (''C'',''T'') and O.nrOrcamento = I.nrOrcamento and O.nrOrcamento = :NRORCAMENTO '
-            + 'Order by T.dsPrateleira,T.nmProduto ';
+          'Select P.nmPessoa, T.nmProduto, T.dsReferencia, T.cdFabricante, O.cdPessoa,'+
+          'O.nrOrcamento, I.cdProduto, O.dtEmissao, I.NrQtd, I.vlPreco, O.nrDesconto, '+
+          'O.dsImpresso, O.dtEmissao, O.cdCliente, T.dsUnidade, T.dsPrateleira, T.dsProdutoNota '+
+          'From Orcamento O WITH (NOLOCK), Pessoa P WITH (NOLOCK), Produto T WITH (NOLOCK),     '+
+          'IteOrcamento I WITH (NOLOCK) Where P.cdPessoa = O.cdPessoa and T.cdProduto = I.cdProduto and '+
+          'I.dsSituacao not in (''C'',''T'') and O.nrOrcamento = I.nrOrcamento and O.nrOrcamento = :NRORCAMENTO '+
+          'Order by T.dsPrateleira, T.nmProduto';
           Parameters.ParamByName('NRORCAMENTO').Value := EdtLancto.Text;
           open;
         end;
@@ -10339,8 +10348,7 @@ begin
         begin
           WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
             'print4.bat')), sw_ShowNormal)
-        end
-        else
+        end else
           WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
             'print3.bat')), sw_ShowNormal);
       end;
@@ -17298,9 +17306,9 @@ begin
               begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                  if (UpperCase(vEmpresa) = 'BATAUTO') or (MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                     + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
-                    [mbYes, mbNo], 0) = mrYes then
+                    [mbYes, mbNo], 0) = mrYes) then
                     FrmPrincipalPreVenda.ImprimeComprovante
                       (StrToInt(prevenda.codigoFormaPagamento));
                   MessageDlg(Msg, mtInformation, [mbOK], 0);
@@ -17318,8 +17326,7 @@ begin
                       ('Deseja imprimir a Pré-Venda \ Orçamento de nº ' +
                       FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
-                      FrmPrincipalPreVenda.ImprimeOrcamento
-                        (StrToInt(prevenda.codigoFormaPagamento));
+                      FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                   end;
                 end;
               end else
@@ -17353,25 +17360,29 @@ begin
                 end;
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                  if (UpperCase(vEmpresa) = 'BATAUTO') then
+                  begin
+                    if (RgOpcoes.ItemIndex = 2) or orgaoPublicoBatAuto then  // batauto só imprime orçamento ou orgão publico no formulário contínuo
+                      FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento))
+                  end else if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                 end;
-                // if FrmPrincipalPreVenda.vImpressao_80 = 'S' then begin
-                // if MessageDlg('Deseja imprimir a Pré Venda \ Orçamento de nº '+ FrmPrincipalPreVenda.EdtLancto.Text + ' em 80 colunas ?',
-                // mtConfirmation,[mbYes, mbNo],0) = mrYes then
-                // FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
-                // end;
               end else
               begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') or (UpperCase(vEmpresa) = 'PROAUTO') then
                   FrmPrincipalPreVenda.ImprimeComprovante(StrToInt(prevenda.codigoFormaPagamento));
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
-                  FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
+                begin
+                  if (UpperCase(vEmpresa) = 'BATAUTO') then
+                  begin
+                    if (RgOpcoes.ItemIndex = 2) or orgaoPublicoBatAuto then  // batauto só imprime orçamento ou orgão publico no formulário contínuo
+                      FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento))
+                  end else
+                    FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
+                end;
               end;
-              // if RgOpcoes.ItemIndex <> 2 then // diferente de orcamento
-              // MessageDlg('Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 + 'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,[mbOk],0);
             end;
           except
             //
