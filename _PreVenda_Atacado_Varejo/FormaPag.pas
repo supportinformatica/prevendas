@@ -942,17 +942,15 @@ begin
     FrmPrincipalPreVenda.EdtSubTotal.text);
   limiteDeCredito := TNegcliente.getLimiteCredito(codigoCliente);
   { Se tiver restrição financeira e não for a vista, pede senha }
-  if TestaFinanceiroNaConfirmacao and ((clienteComRestricaoFinanceira) and
-//    (FrmPrincipalPreVenda.auxiLiberacao = False) and
+  if (TestaFinanceiroNaConfirmacao or (LIMITE in restricaoFinanceira)) and ((clienteComRestricaoFinanceira) and
     (RadioGroup1.ItemIndex in [1, 5, 11]) and
     (FrmPrincipalPreVenda.vTeste_do_Financeiro = '1')
-    // testar na prevenda = 1, testar na baixa = 0
     or ((limiteDeCredito = 0) and (RadioGroup1.ItemIndex in [1, 5, 11]) and
     (FrmPrincipalPreVenda.auxiLiberacao = False)) or
-    ((MoPreVenda.TestaFinanceiroNaConfirmacao) and (RadioGroup1.ItemIndex in [1,
+    ((TestaFinanceiroNaConfirmacao or (LIMITE in restricaoFinanceira)) and (RadioGroup1.ItemIndex in [1,
     5, 11]) and (clienteComRestricaoFinanceira) and
     (FrmPrincipalPreVenda.auxiLiberacao = False))) and
-    (FrmPrincipalPreVenda.RgOpcoes.ItemIndex <> 2) // se não for orçamento
+    (FrmPrincipalPreVenda.RgOpcoes.ItemIndex <> 2) // testar na prevenda = 1, testar na baixa = 0 | se não for orçamento
   then
   begin
     vFlag := '9';

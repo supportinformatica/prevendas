@@ -8911,7 +8911,6 @@ begin
   restricao := [];
   if (vOrcamento = 'N') or (RgOpcoes.ItemIndex = 0) then
   begin
-    // if TestaRestricao then exit;
     // Vou testar a situação financeira do cliente
     if (trim(UpperCase(copy_campo(CbxCliente.Text, '|', 1))) <>
       'VENDA A CONSUMIDOR') and (vTeste_do_Financeiro = '1') then
@@ -9004,8 +9003,7 @@ begin
           Close;
         end;
       end;
-    end
-    else
+    end else
     begin
       // vauxi := 'N'; // venda a consumidor
       resultado := false;
@@ -9276,8 +9274,8 @@ begin
         EdtConsulta.Setfocus;
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       end;
-    end else if (((ATRASO in restricaoFinanceira) or (CHEQUE in restricaoFinanceira))
-                and (auxiLiberacao = False)) then
+    end else if ((ATRASO in restricaoFinanceira) or (CHEQUE in restricaoFinanceira))
+              and (auxiLiberacao = False) then
     begin
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       vFlag := '7';
