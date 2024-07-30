@@ -256,7 +256,6 @@ type
     LblReserva: TEdit;
     Label15: TEdit;
     Conferncia1: TMenuItem;
-    Label13: TEdit;
     edtDisponivel: TEdit;
     Shape7: TShape;
     Label17: TLabel;
@@ -302,6 +301,9 @@ type
     miProdutosEtiqueta: TMenuItem;
     lblLinkSite: TLabel;
     TimerRealizarPesquisa: TTimer;
+    Label13: TEdit;
+    ADODeposito2: TADOQuery;
+    dsDeposito2: TDataSource;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -475,6 +477,7 @@ type
     Procedure RemontaSgDados(i: Integer);
     Procedure ImprimirRequisicao(vCliente: String; vRequisicao: Integer);
     Procedure Consulta_Deposito;
+    Procedure Consulta_Deposito2;
     Procedure ImprimeComprovanteTransferencia;
     procedure SalvaTransferencia; // somente p proauto
     Procedure AtualizaCombProduto;
@@ -486,6 +489,7 @@ type
       deletarSomenteItens: Boolean = false); overload;
     procedure CriarIniSQL;
     procedure CriarIniSQLDeposito;
+    procedure CriarIniSQLDeposito2;
     Procedure ConsultaReserva;
     procedure ConsultaPreVendas;
     Function PegaValorAtacado(cdProduto: Integer): Real;
@@ -1931,11 +1935,6 @@ begin
   end
   else
     EdtTotal.Text := '0,00';
-  // ********* esconde a barra
-  { StrPCopy(@wndClass[0],'Shell_TrayWnd');
-    wndHandle := FindWindow(@wndClass[0], nil);
-    ShowWindow(wndHandle, SW_RESTORE); }
-  // *********
   intemIndexRgOpcoesOLD := RgOpcoes.ItemIndex;
   EdtTotal.Refresh;
   CriarIniSQL;
@@ -2053,13 +2052,6 @@ begin
   if UpperCase(vEmpresa) = 'MEGA' then
   // Mega móveis pediu para não permitir desmarcar o checkBox1. Protocolo 33228
     CheckBox1.Visible := false;
-  if (UpperCase(vEmpresa) = 'LIBEL') then
-  begin
-    liberaDigitacaoLancamento := True;
-    EdtLancto.Enabled := True;
-    EdtLancto.ReadOnly := false;
-    EdtLancto.Color := clWindow;
-  end;
   if (SoNumeros(dsCGC) = '03643774000129') then
   // esse cliente Torrone quer q a data fique aberta
     DtLancto.Enabled := True;
@@ -2081,8 +2073,7 @@ begin
   if UpperCase(vEmpresa) = 'PROAUTO' then
   begin
     RgOpcoes.Items.Add('Ctrl+T Transf');
-  end
-  else
+  end else
   begin
     ransferncia1.Visible := false;
     ConsultarCrdito1.Visible := false;
@@ -2092,23 +2083,23 @@ begin
     chkbxBaixarEstoque.Visible := True;
     chkbxOrcamentoExterno.Visible := True;
   end;
-  if UpperCase(vEmpresa) = 'ODONTO' then
-  begin
-    Label14.caption := 'V.Desconto';
-    Label14.Visible := True;
-    Label15.Visible := True;
-    Shape2.Visible := True;
-    Shape3.Visible := True;
-    Label16.Visible := false;
-    Shape5.Visible := false;
-    Shape6.Visible := false;
-    LblReserva.Visible := false;
-    Label12.Visible := false;
-    Label13.Visible := false;
-    Label11.Visible := false;
-    Shape1.Visible := false;
-    Shape4.Visible := false;
-  end;
+//  if UpperCase(vEmpresa) = 'ODONTO' then
+//  begin
+//    Label14.caption := 'V.Desconto';
+//    Label14.Visible := True;
+//    Label15.Visible := True;
+//    Shape2.Visible := True;
+//    Shape3.Visible := True;
+//    Label16.Visible := false;
+//    Shape5.Visible := false;
+//    Shape6.Visible := false;
+//    LblReserva.Visible := false;
+//    Label12.Visible := false;
+//    Label13.Visible := false;
+//    Label11.Visible := false;
+//    Shape1.Visible := false;
+//    Shape4.Visible := false;
+//  end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') then
   begin
@@ -2124,6 +2115,19 @@ begin
     Label15.Visible := True;
     Shape2.Visible := True;
     Shape3.Visible := True;
+  end;
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+  begin
+    CriarIniSQLDeposito;
+    CriarIniSQLDeposito2;
+    Label12.caption := 'DEPÓSITO';
+    Label14.caption := 'DISPONÍVEL';
+    Label16.caption := 'OFICINA';
+    Label11.Visible := True;
+    Label13.Font := Label11.Font; // iguala o tamano das fontes
+    Shape1.Visible := True;
+    Shape4.Visible := True;
+    Label13.Visible := True;
   end;
   if (UpperCase(vEmpresa) = 'NACIONAL') OR (UpperCase(vEmpresa) = 'RURALPET') then
   begin
@@ -2154,21 +2158,21 @@ begin
       'Quantidades do item selecionado que estão em Ordens de Serviço';
     Shape2.Visible := True;
     Label16.caption := 'RESERVA';
-    if (UpperCase(vEmpresa) = 'PTINTAS_') then
-    begin
-      Shape1.height := Shape3.height;
-      Label11.Top := Label13.Top;
-      Label12.caption := 'DISPONÍVEL';
-      Label13.Visible := false;
-      Label11.Hint := 'Quantidade disponível';
-      Label12.Hint := '';
-    end else
-    begin
+//    if (UpperCase(vEmpresa) = 'PTINTAS_') then
+//    begin
+//      Shape1.height := Shape3.height;
+//      Label11.Top := Label13.Top;
+//      Label12.caption := 'DISPONÍVEL';
+//      Label13.Visible := false;
+//      Label11.Hint := 'Quantidade disponível';
+//      Label12.Hint := '';
+//    end else
+//    begin
       edtDisponivel.Visible := True;
       Shape7.Visible := True;
       Label17.Visible := True;
       Shape8.Visible := True;
-    end;
+//    end;
   end;
   Label11.Hint := 'Informações do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
@@ -2204,14 +2208,12 @@ begin
   then // LIBERA P ALTERAR A QUANTIDADE NO PRODUTO DIRETO NA GRID
     SgDados.Options := [goFixedVertLine, goFixedHorzLine, goRangeSelect,
       goEditing];
-  if (UpperCase(vEmpresa) = 'BIJOUARTS') or
-    (UpperCase(vEmpresa) = 'BIJOUARTSOS214')
-    or (UpperCase(vEmpresa) = 'BIJOUARTSZEBRA') or
-    (UpperCase(vEmpresa) = 'PIPELINE') or (UpperCase(vEmpresa) = 'LITORAL655')
+  if (UpperCase(vEmpresa) = 'BIJOUARTS') or (UpperCase(vEmpresa) = 'BIJOUARTSOS214')
+    or (UpperCase(vEmpresa) = 'BIJOUARTSZEBRA') or (UpperCase(vEmpresa) = 'PIPELINE') or (UpperCase(vEmpresa) = 'LITORAL655')
   then
   begin
     FrmPrincipalPreVenda.caption :=
-      'Impressão de etiquetas             <<<  Support Informática  79  3214-5161  >>>';
+      'Impressão de etiquetas       Support Informática  79 3214-5161';
     Label29.caption := 'Operador';
     Label2.Visible := false;
     Label3.Visible := false;
@@ -2229,7 +2231,8 @@ begin
      (dsCGC = '21597412000120') or (dsCGC = '36056673000100') or
      (dsCGC = '15066244000144') or (dsCGC = '51276698000103') or
      (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
-     (dsCGC = '08219676000182') or (dsCGC = '22517010000131')
+     (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
+     (dsCGC = '55061884000186')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -6854,13 +6857,13 @@ begin
         montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
       if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
         or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
-        OR (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET')
+        or (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO')
       then
         Consulta_Deposito
       else if Label12.Visible = True then
         Consultapedidodecompra1.Click;
-      if (UpperCase(vEmpresa) = 'PTINTAS') then
-        Consultapedidodecompra1.Click;
+      if (UpperCase(vEmpresa) = 'BATAUTO') then
+        Consulta_Deposito2;
     end;
   end;
 end;
@@ -6926,12 +6929,12 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-    Consultapedidodecompra1.Click;
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Consulta_Deposito2;
 end;
 
 procedure TFrmPrincipalPreVenda.BtnMdProximoClick(Sender: TObject);
@@ -6954,12 +6957,12 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-    Consultapedidodecompra1.Click;
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Consulta_Deposito2;
 end;
 
 procedure TFrmPrincipalPreVenda.BtnMdAnteriorClick(Sender: TObject);
@@ -6982,12 +6985,12 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-    Consultapedidodecompra1.Click;
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Consulta_Deposito2;
 end;
 
 procedure TFrmPrincipalPreVenda.BtnMdUltimoClick(Sender: TObject);
@@ -7010,9 +7013,10 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito;
-  // if (UpperCase(vEmpresa) = 'PTINTAS') then
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Consulta_Deposito2;
   Consultapedidodecompra1.Click;
 end;
 
@@ -7035,12 +7039,12 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'PTINTAS') or (UpperCase(vEmpresa) = 'RURALPET') then
+    (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(self);
-  if (UpperCase(vEmpresa) = 'PTINTAS') then
-    Consultapedidodecompra1.Click;
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Consulta_Deposito2;
   EdtConsulta.SelectAll;
   EdtConsulta.Setfocus;
 end;
@@ -9423,12 +9427,12 @@ begin
       montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
       or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
-      or (UpperCase(vEmpresa) = 'RURALPET') then
+      or (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') then
       Consulta_Deposito
     else if Label12.Visible = True then
       Consultapedidodecompra1.Click;
-    if (UpperCase(vEmpresa) = 'PTINTAS') then
-      Consultapedidodecompra1.Click;
+    if (UpperCase(vEmpresa) = 'BATAUTO') then
+      Consulta_Deposito2;
   end;
 end;
 
@@ -9437,14 +9441,6 @@ begin
   // if (UpperCase(vEmpresa) = 'LAMARAO') or (UpperCase(vEmpresa) = 'AUTOCAR')or(UpperCase(vEmpresa) = 'TOPLINE') or (UpperCase(vEmpresa) = 'TREVO')  then  // nao fazer p autocar
   if (UpperCase(vEmpresa) = 'PTINTAS_') and (TNEGLoja.getExibirQuantidadesReservadasPreVenda) then
     exit;
-  { With ADOSP_PEDIDO_GARANTIA do begin
-    Close;
-    Parameters.ParamByName('@OPCAO').Value  := 'P';
-    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('Código').AsInteger;
-    Open;
-    Label13.Caption := FieldByName('dtEmissao').AsString;
-    Label11.Text := FormatFloat('#,##0.00',ADOSP_PEDIDO_GARANTIA.FieldByName('NrQtd').AsFloat);
-    end; }
   with AdoQrySimilar do
   begin
     sql.Text :=
@@ -9473,13 +9469,6 @@ end;
 
 procedure TFrmPrincipalPreVenda.ConsultaGarantia;
 begin
-  { With ADOSP_PEDIDO_GARANTIA do begin
-    Close;
-    Parameters.ParamByName('@OPCAO').Value  := 'G';
-    Parameters.ParamByName('@CODIGO').Value := ADOSPConsulta.FieldByName('Código').AsInteger;
-    Open;
-    label15.Text := FormatFloat('#,##0.00',ADOSP_PEDIDO_GARANTIA.FieldByName('NQtd').AsFloat);
-    end; }
   with ADOQuery1 do
   begin
     sql.Text :=
@@ -9498,7 +9487,6 @@ begin
     Label15.Text := FormatFloat('#,##0.00',
       ADOQuery1.FieldByName('Qtd').AsFloat);
   end;
-  { TODO -oclaudioo -c : corrigir o o lançaProdutos, o segundo lote lançado automaticamente está ficando com o código do produto errado 08/05/2013 11:52:49 }
 end;
 
 procedure TFrmPrincipalPreVenda.preencheArrayLinhasDestacadas;
@@ -17637,11 +17625,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.Consulta_Deposito;
 begin
-  if (UpperCase(vEmpresa) <> 'PBFARMA') and (UpperCase(vEmpresa) <> 'PTINTAS')
-  then
-    Label11.Text := '0,00'
-  else
-    LblReserva.Text := '0,00';
+  Label11.Text := '0,00';
   if ADOSPConsulta.RecordCount > 0 then
   begin
     With ADOQryUltimoCodigo do
@@ -17653,26 +17637,16 @@ begin
       if (UpperCase(vEmpresa) = 'PROAUTO') then
       begin
         sql.Add('dsReferencia = :REFERENCIA ');
-        Parameters.ParamByName('REFERENCIA').Value :=
-          ADOSPConsulta.FieldByName('REFERÊNCIA').AsString;
-      end
-      else
+        Parameters.ParamByName('REFERENCIA').Value := ADOSPConsulta.FieldByName('REFERÊNCIA').AsString;
+      end else
       begin
         sql.Add('cdProduto = :CDPRODUTO ');
-        Parameters.ParamByName('CDPRODUTO').Value :=
-          ADOSPConsulta.FieldByName('Código').AsString;
+        Parameters.ParamByName('CDPRODUTO').Value := ADOSPConsulta.FieldByName('Código').AsString;
       end;
       open;
     end;
-//    if (UpperCase(vEmpresa) <> 'PBFARMA') and (UpperCase(vEmpresa) <> 'PTINTAS')
-//    then
-//      Label11.Text := FormatFloat('0.00',
-//        ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat)
-//    else
-      Label11.Text := FormatFloat('0.00',
-        ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat); // PBFARMA
-  end
-  else
+      Label11.Text := FormatFloat('0.00', ADOQryUltimoCodigo.FieldByName('nrqtdreal').AsFloat);
+  end else
     Label11.Text := '0';
   if (UpperCase(vEmpresa) = 'NACIONAL') then
   begin
@@ -17683,14 +17657,30 @@ begin
   Label15.Refresh;
 end;
 
+procedure TFrmPrincipalPreVenda.Consulta_Deposito2;
+begin
+  Label13.Text := '0,00';
+  if ADOSPConsulta.RecordCount > 0 then
+  begin
+    With ADODeposito2 do
+    begin // Pega da conexão depósito
+      sql.Text := 'Select nrqtdReal From Produto WITH (NOLOCK) WHERE cdProduto = :CDPRODUTO ';
+      Parameters.ParamByName('CDPRODUTO').Value := ADOSPConsulta.FieldByName('Código').AsString;
+      open;
+    end;
+    Label13.Text := FormatFloat('0.00', ADODeposito2.FieldByName('nrqtdreal').AsFloat);
+  end else
+    Label13.Text := '0';
+  Label13.Refresh;
+end;
+
 procedure TFrmPrincipalPreVenda.CriarIniSQLDeposito;
 var
-  Arquivo: TIniFile;
-  Path: String;
-  ConstBd: String;
+  Arquivo : TIniFile;
+  Path : String;
+  ConstBd : String;
 begin
-  { Procedimento para criar ou carregar configurações do BD }
-  try { try finnaly }
+  try
     try
       Path := ExtractFilePath(Application.ExeName);
       ConstBd := '';
@@ -17711,7 +17701,7 @@ begin
         ConstBd := Arquivo.ReadString('BD', 'Path', '');
       end;
     except
-      ShowMessage('Erro ao carregar o arquivo de Inicialização. ' + #13 +
+      ShowMessage('Erro ao carregar o arquivo de Inicialização do depósito. ' + #13 +
         'Entre em contato com o Suporte do Sistema!');
     end;
   finally
@@ -17726,9 +17716,61 @@ begin
       Connected := True;
     end;
   except
-    ShowMessage('Não foi possível conectar com o banco de dados.' + #13 +
+    ShowMessage('Não foi possível conectar com o banco de dados do depósito.' + #13 +
       '   Entre em contato com o suporte do sistema');
-    Application.Terminate; // TESTE
+    Application.Terminate;
+    FrmPrincipalPreVenda.Close;
+    FrmPrincipalPreVenda := nil;
+    FrmPrincipalPreVenda.Free;
+    exit;
+  end;
+end;
+
+procedure TFrmPrincipalPreVenda.CriarIniSQLDeposito2;
+var
+  Arquivo : TIniFile;
+  Path : String;
+  ConstBd : String;
+begin
+  try
+    try
+      Path := ExtractFilePath(Application.ExeName);
+      ConstBd := '';
+      if not FileExists(Path + 'ConfSQLDep2.ini') then
+      begin
+        ShowMessage
+          ('Configure a Conexão com o Banco SQL Server para o Depósito 2');
+        Arquivo := TIniFile.Create(Path + 'ConfSQLDep2.ini');
+        DModulo.ADODeposito2.ConnectionString := PromptDataSource(self.handle,
+          'Provider=SQLOLEDB.1;Password=;' + 'Persist Security Info=True;' +
+          'User ID=;Initial Catalog=;Data Source=');
+        ConstBd := Cryptografia('C', DModulo.ADODeposito2.ConnectionString);
+        Arquivo.WriteString('BD', 'Path', ConstBd);
+      end
+      else
+      begin
+        Arquivo := TIniFile.Create(Path + 'ConfSQLDep2.ini');
+        ConstBd := Arquivo.ReadString('BD', 'Path', '');
+      end;
+    except
+      ShowMessage('Erro ao carregar o arquivo de Inicialização depósito2. ' + #13 +
+        'Entre em contato com o Suporte do Sistema!');
+    end;
+  finally
+    if Arquivo <> nil then
+      Arquivo.Free;
+  end;
+  try
+    with DModulo.ADODeposito2 do
+    begin
+      Connected := false;
+      ConnectionString := Cryptografia('D', ConstBd);
+      Connected := True;
+    end;
+  except
+    ShowMessage('Não foi possível conectar com o banco de dados do depósito 2.' + #13 +
+      '   Entre em contato com o suporte do sistema');
+    Application.Terminate;
     FrmPrincipalPreVenda.Close;
     FrmPrincipalPreVenda := nil;
     FrmPrincipalPreVenda.Free;

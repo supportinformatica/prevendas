@@ -36,7 +36,9 @@
     Height = 40
     Anchors = [akTop, akRight]
     Brush.Color = 14540253
+    ParentShowHint = False
     Pen.Style = psClear
+    ShowHint = True
     ExplicitLeft = 713
   end
   object Shape6: TShape
@@ -46,8 +48,10 @@
     Height = 18
     Anchors = [akTop, akRight]
     Brush.Color = 10066329
+    ParentShowHint = False
     Pen.Style = psClear
     Shape = stRoundRect
+    ShowHint = True
     ExplicitLeft = 728
   end
   object Shape5: TShape
@@ -57,7 +61,9 @@
     Height = 24
     Anchors = [akTop, akRight]
     Brush.Color = 14540253
+    ParentShowHint = False
     Pen.Style = psClear
+    ShowHint = True
     ExplicitLeft = 728
   end
   object Shape4: TShape
@@ -67,8 +73,10 @@
     Height = 28
     Anchors = [akTop, akRight]
     Brush.Color = 10066329
+    ParentShowHint = False
     Pen.Style = psClear
     Shape = stRoundRect
+    ShowHint = True
     ExplicitLeft = 713
   end
   object Shape2: TShape
@@ -78,8 +86,10 @@
     Height = 18
     Anchors = [akTop, akRight]
     Brush.Color = 10066329
+    ParentShowHint = False
     Pen.Style = psClear
     Shape = stRoundRect
+    ShowHint = True
     ExplicitLeft = 728
   end
   object Label28: TLabel
@@ -278,7 +288,7 @@
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
-    ShowHint = False
+    ShowHint = True
     Transparent = True
     WordWrap = True
     ExplicitLeft = 713
@@ -300,7 +310,7 @@
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
-    ShowHint = False
+    ShowHint = True
     Transparent = True
     ExplicitLeft = 713
   end
@@ -397,7 +407,9 @@
     Height = 24
     Anchors = [akTop, akRight]
     Brush.Color = 14540253
+    ParentShowHint = False
     Pen.Style = psClear
+    ShowHint = True
     ExplicitLeft = 728
   end
   object Label14: TLabel
@@ -416,9 +428,8 @@
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
-    ShowHint = False
+    ShowHint = True
     Transparent = True
-    ExplicitLeft = 713
   end
   object Label8: TLabel
     Left = 170
@@ -441,7 +452,9 @@
     Height = 24
     Anchors = [akTop, akRight]
     Brush.Color = 14540253
+    ParentShowHint = False
     Pen.Style = psClear
+    ShowHint = True
     Visible = False
     ExplicitLeft = 713
   end
@@ -452,8 +465,10 @@
     Height = 18
     Anchors = [akTop, akRight]
     Brush.Color = 10066329
+    ParentShowHint = False
     Pen.Style = psClear
     Shape = stRoundRect
+    ShowHint = True
     Visible = False
     ExplicitLeft = 713
   end
@@ -474,7 +489,7 @@
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
-    ShowHint = False
+    ShowHint = True
     Transparent = True
     Visible = False
     ExplicitLeft = 713
@@ -851,7 +866,7 @@
     Height = 416
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    TabOrder = 42
+    TabOrder = 41
     object Splitter1: TSplitter
       Left = 0
       Top = 229
@@ -2601,7 +2616,9 @@
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 35
     Text = '0,00'
   end
@@ -2621,7 +2638,9 @@
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 36
     Text = '0,00'
   end
@@ -2641,30 +2660,11 @@
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ReadOnly = True
-    TabOrder = 37
-    Text = '0,00'
-  end
-  object Label13: TEdit
-    Left = 811
-    Top = 291
-    Width = 69
-    Height = 21
-    TabStop = False
-    Alignment = taRightJustify
-    Anchors = [akTop, akRight]
-    BorderStyle = bsNone
-    Color = 14540253
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
     ParentShowHint = False
     ReadOnly = True
-    ShowHint = False
-    TabOrder = 38
+    ShowHint = True
+    TabOrder = 37
+    Text = '0,00'
   end
   object edtDisponivel: TEdit
     Left = 808
@@ -2682,8 +2682,10 @@
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
     ReadOnly = True
-    TabOrder = 39
+    ShowHint = True
+    TabOrder = 38
     Text = '0,00'
     Visible = False
   end
@@ -2715,7 +2717,7 @@
     PopupMenu = PopupMenu1
     ShowHint = True
     Spacing = 1
-    TabOrder = 40
+    TabOrder = 39
     OnClick = SBF5Click
     OnKeyPress = BtnAprazoKeyPress
   end
@@ -2734,7 +2736,7 @@
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 41
+    TabOrder = 40
     Text = '0,00'
     Visible = False
   end
@@ -2755,10 +2757,31 @@
     TabOrder = 4
     OnExit = edtReferenciaExit
   end
+  object Label13: TEdit
+    Left = 811
+    Top = 291
+    Width = 69
+    Height = 21
+    TabStop = False
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight]
+    BorderStyle = bsNone
+    Color = 14540253
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ReadOnly = True
+    ShowHint = True
+    TabOrder = 42
+  end
   object DsConsulta: TDataSource
     DataSet = ADOSPConsulta
-    Left = 294
-    Top = 268
+    Left = 518
+    Top = 220
   end
   object PopupMenu1: TPopupMenu
     Left = 25
@@ -3459,13 +3482,13 @@
   object ADOQryUltimoCodigo: TADOQuery
     Connection = DModulo.ADODeposito
     Parameters = <>
-    Left = 160
-    Top = 310
+    Left = 584
+    Top = 262
   end
   object DsDeposito: TDataSource
     DataSet = ADOQryUltimoCodigo
-    Left = 660
-    Top = 266
+    Left = 628
+    Top = 234
   end
   object ADOVarejo: TADOQuery
     Connection = DModulo.Conexao
@@ -3483,8 +3506,8 @@
   object ADOQryProcura1: TADOQuery
     Connection = DModulo.Conexao
     Parameters = <>
-    Left = 568
-    Top = 310
+    Left = 560
+    Top = 366
   end
   object adoEntrada: TADOQuery
     Connection = DModulo.Conexao
@@ -3561,5 +3584,16 @@
     OnTimer = TimerRealizarPesquisaTimer
     Left = 127
     Top = 471
+  end
+  object ADODeposito2: TADOQuery
+    Connection = DModulo.AdoDeposito2
+    Parameters = <>
+    Left = 264
+    Top = 366
+  end
+  object dsDeposito2: TDataSource
+    DataSet = ADODeposito2
+    Left = 700
+    Top = 242
   end
 end

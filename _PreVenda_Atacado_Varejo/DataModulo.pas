@@ -23,6 +23,7 @@ type
     adoThread: TADOQuery;
     tmrAtualizacao: TTimer;
     ConexaoWEB: TADOConnection;
+    AdoDeposito2: TADOConnection;
     procedure tmrAtualizacaoTimer(Sender: TObject);
   private
     { Private declarations }
