@@ -10018,7 +10018,8 @@ begin
   begin
     ImprimeOrcamento(valor);
     exit;
-  end;
+  end else if orgaoPublicoBatAuto then // orgão publico bat auto tem que imprimir obrigatoriamente também o de 80 colunas
+    ImprimeOrcamento(valor);
   if ((vImpressao_40 = 'S') and (vOrcamento <> 'O')) or
     ((vImpressao_40 = 'S') and (UpperCase(vEmpresa) <> 'TREVO')) then
   begin // antes if (vOrcamento <> 'O') and (vImpressao_40 = 'S') then begin
