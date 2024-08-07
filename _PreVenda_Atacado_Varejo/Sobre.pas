@@ -9,7 +9,6 @@ type
   TfrmSobre = class(TForm)
     Image1: TImage;
     Label5: TLabel;
-    Label7: TLabel;
     Label10: TLabel;
     Label12: TLabel;
     Label15: TLabel;

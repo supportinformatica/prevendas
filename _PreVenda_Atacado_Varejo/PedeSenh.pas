@@ -35,6 +35,9 @@ type
     LblAlterar: TLabel;
     LblInserirChave: TLabel;
     Definirimpressora40colunas1: TMenuItem;
+    Image2: TImage;
+    Label9: TLabel;
+    Shape1: TShape;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
