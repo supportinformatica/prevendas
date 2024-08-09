@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, Buttons, Db,  Grids, DBGrids, ADODB, IniFiles, jpeg,
-  Menus, DateUtils, Thread_Conexao2, Vcl.Imaging.pngimage;
+  Menus, DateUtils, Thread_Conexao2, Vcl.Imaging.pngimage, ShellAPI;
 
 type
   TFrmPedeSenha = class(TForm)
@@ -22,12 +22,10 @@ type
     editUsuario: TComboBox;
     LblData: TLabel;
     Image1: TImage;
-    Label5: TLabel;
     Label10: TLabel;
     Label12: TLabel;
     Label4: TLabel;
     Label15: TLabel;
-    Label16: TLabel;
     Label17: TLabel;
     LblNomeCliente: TLabel;
     Label6: TLabel;
@@ -51,6 +49,7 @@ type
     procedure LblInserirChaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Definirimpressora40colunas1Click(Sender: TObject);
+    procedure Label17Click(Sender: TObject);
   private
     isLoginInicial : Boolean;
     Procedure Confirma;
@@ -116,6 +115,11 @@ begin
   end;
   Result := (versao);
   FreeMem(VerInfo, VerInfoSize);
+end;
+
+procedure TFrmPedeSenha.Label17Click(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, nil, PChar('https://supportinformatica.net/'), nil, nil, sw_hide);
 end;
 
 procedure TFrmPedeSenha.LblAlterarClick(Sender: TObject);
