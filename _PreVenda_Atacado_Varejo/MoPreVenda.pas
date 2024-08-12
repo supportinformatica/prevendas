@@ -4253,7 +4253,7 @@ begin
     ADOQryCliente.open;
     if ADOQryCliente.Locate('cdPessoa', copy_campo(CbxCliente.Text, '|', 2), []) then
     begin
-      Label10.Caption  := 'Observação';
+      Label10.Caption   := 'Observação';
       EdtCdCliente.Text := ADOQryCliente.FieldByName('cdPessoa').AsString;
       cdTabelaPreco    := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
       EdtEndereco.Text := ADOQryCliente.FieldByName('nmLogradouro').AsString;
@@ -7467,6 +7467,7 @@ begin
     CbxCliente.ItemIndex := CbxCliente.Items.IndexOf
       (ADOQryCliente.FieldByName('nmPessoa').AsString + ' | ' +
       ADOQryCliente.FieldByName('cdPessoa').AsString);
+    cdTabelaPreco := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
     PegaClienteAtacadoVarejo;
     vUF_Cliente := ADOQryCliente.FieldByName('dsUF').AsString;
     // pega o número de itens
@@ -7582,7 +7583,7 @@ begin
 //  CarregarItensGrid(prevenda, true);
     CbxCliente.Enabled := True;
 //    CbxCliente.Setfocus;
-    edtconsulta.setfocus;
+    edtconsulta.setFocus;
     if prevenda.isOrcamento then
     begin
       if (transformarOrcamentoPrevenda = False) or (FrmCancelamentoVenda.Possui_Permissao('831','V',cbxUsuario.Text,EdtUsuario.Text)) then
