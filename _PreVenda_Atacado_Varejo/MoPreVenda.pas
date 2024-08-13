@@ -6828,7 +6828,7 @@ begin
   // EdtConsulta.Clear;
 //  EdtConsultaChange(self);
   textoConsulta_temp := EdtConsulta.Text;
-  EdtConsulta.Text := '';
+  EdtConsulta.Clear;
   if (RadioGroup1.ItemIndex <> 4) then
     AtualizaQryConsulta;
   if RadioGroup1.ItemIndex = 7 then
@@ -7580,13 +7580,10 @@ begin
         prevenda.itens.Delete(i);
       end;
     end;
-//  CarregarItensGrid(prevenda, true);
     CbxCliente.Enabled := True;
-//    CbxCliente.Setfocus;
-    edtconsulta.setFocus;
     if prevenda.isOrcamento then
     begin
-      if (transformarOrcamentoPrevenda = False) or (FrmCancelamentoVenda.Possui_Permissao('831','V',cbxUsuario.Text,EdtUsuario.Text)) then
+      if (transformarOrcamentoPrevenda = False) or (FrmCancelamentoVenda.Possui_Permissao('831', 'V', cbxUsuario.Text, EdtUsuario.Text)) then
         possuiPermissaoParaAlterarPrevenda := True
       else
       begin
@@ -7594,9 +7591,11 @@ begin
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '831', 'V', possuiPermissaoParaAlterarPrevenda);
-          FrmCancelamentoVenda.Caption :=  'Transformar Orçamento em Pré-venda';
+          FrmCancelamentoVenda.Caption := 'Transformar Orçamento em Pré-venda';
           FrmCancelamentoVenda.showmodal;
           FreeAndNil(FrmCancelamentoVenda);
+          EdtConsulta.Enabled := True;
+          EdtConsulta.ReadOnly := False;
         except
           if FrmCancelamentoVenda <> nil then
             FreeAndNil(FrmCancelamentoVenda);
@@ -7613,7 +7612,7 @@ begin
             FreeAndNil(FrmCancelamentoVenda);
           FrmCancelamentoVenda := TFrmCancelamentoVenda.Create(Self, '820', 'A', possuiPermissaoParaAlterarPrevenda);
           FrmCancelamentoVenda.Caption := 'Alteração de pré-venda';
-          FrmCancelamentoVenda.showmodal;
+          FrmCancelamentoVenda.Showmodal;
           FreeAndNil(FrmCancelamentoVenda);
         except
           if FrmCancelamentoVenda <> nil then
@@ -7669,12 +7668,13 @@ begin
             Exit;
           end;
           Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
-//            CbxCliente.Setfocus;
         end;
       end;
       if Prevenda.itens.Count = 0 then
         Exit;
       CarregarItensGrid(prevenda, true);
+      Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
+      CbxCliente.SetFocus;
     end;
   end else if RgOpcoes.ItemIndex = 3 then // AMBIENTAR NOTA DE ENTRADA
   begin
@@ -7770,6 +7770,7 @@ begin
       UltimoLancamento;
     end;
   end;
+  EdtConsulta.Enabled := True;
 end;
 
 procedure TFrmPrincipalPreVenda.DtLanctoChange(Sender: TObject);
@@ -8593,7 +8594,6 @@ begin
     begin
       if (UpperCase(vEmpresa) = 'MOTOBOX') or (chkbxEtiqueta.Checked = false) then
         produto_temp := TNEGProduto.buscarProduto(prevenda.itens[i].cdProduto);
-
       Cells[0, i + 1] := intToStr(prevenda.itens[i].cdProduto); // codigo
       Cells[1, i + 1] := prevenda.itens[i].descricao;
       Cells[10, i + 1] := prevenda.itens[i].unidade.unidade; // unidade
@@ -8633,27 +8633,28 @@ begin
       if chkbxEtiqueta.Checked = false then
       begin
         if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
-          (RgOpcoes.ItemIndex = 1))) then begin
+          (RgOpcoes.ItemIndex = 1))) then
+        begin
 
-          if vEstqNegativo <> 'S' then begin
-            if produto_temp.tipoComposicao = composto then begin
+          if vEstqNegativo <> 'S' then
+          begin
+            if produto_temp.tipoComposicao = composto then
+            begin
               if TNEGProduto.getEstoquePossivelProdutoComposto(StrToInt(SgDados.Cells[0, i + 1]), 1) <= 0 then
                 ArraylinhasDestacadas[i + 1] := True;
-            end
-            else begin
+            end else
+            begin
               if qtdInsuficienteParaPrevend(StrToInt(SgDados.Cells[0, i + 1]),
                  StrToFloatDef(SgDados.Cells[2, i + 1], 0)) > 0 then
                 ArraylinhasDestacadas[i + 1] := True;
             end;
-          end
-          else
+          end else
             ArraylinhasDestacadas[i + 1] := false;
         end;
       end
       else
         ArraylinhasDestacadas[i + 1] := false;
     end;
-
     temp := (prevenda.itens[i].precoBruto * prevenda.itens[i].quantidade);
     temp := SimpleRoundTo(temp, -2);
     tempBruto := temp;
@@ -8665,10 +8666,6 @@ begin
       acrescimoCartao := True
     else
       EdtSubTotal.Text := FloatToStr(StrToFloat(EdtSubTotal.Text) + temp);
-    // edtValorBruto.Text := FloatToStr(StrtoFloat(edtValorBruto.Text) + (prevenda.itens[I].precoBruto * prevenda.itens[I].quantidade));
-    // EdtTotal.Text := FloatToStr(StrtoFloat(EdtTotal.Text) + (prevenda.itens[I].precoBruto * prevenda.itens[I].quantidade));
-    // edtValorBruto.Text := FloatToStr(SimpleRoundTo(StrtoFloat(edtValorBruto.Text),-2));
-    // EdtTotal.Text := FloatToStr(SimpleRoundTo(StrtoFloat(EdtTotal.Text),-2));
   end;
   if acrescimoCartao then
     EdtSubTotal.Text := edtValorBruto.Text;

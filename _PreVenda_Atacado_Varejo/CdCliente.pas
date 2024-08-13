@@ -621,7 +621,7 @@ begin
       SQL.Add('ORDER BY '+PARAM+' ');
     Parameters.ParamByName('PARAMETRO').Value := EdtConsulta.Text + '%';
     Open;
-    LblListados.Caption := 'Listados --> ' + IntToStr(RecordCount);
+    LblListados.Caption := 'Listados: ' + IntToStr(RecordCount);
     if EdtCodigo.Text <> '' then
       ADOQryConsulta.Locate('Código',EdtCodigo.Text,[]);
     { omite estes campos na grid }

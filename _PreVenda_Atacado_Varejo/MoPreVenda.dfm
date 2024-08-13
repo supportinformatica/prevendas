@@ -778,7 +778,7 @@
     Caption = 'supportinformatica.net'
     DragCursor = crHandPoint
     Font.Charset = ANSI_CHARSET
-    Font.Color = clBlue
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
