@@ -66,7 +66,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLblTitulo: TRLLabel
-        Left = 485
+        Left = 448
         Top = 25
         Width = 115
         Height = 25
@@ -105,7 +105,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Height = 1
       end
       object QRLabel10: TRLLabel
-        Left = 3
+        Left = 0
         Top = 88
         Width = 40
         Height = 13
@@ -118,11 +118,11 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel13: TRLLabel
-        Left = 3
+        Left = 0
         Top = 104
-        Width = 41
+        Width = 52
         Height = 13
-        Caption = 'Endere:'
+        Caption = 'Endere'#231'o:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -131,7 +131,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel1: TRLLabel
-        Left = 3
+        Left = 0
         Top = 150
         Width = 60
         Height = 13
@@ -144,9 +144,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlCliente: TRLLabel
-        Left = 45
+        Left = 41
         Top = 88
-        Width = 261
+        Width = 278
         Height = 13
         AutoSize = False
         Font.Charset = ANSI_CHARSET
@@ -157,9 +157,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlEndereco: TRLLabel
-        Left = 45
+        Left = 51
         Top = 104
-        Width = 274
+        Width = 268
         Height = 13
         AutoSize = False
         Font.Charset = ANSI_CHARSET
@@ -170,11 +170,11 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel16: TRLLabel
-        Left = 486
-        Top = 120
+        Left = 320
+        Top = 119
         Width = 26
         Height = 13
-        Caption = 'Cep:'
+        Caption = 'CEP:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -183,7 +183,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel14: TRLLabel
-        Left = 320
+        Left = 497
         Top = 104
         Width = 35
         Height = 13
@@ -196,9 +196,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlCep: TRLLabel
-        Left = 510
-        Top = 120
-        Width = 87
+        Left = 344
+        Top = 119
+        Width = 77
         Height = 13
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
@@ -208,9 +208,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlBairro: TRLLabel
-        Left = 354
+        Left = 535
         Top = 104
-        Width = 117
+        Width = 177
         Height = 13
         AutoSize = False
         Font.Charset = ANSI_CHARSET
@@ -221,7 +221,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object Qrl: TRLLabel
-        Left = 463
+        Left = 497
         Top = 88
         Width = 49
         Height = 13
@@ -234,7 +234,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel15: TRLLabel
-        Left = 472
+        Left = 320
         Top = 104
         Width = 40
         Height = 13
@@ -247,7 +247,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlTelefone: TRLLabel
-        Left = 510
+        Left = 546
         Top = 88
         Width = 99
         Height = 13
@@ -260,7 +260,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlCidade: TRLLabel
-        Left = 510
+        Left = 358
         Top = 104
         Width = 136
         Height = 13
@@ -300,7 +300,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel2: TRLLabel
-        Left = 467
+        Left = 560
         Top = 150
         Width = 45
         Height = 13
@@ -313,8 +313,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLabel11: TRLLabel
-        Left = 583
-        Top = 133
+        Left = 611
+        Top = 119
         Width = 47
         Height = 13
         Caption = 'Validade:'
@@ -405,9 +405,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QreValidade: TRLDBText
-        Left = 632
-        Top = 133
-        Width = 63
+        Left = 659
+        Top = 119
+        Width = 53
         Height = 13
         AutoSize = False
         DataField = 'dsPrazoOrcamento'
@@ -419,22 +419,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Style = []
         ParentFont = False
         Text = ''
-      end
-      object QRSysData2: TRLSystemInfo
-        Left = 658
-        Top = 150
-        Width = 47
-        Height = 13
-        AutoSize = False
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        Info = itHour
-        ParentFont = False
-        Text = ''
-        Visible = False
       end
       object QREVendedor: TRLDBText
         Left = 208
@@ -453,7 +437,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Text = ''
       end
       object QREOrcamento: TRLDBText
-        Left = 65
+        Left = 62
         Top = 149
         Width = 83
         Height = 15
@@ -496,7 +480,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlCPF: TRLLabel
-        Left = 3
+        Left = 0
         Top = 135
         Width = 55
         Height = 13
@@ -509,8 +493,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlRG: TRLLabel
-        Left = 310
-        Top = 134
+        Left = 150
+        Top = 135
         Width = 45
         Height = 13
         Caption = 'RG/Insc:'
@@ -522,8 +506,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlUf: TRLLabel
-        Left = 492
-        Top = 134
+        Left = 423
+        Top = 119
         Width = 20
         Height = 13
         Caption = 'UF:'
@@ -547,7 +531,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel4: TRLLabel
-        Left = 3
+        Left = 0
         Top = 119
         Width = 72
         Height = 13
@@ -560,9 +544,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlComp: TRLLabel
-        Left = 77
+        Left = 74
         Top = 119
-        Width = 242
+        Width = 245
         Height = 13
         AutoSize = False
         Font.Charset = ANSI_CHARSET
@@ -572,21 +556,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Style = []
         ParentFont = False
       end
-      object s: TRLLabel
-        Left = 648
-        Top = 104
-        Width = 66
-        Height = 14
-        Caption = '                     '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object rlApelido: TRLLabel
-        Left = 309
+        Left = 320
         Top = 88
         Width = 155
         Height = 13
@@ -614,8 +585,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QrlUf2: TRLLabel
-        Left = 510
-        Top = 134
+        Left = 444
+        Top = 119
         Width = 16
         Height = 13
         Caption = 'UF'
@@ -644,6 +615,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Top = 1
         Width = 18
         Height = 12
+        Alignment = taRightJustify
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -655,11 +627,11 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Text = ''
       end
       object RLSystemInfo2: TRLSystemInfo
-        Left = 656
+        Left = 687
         Top = 13
         Width = 27
         Height = 12
-        Alignment = taCenter
+        Alignment = taRightJustify
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -669,28 +641,12 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
         Text = ''
       end
-      object QreEmissao: TRLDBText
-        Left = 624
-        Top = 150
-        Width = 41
-        Height = 13
-        AutoSize = False
-        DataField = 'hrHora'
-        DataSource = DS
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Text = ''
-        Visible = False
-      end
       object QrlDtHR: TRLLabel
-        Left = 510
+        Left = 661
         Top = 150
         Width = 51
         Height = 13
+        Alignment = taRightJustify
         Caption = 'Data hora'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
@@ -700,7 +656,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QreRota2: TRLLabel
-        Left = 632
+        Left = 528
         Top = 119
         Width = 30
         Height = 13
@@ -714,7 +670,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Visible = False
       end
       object QreRota: TRLLabel
-        Left = 600
+        Left = 497
         Top = 119
         Width = 30
         Height = 13
@@ -810,8 +766,17 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Height = 24
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taRightJustify
         BarcodeType = bcCode128B
         Caption = '000000'
+      end
+      object QRLblPrevisao: TRLLabel
+        Left = 605
+        Top = 135
+        Width = 107
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Previs'#227'o de Entrega: '
       end
     end
     object RLBand2: TRLBand
@@ -1146,20 +1111,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-      end
-      object QRLblPrevisao: TRLLabel
-        Left = 335
-        Top = 48
-        Width = 106
-        Height = 14
-        Caption = 'Previs'#227'o de Entrega: '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        Visible = False
       end
       object QRL2: TRLLabel
         Left = 549

@@ -2120,13 +2120,13 @@ begin
   begin
     CriarIniSQLDeposito;
     CriarIniSQLDeposito2;
-    Label12.caption := 'DEPÓSITO';
+    Label12.caption := '      SOBRAL        M.F.';
     Label14.caption := 'DISPONÍVEL';
     Label16.caption := 'OFICINA';
     Label11.Visible := True;
     Label13.Font := Label11.Font; // iguala o tamano das fontes
-    Shape1.Visible := True;
-    Shape4.Visible := True;
+    Shape1.Visible  := True;
+    Shape4.Visible  := True;
     Label13.Visible := True;
   end;
   if (UpperCase(vEmpresa) = 'NACIONAL') OR (UpperCase(vEmpresa) = 'RURALPET') then
@@ -4315,7 +4315,10 @@ begin
   ListBox1.Clear;
   ListBox1.Visible := false;
   Label11.Text := '0,00';
-  Label13.Text := '__/__/____';
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Label13.Text := '0,00'
+  else
+    Label13.Text := '__/__/____';
   Label15.Text := '0,00';
   LblReserva.Text := '0,00';
   textoConsulta_temp := EdtConsulta.Text;
@@ -5049,7 +5052,7 @@ begin
   with qry do
   begin
     Connection := DModulo.Conexao;
-    sql.Text := 'select dsCGC from CONFIGURACAO WITH (NOLOCK)';
+    sql.Text := 'Select dsCGC from CONFIGURACAO WITH (NOLOCK)';
     open;
     if (RecordCount > 0) and (SoNumeros(FieldByName('dsCGC').AsString) = '08872144000140') then // HIPERMOVEIS
     begin
@@ -5149,11 +5152,10 @@ begin
   if (vOcultaDesconto = 'S') then
   begin
     FrmRelOrcamentos.RLDBResult3.DataField := '';
-    FrmRelOrcamentos.RLDBResult3.DataFormula :=
-      '(vlPreco-((vlPreco*nrDesconto)/100))';
+    FrmRelOrcamentos.RLDBResult3.DataFormula := '(vlPreco-((vlPreco*nrDesconto)/100))';
   end;
   FrmRelOrcamentos.RLBand1.height := 185;
-  FrmRelOrcamentos.RLBPAF.height := 0;
+  FrmRelOrcamentos.RLBPAF.height  := 0;
   FrmRelOrcamentos.RLBand3.height := 120; //110
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
   if (usarLoteValidade = True) then // and (UpperCase(vEmpresa) <> 'ATIVAOLD')
@@ -5161,20 +5163,19 @@ begin
     FrmRelOrcamentos.RLLabel5.caption  := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel13.caption := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel24.Caption := 'Descrição \ Validade \  Lote';
-    FrmRelOrcamentos.RLDBText2.AutoSize := True;
+    FrmRelOrcamentos.RLDBText2.AutoSize  := True;
     FrmRelOrcamentos.RLDBText2.DataField := 'nrLote';
     FrmRelOrcamentos.RLBand2.height := 34;  //27
-    FrmRelOrcamentos.RLDBText2.Top := 13;
+    FrmRelOrcamentos.RLDBText2.Top  := 13;
     FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left + 22;   // ficará embaixo da descrição
     FrmRelOrcamentos.RLDBText2.Alignment := taLeftJustify;
-    FrmRelOrcamentos.RlDescricao.width := 362;
+    FrmRelOrcamentos.RlDescricao.width  := 362;
     FrmRelOrcamentos.QREDescricao.width := 362;
     FrmRelOrcamentos.RLLabel15.Left := FrmRelOrcamentos.RLLabel23.Left + 50;
   end;
   varQtdItens := StrToIntDef(edtQtdItens.Text, 0);
   if (varQtdItens > 13) then
     FrmRelOrcamentos.QrMdRel.PageSetup.PaperHeight := 297;
-  // FrmRelOrcamentos.QryRelDados.Active := True;
   With FrmRelOrcamentos.ADOSPRelDados do
   begin
     Close;
@@ -5212,12 +5213,12 @@ begin
   with FrmRelOrcamentos.ADOQryCliente do
   begin
     sql.Text :=
-      'Select Distinct P.cdPessoa, P.nmPessoa, E.dsUf, UPPER(E.nmLogradouro) AS nmLogradouro, '
-      + 'E.dsBairro,E.dsCidade,E.dsCep,P.Existir,E.dsUF,E.dsComplemento,E.nrNumero,C.dsPrevenda,'
-      + 'G.dsRegiao                                                                             '
-      + 'From Pessoa P WITH (NOLOCK), Endereco E WITH (NOLOCK),                                 '
-      + 'Cliente C WITH (NOLOCK) left join Regiao G WITH (NOLOCK) on C.cdRegiao = G.cdRegiao    '
-      + 'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA   ';
+    'Select Distinct P.cdPessoa, P.nmPessoa, E.dsUf, UPPER(E.nmLogradouro) AS nmLogradouro,'+
+    'E.dsBairro, E.dsCidade, E.dsCep, P.Existir, E.dsUF, E.dsComplemento, E.nrNumero,      '+
+    'C.dsPrevenda, G.dsRegiao                                                              '+
+    'From Pessoa P WITH (NOLOCK), Endereco E WITH (NOLOCK),                                '+
+    'Cliente C WITH (NOLOCK) left join Regiao G WITH (NOLOCK) ON C.cdRegiao = G.cdRegiao   '+
+    'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA  ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
     if FieldByName('Existir').AsString = 'F' then
@@ -8500,7 +8501,10 @@ begin
   if EdtCFOP.Visible = True then
     EdtCFOP.Text := SugereCFOP;
   Label11.Text := '0,00';
-  Label13.Text := '__/__/____';
+  if (UpperCase(vEmpresa) = 'BATAUTO') then
+    Label13.Text := '0,00'
+  else
+    Label13.Text := '__/__/____';
 end;
 
 procedure TFrmPrincipalPreVenda.Alteraquantidade1Click(Sender: TObject);

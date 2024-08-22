@@ -52,13 +52,11 @@ type
     ADOQryConfigdsCidade: TStringField;
     DS: TDataSource;
     QreValidade: TRLDBText;
-    QRSysData2: TRLSystemInfo;
     QREVendedor: TRLDBText;
     QREOrcamento: TRLDBText;
     QrlSub: TRLLabel;
     QRLblEmpresa2: TRLLabel;
     QRLD: TRLLabel;
-    QRLblPrevisao: TRLLabel;
     QRL2: TRLLabel;
     QRLabel18: TRLLabel;
     QRExpr3: TRLDBText;
@@ -75,7 +73,6 @@ type
     RlblFormaPgto: TRLLabel;
     RLLabel4: TRLLabel;
     QrlComp: TRLLabel;
-    s: TRLLabel;
     ADOQuery1: TADOQuery;
     rlApelido: TRLLabel;     //se 
     Qualidade_Dos: TRLDraftFilter;
@@ -123,7 +120,6 @@ type
     RLLabel22: TRLLabel;
     RLMemo1: TRLMemo;
     AdoQryOrcamento: TADOQuery;
-    QreEmissao: TRLDBText;
     QrlDtHR: TRLLabel;
     QreRota2: TRLLabel;
     QreRota: TRLLabel;
@@ -160,6 +156,7 @@ type
     RLLblUnitario: TRLLabel;
     RLLblDesconto: TRLLabel;
     RLLblTotal: TRLLabel;
+    QRLblPrevisao: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand2AfterPrint(Sender: TObject);
