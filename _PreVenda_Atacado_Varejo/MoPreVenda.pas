@@ -10180,17 +10180,15 @@ begin
         FrmPrincipalPreVenda.ImprimeOrcamento2(StrToInt(prevenda.codigoFormaPagamento))
       else
       begin
-//        if (UpperCase(vEmpresa) <> 'BATAUTO') then  // BATAUTO NÃO IMPRIME OS ITNES
-//        begin
+        if (UpperCase(vEmpresa) = 'BATAUTO') then
           Editor.Clear;
-          if (modeloImpressora = 'ELGINI9') then
-          begin
-            Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-              (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora, parcelasCartao));
-          end else
-            Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
-              (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, parcelasCartao));
-//        end;
+        if (modeloImpressora = 'ELGINI9') then
+        begin
+          Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
+            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, modeloImpressora, parcelasCartao));
+        end else
+          Editor.Lines.AddStrings(TNEGPrevenda.getComprovantePrevenda
+            (numeroLancamento, isReimpressao, isPrevendaOuOrcamento, parcelasCartao));
         try
           if (TNEGLoja.CortarPapel40ColunasPreVenda) and (modeloImpressora <> 'ELGINI9') then
             Editor.Lines.Add(CHR(27) + 'm');
