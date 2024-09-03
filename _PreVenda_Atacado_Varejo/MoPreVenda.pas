@@ -2914,7 +2914,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-
   // TESTA SE PRODUTO INATIVO
   if ADOSPConsulta.FieldByName('dsAtivo').AsString <> 'S' then
   begin
@@ -2923,8 +2922,7 @@ begin
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-//    if (UpperCase(vEmpresa) <> 'DELUC') then
-      EdtQtd.Text := '0,000';
+    EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
     CbLote.ItemIndex := -1;
@@ -2936,7 +2934,7 @@ begin
   if ((UpperCase(vEmpresa) = 'JNUNES') and (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or
      (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or
      (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or
-     (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+     (dsCGC = '43081798000156') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
     FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName('DESCRIÇÃO').AsString;
@@ -2945,7 +2943,8 @@ begin
     FrmDescricao.EdtQtd.Text := FormatFloat('0.00000', StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtQtdSai.Text := FormatFloat('0.00000', StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtFator.Text := '1,00000';
-    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') then
+    if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or
+       (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
     begin
       FrmDescricao.Panel2.Visible := false;
       FrmDescricao.height := 112;
@@ -2977,14 +2976,12 @@ begin
             mtInformation, [mbOK], 0);
           Application.OnMessage := ProcessaMsg;
           Break;
-        end
-        else
+        end else
         begin
           Application.OnMessage := NaoProcessaMsg;
           MessageDlg('Esse produto já está incluso nessa pré-venda!', mtWarning,
             [mbOK], 0);
-//          if (UpperCase(vEmpresa) <> 'DELUC') then
-            EdtQtd.Text := '0,00';
+          EdtQtd.Text := '0,00';
           EdtDescUnit.Text := '0,00';
           setLabel23(0);
           CbLote.ItemIndex := -1;
@@ -2999,8 +2996,7 @@ begin
   begin
     EdtConsulta.Setfocus;
     EdtConsulta.Clear;
-//    if (UpperCase(vEmpresa) <> 'DELUC') then
-      EdtQtd.Text := '0,000';
+    EdtQtd.Text := '0,000';
     EdtDescUnit.Text := '0,00';
     setLabel23(0);
     CbLote.ItemIndex := -1;
@@ -3034,8 +3030,6 @@ begin
         ((StrToCurr(EdtPreco.Text) > FloatToCurr(produtoLancado.vlPreco)) and (vAtacadoVarejo <> 'A'));
     produtoLancado.destruir;
   end;
-//  if TNEGLoja.getBloquearVendaAbaixoDoCustoFinal then  // o q importa é a senha
-//  begin
   if abaixoDoCustoFinal and (StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsCurrency)) =
      StrToCurr(FormatFloatQ(vCasasPreco, ADOSPConsultaVALOR.AsCurrency))) then  // produto em promoção não é p analisar o preço de venda abaixo do preço de custo
   begin
@@ -3082,7 +3076,7 @@ begin
   end;
   if (trim(EdtDescUnit.Text) <> '') and (StrToFloat(EdtDescUnit.Text) > 0) and
     ((UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and
-    (UpperCase(vEmpresa) <> 'PROAUTO')) then //(UpperCase(vEmpresa) <> 'MOTOPECAS') and
+    (UpperCase(vEmpresa) <> 'PROAUTO')) then
   begin
     BtnAprazo.Enabled := false;
     EdtDesconto.Text := '0,00000';
@@ -3098,7 +3092,7 @@ begin
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
        (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-       (dsCGC = '33185213000194') or (dsCGC = '52961019000106') then
+       (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
@@ -3114,8 +3108,7 @@ begin
     end;
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
       itemPrevenda.fatorConversao := vFatorGama;
-    if (usarLoteValidade = True) and ((lote <> '') and (cdFabricanteLote <> ''))
-    then
+    if (usarLoteValidade = True) and ((lote <> '') and (cdFabricanteLote <> '')) then
     begin
       itemPrevenda.lote := lote;
       itemPrevenda.cdFabricanteLote := StrToInt(cdFabricanteLote);
@@ -3766,7 +3759,8 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -3840,7 +3834,8 @@ begin
   if (UpperCase(vEmpresa) = 'PTINTAS') OR (UpperCase(vEmpresa) = 'JNUNES') then
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
-  (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') then
+    (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -5141,7 +5136,8 @@ begin
     FrmRelOrcamentos.RlDescricao.width  := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') then
+  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
