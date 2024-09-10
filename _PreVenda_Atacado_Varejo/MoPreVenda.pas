@@ -10043,26 +10043,26 @@ begin
       parcelasCartao := '';
       // não pergunta se quer imprimir a pre-venda
       case StrToInt(prevenda.codigoFormaPagamento) of
-        0 : vformapag  := 'Forma Pgto: A vista';
-        1 : vformapag  := 'Forma Pgto: A prazo';
-        2 : vformapag  := 'Forma Pgto: Cartao a Vista';
+        0 : vformapag := 'Forma Pgto: A vista';
+        1 : vformapag := 'Forma Pgto: A prazo';
+        2 : vformapag := 'Forma Pgto: Cartao a Vista';
         3 :
         begin
-          vformapag  := 'Forma Pgto: Cartao Parcelado';
+          vformapag := 'Forma Pgto: Cartao Parcelado';
           if selecionarParcelasCartao then
             parcelasCartao := ' ' + FrmFormaPag.edtParcelas.Text;
           vformapag := vformapag + parcelasCartao;
         end;
-        4 : vformapag  := 'Forma Pgto: Cheque Pre';
-        5 : vformapag  := 'Forma Pgto: Entrada + Prazo';
+        4 : vformapag := 'Forma Pgto: Cheque Pre';
+        5 : vformapag := 'Forma Pgto: Entrada + Prazo';
         6 :
         begin
-          vformapag  := 'Forma Pgto: Entrada + Cartao';
+          vformapag := 'Forma Pgto: Entrada + Cartao';
           if selecionarParcelasCartao then
             parcelasCartao := ' ' + FrmFormaPag.edtParcelas.Text;
           vformapag := vformapag + parcelasCartao;
         end;
-        7 : vformapag  := 'Forma Pgto: Credito do cliente';
+        7 :  vformapag := 'Forma Pgto: Credito do cliente';
         12 : vformapag := 'Forma Pgto: Cheque a Vista';
         13 : vformapag := 'Forma Pgto: Cartao Debito';
         14 : vformapag := 'Forma Pgto: Deposito/Transferencia/Pix';

@@ -74,7 +74,7 @@ end;
 procedure TFrmDescricao.Button1Click(Sender: TObject);
 begin
   FrmPrincipalPreVenda.vDescricaoGama := EdtDescricao.Text;
-  FrmPrincipalPreVenda.vUndGama       := EdtUnidade.Text;
+  FrmPrincipalPreVenda.vUndGama := EdtUnidade.Text;
   if btnMult.Down then
      FrmPrincipalPreVenda.vFatorGama := strToFloat(EdtFator.Text)
   else
@@ -145,8 +145,7 @@ begin
       messagedlg('A quantidade não pode ser igual a zero', mtWarning, [mbOk], 0);
       btnMultClick(btnMult);
     end;
-  end
-  else
+  end else
   begin
     try
       fator := quantidade / quantidade_saida;

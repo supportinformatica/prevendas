@@ -339,7 +339,8 @@ begin
   if (UPPERCASE(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
     (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or
     (FrmPrincipalPreVenda.dsCGC = '47305252000192') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
-    (FrmPrincipalPreVenda.dsCGC = '33185213000194') or (FrmPrincipalPreVenda.dsCGC = '52961019000106') then
+    (FrmPrincipalPreVenda.dsCGC = '33185213000194') or (FrmPrincipalPreVenda.dsCGC = '52961019000106') or
+    (FrmPrincipalPreVenda.dsCGC = '43081798000156') then
   begin
     with AdoQuery1 do
     begin
