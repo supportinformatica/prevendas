@@ -5059,22 +5059,41 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible   := False;
     end;
   end;
+
+  if (UpperCase(vEmpresa) = 'ATIVA') then
+  begin
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
+    FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
+  end else
   if dsCGC = '10305634000106' then // d rios
   begin
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
     FrmRelOrcamentos.RLLabel1.Caption    := 'C. Barras';
-  end;
-  if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
+  end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
+  begin
+    FrmRelOrcamentos.RLDBText6.Visible := False;
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
+    FrmRelOrcamentos.RLLabel1.Caption    := 'NCM';
+  end else if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
     FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel10.Visible := False;
     FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel11.Visible := False;
-  end;
-  if (UpperCase(vEmpresa) = 'ATIVA') then
+  end else if vOcultaReferenciaNaImpressao then
   begin
-    FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
-    FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
+    FrmRelOrcamentos.RLLabel1.Visible := false;
+    FrmRelOrcamentos.RLDBText1.Visible := false;
+    moverCamposImpressao(FrmRelOrcamentos, FrmRelOrcamentos.RLLabel1.Left -
+      FrmRelOrcamentos.QRLabel6.Left);
+    FrmRelOrcamentos.QRLabel6.Left := FrmRelOrcamentos.RLLabel1.Left;
+    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLLabel1.Left;
   end;
   if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
@@ -5197,24 +5216,15 @@ begin
   begin
     FrmRelOrcamentos.RLSystemInfo2.Info := TRLInfoType(1);
   end;
-  if vOcultaReferenciaNaImpressao then
-  begin
-    FrmRelOrcamentos.RLLabel1.Visible := false;
-    FrmRelOrcamentos.RLDBText1.Visible := false;
-    moverCamposImpressao(FrmRelOrcamentos, FrmRelOrcamentos.RLLabel1.Left -
-      FrmRelOrcamentos.QRLabel6.Left);
-    FrmRelOrcamentos.QRLabel6.Left := FrmRelOrcamentos.RLLabel1.Left;
-    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLLabel1.Left;
-  end;
   with FrmRelOrcamentos.ADOQryCliente do
   begin
     sql.Text :=
-    'Select Distinct P.cdPessoa, P.nmPessoa, E.dsUf, UPPER(E.nmLogradouro) AS nmLogradouro,'+
-    'E.dsBairro, E.dsCidade, E.dsCep, P.Existir, E.dsUF, E.dsComplemento, E.nrNumero,      '+
-    'C.dsPrevenda, G.dsRegiao                                                              '+
-    'From Pessoa P WITH (NOLOCK), Endereco E WITH (NOLOCK),                                '+
-    'Cliente C WITH (NOLOCK) left join Regiao G WITH (NOLOCK) ON C.cdRegiao = G.cdRegiao   '+
-    'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA  ';
+    'Select Distinct P.cdPessoa, P.nmPessoa, E.dsUf, UPPER(E.nmLogradouro) nmLogradouro, '+
+    'E.dsBairro, E.dsCidade, E.dsCep, P.Existir, E.dsUF, E.dsComplemento, E.nrNumero,    '+
+    'C.dsPrevenda, G.dsRegiao                                                            '+
+    'From Pessoa P WITH (NOLOCK), Endereco E WITH (NOLOCK),                              '+
+    'Cliente C WITH (NOLOCK) left join Regiao G WITH (NOLOCK) ON C.cdRegiao = G.cdRegiao '+
+    'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
     if FieldByName('Existir').AsString = 'F' then
@@ -10152,11 +10162,20 @@ begin
             TNEGACBrPosPrint.fecharPorta(FrmPrincipalPreVenda.ACBrPosPrinter);
           end else
           begin
-            WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
-            Sleep(6000);
-            if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-              'Print.bat'))) then
-              ShowMessage('Não foi encontrado o arquivo Print.bat');
+            if (UpperCase(vEmpresa) = 'BATAUTO') then
+            begin
+              WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print1.bat')), sw_ShowNormal);
+              Sleep(6000);
+              if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'Print1.bat'))) then
+                ShowMessage('Não foi encontrado o arquivo Print1.bat');
+            end else
+            begin
+              WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) + 'print.bat')), sw_ShowNormal);
+              Sleep(6000);
+              if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+                'Print.bat'))) then
+                ShowMessage('Não foi encontrado o arquivo Print.bat');
+            end;
           end;
         end;
       end;  // FIM VIA DO CONFERENTE
