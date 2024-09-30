@@ -45,6 +45,9 @@ type
     edtDifal: TEdit;
     ckbPrevEntrega: TCheckBox;
     dtPrevEntrega: TDateTimePicker;
+    Label7: TLabel;
+    edtFrete: TEdit;
+    Label8: TLabel;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnConfirmarKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -71,9 +74,12 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure dtPrevEntregaChange(Sender: TObject);
     procedure ckbPrevEntregaClick(Sender: TObject);
+    procedure edtFreteKeyPress(Sender: TObject; var Key: Char);
+    procedure edtFreteExit(Sender: TObject);
+    procedure edtFreteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-    { Private declarations }
     vSalvar: integer;
+    procedure recalcularFrete;
     function obrigarProfissional(cnpj: string): Boolean;
     function verificaLimieteCredito: Boolean;
     function ConsultaFinanceiro: Boolean;
@@ -89,7 +95,7 @@ type
     function ValidarDesconto_PROAUTO: Boolean;
     function getCodigoFormaPagamento: string;
   public
-    { Public declarations }
+
   end;
 
 var
@@ -210,9 +216,9 @@ begin
       BtnConfirmar.Enabled := True;
       exit;
     end;
-    if StrToCurrDef(edtAcresCartao.Text, 0) > StrToCurr(FrmPrincipalPreVenda.EdtSubTotal.Text) then
+    if (StrToCurrDef(edtAcresCartao.Text, 0) - StrToCurrDef(edtFrete.Text, 0)) > StrToCurr(FrmPrincipalPreVenda.EdtSubTotal.Text) then
     begin
-      FrmPrincipalPreVenda.EdtSubTotal.Text := edtAcresCartao.Text;
+      FrmPrincipalPreVenda.EdtSubTotal.Text := FormatCurr('0.00', strtocurrDef(edtAcresCartao.Text, 0) - StrToCurrDef(edtFrete.Text, 0));
       FrmPrincipalPreVenda.EdtSubTotal.Refresh;
       // como alteramos o valor por conta das parcelas do cartão,
       // tenho que mudar essa proproedade para reclacular o acrescimo desses items que tiveram desconto no valor
@@ -233,6 +239,7 @@ begin
     FrmPrincipalPreVenda.prevenda.codigoFormaPagamento := getCodigoFormaPagamento;
     FrmPrincipalPreVenda.prevenda.codigoDoProfissional :=
       StrToIntDef(EdtCdProfissional.text, 0);
+    FrmPrincipalPreVenda.prevenda.vlTaxaEntrega := StrToCurrDef(edtFrete.Text, 0);
     FrmPrincipalPreVenda.prevenda.observacao := Memo1.text;
     FrmPrincipalPreVenda.SalvarPreVenda(FrmPrincipalPreVenda.prevenda,
       chkbxEnviarCopiaEmail.Checked);
@@ -406,6 +413,26 @@ begin
   end;
 end;
 
+procedure TFrmFormaPag.edtFreteExit(Sender: TObject);
+begin
+  edtFrete.Text := FormatCurr('0.00', StrToCurrDef(edtFrete.Text, 0));
+  if StrToCurr(edtFrete.Text) < 0 then
+    edtFrete.Text := '0,00';
+  edtAcresCartao.Text := FormatCurr('0.00', StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0));
+//  recalcularFrete;
+end;
+
+procedure TFrmFormaPag.edtFreteKeyPress(Sender: TObject; var Key: Char);
+begin
+  ValidarNumero(key);
+end;
+
+procedure TFrmFormaPag.edtFreteKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  recalcularFrete;
+end;
+
 procedure TFrmFormaPag.edtNumeroKeyPress(Sender: TObject; var Key: Char);
 begin
   ValidarInteiro(Key);
@@ -485,7 +512,7 @@ begin
   if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     RadioGroup1.ItemIndex := 0;
-    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
+    edtAcresCartao.Text := FormatCurr('0.00', StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + FrmPrincipalPreVenda.prevenda.vlTaxaEntrega);
     edtParcelas.Text := '1x';
   end else
   begin
@@ -496,6 +523,8 @@ begin
   end;
   ckbPrevEntrega.Checked := FrmPrincipalPreVenda.CbPrevisao.Checked;
   dtPrevEntrega.Date := FrmPrincipalPreVenda.previsaoEntrega;
+  if FrmPrincipalPreVenda.prevenda <> nil then
+    edtFrete.Text := FormatCurr('0.00', FrmPrincipalPreVenda.prevenda.vlTaxaEntrega);
   if ckbPrevEntrega.Checked or FrmPrincipalPreVenda.habilitarPrevisaoEntrega(FrmPrincipalPreVenda.dsCGC) then
   begin
     chkbxEnviarCopiaEmail.Visible := True;
@@ -529,8 +558,8 @@ begin
   with AdoQryProfissional do
   begin
     SQL.text :=
-      'select P.nmPessoa, Pr.cdPessoa from pessoa P WITH (NOLOCK) inner join ' +
-      'Profissional PR WITH (NOLOCK)  on P.cdPessoa = PR.cdPessoa where P.dsAtivo = ''S''';
+    'Select P.nmPessoa, Pr.cdPessoa From pessoa P WITH (NOLOCK) inner join ' +
+    'Profissional PR WITH (NOLOCK) ON P.cdPessoa = PR.cdPessoa Where P.dsAtivo = ''S''';
   end;
   MontaComboListBoolADO(AdoQryProfissional, CBXProfissional);
   if FrmPrincipalPreVenda.prevenda.codigoDoProfissional > 0 then
@@ -865,18 +894,32 @@ end;
 
 procedure TFrmFormaPag.RadioGroup1Click(Sender: TObject);
 begin
+  recalcularFrete;
+//  if FrmPrincipalPreVenda.selecionarParcelasCartao then
+//  begin
+//    case RadioGroup1.ItemIndex of
+//      0,1,4,5,6,7,8,10,11 :
+//        preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), '');
+//      2 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'CARTAO');
+//      9 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'DEBITO');
+//    else
+//      preencherGridParcelas(12, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'CARTAO');
+//    end;
+//  end;
+end;
+
+procedure TFrmFormaPag.recalcularFrete;
+begin
   if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     case RadioGroup1.ItemIndex of
       0,1,4,5,6,7,8,10,11 :
-        preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
-      2 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'CARTAO');
-      9 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'DEBITO');
+        preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), '');
+      2 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'CARTAO');
+      9 : preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'DEBITO');
     else
-      preencherGridParcelas(12, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), 'CARTAO');
+      preencherGridParcelas(12, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0), 'CARTAO');
     end;
-//    edtParcelas.Text    := gridParcelas.Cells[1,1]; //'1x';
-//    edtAcresCartao.Text := FrmPrincipalPreVenda.EdtSubTotal.Text;
   end;
 end;
 

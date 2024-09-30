@@ -23,9 +23,9 @@ object FrmFormaPag: TFrmFormaPag
   object Label1: TLabel
     Left = 2
     Top = 220
-    Width = 89
+    Width = 188
     Height = 13
-    Caption = 'Obs.: Max 3 linhas'
+    Caption = 'Observa'#231#227'o (digite no M'#225'ximo 3 linhas)'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -110,8 +110,41 @@ object FrmFormaPag: TFrmFormaPag
     Caption = 'Difal'
     Visible = False
   end
+  object Label7: TLabel
+    Left = 127
+    Top = 184
+    Width = 35
+    Height = 13
+    Hint = 
+      'Para emitir nota fiscal com frete ser'#225' necess'#225'rio cadastrar todo' +
+      's os dados do cliente.'
+    Caption = 'Frete *'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+  end
+  object Label8: TLabel
+    Left = 3
+    Top = 329
+    Width = 417
+    Height = 13
+    Caption = 
+      '* Para emitir nota fiscal com frete ser'#225' necess'#225'rio cadastrar to' +
+      'dos os dados do cliente.'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object BtnConfirmar: TBitBtn
-    Left = 415
+    Left = 426
     Top = 316
     Width = 104
     Height = 38
@@ -184,7 +217,7 @@ object FrmFormaPag: TFrmFormaPag
     PopupMenu = PopupMenu1
     ShowHint = True
     Spacing = 0
-    TabOrder = 10
+    TabOrder = 13
     OnClick = BtnConfirmarClick
     OnKeyPress = BtnConfirmarKeyPress
   end
@@ -223,7 +256,7 @@ object FrmFormaPag: TFrmFormaPag
     OnClick = RadioGroup1Click
   end
   object BtnCancelar: TBitBtn
-    Left = 534
+    Left = 545
     Top = 316
     Width = 104
     Height = 38
@@ -253,7 +286,7 @@ object FrmFormaPag: TFrmFormaPag
     PopupMenu = PopupMenu1
     ShowHint = True
     Spacing = 5
-    TabOrder = 11
+    TabOrder = 14
     OnClick = BtnCancelarClick
     OnKeyPress = BtnCancelarKeyPress
   end
@@ -269,7 +302,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = []
     ParentFont = False
     PopupMenu = PopupMenu1
-    TabOrder = 3
+    TabOrder = 5
     OnEnter = Memo1Enter
     OnExit = Memo1Exit
     OnKeyPress = Memo1KeyPress
@@ -279,6 +312,7 @@ object FrmFormaPag: TFrmFormaPag
     Top = 142
     Width = 153
     Height = 17
+    TabStop = False
     Caption = 'Selecionar Profissional'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy
@@ -286,7 +320,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 6
     OnClick = CBXSelecionaProfissionaisClick
   end
   object CBXProfissional: TComboBox
@@ -300,7 +334,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 4
     Visible = False
     OnChange = CBXProfissionalChange
   end
@@ -317,7 +351,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = []
     ParentFont = False
     ReadOnly = True
-    TabOrder = 12
+    TabOrder = 3
     Visible = False
   end
   object edtEspecie: TEdit
@@ -332,7 +366,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = []
     MaxLength = 15
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 7
     Visible = False
   end
   object edtAcresCartao: TEdit
@@ -351,7 +385,7 @@ object FrmFormaPag: TFrmFormaPag
     MaxLength = 15
     ParentFont = False
     ReadOnly = True
-    TabOrder = 5
+    TabOrder = 8
   end
   object edtVolume: TEdit
     Left = 593
@@ -364,7 +398,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 9
     Visible = False
     OnKeyPress = edtVolumeKeyPress
   end
@@ -379,7 +413,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 10
     Visible = False
     OnKeyPress = edtNumeroKeyPress
   end
@@ -398,7 +432,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = []
     ParentFont = False
     ReadOnly = True
-    TabOrder = 8
+    TabOrder = 11
     Text = '1'
     OnExit = edtParcelasExit
     OnKeyPress = edtParcelasKeyPress
@@ -427,7 +461,7 @@ object FrmFormaPag: TFrmFormaPag
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 9
+    TabOrder = 12
     OnDblClick = gridParcelasDblClick
     OnDrawCell = gridParcelasDrawCell
     OnMouseUp = gridParcelasMouseUp
@@ -442,6 +476,7 @@ object FrmFormaPag: TFrmFormaPag
     Top = 142
     Width = 153
     Height = 17
+    TabStop = False
     Caption = 'Enviar c'#243'pia por email'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy
@@ -449,7 +484,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 13
+    TabOrder = 15
     Visible = False
   end
   object pnlAguardaEnvioEmail: TPanel
@@ -466,7 +501,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Style = [fsBold]
     ParentBackground = False
     ParentFont = False
-    TabOrder = 14
+    TabOrder = 16
     Visible = False
   end
   object edtDifal: TEdit
@@ -478,14 +513,14 @@ object FrmFormaPag: TFrmFormaPag
     Anchors = [akTop, akRight]
     Color = clInfoBk
     ReadOnly = True
-    TabOrder = 15
+    TabOrder = 17
     Text = '0,00'
     Visible = False
   end
   object ckbPrevEntrega: TCheckBox
     Left = 2
     Top = 182
-    Width = 153
+    Width = 119
     Height = 17
     Caption = 'Previs'#227'o de entrega'
     Enabled = False
@@ -495,7 +530,7 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 16
+    TabOrder = 18
     OnClick = ckbPrevEntregaClick
   end
   object dtPrevEntrega: TDateTimePicker
@@ -506,8 +541,24 @@ object FrmFormaPag: TFrmFormaPag
     Date = 45478.000000000000000000
     Time = 0.709504861108143800
     Enabled = False
-    TabOrder = 17
+    TabOrder = 1
     OnChange = dtPrevEntregaChange
+  end
+  object edtFrete: TEdit
+    Left = 127
+    Top = 198
+    Width = 121
+    Height = 21
+    Hint = 
+      'Para emitir nota fiscal com frete ser'#225' necess'#225'rio cadastrar todo' +
+      's os dados do cliente.'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    Text = '0,00'
+    OnExit = edtFreteExit
+    OnKeyPress = edtFreteKeyPress
+    OnKeyUp = edtFreteKeyUp
   end
   object ADOSPLiberacao1: TADOStoredProc
     Connection = DModulo.Conexao
