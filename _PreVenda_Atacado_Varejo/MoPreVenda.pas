@@ -7456,10 +7456,16 @@ begin
       LimpaGrid;
     end;
     vObs := prevenda.observacao;
-    if UpperCase(intToStr(prevenda.vendedor.codigo)) <> trim(EdtCdNome.Text) then
-    begin
-      EdtCdNome.Text := intToStr(prevenda.vendedor.codigo);
-      CbxNome.Text := prevenda.vendedor.nome;
+    if (prevenda.vendedor) <> nil then begin
+      if UpperCase(intToStr(prevenda.vendedor.codigo)) <> trim(EdtCdNome.Text) then
+      begin
+        EdtCdNome.Text := intToStr(prevenda.vendedor.codigo);
+        CbxNome.Text := prevenda.vendedor.nome;
+      end;
+    end
+    else begin
+      CbxNome.Text := vnmVendedor;
+      EdtCdNome.Text := vcdVendedor;
     end;
     if prevenda.isOrcamento then
       vOrcamento := 'O'
