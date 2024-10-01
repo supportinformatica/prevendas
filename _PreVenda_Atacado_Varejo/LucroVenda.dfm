@@ -15,29 +15,30 @@ object frmLucroVenda: TfrmLucroVenda
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label4: TLabel
-    Left = 8
+    Left = 0
     Top = 1
-    Width = 176
+    Width = 63
     Height = 13
-    Caption = 'Lista de itens lan'#231'ados na pr'#233'-venda'
+    Caption = 'Lista de itens'
   end
   object SgDados: TStringGrid
-    Left = 8
+    Left = 0
     Top = 16
-    Width = 553
-    Height = 297
+    Width = 569
+    Height = 299
+    TabStop = False
     Color = clInfoBk
     ColCount = 6
+    DefaultRowHeight = 18
     FixedCols = 0
     RowCount = 2
     TabOrder = 0
     ColWidths = (
-      56
-      209
+      51
+      269
       71
       74
       49
@@ -45,10 +46,10 @@ object frmLucroVenda: TfrmLucroVenda
   end
   object btnSair: TBitBtn
     Left = 469
-    Top = 343
-    Width = 96
-    Height = 25
-    Caption = 'Sair'
+    Top = 328
+    Width = 92
+    Height = 38
+    Caption = 'Sai&r'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
     Font.Height = -11
@@ -93,49 +94,72 @@ object frmLucroVenda: TfrmLucroVenda
     Caption = 'Totais'
     TabOrder = 2
     object Label1: TLabel
-      Left = 16
+      Left = 6
       Top = 14
-      Width = 24
+      Width = 57
       Height = 13
-      Caption = 'Valor'
+      Caption = 'Valor venda'
     end
     object Label2: TLabel
-      Left = 169
+      Left = 120
       Top = 14
-      Width = 28
+      Width = 51
       Height = 13
-      Caption = 'Custo'
+      Caption = 'Custo final'
     end
     object Label3: TLabel
-      Left = 321
+      Left = 235
       Top = 14
       Width = 42
       Height = 13
       Caption = 'Lucro R$'
     end
+    object Label5: TLabel
+      Left = 348
+      Top = 14
+      Width = 40
+      Height = 13
+      Caption = 'Lucro %'
+    end
     object edtvlValor: TEdit
-      Left = 16
+      Left = 6
       Top = 29
-      Width = 121
+      Width = 100
       Height = 21
+      TabStop = False
+      Color = clInfoBk
       ReadOnly = True
       TabOrder = 0
     end
     object edtvlCusto: TEdit
-      Left = 168
+      Left = 119
       Top = 29
-      Width = 121
+      Width = 100
       Height = 21
+      TabStop = False
+      Color = clInfoBk
       ReadOnly = True
       TabOrder = 1
     end
     object edtvlLucro: TEdit
-      Left = 320
+      Left = 234
       Top = 29
-      Width = 121
+      Width = 100
       Height = 21
+      TabStop = False
+      Color = clInfoBk
       ReadOnly = True
       TabOrder = 2
+    end
+    object edtLucroPorcentagem: TEdit
+      Left = 347
+      Top = 29
+      Width = 100
+      Height = 21
+      TabStop = False
+      Color = clInfoBk
+      ReadOnly = True
+      TabOrder = 3
     end
   end
   object ADOQuery1: TADOQuery
