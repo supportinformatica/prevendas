@@ -6,8 +6,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, Grids, ComCtrls, ExtCtrls, Db, DBTables, DBGrids,
   RelOrcamentos,
-  Menus, ShellApi, IniFiles, ADODB, Variants, XPMan, TypInfo {, letreiro} ,
-  {WinSkinData,} Math, DateUtils, RLConsts, MaskUtils, Themes, NEGCliente,
+  Menus, ShellApi, IniFiles, ADODB, Variants, XPMan, TypInfo ,
+  Math, DateUtils, RLConsts, MaskUtils, Themes, NEGCliente,
   NEGLoja,
   Vcl.ActnMan, System.Generics.Collections, NEGFabricante,
   RLReport, NEGPrevenda, frmComprouJunto, DOMCliente,
@@ -497,11 +497,9 @@ type
     function PegaNomeFabricante(cdProduto: Integer): string;
     function isProdutoPromocao(cdProduto: Integer): Boolean;
     Procedure SalvaEtiquetas;
-
     Procedure Mount_GondolaG001;
     Procedure Mount_GondolaAtacadoVarejo001;
     Procedure Mount_GondolaG003;
-
     Procedure ImprimeEtiquetasBijouArts;
     procedure ImprimeEtiquetasBijouArtsMaior;
     procedure ImprimeEtiquetasLindaStore;
@@ -5000,20 +4998,16 @@ begin
     RLLabel5.Left := RLLabel5.Left + movimento;
     RLLabel13.Left := RLLabel3.Left + movimento;
     RLDBText2.Left := RLDBText2.Left + movimento;
-
     QRLabel12.Left := QRLabel12.Left + movimento;
     RLLabel14.Left := RLLabel4.Left + movimento;
     QreUnidade.Left := QreUnidade.Left + movimento;
-
     QRLabel7.Left := QRLabel7.Left + movimento;
     RLLabel17.Left := RLLabel7.Left + movimento;
     QREQtd.Left := QREQtd.Left + movimento;
-
     QRLabel8.Left := QRLabel8.Left + movimento;
     RLLabel18.Left := RLLabel8.Left + movimento;
     QREPreco.Left := QREPreco.Left + movimento;
     RLLblUnitario.Left := RLLblUnitario.Left + movimento;
-
     RLLabel2.Left := RLLabel2.Left + movimento;
     RLLabel19.Left := RLLabel9.Left + movimento;
     RLDBResult3.Left := RLDBResult3.Left + movimento;
@@ -5171,7 +5165,7 @@ begin
   end;
   FrmRelOrcamentos.RLBand1.height := 185;
   FrmRelOrcamentos.RLBPAF.height  := 0;
-  FrmRelOrcamentos.RLBand3.height := 120; //110
+  FrmRelOrcamentos.RLBand3.height := 130; //120
   { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
   if (usarLoteValidade = True) then // and (UpperCase(vEmpresa) <> 'ATIVAOLD')
   begin
@@ -5861,58 +5855,46 @@ begin
   begin
     Close;
     sql.Text :=
-      'SELECT P.nmPessoa,T.nmProduto,T.dsProdutoNota,T.dsReferencia,O.cdPessoa,                         '
-      + 'O.nrOrcamento,O.cdCliente,I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,                             '
-      + 'O.nrDesconto,T.dsUnidade,T.dsPrateleira, I.cdAmbiente, A.dsAmbiente                              '
-      + 'FROM Orcamento O WITH (nolock),Pessoa P WITH (nolock),                                           '
-      + 'Produto T WITH (nolock),IteOrcamento I WITH (nolock),                                            '
-      + '     Ambiente A WITH (NOLOCK)                                                                    '
-      + 'WHERE O.nrOrcamento = :nrOrcamento And P.cdPessoa = O.cdPessoa And T.cdProduto = I.cdProduto And '
-      + 'O.cdPessoa = P.cdPessoa And I.dsSituacao = '''' And A.cdAmbiente =* I.cdAmbiente                 '
-      + 'and O.nrOrcamento = I.nrOrcamento                                                                '
-      +
-    // 'group by I.cdAmbiente, P.nmPessoa,T.nmProduto,T.dsProdutoNota,T.dsReferencia,O.cdPessoa,         '+
-    // 'O.nrOrcamento,O.cdCliente,I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,                             '+
-    // 'O.nrDesconto,T.dsUnidade,T.dsPrateleira, A.dsAmbiente                                            '+
-      'order by A.dsAmbiente,I.cdAmbiente, T.dsPrateleira                                               ';
+    'SELECT P.nmPessoa,T.nmProduto,T.dsProdutoNota,T.dsReferencia,O.cdPessoa,'+
+    'O.nrOrcamento,O.cdCliente,I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,  '+
+    'O.nrDesconto,T.dsUnidade,T.dsPrateleira, I.cdAmbiente, A.dsAmbiente   '+
+    'FROM Orcamento O WITH (nolock),Pessoa P WITH (nolock),                '+
+    'Produto T WITH (nolock),IteOrcamento I WITH (nolock),                 '+
+    'Ambiente A WITH (NOLOCK)                                              '+
+    'WHERE O.nrOrcamento = :nrOrcamento And P.cdPessoa = O.cdPessoa And T.cdProduto = I.cdProduto '+
+    'and O.cdPessoa = P.cdPessoa And I.dsSituacao = '''' And A.cdAmbiente = I.cdAmbiente          '+
+    'and O.nrOrcamento = I.nrOrcamento                                                            '+
+    'order by A.dsAmbiente,I.cdAmbiente, T.dsPrateleira';
     Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
     open;
   end;
-
   if vOcultaReferenciaNaImpressao then
   begin
-    frmRelOrcamentosAmbiente.RLLabel1.Visible := false;
+    frmRelOrcamentosAmbiente.RLLabel1.Visible  := false;
     frmRelOrcamentosAmbiente.RLDBText1.Visible := false;
-    frmRelOrcamentosAmbiente.QRLabel6.Left :=
-      frmRelOrcamentosAmbiente.RLLabel1.Left;
-    frmRelOrcamentosAmbiente.QREDescricao.Left :=
-      frmRelOrcamentosAmbiente.RLLabel1.Left;
+    frmRelOrcamentosAmbiente.QRLabel6.Left := frmRelOrcamentosAmbiente.RLLabel1.Left;
+    frmRelOrcamentosAmbiente.QREDescricao.Left := frmRelOrcamentosAmbiente.RLLabel1.Left;
   end;
   with frmRelOrcamentosAmbiente.ADOQryCliente do
   begin
     sql.Text :=
-      'Select Distinct P.cdPessoa,P.nmPessoa,E.dsUf,E.nmLogradouro,E.dsBairro,      '
-      + 'E.dsCidade,E.dsCep,P.Existir,E.dsUF,E.dsComplemento,E.nrNumero,C.dsPrevenda  '
-      + 'From Pessoa P WITH (NOLOCK),Endereco E WITH (NOLOCK),Cliente C WITH (NOLOCK) '
-      + 'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA';
+    'Select Distinct P.cdPessoa,P.nmPessoa,E.dsUf,E.nmLogradouro,E.dsBairro,      '+
+    'E.dsCidade,E.dsCep,P.Existir,E.dsUF,E.dsComplemento,E.nrNumero,C.dsPrevenda  '+
+    'From Pessoa P WITH (NOLOCK),Endereco E WITH (NOLOCK),Cliente C WITH (NOLOCK) '+
+    'Where P.cdPessoa = E.cdPessoa and P.cdPessoa = C.cdPessoa and P.cdPessoa = :CDPESSOA';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
     if FieldByName('Existir').AsString = 'F' then
       vcdpessoa := 'F'
     else
       vcdpessoa := 'J';
-    // if vPAFECF then
-    // frmRelOrcamentosAmbiente.LblDenoDest.Caption := 'Nome: ' + FieldByName('cdPessoa').AsString + ' - ' + FieldByName('nmPessoa').AsString
-    // else
     frmRelOrcamentosAmbiente.QrlCliente.caption := FieldByName('cdPessoa')
       .AsString + ' - ' + FieldByName('nmPessoa').AsString;
-
     frmRelOrcamentosAmbiente.QrlEndereco.caption :=
       FieldByName('nmLogradouro').AsString;
     if FieldByName('nrNumero').AsString <> '' then
-      frmRelOrcamentosAmbiente.QrlEndereco.caption :=
-        frmRelOrcamentosAmbiente.QrlEndereco.caption + ', ' +
-        FieldByName('nrNumero').AsString;
+      frmRelOrcamentosAmbiente.QrlEndereco.caption := FrmRelOrcamentosAmbiente.QrlEndereco.caption + ', ' +
+      FieldByName('nrNumero').AsString;
     frmRelOrcamentosAmbiente.QrlCep.caption := FieldByName('dsCep').AsString;
     frmRelOrcamentosAmbiente.QrlCidade.caption :=
       FieldByName('dsCidade').AsString;
@@ -5921,17 +5903,18 @@ begin
     frmRelOrcamentosAmbiente.QrlComp.caption :=
       FieldByName('dsComplemento').AsString;
     frmRelOrcamentosAmbiente.QrlUf2.caption := FieldByName('dsUf').AsString;
-    // FrmRelOrcamentos.QRLabel21.Caption   := FormatFloat('0.00',StrToFloat(EdtTotal.Text) - StrToFloat(EdtSubTotal.Text));
-    sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
-      'Where cdPessoa = :CDPESSOA ';
+    sql.Text :=
+    'Select distinct nmTelefone From Telefone WITH (NOLOCK) '+
+    'Where cdPessoa = :CDPESSOA';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
     frmRelOrcamentosAmbiente.QrlTelefone.caption :=
       FieldByName('nmTelefone').AsString;
     if vcdpessoa = 'F' then
     begin
-      sql.Text := 'Select dsCpf,dsIdentidade,dsNaturalidade from P_fisica ' +
-        'WITH (NOLOCK) Where cdPessoa = ' + EdtCdCliente.Text + ' ';
+      sql.Text :=
+      'Select dsCpf,dsIdentidade,dsNaturalidade from P_fisica '+
+      'WITH (NOLOCK) Where cdPessoa = ' + EdtCdCliente.Text + ' ';
       open;
       frmRelOrcamentosAmbiente.rlApelido.caption := ' - ' +
         FieldByName('dsnaturalidade').AsString;
@@ -5939,21 +5922,16 @@ begin
         FieldByName('dsCpf').AsString;
       frmRelOrcamentosAmbiente.QrlRG.caption := 'RG/IE: ' +
         FieldByName('dsIdentidade').AsString;
-      // if vPAFECF then
-      // frmRelOrcamentosAmbiente.RLLCNPJ_Dest.Caption := 'CPF/CNPJ: ' + FieldByName('dsCpf').AsString;
-    end
-    else
+    end else
     begin
       sql.Text :=
-        'Select CGC,dsInscricaoEstadual from P_Juridica WITH (NOLOCK) ' +
-        'Where cdPessoa = ' + EdtCdCliente.Text + '       ';
+      'Select CGC,dsInscricaoEstadual from P_Juridica WITH (NOLOCK) '+
+      'Where cdPessoa = ' + EdtCdCliente.Text + ' ';
       open;
       frmRelOrcamentosAmbiente.QrlCPF.caption := 'CPF/CNPJ: ' +
         FieldByName('CGC').AsString;
       frmRelOrcamentosAmbiente.QrlRG.caption := 'RG/IE: ' +
         FieldByName('dsInscricaoEstadual').AsString;
-      // if vPAFECF then
-      // frmRelOrcamentosAmbiente.RLLCNPJ_Dest.Caption := 'CPF/CNPJ: ' + FieldByName('CGC').AsString;
     end;
   end;
   frmRelOrcamentosAmbiente.AdoQryOrcamento.Parameters.ParamByName('nrOrcamento')
@@ -5962,19 +5940,6 @@ begin
   frmRelOrcamentosAmbiente.QrlDtHR.caption :=
     frmRelOrcamentosAmbiente.AdoQryOrcamento.FieldByName('hrHora').AsString;
   frmRelOrcamentosAmbiente.AdoQryOrcamento.Close;
-
-  { if vPAFECF then begin
-    if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Pré-Venda**'
-    else if RgOpcoes.ItemIndex = 1 then begin
-    if vOrcamento = 'O' then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Orçamento**'
-    else if vOrcamento = 'N' then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Pré-Venda**'
-    end else if RgOpcoes.ItemIndex = 2 then
-    frmRelOrcamentosAmbiente.QRLblTitulo2.Caption := '**Orçamento**';
-    end else begin
-  }
   if RgOpcoes.ItemIndex = 0 then
     frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-Venda'
   else if RgOpcoes.ItemIndex = 1 then
@@ -5983,8 +5948,7 @@ begin
       frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Orçamento'
     else if vOrcamento = 'N' then
       frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-Venda'
-  end
-  else if RgOpcoes.ItemIndex = 2 then
+  end else if RgOpcoes.ItemIndex = 2 then
     frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Orçamento';
   FrmRelOrcamentos.QRLblPrevisao.Enabled := CbPrevisao.Checked;
   FrmRelOrcamentos.QRLblPrevisao.Visible := CbPrevisao.Checked;
@@ -5993,7 +5957,6 @@ begin
       DateToStr(previsaoEntrega)
   else
     frmRelOrcamentosAmbiente.QRLblPrevisao.Enabled := false;
-  // end;
   frmRelOrcamentosAmbiente.QrlCnpj.caption := 'CNPJ: ' +
     frmRelOrcamentosAmbiente.ADOQryConfig.FieldByName('dsCgc').AsString +
     '     I.E.: ' + frmRelOrcamentosAmbiente.ADOQryConfig.FieldByName
@@ -6084,15 +6047,10 @@ begin
   else
   begin
     try
-      // FrmRelOrcamentos.QrMdRel.Print
-      // FrmRelOrcamentos.QRMdRel.Printdialog := True;
       // coloca a impressao como default DOS para as empresas que imprime em matricial
       if vTipoImpressora = '' then
         frmRelOrcamentosAmbiente.RLReport1.DefaultFilter :=
           frmRelOrcamentosAmbiente.Qualidade_Dos;
-      // else
-      // frmRelOrcamentosAmbiente.QrMdRel.DefaultFilter:= frmRelOrcamentosAmbiente.Padrao;
-      // imprime na impressora jato e lase ou matricial
       if vTipoImpressora = 'S' then
       begin
         frmRelOrcamentosAmbiente.RLReport1.PageSetup.PaperHeight := 297;
@@ -6110,19 +6068,11 @@ begin
         if (trim(vQtdPrint) <> '') then
         begin
           for i := 1 to StrToInt(vQtdPrint) do
-          begin
-            // frmRelOrcamentosAmbiente.QrMdRel.DefaultFilter:= frmRelOrcamentosAmbiente.Padrao;
-            // if vPAFECF = False then
             frmRelOrcamentosAmbiente.RLReport1.Print;
-          end;
-        end
-        else
+        end else
           frmRelOrcamentosAmbiente.RLReport1.Print;
-      end
-      else
+      end else
       begin
-        // if vPAFECF = False then
-        // if (Trim(vQtdPrint) <> '') and (vQtdPrint <> '1')  then begin
         if (trim(vQtdPrint) <> '') then
         begin
           for i := 1 to StrToInt(vQtdPrint) do
@@ -6132,17 +6082,12 @@ begin
             // if vPAFECF = False then
             frmRelOrcamentosAmbiente.RLReport1.Print;
           end;
-        end
-        else
+        end else
           frmRelOrcamentosAmbiente.RLReport1.Print;
       end;
       frmRelOrcamentosAmbiente.Free;
     except
       exit;
-      // Application.OnMessage := FormPrincipal.ProcessaMsg;
-
-      // Limpar_Tela;
-      // RgOpcoes.ItemIndex := 0;
     end;
   end;
 end;

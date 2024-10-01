@@ -74,7 +74,7 @@ type
     RLLabel4: TRLLabel;
     QrlComp: TRLLabel;
     ADOQuery1: TADOQuery;
-    rlApelido: TRLLabel;     //se 
+    rlApelido: TRLLabel;
     Qualidade_Dos: TRLDraftFilter;
     RLLabel5: TRLLabel;
     QrlUf2: TRLLabel;
@@ -157,6 +157,10 @@ type
     RLLblDesconto: TRLLabel;
     RLLblTotal: TRLLabel;
     QRLblPrevisao: TRLLabel;
+    RLLabel25: TRLLabel;
+    RLLabel26: TRLLabel;
+    lblFrete: TRLLabel;
+    lblValorTotal: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand2AfterPrint(Sender: TObject);
@@ -259,8 +263,8 @@ end;
 procedure TfrmRelOrcamentos.lblTotalBeforePrint(Sender: TObject;
   var AText: string; var PrintIt: Boolean);
 begin
-  if ((StrToFloat(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) <= StrtoFloat(StringReplace(AText,'.','',[rfReplaceAll])))) then
-    lblSubTotal.Caption := AText;
+//  if ((StrToCurr(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) <= StrToCurr(StringReplace(AText,'.','',[rfReplaceAll])))) then
+//    lblSubTotal.Caption := AText;
 end;
 
 procedure TfrmRelOrcamentos.lblValorDescontoBeforePrint(Sender: TObject;
@@ -325,6 +329,7 @@ begin
   temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
   temp := SimpleRoundTo(temp, -2);
   totalLiquido := totalLiquido + temp;
+//  lblFrete.Caption := FormatCurr('0.00', ADOSPRelDados.FieldByName('Frete').AsCurrency);
 end;
 
 procedure TfrmRelOrcamentos.RLBand2BeforePrint(Sender: TObject;
@@ -395,6 +400,8 @@ begin
   end;
   lblSubTotal.Caption := FormatFloat('###,##0.00',SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('###,##0.00',SimpleRoundTo(totalLiquido,-2));
+  lblFrete.Caption := FormatCurr('0.00', ADOSPRelDados.FieldByName('Frete').AsCurrency);
+  lblValorTotal.Caption := FormatCurr('0.00', StrToCurrDef(lblTotal.Caption,0) + ADOSPRelDados.FieldByName('Frete').AsCurrency);
 end;
 
 procedure TfrmRelOrcamentos.RLDBResult3BeforePrint(Sender: TObject;

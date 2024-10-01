@@ -811,8 +811,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Style = []
         ParentFont = False
         object QRECodigo: TRLDBText
-          Left = 2
-          Top = -1
+          Left = 0
+          Top = 0
           Width = 37
           Height = 13
           AutoSize = False
@@ -1057,7 +1057,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       Left = 38
       Top = 369
       Width = 718
-      Height = 120
+      Height = 130
       BandType = btSummary
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1067,7 +1067,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       AfterPrint = RLBand3AfterPrint
       BeforePrint = RLBand3BeforePrint
       object QrlSub: TRLLabel
-        Left = 24
+        Left = 1
         Top = 1
         Width = 75
         Height = 14
@@ -1081,7 +1081,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRLblEmpresa2: TRLLabel
         Left = 335
-        Top = 80
+        Top = 91
         Width = 178
         Height = 15
         Alignment = taCenter
@@ -1100,7 +1100,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRLD: TRLLabel
-        Left = 384
+        Left = 369
         Top = 1
         Width = 78
         Height = 14
@@ -1113,7 +1113,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRL2: TRLLabel
-        Left = 549
+        Left = 594
         Top = 1
         Width = 54
         Height = 14
@@ -1127,7 +1127,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRLabel18: TRLLabel
         Left = 524
-        Top = 80
+        Top = 91
         Width = 193
         Height = 15
         Alignment = taCenter
@@ -1147,7 +1147,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object QRExpr3: TRLDBText
         Left = 1
-        Top = 17
+        Top = 44
         Width = 715
         Height = 13
         Alignment = taCenter
@@ -1163,7 +1163,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Text = ''
       end
       object RLLabel3: TRLLabel
-        Left = 200
+        Left = 185
         Top = 2
         Width = 76
         Height = 14
@@ -1177,8 +1177,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Transparent = False
       end
       object RlblFormaPgto: TRLLabel
-        Left = 1
-        Top = 32
+        Left = 2
+        Top = 21
         Width = 66
         Height = 14
         Caption = '                     '
@@ -1191,7 +1191,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLabel21: TRLLabel
         Left = 341
-        Top = 101
+        Top = 112
         Width = 369
         Height = 13
         Caption = 
@@ -1206,7 +1206,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLLabel22: TRLLabel
         Left = 1
-        Top = 47
+        Top = 58
         Width = 31
         Height = 14
         Caption = 'OBS: '
@@ -1219,7 +1219,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RLMemo1: TRLMemo
         Left = 33
-        Top = 47
+        Top = 58
         Width = 301
         Height = 68
         Alignment = taJustify
@@ -1234,7 +1234,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Transparent = False
       end
       object lblSubTotal: TRLLabel
-        Left = 103
+        Left = 77
         Top = 1
         Width = 29
         Height = 14
@@ -1247,7 +1247,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object lblPorcDesconto: TRLLabel
-        Left = 279
+        Left = 264
         Top = 2
         Width = 29
         Height = 14
@@ -1262,7 +1262,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         BeforePrint = lblPorcDescontoBeforePrint
       end
       object lblValorDesconto: TRLLabel
-        Left = 467
+        Left = 452
         Top = 1
         Width = 29
         Height = 14
@@ -1276,10 +1276,67 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         BeforePrint = lblValorDescontoBeforePrint
       end
       object lblTotal: TRLLabel
-        Left = 608
+        Left = 687
         Top = 1
         Width = 29
         Height = 14
+        Alignment = taRightJustify
+        Caption = '0,00'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = lblTotalBeforePrint
+      end
+      object RLLabel25: TRLLabel
+        Left = 593
+        Top = 15
+        Width = 55
+        Height = 14
+        Caption = 'Frete R$:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel26: TRLLabel
+        Left = 566
+        Top = 29
+        Width = 82
+        Height = 14
+        Caption = 'Valor total R$:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblFrete: TRLLabel
+        Left = 687
+        Top = 15
+        Width = 29
+        Height = 14
+        Alignment = taRightJustify
+        Caption = '0,00'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = lblTotalBeforePrint
+      end
+      object lblValorTotal: TRLLabel
+        Left = 687
+        Top = 29
+        Width = 29
+        Height = 14
+        Alignment = taRightJustify
         Caption = '0,00'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
@@ -1775,7 +1832,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
+        Value = 0
       end
       item
         Name = '@DSLANCAMENTO'
