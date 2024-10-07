@@ -1335,7 +1335,7 @@
     end
     object LblListados: TLabel
       Left = 6
-      Top = 74
+      Top = 75
       Width = 50
       Height = 13
       Caption = 'Listados:'
@@ -1566,7 +1566,7 @@
     object CheckBox1: TCheckBox
       Left = 6
       Top = 7
-      Width = 168
+      Width = 162
       Height = 17
       TabStop = False
       Caption = 'So&mente produtos ativos'
@@ -1610,12 +1610,11 @@
       OnKeyPress = EdtPrecoKeyPress
     end
     object CbPrevisao: TCheckBox
-      Left = 388
-      Top = 72
+      Left = 375
+      Top = 7
       Width = 130
       Height = 17
       Hint = 'Imprimir previs'#227'o de entrega?'
-      Anchors = [akTop, akRight]
       Caption = 'Previs'#227'o de &entrega'
       Checked = True
       Color = clBtnFace
@@ -1723,7 +1722,7 @@
       Visible = False
     end
     object chkOcultarProdutosSemEstoque: TCheckBox
-      Left = 182
+      Left = 175
       Top = 7
       Width = 190
       Height = 17
@@ -1778,8 +1777,8 @@
       Visible = False
     end
     object chkbxEtiqueta: TCheckBox
-      Left = 386
-      Top = 7
+      Left = 175
+      Top = 72
       Width = 63
       Height = 17
       TabStop = False

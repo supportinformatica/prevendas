@@ -675,8 +675,7 @@ begin
   begin
     CBXProfissional.Visible := True;
     EdtCdProfissional.Visible := True;
-  end
-  else
+  end else
   begin
     CBXProfissional.Visible := False;
     EdtCdProfissional.Visible := False;

@@ -3723,7 +3723,6 @@ var
 begin
   if MessageDlg('Cancelar esta pré-venda?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
-    // Limpar_Tela;
     Cancelar;
     if vAutoLogoff then
       Solicitar_Login;
@@ -9827,7 +9826,7 @@ end;
 procedure TFrmPrincipalPreVenda.Cancelar;
 begin
   previsaoEntrega := StrToDate(vdata_banco);
-  CbPrevisao.Checked := True;
+//  CbPrevisao.Checked := True;
   idLiberacaoRestrincaoVenda := 0;
   cbxEntrega.Visible := False;
   possuiPermissaoVenderAbaixoDoCusto := False;
