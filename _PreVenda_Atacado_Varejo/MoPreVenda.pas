@@ -7778,13 +7778,14 @@ procedure TFrmPrincipalPreVenda.EdtLanctoKeyPress(Sender: TObject;
 begin
   if (Key = Char(42)) then
   begin
+    Key := #0;
     Consulta_prevenca := TConsulta_prevenca.Create(Application);
     try
-      FrmPrincipalPreVenda.Enabled := false;
-      Consulta_prevenca.Show;
+//      FrmPrincipalPreVenda.Enabled := false;
+      Consulta_prevenca.ShowModal;
     except
       Consulta_prevenca.Free;
-      FrmPrincipalPreVenda.Enabled := True;
+//      FrmPrincipalPreVenda.Enabled := True;
     end;
   end else if (Key = Char(27)) then
     BtnCancelar.Click

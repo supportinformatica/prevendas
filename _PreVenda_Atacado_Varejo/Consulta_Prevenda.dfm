@@ -1,4 +1,4 @@
-object Consulta_prevenca: TConsulta_prevenca
+﻿object Consulta_prevenca: TConsulta_prevenca
   Left = 265
   Top = 240
   BorderIcons = [biHelp]
@@ -17,7 +17,6 @@ object Consulta_prevenca: TConsulta_prevenca
   Position = poScreenCenter
   OnActivate = FormActivate
   OnClose = FormClose
-  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   DesignSize = (
@@ -27,13 +26,13 @@ object Consulta_prevenca: TConsulta_prevenca
   TextHeight = 13
   object Label2: TLabel
     Left = 582
-    Top = 423
+    Top = 422
     Width = 123
     Height = 13
     Anchors = [akRight, akBottom]
     Caption = 'Pressione "ESC" para sair'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
@@ -45,6 +44,19 @@ object Consulta_prevenca: TConsulta_prevenca
     Width = 29
     Height = 13
     Caption = 'Itens'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object LblValorBruto: TLabel
+    Left = 476
+    Top = 231
+    Width = 34
+    Height = 13
+    Caption = 'Valor:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
     Font.Height = -11
@@ -191,7 +203,6 @@ object Consulta_prevenca: TConsulta_prevenca
       OnChange = cbxVendedorChange
       OnClick = cbxVendedorClick
       OnKeyDown = cbxVendedorKeyDown
-      OnKeyPress = cbxVendedorKeyPress
     end
     object rbReferencia: TRadioButton
       Left = 253
@@ -1352,12 +1363,36 @@ object Consulta_prevenca: TConsulta_prevenca
     Connection = DModulo.Conexao
     CursorType = ctStatic
     Parameters = <>
-    Left = 382
-    Top = 120
+    Left = 374
+    Top = 168
+    object ADOQryConsultaLancamento: TIntegerField
+      FieldName = 'Lancamento'
+    end
+    object ADOQryConsultaData: TDateField
+      FieldName = 'Data'
+    end
+    object ADOQryConsultaValor: TFloatField
+      FieldName = 'Valor'
+    end
+    object ADOQryConsultaFrete: TFloatField
+      FieldName = 'Frete'
+    end
+    object ADOQryConsultaFormaPagamento: TStringField
+      FieldName = 'Forma Pagamento'
+    end
+    object ADOQryConsultaCliente: TStringField
+      FieldName = 'Cliente'
+    end
+    object ADOQryConsultaCodigo: TIntegerField
+      FieldName = 'Codigo'
+    end
+    object ADOQryConsultaReferência: TStringField
+      FieldName = 'Refer'#234'ncia'
+    end
   end
   object ADODsConsulta: TDataSource
     DataSet = ADOQryConsulta
-    Left = 350
+    Left = 302
     Top = 120
   end
   object ADOQryCupon: TADOQuery

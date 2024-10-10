@@ -38,6 +38,15 @@ type
     rbVendedor: TRadioButton;
     cbxVendedor: TComboBox;
     rbReferencia: TRadioButton;
+    LblValorBruto: TLabel;
+    ADOQryConsultaFrete: TFloatField;
+    ADOQryConsultaData: TDateField;
+    ADOQryConsultaFormaPagamento: TStringField;
+    ADOQryConsultaCodigo: TIntegerField;
+    ADOQryConsultaReferência: TStringField;
+    ADOQryConsultaValor: TFloatField;
+    ADOQryConsultaLancamento: TIntegerField;
+    ADOQryConsultaCliente: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure RgTipoClick(Sender: TObject);
@@ -63,7 +72,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure rbVendedorClick(Sender: TObject);
     procedure cbxVendedorChange(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure SgDadosKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word;
@@ -83,20 +91,17 @@ type
     procedure rbReferenciaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBGrid1KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure cbxVendedorKeyPress(Sender: TObject; var Key: Char);
     procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
     procedure DBGrid1DblClick(Sender: TObject);
   private
-  procedure monta_pedidos;
-  Procedure MontaProdutos;
-  Procedure LimpaGrid;
-  function getDescricaoProduto(codigo: integer): string;
-  function getNomePessoa(codigo: integer): string;
-  function getNomeVendedor(codigo:integer):string;
-  procedure FixarDataFiltroPrevenda;
-    { Private declarations }
+    procedure monta_pedidos;
+    Procedure MontaProdutos;
+    Procedure LimpaGrid;
+    function getDescricaoProduto(codigo: integer): string;
+    function getNomePessoa(codigo: integer): string;
+    function getNomeVendedor(codigo:integer):string;
+    procedure FixarDataFiltroPrevenda;
   public
-    { Public declarations }
     procedure MontaComboVendedor;
   end;
 
@@ -116,35 +121,31 @@ uses uFuncoesPadrao,  DataModulo, MoPreVenda, NEGLoja, DOMFuncionario,
 procedure TConsulta_prevenca.monta_pedidos;
 var i: integer;
 begin
-    Label1.Font.Color     := clBlack;
-    Label1.Caption        := 'Pré-Vendas e Orçamentos';
-    Caption               := 'Consulta Pré-Vendas e Orçamentos';
-    LblMdConsulta.Caption := 'Cliente';
-    // dimensões do edit
-//    EdtConsulta.Width       := 334;
-//    EdtConsulta.Height      := 24;
-//    RgTipo.Enabled          := True;
-//    DateTimePicker1.Visible := True;
+  Label1.Font.Color := clBlack;
+  Label1.Caption    := 'Pré-Vendas e Orçamentos';
+  Caption           := 'Consulta Pré-Vendas e Orçamentos';
+  LblMdConsulta.Caption := 'Cliente';
   if rbCliente.Checked then
   begin
     with ADOQryConsulta do
     begin
-      Sql.Text := 'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,    '+
-                  'REPLACE(CAST(O.vlValor AS VARCHAR),''.'','','') AS Valor,  '+
-                  'P.nmPessoa as Cliente,                                     '+
-                  'case O.dsFormatacao                                        '+
-                  'when ''0'' then ''À Vista''                                '+
-                  'when ''1'' then ''A Prazo''                                '+
-                  'when ''2'' then ''Cartão a Vista''                         '+
-                  'when ''3'' then ''Cartão Parcelado''                       '+
-                  'when ''4'' then ''Cheque Pré''                             '+
-                  'when ''5'' then ''Entrada + a Prazo''                      '+
-                  'when ''6'' then ''Entrada + Cartão''                       '+
-                  'when ''7'' then ''Entrada + Cheque Pré''                   '+
-                  'End as ''Forma Pagamento'',                                '+
-                  'P.cdPessoa as Codigo, O.dsReferencia AS Referência         '+
-                  'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK)      '+
-                  'Where P.cdPessoa = O.cdCliente and dtEmissao between :DATA1 AND :DATA2 ';
+      Sql.Text :=
+      'Select O.nrOrcamento as Lancamento, O.dtEmissao as Data, '+
+      'O.vlValor Valor, O.vlTaxaEntrega as Frete,               '+
+      'P.nmPessoa as Cliente,                                   '+
+      'case O.dsFormatacao                                      '+
+      'when ''0'' then ''À Vista''                              '+
+      'when ''1'' then ''A Prazo''                              '+
+      'when ''2'' then ''Cartão a Vista''                       '+
+      'when ''3'' then ''Cartão Parcelado''                     '+
+      'when ''4'' then ''Cheque Pré''                           '+
+      'when ''5'' then ''Entrada + a Prazo''                    '+
+      'when ''6'' then ''Entrada + Cartão''                     '+
+      'when ''7'' then ''Entrada + Cheque Pré''                 '+
+      'End as ''Forma Pagamento'',                              '+
+      'P.cdPessoa as Codigo, O.dsReferencia AS Referência       '+
+      'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK)    '+
+      'Where P.cdPessoa = O.cdCliente and dtEmissao between :DATA1 AND :DATA2 ';
       if NOT (FrmCancelamentoVenda.Possui_Permissao('854','V',FrmPrincipalPreVenda.cbxUsuario.Text,FrmPrincipalPreVenda.EdtUsuario.Text,false)) then begin
         Sql.Add('AND O.cdPessoa = :VENDEDOR');
         Parameters.ParamByName('VENDEDOR').Value := FrmPrincipalPreVenda.vcdVendedor;
@@ -159,36 +160,39 @@ begin
       Sql.Add('and O.vlvalor > 0  ');
       Sql.Add('Order by O.nrOrcamento desc,O.dtEmissao desc');
       Prepared;
-      Parameters.ParamByName('DATA1').Value := DateOf(DtIni.Date);  // - StrToInt(vDias)
-      Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);  // - StrToInt(vDias)
+      Parameters.ParamByName('DATA1').Value := DateOf(DtIni.Date);
+      Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);
       Open;
       MontaProdutos;
-      DbGrid1.Columns[1].Width      := 61;
-      DbGrid1.Columns[2].Width      := 60;
-      DbGrid1.Columns[3].Width      := 230;
+      DbGrid1.Columns[1].Width := 61;
+      DbGrid1.Columns[2].Width := 60;
+      DbGrid1.Columns[3].Width := 60;
+      DbGrid1.Columns[4].Width := 130;
+      DbGrid1.Columns[5].Width := 330;
       DbGrid1.Columns[2].Font.color := clRed;
     end;
-  end
-  else if rbProduto.Checked then
+  end else if rbProduto.Checked then
   begin
     with ADOQryConsulta do
     begin
-      Sql.Text := 'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,    '+
-                  'REPLACE(CAST(O.vlValor AS VARCHAR),''.'','','') AS Valor,  '+
-                  'P.nmPessoa as Cliente,                                     '+
-                  'case O.dsFormatacao                                        '+
-                  'when ''0'' then ''À Vista''                                '+
-                  'when ''1'' then ''A Prazo''                                '+
-                  'when ''2'' then ''Cartão a Vista''                         '+
-                  'when ''3'' then ''Cartão Parcelado''                       '+
-                  'when ''4'' then ''Cheque Pré''                             '+
-                  'when ''5'' then ''Entrada + a Prazo''                      '+
-                  'when ''6'' then ''Entrada + Cartão''                       '+
-                  'when ''7'' then ''Entrada + Cheque Pré''                   '+
-                  'End as ''Forma Pagamento'',                                '+
-                  'P.cdPessoa as Codigo,O.dsReferencia AS Referência           '+
-                  'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK), iteOrcamento I, produto PROD '+
-                  'Where O.cdPessoa = :VENDEDOR AND P.cdPessoa = O.cdCliente and dtEmissao between :DATA1 and :DATA2 and I.nrorcamento = O.nrOrcamento and I.cdproduto = PROD.cdproduto ';
+      Sql.Text :=
+      'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,  '+
+      'O.vlValor as Valor, O.vlTaxaEntrega as Frete,            '+
+      'P.nmPessoa as Cliente,                                   '+
+      'case O.dsFormatacao                                      '+
+      'when ''0'' then ''À Vista''                              '+
+      'when ''1'' then ''A Prazo''                              '+
+      'when ''2'' then ''Cartão a Vista''                       '+
+      'when ''3'' then ''Cartão Parcelado''                     '+
+      'when ''4'' then ''Cheque Pré''                           '+
+      'when ''5'' then ''Entrada + a Prazo''                    '+
+      'when ''6'' then ''Entrada + Cartão''                     '+
+      'when ''7'' then ''Entrada + Cheque Pré''                 '+
+      'End as ''Forma Pagamento'',                              '+
+      'P.cdPessoa Codigo, O.dsReferencia as Referência          '+
+      'From Orcamento O WITH (NOLOCK), Pessoa P WITH (NOLOCK),  '+
+      'IteOrcamento I, Produto PROD                             '+
+      'Where O.cdPessoa = :VENDEDOR AND P.cdPessoa = O.cdCliente and dtEmissao between :DATA1 and :DATA2 and I.nrorcamento = O.nrOrcamento and I.cdproduto = PROD.cdproduto ';
       case RgTipo.ItemIndex of
         0: Sql.Add('and dsImpresso = ''N'' ');
         1: Sql.Add('and dsImpresso = ''S'' ');
@@ -204,34 +208,36 @@ begin
       Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);  // - StrToInt(vDias)
       Open;
       MontaProdutos;
-      DbGrid1.Columns[1].Width       := 61;
-      DbGrid1.Columns[2].Width       := 60;
-      DbGrid1.Columns[3].Width       := 230;
-      DbGrid1.Columns[2].Font.color  := clRed;
+      DbGrid1.Columns[1].Width := 61;
+      DbGrid1.Columns[2].Width := 60;
+      DbGrid1.Columns[3].Width := 60;
+      DbGrid1.Columns[4].Width := 130;
+      DbGrid1.Columns[5].Width := 330;
+      DbGrid1.Columns[2].Font.color := clRed;
     end;
-  end else
-  if rbVendedor.Checked then
+  end else if rbVendedor.Checked then
   begin
     with ADOQryConsulta do
     begin
-      Sql.Text := 'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,    '+
-                  'REPLACE(CAST(O.vlValor AS VARCHAR),''.'','','') AS Valor,  '+
-                  'P.nmPessoa as Cliente,                                     '+
-                  'case O.dsFormatacao                                        '+
-                  'when ''0'' then ''À Vista''                                '+
-                  'when ''1'' then ''A Prazo''                                '+
-                  'when ''2'' then ''Cartão a Vista''                         '+
-                  'when ''3'' then ''Cartão Parcelado''                       '+
-                  'when ''4'' then ''Cheque Pré''                             '+
-                  'when ''5'' then ''Entrada + a Prazo''                      '+
-                  'when ''6'' then ''Entrada + Cartão''                       '+
-                  'when ''7'' then ''Entrada + Cheque Pré''                   '+
-                  'End as ''Forma Pagamento'',                                '+
-                  'P.cdPessoa as Codigo,O.dsReferencia AS Referência          '+
-                  'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),     '+
-                  'Pessoa Func WITH(NOLOCK)                                   '+
-                  'Where P.cdPessoa = O.cdCliente and Func.cdPessoa = O.cdPessoa and '+
-                  'dtEmissao between :DATA1 AND :DATA2 ';
+      Sql.Text :=
+      'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,  '+
+      'O.vlValor Valor, O.vlTaxaEntrega as Frete,               '+
+      'P.nmPessoa as Cliente,                                   '+
+      'case O.dsFormatacao                                      '+
+      'when ''0'' then ''À Vista''                              '+
+      'when ''1'' then ''A Prazo''                              '+
+      'when ''2'' then ''Cartão a Vista''                       '+
+      'when ''3'' then ''Cartão Parcelado''                     '+
+      'when ''4'' then ''Cheque Pré''                           '+
+      'when ''5'' then ''Entrada + a Prazo''                    '+
+      'when ''6'' then ''Entrada + Cartão''                     '+
+      'when ''7'' then ''Entrada + Cheque Pré''                 '+
+      'End as ''Forma Pagamento'',                              '+
+      'P.cdPessoa as Codigo,O.dsReferencia AS Referência        '+
+      'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK),   '+
+      'Pessoa Func WITH(NOLOCK)                                 '+
+      'Where P.cdPessoa = O.cdCliente and Func.cdPessoa = O.cdPessoa '+
+      'and dtEmissao between :DATA1 AND :DATA2 ';
       case RgTipo.ItemIndex of
         0: Sql.Add('and dsImpresso = ''N'' ');
         1: Sql.Add('and dsImpresso = ''S'' ');
@@ -247,9 +253,11 @@ begin
       Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);  // - StrToInt(vDias)
       Open;
       MontaProdutos;
-      DbGrid1.Columns[1].Width      := 61;
-      DbGrid1.Columns[2].Width      := 60;
-      DbGrid1.Columns[3].Width      := 230;
+      DbGrid1.Columns[1].Width := 61;
+      DbGrid1.Columns[2].Width := 60;
+      DbGrid1.Columns[3].Width := 60;
+      DbGrid1.Columns[4].Width := 130;
+      DbGrid1.Columns[5].Width := 330;
       DbGrid1.Columns[2].Font.color := clRed;
     end;
   end else
@@ -257,22 +265,22 @@ begin
   begin
     with ADOQryConsulta do
     begin
-      Sql.Text := 'Select O.nrOrcamento as Lancamento,O.dtEmissao as Data,    '+
-                  'REPLACE(CAST(O.vlValor AS VARCHAR),''.'','','') AS Valor,  '+
-                  'P.nmPessoa as Cliente,                                     '+
-                  'case O.dsFormatacao                                        '+
-                  'when ''0'' then ''À Vista''                                '+
-                  'when ''1'' then ''A Prazo''                                '+
-                  'when ''2'' then ''Cartão a Vista''                         '+
-                  'when ''3'' then ''Cartão Parcelado''                       '+
-                  'when ''4'' then ''Cheque Pré''                             '+
-                  'when ''5'' then ''Entrada + a Prazo''                      '+
-                  'when ''6'' then ''Entrada + Cartão''                       '+
-                  'when ''7'' then ''Entrada + Cheque Pré''                   '+
-                  'End as ''Forma Pagamento'',                                '+
-                  'P.cdPessoa as Codigo,O.dsReferencia AS Referência          '+
-                  'From Orcamento O WITH (NOLOCK),Pessoa P WITH (NOLOCK)      '+
-                  'Where O.cdPessoa = :VENDEDOR AND P.cdPessoa = O.cdCliente and dtEmissao between :DATA1 AND :DATA2 ';
+      Sql.Text :=
+      'Select O.nrOrcamento as Lancamento, O.dtEmissao as Data, '+
+      'O.vlValor Valor, O.vlTaxaEntrega as Frete,               '+
+      'P.nmPessoa as Cliente,                                   '+
+      'case O.dsFormatacao                                      '+
+      'when ''0'' then ''À Vista''                              '+
+      'when ''1'' then ''A Prazo''                              '+
+      'when ''2'' then ''Cartão a Vista''                       '+
+      'when ''3'' then ''Cartão Parcelado''                     '+
+      'when ''4'' then ''Cheque Pré''                           '+
+      'when ''5'' then ''Entrada + a Prazo''                    '+
+      'when ''6'' then ''Entrada + Cartão''                     '+
+      'when ''7'' then ''Entrada + Cheque Pré''                 '+
+      'End as ''Forma Pagamento'',                              '+
+      'Where O.cdPessoa = :VENDEDOR AND P.cdPessoa = O.cdCliente '+
+      'and dtEmissao between :DATA1 AND :DATA2 ';
       case RgTipo.ItemIndex of
         0: Sql.Add('and dsImpresso = ''N'' ');
         1: Sql.Add('and dsImpresso = ''S'' ');
@@ -282,27 +290,36 @@ begin
       Sql.Add('and O.dsReferencia like '+ QuotedStr(EdtConsulta.Text+'%') +' ');
       Sql.Add('and O.vlvalor > 0  ');
       Sql.Add('Order by O.nrOrcamento desc,O.dtEmissao desc');
-      Prepared;
       Parameters.ParamByName('VENDEDOR').Value := FrmPrincipalPreVenda.vcdVendedor;
-      Parameters.ParamByName('DATA1').Value := DateOf(DtIni.Date);  // - StrToInt(vDias)
-      Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);  // - StrToInt(vDias)
+      Parameters.ParamByName('DATA1').Value := DateOf(DtIni.Date);
+      Parameters.ParamByName('DATA2').Value := DateOf(DtFim.Date);
       Open;
       MontaProdutos;
-      DbGrid1.Columns[1].Width      := 61;
-      DbGrid1.Columns[2].Width      := 60;
-      DbGrid1.Columns[3].Width      := 230;
+      DbGrid1.Columns[1].Width := 61;
+      DbGrid1.Columns[2].Width := 60;
+      DbGrid1.Columns[3].Width := 60;
+      DbGrid1.Columns[4].Width := 130;
+      DbGrid1.Columns[5].Width := 330;
       DbGrid1.Columns[2].Font.color := clRed;
     end;
   end;
+  ADOQryConsultaValor.DisplayFormat := '0.00';
+  ADOQryConsultaFrete.DisplayFormat := '0.00';
   {abaixo se nao for do grupo LITORAL eu oculto a referencia da prevenda}
-      if (FrmPrincipalPreVenda.dsCGC <> '11334892000183') and (FrmPrincipalPreVenda.dsCGC <> '09540332000133')
-        and (FrmPrincipalPreVenda.dsCGC <> '02751835000109') and (FrmPrincipalPreVenda.dsCGC <> '14223073000157') then
-          ADOQryConsulta.FieldByName('Referência').Visible := False;
+  if (FrmPrincipalPreVenda.dsCGC <> '11334892000183') and (FrmPrincipalPreVenda.dsCGC <> '09540332000133')
+    and (FrmPrincipalPreVenda.dsCGC <> '02751835000109') and (FrmPrincipalPreVenda.dsCGC <> '14223073000157') then
+      ADOQryConsulta.FieldByName('Referência').Visible := False;
+  if ADOQryConsulta.RecordCount > 0 then
+    LblValorBruto.Caption := 'Valor total + frete: ' + FormatFloat('0.00', ADOQryConsulta.FieldByName('valor').AsCurrency +
+                                                                         ADOQryConsulta.FieldByName('Frete').AsCurrency)
+  else
+    LblValorBruto.Caption := 'Valor total + frete: ';
 end;
 
 procedure TConsulta_prevenca.rbReferenciaClick(Sender: TObject);
 begin
-  if rbReferencia.Checked = true then begin
+  if rbReferencia.Checked = true then
+  begin
     rbProduto.Checked := not rbReferencia.Checked;
     rbVendedor.Checked := not rbReferencia.Checked;
     EdtConsulta.Visible := rbReferencia.Checked;
@@ -329,9 +346,8 @@ begin
   LblEnvelope.Caption := '';
   DtIni.Date := FrmPrincipalPreVenda.PegaDatabanco;
   DtFim.Date := FrmPrincipalPreVenda.PegaDatabanco;
-//  monta_pedidos;
-//  MontaProdutos;
-  With SgDados do begin
+  With SgDados do
+  begin
     Cells[0,0] := 'Descrição';
     Cells[1,0] := 'Qtd';
     Cells[2,0] := 'Valor';
@@ -346,8 +362,6 @@ end;
 
 procedure TConsulta_prevenca.FormShow(Sender: TObject);
 begin
-  //if (UPPERCASE(vEmpresa) = 'MEGA') then
-  //  FixarDataFiltroPrevenda;
   Monta_pedidos;
   MontaProdutos;
   EdtConsulta.SetFocus;
@@ -359,23 +373,20 @@ begin
   Action := caFree;
   if FrmPrincipalPrevenda.Enabled = false then
     FrmPrincipalPrevenda.Enabled := True;
-  if FrmPrincipalPrevenda.EdtLancto.Enabled = True then FrmPrincipalPrevenda.EdtLancto.SetFocus;
-end;
-
-procedure TConsulta_prevenca.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
-begin
-//
+  if FrmPrincipalPrevenda.EdtLancto.Enabled = True then
+    FrmPrincipalPrevenda.EdtLancto.SetFocus;
 end;
 
 procedure TConsulta_prevenca.RgTipoClick(Sender: TObject);
 begin
-  if (UPPERCASE(vEmpresa) = 'MEGA_OLD') then begin
-    if RgTipo.ItemIndex = 1 then begin
+  if (UPPERCASE(vEmpresa) = 'MEGA_OLD') then
+  begin
+    if RgTipo.ItemIndex = 1 then
+    begin
       DtIni.Enabled := True;
       DtFim.Enabled := True;
-    end
-    else begin
+    end else
+    begin
       DtIni.Enabled := False;
       DtFim.Enabled := False;
       FixarDataFiltroPrevenda;
@@ -386,9 +397,8 @@ begin
   if rbVendedor.Checked = true then
     cbxVendedor.SetFocus
   else
-     EdtConsulta.SetFocus;
+    EdtConsulta.SetFocus;
 end;
-
 
 procedure TConsulta_prevenca.SgDadosKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -414,23 +424,17 @@ end;
 
 procedure TConsulta_prevenca.BtnMdPrimeiroClick(Sender: TObject);
 begin
-  ADOQryConsulta.First; // Primeiro registro
-//  if FrmCupom.vauxi = '1' then
-   // EdtDesconto.Text := FormatFloat('0.00',ADOQryConsulta.FieldByName('Desconto').AsFloat);
+  ADOQryConsulta.First;
 end;
 
 procedure TConsulta_prevenca.BtnMdAnteriorClick(Sender: TObject);
 begin
-  ADOQryConsulta.Prior; // Registro Anterior
-//  if FrmCupom.vauxi = '1' then
-   // EdtDesconto.Text := FormatFloat('0.00',ADOQryConsulta.FieldByName('Desconto').AsFloat);
+  ADOQryConsulta.Prior;
 end;
 
 procedure TConsulta_prevenca.BtnMdUltimoClick(Sender: TObject);
 begin
-  ADOQryConsulta.Last; // Ultimo registro
-//  if FrmCupom.vauxi = '1' then
-   // EdtDesconto.Text := FormatFloat('0.00',ADOQryConsulta.FieldByName('Desconto').AsFloat);
+  ADOQryConsulta.Last;
 end;
 
 procedure TConsulta_prevenca.cbxVendedorChange(Sender: TObject);
@@ -448,12 +452,6 @@ procedure TConsulta_prevenca.cbxVendedorKeyDown(Sender: TObject; var Key: Word;
 begin
   if VK_ESCAPE  = key then
     Close;
-end;
-
-procedure TConsulta_prevenca.cbxVendedorKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-//
 end;
 
 procedure TConsulta_prevenca.DtFimKeyDown(Sender: TObject; var Key: Word;
@@ -477,10 +475,7 @@ end;
 
 Procedure TConsulta_prevenca.EdtConsultaChange(Sender: TObject);
 begin
-//  edtCodigo.Clear;
-  
   monta_pedidos;
-//  MontaProdutos;
 end;
 
 function TConsulta_Prevenca.getDescricaoProduto(codigo:integer):string;
@@ -495,9 +490,9 @@ begin
     parameters.parambyname('codigo').value := codigo;
     open;
     if recordcount > 0 then
-       result := fieldbyname('descricao').AsString
+      result := fieldbyname('descricao').AsString
     else
-       result := '';
+      result := '';
   end;
   freeandnil(query);
 end;
@@ -514,9 +509,9 @@ begin
     parameters.parambyname('codigo').value := codigo;
     open;
     if recordcount > 0 then
-       result := fieldbyname('nome').AsString
+      result := fieldbyname('nome').AsString
     else
-       result := '';
+      result := '';
   end;
   freeandnil(query);
 end;
@@ -533,19 +528,19 @@ begin
     parameters.parambyname('codigo').value := codigo;
     open;
     if recordcount > 0 then
-       result := fieldbyname('nome').AsString
+      result := fieldbyname('nome').AsString
     else
-       result := '';
+      result := '';
   end;
   freeandnil(query);
 end;
-
 
 Procedure TConsulta_Prevenca.EdtConsultaKeyPress(Sender: TObject;
   var Key: Char);
 begin
   edtcodigo.clear;
-  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then begin   // enter
+  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then
+  begin
     FrmPrincipalPreVenda.Enabled := True;
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
     FrmPrincipalPreVenda.Enabled := True;
@@ -556,7 +551,8 @@ begin
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     close;
   end;
-  if Key = Char(27) then begin   // ESC
+  if Key = Char(27) then
+  begin
     FrmPrincipalPreVenda.Enabled := True;
     if FrmPrincipalPreVenda.EdtLancto.Text = '*' then
       FrmPrincipalPreVenda.EdtLancto.Clear;
@@ -569,19 +565,19 @@ procedure TConsulta_prevenca.FixarDataFiltroPrevenda;
 var
   query : TADOQuery;
 begin
-    DtIni.Enabled := False;
-    DtFim.Enabled := False;
-    query := TADOQuery.Create(self);
-    query.Connection := DModulo.Conexao;
-    with query do
-    begin
-      SQL.Text := 'SELECT CAST(CAST(YEAR(GETDATE()) AS VARCHAR) + ''-'' + CAST(MONTH(GETDATE()) AS VARCHAR)+ '+
-           ' ''-1'' AS DATETIME) DTINI, GETDATE() DTFIM';
-      open;
-      DtIni.Date := FieldByName('DTINI').AsDateTime;
-      DtFim.Date := FieldByName('DTFIM').AsDateTime;
-    end;
-    freeandnil(query);
+  DtIni.Enabled := False;
+  DtFim.Enabled := False;
+  query := TADOQuery.Create(self);
+  query.Connection := DModulo.Conexao;
+  with query do
+  begin
+    SQL.Text := 'SELECT CAST(CAST(YEAR(GETDATE()) AS VARCHAR) + ''-'' + CAST(MONTH(GETDATE()) AS VARCHAR)+ '+
+         ' ''-1'' AS DATETIME) DTINI, GETDATE() DTFIM';
+    open;
+    DtIni.Date := FieldByName('DTINI').AsDateTime;
+    DtFim.Date := FieldByName('DTFIM').AsDateTime;
+  end;
+  freeandnil(query);
 end;
 
 procedure TConsulta_prevenca.FormActivate(Sender: TObject);
@@ -608,15 +604,18 @@ end;
 procedure TConsulta_Prevenca.MontaProdutos;
 var I : Integer;
 begin
-  if AdoQryConsulta.RecordCount > 0 then begin
-    With ADOQryProcura do begin
-      Sql.Text := 'Select O.cdPessoa,O.nrOrcamento,O.cdCliente,O.dsImpresso,P.nmProduto, '+
-                  'I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,O.dsChave, Vendedor.nmPessoa '+
-                  'From Orcamento O WITH (NOLOCK),IteOrcamento I WITH (NOLOCK),Produto P WITH (NOLOCK), Pessoa Vendedor WITH(NOLOCK) '+
-                  'Where O.nrOrcamento = :LANCTO               '+
-                  'and I.dsSituacao <> ''C''                                            '+
-                  'and O.nrOrcamento = I.nrOrcamento and I.cdproduto = P.cdProduto      '+
-                  'and O.cdPessoa = Vendedor.cdPessoa ';
+  if AdoQryConsulta.RecordCount > 0 then
+  begin
+    With ADOQryProcura do
+    begin
+      Sql.Text :=
+      'Select O.cdPessoa,O.nrOrcamento,O.cdCliente,O.dsImpresso, P.nmProduto,'+
+      'I.cdProduto,O.dtEmissao,I.NrQtd,I.vlPreco,O.nrDesconto,O.dsChave, Vendedor.nmPessoa '+
+      'From Orcamento O WITH (NOLOCK),IteOrcamento I WITH (NOLOCK),Produto P WITH (NOLOCK),'+
+      'Pessoa Vendedor WITH (NOLOCK)                                   '+
+      'Where O.nrOrcamento = :LANCTO and I.dsSituacao <> ''C''         '+
+      'and O.nrOrcamento = I.nrOrcamento and I.cdproduto = P.cdProduto '+
+      'and O.cdPessoa = Vendedor.cdPessoa ';
       Parameters.ParamByName('LANCTO').Value := AdoQryConsulta.FieldByName('Lancamento').asString;
       case RgTipo.ItemIndex of
         0: Sql.Add('and dsImpresso = ''N'' ');
@@ -625,50 +624,55 @@ begin
         3: Sql.Add('and dsImpresso in (''O'',''N'',''S'')');
       end;
       Open;
-//      FrmPrincipalPreVenda.ADOQryNome.Open;
-//      FrmPrincipalPreVenda.ADOQryNome.Locate('cdPessoa',ADOQryProcura.FieldByName('cdPessoa').AsString,[]);
       Label4.caption := 'Vendedor : ' + FieldByName('nmPessoa').AsString;
       LimpaGrid;
-      for i := 1 to ADOQryProcura.RecordCount do begin
+      for i := 1 to ADOQryProcura.RecordCount do
+      begin
         SgDados.Cells[0,i] := ADOQryProcura.FieldByName('nmProduto').AsString;
         SgDados.Cells[1,i] := FormatFloat('0.00',ADOQryProcura.FieldByName('nrQtd').AsFloat);
         SgDados.Cells[2,i] := FormatFloat('0.00',(ADOQryProcura.FieldByName('nrQtd').AsFloat *
           ADOQryProcura.FieldByName('vlPreco').AsFloat));
         ADOQryProcura.Next;
       end;
+      if ADOQryConsulta.RecordCount > 0 then
+        LblValorBruto.Caption := 'Valor total + frete: ' + FormatFloat('0.00', ADOQryConsulta.FieldByName('valor').AsCurrency +
+                                                                             ADOQryConsulta.FieldByName('Frete').AsCurrency)
+      else
+        LblValorBruto.Caption := 'Valor total + frete: ';
     end;
-  end
-  else
+  end else
   begin
-      Label4.caption := 'Vendedor : ';
-      LimpaGrid;
+    Label4.caption := 'Vendedor : ';
+    LimpaGrid;
   end;
 end;
 
 procedure TConsulta_prevenca.LimpaGrid;
 var I,C: Integer;
 begin
-  For I := 1 to SgDados.RowCount do //limpa grid Pecas
+  for I := 1 to SgDados.RowCount do
     for C := 0 to SgDados.ColCount do
       SgDados.Cells[C,I] := '';
 end;
 
 procedure TConsulta_prevenca.DBGrid1CellClick(Column: TColumn);
 begin
-  if rbVendedor.Checked = true then begin
-    //cbxVendedor.SelectAll;
-    //cbxVendedor.SetFocus;
-  end
-  else begin
-    //EdtConsulta.SelectAll;
-    //EdtConsulta.SetFocus;
-  end;
+//  if rbVendedor.Checked = true then
+//  begin
+//    //cbxVendedor.SelectAll;
+//    //cbxVendedor.SetFocus;
+//  end else
+//  begin
+//    //EdtConsulta.SelectAll;
+//    //EdtConsulta.SetFocus;
+//  end;
   MontaProdutos;
 end;
 
 procedure TConsulta_prevenca.DBGrid1DblClick(Sender: TObject);
 begin
-  if (ADOQryConsulta.RecordCount > 0) then begin   // enter
+  if (ADOQryConsulta.RecordCount > 0) then
+  begin   // enter
     FrmPrincipalPreVenda.Enabled := True;
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
     FrmPrincipalPreVenda.Enabled := True;
@@ -743,7 +747,8 @@ end;
 
 procedure TConsulta_prevenca.rbProdutoClick(Sender: TObject);
 begin
-  if rbProduto.Checked = true then begin
+  if rbProduto.Checked = true then
+  begin
     rbCliente.Checked := not rbProduto.Checked;
     rbVendedor.Checked := not rbProduto.Checked;
     rbReferencia.Checked := not rbProduto.Checked;
@@ -761,7 +766,8 @@ end;
 
 procedure TConsulta_prevenca.rbVendedorClick(Sender: TObject);
 begin
-  if rbVendedor.Checked = true then begin
+  if rbVendedor.Checked = true then
+  begin
     rbCliente.Checked := not rbVendedor.Checked;
     rbProduto.Checked := not rbVendedor.Checked;
     rbReferencia.Checked := not rbVendedor.Checked;
@@ -796,7 +802,8 @@ end;
 procedure TConsulta_prevenca.edtCodigoKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then begin   // enter
+  if (Key = Char(13)) and (ADOQryConsulta.RecordCount > 0) then
+  begin   // enter
     FrmPrincipalPreVenda.Enabled := True;
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
     FrmPrincipalPreVenda.Enabled := True;
@@ -806,7 +813,8 @@ begin
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     close;
   end;
-  if Key = Char(27) then begin   // ESC
+  if Key = Char(27) then
+  begin   // ESC
     FrmPrincipalPreVenda.Enabled := True;
     if FrmPrincipalPreVenda.EdtLancto.Text = '*' then
       FrmPrincipalPreVenda.EdtLancto.Clear;
@@ -829,14 +837,14 @@ end;
 procedure TConsulta_prevenca.edtCodigoChange(Sender: TObject);
 begin
   if edtcodigo.Focused then
-     if rbCliente.Checked then
-        EdtConsulta.Text := getNomePessoa(strToIntDef(edtCodigo.Text, -1))
-     else
-     if rbProduto.Checked then
-        EdtConsulta.Text := getDescricaoProduto(strToIntDef(edtCodigo.Text, -1))
-     else
-     if rbVendedor.Checked then
-        EdtConsulta.Text := getNomeVendedor(strToIntDef(edtCodigo.Text, -1));
+  begin
+    if rbCliente.Checked then
+      EdtConsulta.Text := getNomePessoa(strToIntDef(edtCodigo.Text, -1))
+    else if rbProduto.Checked then
+      EdtConsulta.Text := getDescricaoProduto(strToIntDef(edtCodigo.Text, -1))
+    else if rbVendedor.Checked then
+      EdtConsulta.Text := getNomeVendedor(strToIntDef(edtCodigo.Text, -1));
+  end;
 end;
 
 end.
