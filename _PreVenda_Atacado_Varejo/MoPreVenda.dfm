@@ -1563,7 +1563,7 @@
       OnKeyPress = EdtConsultaKeyPress
       OnKeyUp = EdtConsultaKeyUp
     end
-    object CheckBox1: TCheckBox
+    object ckbAtivos: TCheckBox
       Left = 6
       Top = 7
       Width = 162
@@ -1581,8 +1581,8 @@
       ParentFont = False
       State = cbChecked
       TabOrder = 0
-      OnClick = CheckBox1Click
-      OnEnter = CheckBox1Enter
+      OnClick = ckbAtivosClick
+      OnEnter = ckbAtivosEnter
     end
     object EdtPreco: TEdit
       Left = 549
@@ -1627,6 +1627,7 @@
       ParentFont = False
       State = cbChecked
       TabOrder = 8
+      OnClick = CbPrevisaoClick
     end
     object EdtDescUnit: TEdit
       Left = 476

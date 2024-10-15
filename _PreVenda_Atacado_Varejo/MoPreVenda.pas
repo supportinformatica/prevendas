@@ -209,7 +209,7 @@ type
     Label21: TLabel;
     EdtQtd: TEdit;
     EdtConsulta: TEdit;
-    CheckBox1: TCheckBox;
+    ckbAtivos: TCheckBox;
     EdtPreco: TEdit;
     CbPrevisao: TCheckBox;
     EdtDescUnit: TEdit;
@@ -324,8 +324,8 @@ type
     procedure BtnAprazoClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure BtnSairClick(Sender: TObject);
-    procedure CheckBox1Click(Sender: TObject);
-    procedure CheckBox1Enter(Sender: TObject);
+    procedure ckbAtivosClick(Sender: TObject);
+    procedure ckbAtivosEnter(Sender: TObject);
     procedure RadioGroup1Click(Sender: TObject);
     procedure EdtConsultaChange(Sender: TObject);
     procedure Banese1Click(Sender: TObject);
@@ -450,6 +450,7 @@ type
     procedure SgDadosKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DtLanctoChange(Sender: TObject);
+    procedure CbPrevisaoClick(Sender: TObject);
 
   private
 
@@ -2049,7 +2050,7 @@ begin
   LiberaCopia;
   if UpperCase(vEmpresa) = 'MEGA' then
   // Mega móveis pediu para não permitir desmarcar o checkBox1. Protocolo 33228
-    CheckBox1.Visible := false;
+    ckbAtivos.Visible := false;
   if (SoNumeros(dsCGC) = '03643774000129') then
   // esse cliente Torrone quer q a data fique aberta
     DtLancto.Enabled := True;
@@ -6650,7 +6651,7 @@ begin
     end
     else
       Parameters.ParamByName('@DESCONTO').Value := 1;
-    if CheckBox1.Checked = false then
+    if ckbAtivos.Checked = false then
       Parameters.ParamByName('@DSATIVO').Value := '%'
     else
       Parameters.ParamByName('@DSATIVO').Value := 'S';
@@ -6738,7 +6739,7 @@ begin
   end;
 end;
 
-procedure TFrmPrincipalPreVenda.CheckBox1Click(Sender: TObject);
+procedure TFrmPrincipalPreVenda.ckbAtivosClick(Sender: TObject);
 var
   textoConsulta_temp : string;
 begin
@@ -6751,7 +6752,7 @@ begin
   EdtConsulta.Setfocus;
 end;
 
-procedure TFrmPrincipalPreVenda.CheckBox1Enter(Sender: TObject);
+procedure TFrmPrincipalPreVenda.ckbAtivosEnter(Sender: TObject);
 begin
   if vFlag = '1' then
     EdtConsulta.Setfocus;
@@ -8086,7 +8087,7 @@ begin
     ADOSPConsulta.Filtered := False;
     Close;
     Parameters.ParamByName('@DSATIVO').Value := 'S';
-    if CheckBox1.Checked = false then
+    if ckbAtivos.Checked = false then
       Parameters.ParamByName('@DSATIVO').Value := Null;
     Parameters.ParamByName('@ATACADOVAREJO').Value := vAtacadoVarejo;
     Parameters.ParamByName('@CDTABELAPRECO').Value := cdTabelaPreco;
@@ -24127,6 +24128,11 @@ begin
   setLabel23(QuantidadeDispNoLote(lote, cdProduto, cdFabricanteLote,EdtLancto.Text));
 end;
 
+procedure TFrmPrincipalPreVenda.CbPrevisaoClick(Sender: TObject);
+begin
+  persistirFormulario;
+end;
+
 // coloca no caption do label23 a quantidade disponível no lote selecionado
 procedure TFrmPrincipalPreVenda.setLabel23(quantidade: Real);
 begin
@@ -33402,14 +33408,9 @@ begin
   end;
 end;
 
-
-
-{
-  ###############################################################
+{ ###############################################################
   ################## FIM DOS MÉTODOS DE ETIQUETAS ###############
-  ###############################################################
-}
-
+  ###############################################################  }
 
 procedure TFrmPrincipalPreVenda.persistirFormulario;
 var
@@ -33419,29 +33420,33 @@ begin
   nomeFormulario := self.Name;
   persistirForm(nomeFormulario, 'chkOcultarProdutosSemEstoque.checked',
     BoolToStr(chkOcultarProdutosSemEstoque.Checked, false), Arquivo);
+  persistirForm(nomeFormulario, 'CbPrevisao.checked',
+    BoolToStr(CbPrevisao.Checked, false), Arquivo);
 end;
 
 procedure TFrmPrincipalPreVenda.verificaLucro(PorcCustoTotal : real; Inicializar : boolean = false);
 begin
-  if Inicializar = true then begin
+  if Inicializar = true then
+  begin
     Image2.Picture := imgTransparente.Picture;
     Image3.Picture := imgTransparente.Picture;
     Image4.Picture := imgTransparente.Picture;
-  end
-  else begin
-    if PorcCustoTotal <= 0 then begin
+  end else
+  begin
+    if PorcCustoTotal <= 0 then
+    begin
       //Result := 'Fraca';
       Image2.Picture := imgBaixa.Picture;
       Image3.Picture := imgTransparente.Picture;
       Image4.Picture := imgTransparente.Picture;
-    end
-    else if (PorcCustoTotal > 5) then begin
+    end else if (PorcCustoTotal > 5) then
+    begin
       //Result := 'Forte';
       Image2.Picture := imgTransparente.Picture;
       Image3.Picture := imgTransparente.Picture;
       Image4.Picture := imgAlta.Picture;
-    end
-    else if (PorcCustoTotal > 0) and (PorcCustoTotal < 4.99) then begin
+    end else if (PorcCustoTotal > 0) and (PorcCustoTotal < 4.99) then
+    begin
       //Result := 'Média';
       Image2.Picture := imgTransparente.Picture;
       Image3.Picture := imgNormal.Picture;
@@ -33452,15 +33457,15 @@ begin
   FrmPrincipalPreVenda.Width := FrmPrincipalPreVenda.Width - 1;
 end;
 
-
 procedure TFrmPrincipalPreVenda.persistirUltimoEstadoForm;
 var
   nomeFormulario: string;
 begin
   nomeFormulario := self.Name;
-  chkOcultarProdutosSemEstoque.Checked :=
-    StrToBoolDef(ReadSupportIni(nomeFormulario,
+  chkOcultarProdutosSemEstoque.Checked := StrToBoolDef(ReadSupportIni(nomeFormulario,
     'chkOcultarProdutosSemEstoque.checked', ''), false);
+  CbPrevisao.Checked := StrToBoolDef(ReadSupportIni(nomeFormulario,
+    'CbPrevisao.checked', ''), false);
 end;
 
 { TDBGrid }
@@ -33482,7 +33487,6 @@ end;
 initialization
 
 vLimiteCasasPreco := 0;
-
 // RLConsts.SetVersion(3, 71, 'B');
 
 end.
