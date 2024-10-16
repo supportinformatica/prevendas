@@ -322,7 +322,10 @@ var
   temp : Currency;
 begin
   temp := 0;
-  temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlDesconto').asFloat, MoPreVenda.vCasasPreco*-1));
+  if ADOSPRelDados.FieldByName('vlPreco').AsCurrency <= ADOSPRelDados.FieldByName('vlDesconto').AsCurrency then
+    temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlDesconto').asFloat, MoPreVenda.vCasasPreco*-1))
+  else // acrescimo
+    temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
   temp := SimpleRoundTo(temp, -2);
   totalBruto := totalBruto + temp;
   temp := 0;

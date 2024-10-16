@@ -6532,6 +6532,7 @@ begin
     [mbYes, mbNo], 0) = mrYes then
   begin
     // ********* esconde a barra
+    persistirFormulario;
     StrPCopy(@wndClass[0], 'Shell_TrayWnd');
     wndHandle := FindWindow(@wndClass[0], nil);
     ShowWindow(wndHandle, SW_RESTORE);
@@ -8859,7 +8860,7 @@ procedure TFrmPrincipalPreVenda.chkOcultarProdutosSemEstoqueClick
 var
   textoConsulta_temp : string;
 begin
-  persistirFormulario;
+//  persistirFormulario;
   textoConsulta_temp := EdtConsulta.Text;
   EdtConsulta.Text := '';
   AtualizaQryConsulta;
@@ -24130,7 +24131,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.CbPrevisaoClick(Sender: TObject);
 begin
-  persistirFormulario;
+//  persistirFormulario;
 end;
 
 // coloca no caption do label23 a quantidade disponível no lote selecionado
@@ -26404,7 +26405,6 @@ var
   vqtd: Real;
   p: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26412,8 +26412,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -26560,8 +26558,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaIMA;
 var
   L: Integer;
@@ -26569,7 +26565,6 @@ var
   vqtd: Real;
   p: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26577,16 +26572,12 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26651,7 +26642,6 @@ var
   vqtd: Real;
   p: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26659,8 +26649,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -26732,7 +26720,6 @@ var
   vqtd: Real;
   p: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26740,8 +26727,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -26887,15 +26872,12 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaSAOJOAO;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26903,8 +26885,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -26955,7 +26935,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -26963,8 +26942,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -27020,61 +26997,6 @@ begin
     Editor.Lines.Add('Q400,16');
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('P1,' + FormatFloat('0000', vqtd));
-
-    // Editor.Lines.Add('N');
-    // Editor.Lines.Add('R0,0');
-    // Editor.Lines.Add('ZB');
-    // Editor.Lines.Add('I8,0,001');
-    // Editor.Lines.Add('q680');
-    // Editor.Lines.Add('JY0000Kf00D11');
-    // Editor.Lines.Add('S3');
-    // Editor.Lines.Add('OD');
-    // Editor.Lines.Add('JB');
-    // Editor.Lines.Add('JF');
-    // Editor.Lines.Add('A134,159,0,3,1,1,N,"'+SgDados.Cells[0,L]+'"');
-    // Editor.Lines.Add('B60,19,0,1,3,6,126,N,"'+SgDados.Cells[0,L]+'"');//codigo de barras
-    //
-    // Editor.Lines.Add('A454,159,0,3,1,1,N,"'+SgDados.Cells[0,L]+'"');
-    // Editor.Lines.Add('B380,19,0,1,3,6,126,N,"'+SgDados.Cells[0,L]+'"');//codigo de barras
-    //
-    // Editor.Lines.Add('Q200,16');
-
-    // Editor.Lines.Add('N');
-    // Editor.Lines.Add('R0,0');
-    // Editor.Lines.Add('ZB');
-    // Editor.Lines.Add('I8,0,001');
-    // Editor.Lines.Add('q840');
-    // Editor.Lines.Add('JY0000Kf00D8');
-    // Editor.Lines.Add('S3');
-    // Editor.Lines.Add('O');
-    // Editor.Lines.Add('JB');
-    //
-    // Editor.Lines.Add('A65,53,0,4,1,1,N,"PRECINHO 10"');
-    // Editor.Lines.Add('A17,118,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],1,20)+'"');
-    // Editor.Lines.Add('A17,146,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],21,20)+'"');
-    // Editor.Lines.Add('A68,347,0,4,1,1,N,"R$'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L]))+'"'); //valor
-    // Editor.Lines.Add('A68,283,0,2,1,1,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    // Editor.Lines.Add('B17,190,0,1,2,4,80,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    //
-    // Editor.Lines.Add('A345,53,0,4,1,1,N,"PRECINHO 10"');
-    // Editor.Lines.Add('A297,118,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],1,20)+'"');
-    // Editor.Lines.Add('A297,146,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],21,20)+'"');
-    // Editor.Lines.Add('A348,347,0,4,1,1,N,"R$'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L]))+'"'); //valor
-    // Editor.Lines.Add('A348,283,0,2,1,1,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    // Editor.Lines.Add('B297,190,0,1,2,4,80,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    // Editor.Lines.Add('JF');
-    //
-    // Editor.Lines.Add('A605,53,0,4,1,1,N,"PRECINHO 10"');
-    // Editor.Lines.Add('A576,118,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],1,20)+'"');
-    // Editor.Lines.Add('A576,146,0,2,1,1,N,"'+Copy(SgDados.Cells[1,L],21,20)+'"');
-    // Editor.Lines.Add('A627,347,0,4,1,1,N,"R$'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L]))+'"'); //valor
-    // Editor.Lines.Add('A627,283,0,2,1,1,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    // Editor.Lines.Add('B576,190,0,1,2,4,80,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-    // Editor.Lines.Add('JF');
-    //
-    // Editor.Lines.Add('Q400,16');
-    // vQtd := StrToFloat(SgDados.Cells[2,L]);
-    // Editor.Lines.Add('P1,'+FormatFloat('0000',vQtd));
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -27090,52 +27012,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-// procedure TFrmPrincipalPreVenda.ImprimeEtiquetaBRAZNAMODA;
-// var L : integer;
-// Arq : TextFile;
-// vQtd : real;
-// begin
-// //if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-// if SgDados.Cells[0,1] = '' then begin
-// Messagedlg('Não foi lançado nenhum item para impressão das etiquetas!', mtWarning, [mbOk], 0);
-// EdtConsulta.Setfocus;
-// exit;
-// end;
-// //if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-// //SalvaEtiquetas;
-// Editor.Lines.Clear;
-// for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
-// if SgDados.Cells[0,L] = '' then Break;
-// Editor.Lines.Add('N');
-// Editor.Lines.Add('R0,0');
-// Editor.Lines.Add('ZB');
-// Editor.Lines.Add('I8,0,001');
-// Editor.Lines.Add('q688');
-// Editor.Lines.Add('JY0000Kf00D8');
-// Editor.Lines.Add('S3');
-// Editor.Lines.Add('O');
-// Editor.Lines.Add('JB');
-// Editor.Lines.Add('B50,25,0,1,2,4,80,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-// Editor.Lines.Add('A71,114,0,4,1,1,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-// Editor.Lines.Add('A105,156,0,4,1,1,N,"R$ '+FormatFloat('0.00',Strtofloat(SgDados.Cells[3,L]))+'"');
-// Editor.Lines.Add('JF');
-// Editor.Lines.Add('B394,25,0,1,2,4,80,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-// Editor.Lines.Add('A415,114,0,4,1,1,N,"'+SgDados.Cells[6,L]+'"');//codigo de barras
-// Editor.Lines.Add('A449,156,0,4,1,1,N,"R$ '+FormatFloat('0.00',Strtofloat(SgDados.Cells[3,L]))+'"');
-// Editor.Lines.Add('Q200,16');
-// vQtd := StrToFloat(SgDados.Cells[2,L]);
-// Editor.Lines.Add('P1,'+FormatFloat('0000',vQtd));
-// end;
-// Editor.Lines.SaveToFile(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'etiqueta.txt')));
-// WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName)+'print2.bat')),sw_ShowNormal);
-// if not FileExists('Print2.bat') then
-// ShowMessage('Não foi encontrado o arquivo Print2.bat');
-// Application.OnMessage := FormPrincipal.ProcessaMsg;
-// Limpar_Tela;
-// RgOpcoes.ItemIndex := 0;
-// Messagedlg('Impressão ok!', mtInformation, [mbOk], 0);
-// end;
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaBRAZNAMODA;
 var
   L: Integer;
@@ -27150,8 +27026,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -27228,7 +27102,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27288,7 +27161,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27296,8 +27168,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -27348,7 +27218,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27434,7 +27303,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27520,7 +27388,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27528,8 +27395,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -27601,7 +27466,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27688,7 +27552,6 @@ var
   vqtd: Real;
   Produto: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27760,8 +27623,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -27827,7 +27688,6 @@ var
   vqtd: Real;
   nomeFabricante: String;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -27883,42 +27743,7 @@ begin
     Editor.Lines.Add('121100000170144FAB: ' + nomeFabricante);
     // SgDados.Cells[7,L]);
     Editor.Lines.Add('121100000170284FAB: ' + nomeFabricante);
-    // SgDados.Cells[7,L]);
-
-    // Editor.Lines.Add('c0000');
-    // Editor.Lines.Add('KI503');
-    // Editor.Lines.Add('O0220');
-    // Editor.Lines.Add('f220');
-    // Editor.Lines.Add('KW0415');
-    // Editor.Lines.Add('KI7');
-    // Editor.Lines.Add('V0');
-    // Editor.Lines.Add('L');
-    // Editor.Lines.Add('H12');
-    // Editor.Lines.Add('PC');
-    // Editor.Lines.Add('A2');
-    // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('121100000700009'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('121100000580009'+Trim(Copy(SgDados.Cells[1,L],21,20)));
-    // Editor.Lines.Add('121100000700152'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('121100000580152'+Trim(Copy(SgDados.Cells[1,L],21,20)));
-    // Editor.Lines.Add('121100000700293'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('121100000580293'+Trim(Copy(SgDados.Cells[1,L],21,20)));
-    // Editor.Lines.Add('121100000440010COD: '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('131100000230010R$ '+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // nomeFabricante := copy(PegaNomeFabricante(strtoint(SgDados.Cells[0,L])),1,20);
-    // Editor.Lines.Add('121100000090010FAB: '+ nomeFabricante); // SgDados.Cells[7,L]);
-    // Editor.Lines.Add('121100000440152COD: '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('131100000230152R$ '+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('121100000090152FAB: ' + nomeFabricante);// SgDados.Cells[7,L]);
-    // Editor.Lines.Add('121100000440293COD: '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('131100000230293R$ '+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('121100000090293FAB: '+ nomeFabricante); //SgDados.Cells[7,L]);
-
     Editor.Lines.Add('^01');
-    // if Frac(StrToFloat(SgDados.Cells[2,L])/2) = 0.00 then
-    // vQtd := StrToFloat(SgDados.Cells[2,L])/2
-    // else vQtd := (StrToint(FormatFloat('000',StrToFloat(SgDados.Cells[2,L]))) div 2) + 1;
-    // Editor.Lines.Add('^'+FormatFloat('00',vQtd));
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
     Editor.Lines.Add('E');
@@ -28078,45 +27903,6 @@ begin
     end;
     Editor.Lines.Add('1X1100000170071b0311007900010001');
     Editor.Lines.Add('^01');
-
-    // Editor.Lines.Add('c0000');
-    // Editor.Lines.Add('KI503');
-    // Editor.Lines.Add('O0220');
-    // Editor.Lines.Add('f220');
-    // Editor.Lines.Add('KW0417');
-    // Editor.Lines.Add('KI7');
-    // Editor.Lines.Add('V0');
-    // Editor.Lines.Add('L');
-    // Editor.Lines.Add('H12');
-    // Editor.Lines.Add('PC');
-    // Editor.Lines.Add('A2');
-    // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('1F2203900310076'+SgDados.Cells[6,L]);       //barra
-    // Editor.Lines.Add('131100000780073'+copy(SgDados.Cells[1,L],1,35));    //DESCRICAO DO PRODUTO DESCRICAO DO PRODUTO
-    // Editor.Lines.Add('141100000420189CODIGO: '+SgDados.Cells[0,L]);    //CODIGO:
-    // Editor.Lines.Add('1X1100000190056b0310008000010001');
-    // Editor.Lines.Add('^01');
-
-
-    // etiqueta ps antigo
-
-    // Editor.Lines.Add('c0000');
-    // Editor.Lines.Add('KI503');
-    // Editor.Lines.Add('O0220');
-    // Editor.Lines.Add('f220');
-    // Editor.Lines.Add('KW0433');
-    // Editor.Lines.Add('KI7');
-    // Editor.Lines.Add('V0');
-    // Editor.Lines.Add('L');
-    // Editor.Lines.Add('H12');
-    // Editor.Lines.Add('PC');
-    // Editor.Lines.Add('A2');
-    // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('1F3304200220004'+SgDados.Cells[6,L]);       //barra
-    // Editor.Lines.Add('131100000800004'+SgDados.Cells[1,L]);
-    // Editor.Lines.Add('141100000260166CODIGO: '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('1X1100000200001b0313007700010001');
-    // Editor.Lines.Add('^01');
     // Cálculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -28176,26 +27962,6 @@ begin
     Editor.Lines.Add('161100000150222' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])));
     Editor.Lines.Add('^01');
-
-    // etiqueta ps antigo
-
-    // Editor.Lines.Add('c0000');
-    // Editor.Lines.Add('KI503');
-    // Editor.Lines.Add('O0220');
-    // Editor.Lines.Add('f220');
-    // Editor.Lines.Add('KW0433');
-    // Editor.Lines.Add('KI7');
-    // Editor.Lines.Add('V0');
-    // Editor.Lines.Add('L');
-    // Editor.Lines.Add('H12');
-    // Editor.Lines.Add('PC');
-    // Editor.Lines.Add('A2');
-    // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('1F3304200220004'+SgDados.Cells[6,L]);       //barra
-    // Editor.Lines.Add('131100000800004'+SgDados.Cells[1,L]);
-    // Editor.Lines.Add('141100000260166CODIGO: '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('1X1100000200001b0313007700010001');
-    // Editor.Lines.Add('^01');
     // Cálculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
     Editor.Lines.Add('Q' + intToStr(Trunc(vqtd)));
@@ -28236,7 +28002,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -28298,45 +28063,6 @@ begin
     // Editor.Lines.Add('^'+FormatFloat('00',vQtd));
     Editor.Lines.Add('Q' + FormatFloat('000', vqtd));
     Editor.Lines.Add('E');
-
-    // Editor.Lines.Add('c0000');
-    // Editor.Lines.Add('KI503');
-    // Editor.Lines.Add('O0220');
-    // Editor.Lines.Add('f220');
-    // Editor.Lines.Add('KW0354');
-    // Editor.Lines.Add('KI7');
-    // Editor.Lines.Add('V0');
-    // Editor.Lines.Add('L');
-    // Editor.Lines.Add('H12');
-    // Editor.Lines.Add('PC');
-    // Editor.Lines.Add('A2');
-    // Editor.Lines.Add('D11');
-    // Editor.Lines.Add('191100100270013CÓD. '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('191100200140026'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('191100100030013REF FAB.'+SgDados.Cells[7,L]);
-    // Editor.Lines.Add('191100100150013R$');
-    // Editor.Lines.Add('191100100370013'+Trim(Copy(SgDados.Cells[1,L],21,40)));
-    // Editor.Lines.Add('191100100450013'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('191100100280128CÓD. '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('191100200150141'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('191100100040128REF FAB.'+ SgDados.Cells[7,L]);
-    // Editor.Lines.Add('191100100160128R$');
-    // Editor.Lines.Add('191100100380128'+Trim(Copy(SgDados.Cells[1,L],21,40)));
-    // Editor.Lines.Add('191100100460128'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('191100100280242CÓD. '+SgDados.Cells[0,L]);
-    // Editor.Lines.Add('191100200150255'+formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('191100100040242REF FAB.'+ SgDados.Cells[7,L]);
-    // Editor.Lines.Add('191100100160242R$');
-    // Editor.Lines.Add('191100100380242'+Trim(Copy(SgDados.Cells[1,L],21,40)));
-    // Editor.Lines.Add('191100100460242'+Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('^01');
-    // Cálculo para imprimir a qtd de etiquetas certo
-    // if Frac(StrToFloat(SgDados.Cells[2,L])/2) = 0.00 then
-    // vQtd := StrToFloat(SgDados.Cells[2,L])/2
-    // else vQtd := (StrToint(FormatFloat('000',StrToFloat(SgDados.Cells[2,L]))) div 2) + 1;
-    // //Editor.Lines.Add('^'+FormatFloat('00',vQtd));
-    // Editor.Lines.Add('Q'+FormatFloat('000',vQtd));
-    // Editor.Lines.Add('E');
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -28744,7 +28470,6 @@ var
   vqtd: Real;
   Produto: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -28752,8 +28477,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -28804,9 +28527,6 @@ begin
       Editor.Lines.Add('f100');
       Editor.Lines.Add('N');
       Editor.Lines.Add('A811,155,2,4,1,1,N,"LT"');
-      //Editor.Lines.Add('A418,67,2,4,1,1,N,"Preco Atacado :"');
-      //Editor.Lines.Add('A291,35,2,4,1,1,N,"5 + Unidades"');
-      //Editor.Lines.Add('A161,82,2,4,1,2,N,"8,00"');
       Editor.Lines.Add('A161,129,2,4,1,2,N,"'+SgDados.Cells[3, L]+'"');
       Editor.Lines.Add('A417,116,2,4,1,1,N,"Preco Varejo :"');
       Editor.Lines.Add('A811,189,2,4,1,1,N,"'+SgDados.Cells[1, L]+'"');
@@ -28836,7 +28556,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -28844,8 +28563,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -28910,7 +28627,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -28918,8 +28634,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -28995,7 +28709,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29003,8 +28716,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -29066,7 +28777,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29126,7 +28836,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29186,7 +28895,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29271,7 +28979,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29279,8 +28986,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -29355,7 +29060,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29391,24 +29095,6 @@ begin
     Editor.Lines.Add('121100000960114' + SgDados.Cells[0, L]);
     Editor.Lines.Add('192200500210223R$:' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])));
-
-    // Editor.Lines.Add('1F3306200060015'+SgDados.Cells[6,L]);
-    // Editor.Lines.Add('191100200820024' + Trim(Copy(SgDados.Cells[1,L],1,40)));
-    // Editor.Lines.Add('111100000990025Codigo:');
-    // Editor.Lines.Add('111100000990059'+ SgDados.Cells[0,L]);
-    // Editor.Lines.Add('192200500210183R$'+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-
-    // Editor.Lines.Add('1F2202900080128'+SgDados.Cells[6,L]);
-    // Editor.Lines.Add('191100100470010' + Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('111100000100074Cod:');
-    // Editor.Lines.Add('111100000100093'+ SgDados.Cells[0,L]);
-    // Editor.Lines.Add('121100000100012R$'+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('111100000490131Cod:');
-    // Editor.Lines.Add('111100000490151'+ SgDados.Cells[0,L]);
-    // Editor.Lines.Add('111100000480199R$'+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('191100100340010' + Trim(Copy(SgDados.Cells[1,L],21,20)));
-    // Editor.Lines.Add('111100000230010'+ SgDados.Cells[7,L]);
-
     Editor.Lines.Add('^01');
     // Cálculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
@@ -29435,7 +29121,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29443,8 +29128,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
   Editor.Lines.Clear;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -29463,15 +29146,6 @@ begin
     Editor.Lines.Add('PC');
     Editor.Lines.Add('A2');
     Editor.Lines.Add('D11');
-
-    // Editor.Lines.Add('1F2204100080050'+SgDados.Cells[6,L]);
-    // Editor.Lines.Add('131100000760055' + Trim(Copy(SgDados.Cells[1,L],1,20)));
-    // Editor.Lines.Add('121100000960056Codigo:');
-    // Editor.Lines.Add('121100000960101'+ SgDados.Cells[0,L]);
-    // Editor.Lines.Add('192200100220168'+ formatfloat('0.00',strtofloat(SgDados.Cells[3,L])));
-    // Editor.Lines.Add('131100000590055' + Trim(Copy(SgDados.Cells[1,L],21,20)));
-    // Editor.Lines.Add('191100000250155R$');
-
     Editor.Lines.Add('131100000860055' + trim(Copy(SgDados.Cells[1, L],
       1, 20)));
     Editor.Lines.Add('131100000690055' + trim(Copy(SgDados.Cells[1, L],
@@ -29520,7 +29194,6 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29640,7 +29313,6 @@ var
   esp1, esp2, esp3: string;
   i, ult: Integer;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29732,7 +29404,6 @@ var
   esp1, esp2, esp3: string;
   i, ult: Integer;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29788,8 +29459,6 @@ begin
     Editor.Lines.Add('1d6301600280019' + intToStr(Produto.cdProduto));
     Editor.Lines.Add('121100000170018' + intToStr(Produto.cdProduto));
     Editor.Lines.Add('121100000040018' + Produto.referenciaFabrica);
-
-    // Editor.Lines.Add('121100000360213R$'+formatFloat('0.00',produto.vlPreco));
     Editor.Lines.Add('121100000260114' + esp1);
     Editor.Lines.Add('121100000150114' + esp2);
     Editor.Lines.Add('121100000040114' + esp3);
@@ -29800,8 +29469,6 @@ begin
     else
       Editor.Lines.Add('121100000360114R$' + FormatFloat('0.00',
         Produto.vlPreco));
-    // Editor.Lines.Add('A145,102,2,2,1,1,N,"'+formatFloat('0.00',produto.vlPreco)+'"');
-
     vqtd := StrToInt(FormatFloat('0000', StrToFloat(SgDados.Cells[2, L])));
     Editor.Lines.Add('^01');
     Editor.Lines.Add('Q' + intToStr(vqtd));
@@ -29821,7 +29488,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ZeroGrauDepositoMercearia;
 var
   L: Integer;
@@ -29829,7 +29495,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29885,7 +29550,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MaisRacoes;
 var
   L: Integer;
@@ -29893,7 +29557,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -29953,7 +29616,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MaisRacoes_MiniGondola;
 var
   L: Integer;
@@ -29961,7 +29623,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30020,7 +29681,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MerceariaDandan;
 var
   L: Integer;
@@ -30028,7 +29688,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30088,7 +29747,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_EldoradoCasaDaArte;
 var
   L: Integer;
@@ -30096,7 +29754,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30196,7 +29853,6 @@ var
   pessoa : TPessoa;
   Produto: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30204,9 +29860,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
-  // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -30302,7 +29955,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_FacaBiju;
 var
   L, y: Integer;
@@ -30311,7 +29963,6 @@ var
   cont: Integer;
   pessoa : TPessoa;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30319,9 +29970,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
-  // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -30410,7 +30058,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_RajuConstrucoes;
 var
   L: Integer;
@@ -30418,7 +30065,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30475,7 +30121,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PandorDelicatesen_Atalaia;
 var
   L: Integer;
@@ -30483,7 +30128,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30541,7 +30185,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados_Gondola;
 var
   L: Integer;
@@ -30549,7 +30192,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30593,11 +30235,6 @@ begin
       Editor.Lines.Add('B243,126,0,1,3,6,47,N,"'+SgDados.Cells[6, L]+'"');
       Editor.Lines.Add('A355,175,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
       Editor.Lines.Add('');
-
-//      Editor.Lines.Add('A450,144,0,1,2,3,N,"R$"');
-//      Editor.Lines.Add('A498,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
-
-
       vqtd := StrToFloat(SgDados.Cells[2, L]);
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       FreeAndNil(Produto);
@@ -30616,8 +30253,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados_GondolaForHoneywell;
 var
   L: Integer;
@@ -30625,7 +30260,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30669,11 +30303,6 @@ begin
       Editor.Lines.Add('B243,158,0,1,3,6,47,N,"'+SgDados.Cells[6, L]+'"');
       Editor.Lines.Add('A355,207,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
       Editor.Lines.Add('');
-
-//      Editor.Lines.Add('A450,144,0,1,2,3,N,"R$"');
-//      Editor.Lines.Add('A498,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
-
-
       vqtd := StrToFloat(SgDados.Cells[2, L]);
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       FreeAndNil(Produto);
@@ -30692,7 +30321,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ItaCentralPescados_AdesivaDetalhada(aDtProduzido, aDtValidade: string);
 var
   L: Integer;
@@ -30700,7 +30328,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30772,20 +30399,6 @@ begin
       Editor.Lines.Add('A570,347,0,1,1,1,N,"de aproximadament 20%"');
       Editor.Lines.Add('A640,364,0,1,1,1,N,"no peso"');
       Editor.Lines.Add('');
-
-
-
-//      Editor.Lines.Add('LO144,53,532,73');
-//      Editor.Lines.Add('A181,67,0,1,2,4,R,"R$ '+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
-//      Editor.Lines.Add('');
-//      Editor.Lines.Add('A599,75,0,2,1,2,R,"'+Produto.unidade.unidade+'"');
-//      Editor.Lines.Add('');
-//      Editor.Lines.Add('B243,126,0,1,3,6,47,N,"'+SgDados.Cells[6, L]+'"');
-//      Editor.Lines.Add('A355,175,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
-//      Editor.Lines.Add('');
-
-
-
       Editor.Lines.Add('P' + FormatFloat('0', vqtd));
       FreeAndNil(Produto);
   end;
@@ -30803,7 +30416,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoAcougueItabaiana_GondolaGrande;
 var
   L: Integer;
@@ -30811,7 +30423,6 @@ var
   vqtd: Real;
   Produto : TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30868,7 +30479,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoAcougueItabaiana_Gondola2Colunas;
 var
   L, y: Integer;
@@ -30878,7 +30488,6 @@ var
   pessoa : TPessoa;
   Produto: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -30964,14 +30573,11 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_DmCasaDecor(StoreName: string);
-
 var
   L, y, cont: integer;
   vqtd: real;
   produto: TDOMProduto;
-
 begin
   if SgDados.Cells[0, 1] = '' then
   begin
@@ -31075,16 +30681,13 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_FenixSuperMercados;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -31146,16 +30749,13 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_SenhorCoco;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -31170,40 +30770,39 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-      vqtd := StrToFloat(SgDados.Cells[2, L]);
-      Editor.Lines.Add('I8,1,001');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('Q240,25');
-      Editor.Lines.Add('q460');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('O');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('D11');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('JF');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('WN');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('ZB');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('N');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A22,8,0,3,1,1,N,"' +Copy(SgDados.Cells[1,L],1,30)+ '"');
-      Editor.Lines.Add('A22,35,0,3,1,1,N,"' +Copy(SgDados.Cells[1,L],31,10)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A22,82,0,2,1,1,N,"' +Produto.unidade.unidade+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A206,82,0,2,1,1,N,"R$"');
-      Editor.Lines.Add('A240,59,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B24,136,0,1,3,6,52,N,"' +SgDados.Cells[6,L]+ '"');
-      Editor.Lines.Add('A152,194,0,2,1,1,N,"' +SgDados.Cells[6,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-      Editor.Lines.Add('');
-      FreeAndNil(Produto);
-
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q240,25');
+    Editor.Lines.Add('q460');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A22,8,0,3,1,1,N,"' +Copy(SgDados.Cells[1,L],1,30)+ '"');
+    Editor.Lines.Add('A22,35,0,3,1,1,N,"' +Copy(SgDados.Cells[1,L],31,10)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A22,82,0,2,1,1,N,"' +Produto.unidade.unidade+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A206,82,0,2,1,1,N,"R$"');
+    Editor.Lines.Add('A240,59,0,1,2,4,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B24,136,0,1,3,6,52,N,"' +SgDados.Cells[6,L]+ '"');
+    Editor.Lines.Add('A152,194,0,2,1,1,N,"' +SgDados.Cells[6,L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    Editor.Lines.Add('');
+    FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -31218,9 +30817,6 @@ begin
   RgOpcoes.ItemIndex := 0;
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoItabaiana;
 var
@@ -31244,37 +30840,37 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-      Editor.Lines.Add('I8,1,001');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('Q240,12');
-      Editor.Lines.Add('q832');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('D11');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('O');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('JF');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('WN');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('ZB');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('N');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A80,24,0,4,1,2,N,"'+SgDados.Cells[1, L]+'"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A80,76,0,4,1,2,N,"'+Produto.unidade.unidade+'"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B88,130,0,1,3,6,48,N,"'+SgDados.Cells[6, L]+'"');
-      Editor.Lines.Add('A184,184,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A514,144,0,1,2,3,N,"R$"');
-      Editor.Lines.Add('A562,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
-      Editor.Lines.Add('');
-      vqtd := StrToFloat(SgDados.Cells[2, L]);
-      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-      FreeAndNil(Produto);
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q240,12');
+    Editor.Lines.Add('q832');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A80,24,0,4,1,2,N,"'+SgDados.Cells[1, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A80,76,0,4,1,2,N,"'+Produto.unidade.unidade+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B88,130,0,1,3,6,48,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('A184,184,0,1,1,2,N,"'+SgDados.Cells[6, L]+'"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A514,144,0,1,2,3,N,"R$"');
+    Editor.Lines.Add('A562,96,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
+    Editor.Lines.Add('');
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -31289,7 +30885,6 @@ begin
   RgOpcoes.ItemIndex := 0;
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MiniMercadoItabaiana_Pequena;
 var
@@ -31308,9 +30903,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
-  // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pr�-venda.
@@ -31395,34 +30987,28 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ResMercadinhoAcaua;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('n');
     Editor.Lines.Add('');
     Editor.Lines.Add('M0500');
@@ -31480,7 +31066,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MaeDeDeusEspacoCatolico;
 var
   L, y: Integer;
@@ -31489,7 +31074,6 @@ var
   cont: Integer;
   pessoa : TPessoa;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -31497,9 +31081,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
-  // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -31546,7 +31127,8 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
-    if SgDados.Cells[0,L+1] <> '' then begin
+    if SgDados.Cells[0,L+1] <> '' then
+    begin
       Editor.Lines.Add('A320,8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],1,20)+'"');
       Editor.Lines.Add('A320,36,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+1],21,20)+'"');
       Editor.Lines.Add('');
@@ -31558,7 +31140,8 @@ begin
       Editor.Lines.Add('');
     end;
 
-    if SgDados.Cells[0,L+2] <> '' then begin
+    if SgDados.Cells[0,L+2] <> '' then
+    begin
       Editor.Lines.Add('A607,8,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],1,20)+'"');
       Editor.Lines.Add('A607,36,0,1,1,2,N,"'+Copy(SgDados.Cells[1, L+2],21,20)+'"');
       Editor.Lines.Add('');
@@ -31588,16 +31171,13 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_OnixJoalheria;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -31612,38 +31192,37 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-      vqtd := StrToFloat(SgDados.Cells[2, L]);
-      Editor.Lines.Add('I8,1,001');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('Q80,12');
-      Editor.Lines.Add('q620');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('O');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('D11');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('JF');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('WN');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('ZB');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('N');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A20,0,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],1,18)+ '"');
-      Editor.Lines.Add('A20,16,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],19,18)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A20,36,0,1,1,1,N,"COD: ' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A248,0,0,1,1,1,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B232,24,0,1,2,2,24,N,"' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-      Editor.Lines.Add('');
-      FreeAndNil(Produto);
-
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('I8,1,001');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q80,12');
+    Editor.Lines.Add('q620');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D11');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A20,0,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],1,18)+ '"');
+    Editor.Lines.Add('A20,16,0,1,1,1,N,"' +Copy(SgDados.Cells[1,L],19,18)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A20,36,0,1,1,1,N,"COD: ' +SgDados.Cells[0,L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A248,0,0,1,1,1,N,"R$ ' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B232,24,0,1,2,2,24,N,"' +SgDados.Cells[0,L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    Editor.Lines.Add('');
+    FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -31659,7 +31238,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_GrupoAquarela(StoreName: string);
 var
   L, y: Integer;
@@ -31668,40 +31246,32 @@ var
   cont: Integer;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   cont := 0;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
     cont := cont + 1;
   end;
-
   if Frac(cont / 2) = 0.00 then
     vqtd := cont / 2
   else
     vqtd := (StrToInt(FormatFloat('0000', cont)) div 2) + 1;
-
   cont := Trunc(vqtd);
-
   if cont <= 0 then
     cont := 1;
-
   Editor.Lines.Clear;
-
   L := 1;
-
-  for y := 1 to cont do begin // Salvando os itens da pré-venda.
-    // if SgDados.Cells[0,L] = '' then Break;
+  for y := 1 to cont do
+  begin // Salvando os itens da pré-venda.
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
@@ -31733,7 +31303,8 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
-    if SgDados.Cells[0,L+1] <> '' then begin
+    if SgDados.Cells[0,L+1] <> '' then
+    begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
       Editor.Lines.Add('A359,6,0,4,1,1,N,"' +StoreName+ '"');
       Editor.Lines.Add('');
@@ -31763,7 +31334,8 @@ begin
     'print2.bat')), sw_ShowNormal);
 
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
-    'Print2.bat'))) then begin
+    'Print2.bat'))) then
+    begin
     ShowMessage('Não foi encontrado o arquivo Print.bat');
     exit;
   end;
@@ -31780,7 +31352,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_GrupoLojasAlexandre(StoreName: string);
 var
   L: Integer;
@@ -31789,22 +31360,15 @@ var
   cont: Integer;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
-
-
   Editor.Lines.Clear;
-
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     // if SgDados.Cells[0,L] = '' then Break;
@@ -31879,7 +31443,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Zavixe(StoreName: string);
 var
   L, y: Integer;
@@ -31889,7 +31452,6 @@ var
   pessoa : TPessoa;
   Produto: TDOMProduto;
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -31897,9 +31459,6 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-
-  // SalvaEtiquetas;
   cont := 0;
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
@@ -31950,7 +31509,8 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
 
-    if SgDados.Cells[0,L+1] <> '' then begin
+    if SgDados.Cells[0,L+1] <> '' then
+    begin
       Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L+1]));
       Editor.Lines.Add('A359,-2,0,4,1,1,N,"' +StoreName+ '"');
       Editor.Lines.Add('');
@@ -31990,40 +31550,30 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PanificacaoMerceariaCompreBem2;
-
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
   BarcodeStringSize: Integer;
-
 begin
-// if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
-
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda. 
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     BarcodeStringSize := SgDados.Cells[6, L].Length;
-
     Editor.Lines.Add('n');
     Editor.Lines.Add('');
     Editor.Lines.Add('M0500');
@@ -32079,37 +31629,28 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_CasaDoRosario_3_Colunas;
-
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-// if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
-
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
     Editor.Lines.Add('Q184,24');
@@ -32136,7 +31677,8 @@ begin
     Editor.Lines.Add('A15,124,0,1,1,1,N,"Pr.Varejo"');
     Editor.Lines.Add('A124,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
 
-    if Produto.vlPreco > Produto.vlAtacado then begin
+    if Produto.vlPreco > Produto.vlAtacado then
+    begin
       Editor.Lines.Add('');
       Editor.Lines.Add('A15,152,0,1,1,1,N,"Pr.Atacado"');
       Editor.Lines.Add('A124,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
@@ -32155,7 +31697,8 @@ begin
     Editor.Lines.Add('A296,124,0,1,1,1,N,"Pr.Varejo"');
     Editor.Lines.Add('A405,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
 
-    if Produto.vlPreco > Produto.vlAtacado then begin
+    if Produto.vlPreco > Produto.vlAtacado then
+    begin
       Editor.Lines.Add('');
       Editor.Lines.Add('A296,152,0,1,1,1,N,"Pr.Atacado"');
       Editor.Lines.Add('A405,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
@@ -32174,22 +31717,17 @@ begin
     Editor.Lines.Add('A577,124,0,1,1,1,N,"Pr.Varejo"');
     Editor.Lines.Add('A686,100,0,4,1,2,N,"' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
 
-    if Produto.vlPreco > Produto.vlAtacado then begin
+    if Produto.vlPreco > Produto.vlAtacado then
+    begin
       Editor.Lines.Add('');
       Editor.Lines.Add('A577,152,0,1,1,1,N,"Pr.Atacado"');
       Editor.Lines.Add('A686,150,0,2,1,1,N,"' +FormatFloat('0.00', Produto.vlAtacado)+ '"');
     end;
-
-
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('');
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-
     FreeAndNil(Produto);
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
@@ -32208,9 +31746,6 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_PatricinhaDeLuxo(StoreName: string);
 var
   L: Integer;
@@ -32219,7 +31754,6 @@ var
   cont: Integer;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
@@ -32229,13 +31763,7 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
-
-
   Editor.Lines.Clear;
-
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     // if SgDados.Cells[0,L] = '' then Break;
@@ -32298,19 +31826,14 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ValMotos;
-
 var
   L, M, Cont: Integer;
   Arq: TextFile;
   vqtd: Real;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
-
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -32318,10 +31841,9 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Cont := 0;
-
-  for L := 1 to Pred(SgDados.RowCount) do begin
+  for L := 1 to Pred(SgDados.RowCount) do
+  begin
     if (SgDados.Cells[0, L] = '') then
       break;
 
@@ -32372,9 +31894,8 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-
-
-    if (SgDados.Cells[0, L+1] <> '') then begin
+    if (SgDados.Cells[0, L+1] <> '') then
+    begin
       Editor.Lines.Add('A304,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+1], 1, 20)+ '"');
       Editor.Lines.Add('A304,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+1], 21, 20)+ '"');
       Editor.Lines.Add('');
@@ -32386,8 +31907,6 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('');
     end;
-
-
     if (SgDados.Cells[0, L+2] <> '') then begin
       Editor.Lines.Add('A584,8,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+2], 1, 20)+ '"');
       Editor.Lines.Add('A584,40,0,1,1,2,N,"' +Copy(SgDados.Cells[1, L+2], 21, 20)+ '"');
@@ -32398,19 +31917,10 @@ begin
       Editor.Lines.Add('A591,144,0,1,1,2,N,"COD.: ' +SgDados.Cells[0, L+2]+ '"');
       Editor.Lines.Add('');
     end;
-
-
     Editor.Lines.Add('P1');
     L := L + 3;
-
-
-
-//    vqtd := StrToFloat(SgDados.Cells[2, L]);
-//
-//    Editor.Lines.Add('P' +FormatFloat('0', vqtd));
     FreeAndNil(Produto);
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
@@ -32432,26 +31942,22 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetaPR_ELGIN;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
-
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin
+  for L := 1 to SgDados.RowCount - 1 do
+  begin
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,0,001');
@@ -32516,19 +32022,17 @@ var
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin
+  for L := 1 to SgDados.RowCount - 1 do
+  begin
     if SgDados.Cells[0, L] = '' then
       Break;
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
@@ -32559,50 +32063,39 @@ begin
     Editor.Lines.Add('A498,120,0,1,2,3,N,"R$"');
     Editor.Lines.Add('A546,72,0,3,2,5,N,"'+FormatFloat('0.00',StrtoFloat(SgDados.Cells[3, L]))+'"');
     Editor.Lines.Add('');
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('P' +FormatFloat('0', vqtd));
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_VivaFesta_MiniGondola;
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
-
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin
+  for L := 1 to SgDados.RowCount - 1 do
+  begin
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,0,001');
@@ -32630,31 +32123,22 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('B133,73,0,1,2,4,80,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A159,160,0,3,1,1,N,"' + SgDados.Cells[6, L] + '"');
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
       'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_VivaFesta_3Colunas;
 var
@@ -32662,17 +32146,16 @@ var
   Arq: TextFile;
   vqtd: Real;
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin
+  for L := 1 to SgDados.RowCount - 1 do
+  begin
     if SgDados.Cells[0, L] = '' then
       Break;
     Editor.Lines.Add('I8,1,001');
@@ -32692,7 +32175,6 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('A27,2,0,2,1,1,N,"' + SgDados.Cells[0, L] + '"');
     Editor.Lines.Add('');
     Editor.Lines.Add('A29,24,0,2,1,1,N,"' +Copy(SgDados.Cells[1, L], 1, 20)+ '"');
@@ -32727,32 +32209,22 @@ begin
     Editor.Lines.Add('B591,90,0,1,2,4,49,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('A632,142,0,2,1,1,N,"' + SgDados.Cells[6, L] + '"');
     Editor.Lines.Add('');
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('P' + FormatFloat('0', vqtd));
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_ShopFemme(StoreNameLine1, StoreNameLine2: string);
 var
@@ -32761,40 +32233,32 @@ var
   vqtd: Real;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
-
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   Cont := 0;
-
-  for L := 1 to Pred(SgDados.RowCount) do begin
+  for L := 1 to Pred(SgDados.RowCount) do
+  begin
     if (SgDados.Cells[0, L] = '') then
       break;
-
     Inc(Cont);
   end;
-
   if (Frac(Cont / 2) = 0.00) then
     vqtd := Cont / 2
   else
     vqtd := (StrToInt(FormatFloat('0', Cont)) div 2) + 1;
-
   Cont := Trunc(vqtd);
-
   if (Cont <= 0) then
     Cont := 1;
-
   Editor.Lines.Clear;
-
   L := 1;
-
-  for M := 1 to Cont do begin
+  for M := 1 to Cont do
+  begin
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('I8,1,001');
     Editor.Lines.Add('');
@@ -32810,8 +32274,6 @@ begin
     Editor.Lines.Add('ZB');
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
-
-
     Editor.Lines.Add('');
     Editor.Lines.Add('A110,20,0,2,2,2,N,"' +StoreNameLine1+ '"');
     Editor.Lines.Add('A94,52,0,2,2,2,N,"' +StoreNameLine2+ '"');
@@ -32824,10 +32286,8 @@ begin
     Editor.Lines.Add('B24,232,0,1,3,4,40,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('A40,280,0,3,1,1,N,"' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-
-
-
-    if (SgDados.Cells[0, L+1] <> '') then begin
+    if (SgDados.Cells[0, L+1] <> '') then
+    begin
       Editor.Lines.Add('');
       Editor.Lines.Add('A457,20,0,2,2,2,N,"' +StoreNameLine1+ '"');
       Editor.Lines.Add('A441,52,0,2,2,2,N,"' +StoreNameLine2+ '"');
@@ -32841,43 +32301,26 @@ begin
       Editor.Lines.Add('A384,280,0,3,1,1,N,"' +SgDados.Cells[0, L+1]+ '"');
       Editor.Lines.Add('');
     end;
-
-
     Editor.Lines.Add('P1');
-
     L := L + 2;
-
     FreeAndNil(Produto);
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
   begin
     ShowMessage('Não foi encontrado o arquivo Print.bat');
     exit;
   end;
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
-
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
-
-
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MixContainerMinimercado;
 var
@@ -32887,7 +32330,6 @@ var
   cont: Integer;
   pessoa : TPessoa;
   Produto: TDOMProduto;
-
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
@@ -32897,13 +32339,7 @@ begin
     EdtConsulta.Setfocus;
     exit;
   end;
-
-  // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
-  // SalvaEtiquetas;
-
-
   Editor.Lines.Clear;
-
   for L := 1 to SgDados.RowCount - 1 do
   begin // Salvando os itens da pré-venda.
     // if SgDados.Cells[0,L] = '' then Break;
@@ -32922,7 +32358,6 @@ begin
     Editor.Lines.Add('ZB');
     Editor.Lines.Add('');
     Editor.Lines.Add('N');
-
     Editor.Lines.Add('');
     Editor.Lines.Add('A132,96,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 1, 30)+ '"');
     Editor.Lines.Add('A132,140,0,3,1,2,N,"' +Copy(SgDados.Cells[1, L], 31, 10)+ '"');
@@ -32932,40 +32367,26 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('A140,280,0,3,1,1,N,"COD: ' +SgDados.Cells[0, L]+ '"');
     Editor.Lines.Add('');
-
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('P' +FormatFloat('0', vqtd));
-
     FreeAndNil(Produto);
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
   begin
     ShowMessage('Não foi encontrado o arquivo Print.bat');
     exit;
   end;
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
-
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_New(street: string);
 var
@@ -32973,9 +32394,7 @@ var
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
   if SgDados.Cells[0, 1] = '' then
   begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
@@ -32990,62 +32409,62 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-      Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-      vqtd := StrToFloat(SgDados.Cells[2, L]);
-      Editor.Lines.Add('I8,A');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('Q560,25');
-      Editor.Lines.Add('q644');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('D13');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('O');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('JF');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('WN');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('ZB');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('N');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,14,0,3,2,2,N,"LITORAL 655"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
-      Editor.Lines.Add('A6,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B54,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A62,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B54,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A62,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A6,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('A183,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,14,0,3,2,2,N,"LITORAL 655"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
-      Editor.Lines.Add('A330,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B378,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A386,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('B378,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('A386,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('A330,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
-      Editor.Lines.Add('A507,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
-      Editor.Lines.Add('');
-      Editor.Lines.Add('P' + FormatFloat('0', vqtd));
-      Editor.Lines.Add('');
-      FreeAndNil(Produto);
+    Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
+    vqtd := StrToFloat(SgDados.Cells[2, L]);
+    Editor.Lines.Add('I8,A');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('Q560,25');
+    Editor.Lines.Add('q644');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('D13');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('O');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('JF');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('WN');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('ZB');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('N');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A6,14,0,3,2,2,N,"LITORAL 655"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A6,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+    Editor.Lines.Add('A6,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B54,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('A62,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A6,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B54,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('A62,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A6,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('A183,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A330,14,0,3,2,2,N,"LITORAL 655"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A330,68,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],0,26)+ '"');
+    Editor.Lines.Add('A330,104,0,1,1,2,N,"' +Copy(SgDados.Cells[1,L],27,14)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B378,152,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('A386,236,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A330,282,0,2,1,1,N,"' +UpperCase(street)+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('B378,368,0,1,2,4,80,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('A386,452,0,4,1,1,N,"' +(SgDados.Cells[6,L])+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('A330,501,0,2,1,2,N,"R$' +FormatFloat('0.00', StrToFloat(SgDados.Cells[3, L]))+ '"');
+    Editor.Lines.Add('A507,500,0,1,1,2,N,"Cod.' +SgDados.Cells[0,L]+ '"');
+    Editor.Lines.Add('');
+    Editor.Lines.Add('P' + FormatFloat('0', vqtd));
+    Editor.Lines.Add('');
+    FreeAndNil(Produto);
   end;
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
@@ -33061,37 +32480,29 @@ begin
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
 
-
-
-
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_Litoral655_NewZ(street: string);
 var
   L: Integer;
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
-  // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('^XA');
     Editor.Lines.Add('');
     Editor.Lines.Add('^SZ2^JMA');
@@ -33119,38 +32530,31 @@ begin
     Editor.Lines.Add('^FT6,160');
     Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],25,16)+ '^FS');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^FO6,200');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+'^FS')
     else
       Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+'^FS');
-
     Editor.Lines.Add('^FT38,282');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+'^FS')
     else
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+'^FS');
-
     Editor.Lines.Add('');
     Editor.Lines.Add('^FT6,314');
     Editor.Lines.Add('^ABN,11,7^FD' +street+ '^FS');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^FO6,384');
-
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+ '^FS')
     else
       Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+ '^FS');
-
     Editor.Lines.Add('^FT38,466');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+ '^FS')
     else
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+ '^FS');
-
     Editor.Lines.Add('');
     Editor.Lines.Add('^FT14,496');
     Editor.Lines.Add('^AFN,26,13^FDR$' +SgDados.Cells[3, L]+ '^FS');
@@ -33161,7 +32565,6 @@ begin
     Editor.Lines.Add('');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^FT352,57');
     Editor.Lines.Add('^ADN,36,20^FDLITORAL655^FS');
     Editor.Lines.Add('');
@@ -33170,38 +32573,31 @@ begin
     Editor.Lines.Add('^^FT326,160');
     Editor.Lines.Add('^ADN,18,10^FD' +Copy(SgDados.Cells[1,L],25,16)+ '^FS');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^FO326,200');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+'^FS')
     else
       Editor.Lines.Add('^BY2^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+'^FS');
-
     Editor.Lines.Add('^FT358,282');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+'^FS')
     else
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+'^FS');
-
     Editor.Lines.Add('');
     Editor.Lines.Add('^FT326,314');
     Editor.Lines.Add('^ABN,11,7^FD' +street+ '^FS');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^FO326,384');
-
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[6,L]+ '^FS')
     else
       Editor.Lines.Add('^BCN,64,N,N^FD>;' +SgDados.Cells[0,L]+ '^FS');
-
     Editor.Lines.Add('^FT358,466');
     if (SgDados.Cells[6,L] <> '') then
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[6,L]+ '^FS')
     else
       Editor.Lines.Add('^ABN,11,7^FD' +SgDados.Cells[0,L]+ '^FS');
-
     Editor.Lines.Add('');
     Editor.Lines.Add('^FT318,496');
     Editor.Lines.Add('^AFN,26,13^FDR$' +SgDados.Cells[3, L]+ '^FS');
@@ -33212,32 +32608,21 @@ begin
     Editor.Lines.Add('^PQ' +FormatFloat('0', vqtd)+ ',0,1,Y');
     Editor.Lines.Add('^XZ');
     Editor.Lines.Add('');
-
     FreeAndNil(Produto);
   end;
-
-  Editor.Lines.SaveToFile
+   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
-  WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
+   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
-
-
 
 procedure TFrmPrincipalPreVenda.ImprimeEtiquetas_MercadinhoCarregosa;
 var
@@ -33245,28 +32630,24 @@ var
   Arq: TextFile;
   vqtd: Real;
   Produto : TDOMProduto;
-
 begin
   // if not CamposObrigatoriosPreenchidos(FrmPrincipalPreVenda) then exit;
-  if SgDados.Cells[0, 1] = '' then begin
+  if SgDados.Cells[0, 1] = '' then
+  begin
     MessageDlg('Não foi lançado nenhum item para impressão das etiquetas!',
       mtWarning, [mbOK], 0);
     EdtConsulta.Setfocus;
     exit;
   end;
-
   if (trim(EdtCdCliente.Text) <> '') and (trim(EdtCdNome.Text) <> '') then
     SalvaEtiquetas;
   Editor.Lines.Clear;
-
-  for L := 1 to SgDados.RowCount - 1 do begin // Salvando os itens da pré-venda.
+  for L := 1 to SgDados.RowCount - 1 do
+  begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Produto := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     vqtd := StrToFloat(SgDados.Cells[2, L]);
-
     Editor.Lines.Add('^XA');
     Editor.Lines.Add('');
     Editor.Lines.Add('^SZ2^JMA');
@@ -33305,36 +32686,24 @@ begin
     Editor.Lines.Add('^A0N,102,69^FDR$' +SgDados.Cells[3, L]+ '^FS');
     Editor.Lines.Add('');
     Editor.Lines.Add('');
-
     Editor.Lines.Add('^PQ' +FormatFloat('0', vqtd)+ ',0,1,Y');
     Editor.Lines.Add('^XZ');
     Editor.Lines.Add('');
-
     FreeAndNil(Produto);
   end;
-
   Editor.Lines.SaveToFile
     (PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'etiqueta.txt')));
-
   WinExec(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'print2.bat')), sw_ShowNormal);
-
   if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print2.bat'))) then
     ShowMessage('Não foi encontrado o arquivo Print2.bat');
-
   Application.OnMessage := FormPrincipal.ProcessaMsg;
   Limpar_Tela;
   RgOpcoes.ItemIndex := 0;
-
   MessageDlg('Impressão ok!', mtInformation, [mbOK], 0);
 end;
-
-
-
-
-
 
 procedure TFrmPrincipalPreVenda.MountFlag_Cliente_De_Teste;
 
@@ -33342,76 +32711,48 @@ begin
   Mount_GondolaAtacadoVarejo001;
 end;
 
-
 procedure TFrmPrincipalPreVenda.Mount_GondolaG001;
-
 var
   G001: TGondola001;
-
 begin
   isFirstImpression := true;
-
   G001 := TGondola001.Create;
-
   try
-
     G001.PrintTagGondolaG001;
-
   finally
-
     G001.Free;
-
   end;
 end;
-
 
 procedure TFrmPrincipalPreVenda.Mount_GondolaAtacadoVarejo001;
-
 var
   Gondola: TGondolaAtacadoVarejo001;
-
 begin
   isFirstImpression := true;
-
   Gondola := TGondolaAtacadoVarejo001.Create;
-
   try
-
     Gondola.PrintTagGondolaAtacadoVarejo001;
-
   finally
-
     Gondola.Free;
-
   end;
 end;
 
-
 procedure TFrmPrincipalPreVenda.Mount_GondolaG003;
-
 var
   G003: TGondola003;
-
 begin
   isFirstImpression := true;
-
   G003 := TGondola003.Create;
-
   try
-
     G003.PrintTagGondolaG003;
-
   finally
-
     G003.Free;
-
   end;
 end;
 
 { ###############################################################
   ################## FIM DOS MÉTODOS DE ETIQUETAS ###############
   ###############################################################  }
-
 procedure TFrmPrincipalPreVenda.persistirFormulario;
 var
   nomeFormulario, Arquivo: string;
@@ -33464,8 +32805,7 @@ begin
   nomeFormulario := self.Name;
   chkOcultarProdutosSemEstoque.Checked := StrToBoolDef(ReadSupportIni(nomeFormulario,
     'chkOcultarProdutosSemEstoque.checked', ''), false);
-  CbPrevisao.Checked := StrToBoolDef(ReadSupportIni(nomeFormulario,
-    'CbPrevisao.checked', ''), false);
+  CbPrevisao.Checked := StrToBoolDef(ReadSupportIni(nomeFormulario, 'CbPrevisao.checked', ''), false);
 end;
 
 { TDBGrid }
