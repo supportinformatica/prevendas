@@ -94,6 +94,7 @@ type
     function ValidarDesconto(prevenda: TPrevenda): Boolean;
     function ValidarDesconto_PROAUTO: Boolean;
     function getCodigoFormaPagamento: string;
+    function setCodigoFOrmaPagamento(codigo : string) : Integer;
   public
 
   end;
@@ -111,30 +112,18 @@ uses MoPreVenda, DataModulo, uFuncoesPadrao, CancelamentoVenda, UItemPrevenda, N
 function TFrmFormaPag.getCodigoFormaPagamento: string;
 begin
   case RadioGroup1.ItemIndex of
-    0:
-      Result := '0'; // a vista
-    1:
-      Result := '1'; // a prazo
-    2:
-      Result := '2'; // Cartão a Vista
-    3:
-      Result := '3'; // Cartão Parcelado
-    4:
-      Result := '4'; // Cheque Pré
-    5:
-      Result := '5'; // Entrada + Prazo
-    6:
-      Result := '6'; // Entrada + Cartao
-    7:
-      Result := '7'; // Entrada + Cheque Pré
-    8:
-      Result := '12'; // Cheque a Vista
-    9:
-      Result := '13'; // Cartão Débito
-    10:
-      Result := '14'; // Depósito em Conta
-    11:
-      Result := '15'; // Boleto Bancário
+    0:  Result := '0'; // a vista
+    1:  Result := '1'; // a prazo
+    2:  Result := '2'; // Cartão a Vista
+    3:  Result := '3'; // Cartão Parcelado
+    4:  Result := '4'; // Cheque Pré
+    5:  Result := '5'; // Entrada + Prazo
+    6:  Result := '6'; // Entrada + Cartao
+    7:  Result := '7'; // Entrada + Cheque Pré
+    8:  Result := '12'; // Cheque a Vista
+    9:  Result := '13'; // Cartão Débito
+    10: Result := '14'; // Depósito em Conta
+    11: Result := '15'; // Boleto Bancário
   end;
 end;
 
@@ -537,7 +526,7 @@ begin
   begin // alteracao de prevenda
     if Length(FrmPrincipalPreVenda.prevenda.codigoFormaPagamento) > 0 then
       RadioGroup1.ItemIndex :=
-        StrToInt(FrmPrincipalPreVenda.prevenda.codigoFormaPagamento)
+        setCodigoFOrmaPagamento(FrmPrincipalPreVenda.prevenda.codigoFormaPagamento)
     else
       RadioGroup1.ItemIndex := 0;
   end;
@@ -949,6 +938,24 @@ begin
         gridParcelas.Cells[3, j + 1] := strData;
       end;
     end;
+end;
+
+function TFrmFormaPag.setCodigoFOrmaPagamento(codigo: string): Integer;
+begin
+  case StrToInt(codigo) of
+    0:  Result := 0; // a vista
+    1:  Result := 1; // a prazo
+    2:  Result := 2; // Cartão a Vista
+    3:  Result := 3; // Cartão Parcelado
+    4:  Result := 4; // Cheque Pré
+    5:  Result := 5; // Entrada + Prazo
+    6:  Result := 6; // Entrada + Cartao
+    7:  Result := 7; // Entrada + Cheque Pré
+    12: Result := 8; // Cheque a Vista
+    13: Result := 9; // Cartão Débito
+    14: Result := 10; // Depósito em Conta
+    15: Result := 15; // Boleto Bancário
+  end;
 end;
 
 function TFrmFormaPag.ValidarCliente: Boolean;
