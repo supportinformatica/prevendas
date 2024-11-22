@@ -2231,7 +2231,7 @@ begin
      (dsCGC = '15066244000144') or (dsCGC = '51276698000103') or
      (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
-     (dsCGC = '55061884000186')
+     (dsCGC = '55061884000186') or (dsCGC = '13116106000105')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5109,6 +5109,10 @@ begin
     FrmRelOrcamentos.QRLD.Visible := False;
     FrmRelOrcamentos.lblValorDesconto.Visible := False;
     FrmRelOrcamentos.RLLblUnitario.Visible := False;
+    FrmRelOrcamentos.RLLabel25.Visible := False;
+    FrmRelOrcamentos.lblFrete.Visible := False;
+    FrmRelOrcamentos.RLLabel26.Visible := False;
+    FrmRelOrcamentos.lblValorTotal.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'MOSR') then
   begin
@@ -5153,7 +5157,7 @@ begin
     (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
-  // Hiper móveis pediu p ficar envertido o local do campo para o cliente e loja assinarem.
+  // Hiper móveis pediu p ficar invertido o local do campo para o cliente e loja assinarem.
   begin
     FrmRelOrcamentos.QRLblEmpresa2.caption := 'Cliente';
     FrmRelOrcamentos.QRLabel18.caption := 'Empresa';
@@ -9728,7 +9732,7 @@ end;
 function TFrmPrincipalPreVenda.orgaoPublicoBatAuto: Boolean;
 begin
   if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and ((dsCGC = '04217440000156') or
-     (dsCGC = '04217440000237') or (dsCGC = '33903814000195')) then
+     (dsCGC = '04217440000237') or (dsCGC = '33903814000195') or (dsCGC = '44744088000121')) then
     Result := True
   else
     Result := False;
