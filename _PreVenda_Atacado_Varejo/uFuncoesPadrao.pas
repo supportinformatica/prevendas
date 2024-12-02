@@ -256,8 +256,8 @@ function NomeDoDia(Data : TDateTime): String;
 Procedure ValidarNumero(Var Key:Char; texto_atual:string ); overload;
 
 Procedure ValidarNumero(Var Key :Char); overload;
-// Permite a digitacao de numeros inteiros sem ponto e com virgula
-{******************************************************************************}
+
+Procedure ValidarNumeroETraco(Var Key :Char);
 
 Procedure ValidarInteiro(Var Key :Char);
 // Permite a digitacao de numeros inteiros sem ponto e sem virgula
@@ -1540,8 +1540,10 @@ var Tam,i : Integer;
 Begin
   edit.EditMask := '';
   Texto := Edit.Text;
-  if (copy(Texto,0,1) = ' ')then AlinharDireitaMsk := Trim(Texto)
-  else begin
+  if (copy(Texto,0,1) = ' ') then
+    AlinharDireitaMsk := Trim(Texto)
+  else
+  begin
     Tam := Edit.MaxLength;
     For i := 1 to (Tam - length(Trim(Texto))) do
       if (length(espaco) + length(Trim(texto))) <= 14 then  espaco := espaco + ' ';
@@ -1552,11 +1554,22 @@ end;
 {******************************************************************************}
 Procedure ValidarNumero(Var Key :Char);
 Begin
-  if not (Key in ['0'..'9',#8,#44,#45,#46]) then begin
+  if not (Key in ['0'..'9',#8,#44,#45,#46]) then
+  begin
     Key := #0;
     MessageBeep ($FFFFFFFF)
-  end else begin
+  end else
+  begin
     if Key = #46 then Key := #44; // muda o ponto para virgula
+  end;
+end;
+
+Procedure ValidarNumeroETraco(Var Key :Char); overload;
+Begin
+  if not (Key in ['0'..'9',#8,#45]) then
+  begin
+    Key := #0;
+    MessageBeep ($FFFFFFFF)
   end;
 end;
 

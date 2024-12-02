@@ -20,6 +20,9 @@ type
     EdtTelefone: TEdit;
     Label5: TLabel;
     EdtTipo: TEdit;
+    chkRedeSocial: TCheckBox;
+    Label6: TLabel;
+    EdtNrDDD: TEdit;
     procedure FormActivate(Sender: TObject);
     procedure PgCtrolMdCadastroChange(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -30,17 +33,17 @@ type
     procedure BtnMdNovoClick(Sender: TObject);
     procedure BtnMdExcluirClick(Sender: TObject);
     procedure BtnMdSalvarClick(Sender: TObject);
+    procedure EdtNrDDDKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtRamalKeyPress(Sender: TObject; var Key: Char);
+    procedure EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
   private
     Procedure AtualizaQryConsulta;
     Procedure AtualizaCampos;
     Procedure AtivaCampos;
     Procedure DesativaCampos;
-    { Private declarations }
   public
     Function FormQueChamamouC(Texto1:String) : String;
-    // pega o codigo pessoa
-    Function FormQueChamamouN(Texto2:String) : String; // pega o nome   pessoa
-    { Public declarations }
+    Function FormQueChamamouN(Texto2:String) : String;
   end;
 
 var
@@ -71,14 +74,17 @@ begin
   EdtConsulta.Text := Nome;
   EdtCodigo.Text := Codigo;
   EdtNome.Text := Nome;
-  With AdoQryConsulta do begin
-    Sql.Text := 'Select nmTelefone as Número, dsRamal as Ramal,' +
-                'dsTelefone as Tipo,cdPessoa,cdTelefone From Telefone WITH (NOLOCK) ';
-    Sql.Add('Where cdPessoa = '+ EdtCodigo.Text+' ');
-    Sql.Add('Order By nmTelefone');
-    Open;            // mostra os dados no dbgrid
-    FieldByName('cdPessoa').Visible := false;
-    FieldByName('cdTelefone').Visible := false;
+  With AdoQryConsulta do
+  begin
+    Sql.Text :=
+    'Select nrDDD DDD, nmTelefone Número, dsRamal Ramal,'+
+    'dsTelefone Tipo, cdPessoa, cdTelefone, redeSocial  '+
+    'From Telefone with (nolock) ';
+    Sql.Add('Where cdPessoa = '+ EdtCodigo.Text+' Order By nmTelefone');
+    Open;
+    FieldByName('cdPessoa').Visible := False;
+    FieldByName('cdTelefone').Visible := False;
+    FieldByName('redeSocial').Visible := False;
   end;
 end;
 
@@ -89,6 +95,8 @@ begin
   EdtTelefone.Text := AdoQryConsulta.FieldByName('Número').AsString;
   EdtRamal.Text := AdoQryConsulta.FieldByName('Ramal').AsString;
   EdtTipo.Text := AdoQryConsulta.FieldByName('Tipo').AsString;
+  EdtNRDDD.Text := AdoQryConsulta.FieldByName('DDD').AsString;
+  chkRedeSocial.Checked := AdoQryConsulta.FieldByName('redeSocial').AsBoolean;
   EdtCodigo.ReadOnly := True;
   EdtNome.ReadOnly := True;
 end;
@@ -98,6 +106,8 @@ begin
   EdtRamal.ReadOnly := False;
   EdtTelefone.ReadOnly := False;
   EdtTipo.ReadOnly := False;
+  EdtNRDDD.ReadOnly := False;
+  chkRedeSocial.Enabled := True;
 end;
 
 Procedure TFrmCdTelefone.DesativaCampos;
@@ -105,6 +115,26 @@ begin
   EdtRamal.ReadOnly := True;
   EdtTelefone.ReadOnly := True;
   EdtTipo.ReadOnly := True;
+  EdtNRDDD.ReadOnly := True;
+  chkRedeSocial.Enabled := False;
+end;
+
+procedure TFrmCdTelefone.EdtNrDDDKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidarNumero(Key);
+end;
+
+procedure TFrmCdTelefone.EdtRamalKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidarNumero(Key);
+end;
+
+procedure TFrmCdTelefone.EdtTelefoneKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidarNumeroETraco(Key);
 end;
 
 procedure TFrmCdTelefone.FormActivate(Sender: TObject);
@@ -123,7 +153,8 @@ end;
 procedure TFrmCdTelefone.PgCtrolMdCadastroChange(Sender: TObject);
 begin
   inherited;
-  if PgCtrolMdCadastro.ActivePage = TbSheetMdCadastroConsulta then begin
+  if PgCtrolMdCadastro.ActivePage = TbSheetMdCadastroConsulta then
+  begin
     AtualizaQryConsulta;
     BtnMdNovo.Enabled := False;
     BtnMdSalvar.Enabled := False;
@@ -131,7 +162,8 @@ begin
     BtnMdExcluir.Enabled := False;
     BtnMdCancelar.Enabled := False;
   end else
-    if PgCtrolMdCadastro.ActivePage = TbSheetMdCadastroDados then begin
+    if PgCtrolMdCadastro.ActivePage = TbSheetMdCadastroDados then
+    begin
       AtualizaCampos;
       DesativaCampos;
       TrataBotoesPadrao(Sender,Padrao);
@@ -191,8 +223,10 @@ procedure TFrmCdTelefone.BtnMdExcluirClick(Sender: TObject);
 begin
   inherited;
   If MessageDlg('Confirma a exclusão deste telefone?',mtConfirmation,
-    [mbYes , mbNo], 0) = mrYes then begin
-    With AdoQryExcluir do begin
+    [mbYes , mbNo], 0) = mrYes then
+  begin
+    With AdoQryExcluir do
+    begin
       try
         DModulo.Conexao.BeginTrans;
         Sql.Text := 'Delete From Telefone Where nmTelefone = :TEL and cdPessoa = :CDPESSOA ';
@@ -204,9 +238,9 @@ begin
       except
         DModulo.Conexao.RollbackTrans;
         Messagedlg('Você não pode excluir este telefone!',mtinformation,[mbOk],0);
-      end;  // try
-    end; // with
-  end;  // messagedlg
+      end;
+    end;
+  end;
   AdoQryConsulta.Next;
   AtualizaQryConsulta;
   AtualizaCampos;
@@ -217,55 +251,68 @@ var
   CodTelefone : String[10];
 begin
   inherited;
-  if not CamposObrigatoriosPreenchidos(TbSheetMdCadastroDados) then Exit;
-  if Status = [Novo] then begin
-    with AdoQrySalvar do begin
+  if not CamposObrigatoriosPreenchidos(TbSheetMdCadastroDados) then
+    Exit;
+  if Status = [Novo] then
+  begin
+    with AdoQrySalvar do
+    begin
       try
         DModulo.Conexao.BeginTrans;
         Sql.Text := 'Select Max(cdTelefone) + 1 as UtCodigo from Telefone';
-        Open;  {usada para calcular o proximo codigo da tabela Telefone}
+        Open;
         UltimoCodigo := IntToStr(AdoQrySalvar.FieldByName('UtCodigo').AsInteger);
-        Sql.Text := 'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone) '+
-                    'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE)          ';
+        Sql.Text :=
+        'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone,nrDDD, redeSocial) '+
+        'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE,:nrDDD, :redeSocial)        ';
         parameters.parambyname('NMTELEFONE').value := EdtTelefone.Text;
         parameters.parambyname('DSRAMAL').value := EdtRamal.Text;
         parameters.parambyname('DSTELEFONE').value := EdtTipo.Text;
         parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
         parameters.parambyname('CDTELEFONE').value := UltimoCodigo;
+        parameters.parambyname('nrDDD').value := EdtNrDDD.Text;
+        parameters.parambyname('redeSocial').value := chkRedeSocial.Checked;
         ExecSql;
         DModulo.Conexao.CommitTrans;
-        Messagedlg('Inclusão Ok!', mtinformation, [mbOk], 0);
+        Messagedlg('Inclusão ok.', mtinformation, [mbOk], 0);
       except
-        on E: Exception do begin
+        on E: Exception do
+        begin
           DModulo.Conexao.RollbackTrans;
           Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.pegaHoraBanco, 'PREVENDA', 'TFrmCdTelefone.BtnMdSalvarClick', e.Message);
-          Messagedlg('Não foi possivel salvar os dados!', mterror, [mbOk], 0);
+          Messagedlg('Não foi possivel salvar os dados.', mterror, [mbOk], 0);
           BtnMdCancelarClick(Sender);
         end;
-      end; // try
-    end;  // QuySalvar
-  end else begin
+      end;
+    end;
+  end else
+  begin
     CodTelefone := AdoQryConsulta.FieldByName('cdTelefone').AsString;
-    With AdoQryAlterar do begin
+    With AdoQryAlterar do
+    begin
       try
         DModulo.Conexao.BeginTrans;
-        Sql.Text := 'Update Telefone Set nmTelefone = :TEL,dsRamal = :RAMAL,'+
-        'dsTelefone = :DSTEL Where cdTelefone = :CODIGO ';
-        Parameters.parambyname('TEL').VAlue :=  EdtTelefone.Text;
-        Parameters.parambyname('RAMAL').VAlue :=  EdtRamal.Text;
+        Sql.Text :=
+        'Update Telefone Set nmTelefone = :TEL,dsRamal = :RAMAL,       '+
+        'dsTelefone = :DSTEL, nrDDD = :nrDDD, redesocial = :redeSocial '+
+        'Where cdTelefone = :CODIGO';
+        Parameters.parambyname('TEL').VAlue := EdtTelefone.Text;
+        Parameters.parambyname('RAMAL').VAlue := EdtRamal.Text;
         Parameters.parambyname('DSTEL').VAlue := EdtTipo.Text;
-        Parameters.parambyname('CODIGO').VAlue :=  CodTelefone;
+        Parameters.parambyname('CODIGO').VAlue := CodTelefone;
+        parameters.parambyname('nrDDD').value := EdtNrDDD.Text;
+        parameters.parambyname('redeSocial').value := chkRedeSocial.Checked;
         ExecSql;
         DModulo.Conexao.CommitTrans;
-        Messagedlg('Alteração Ok!', mtinformation, [mbOk], 0);
+        Messagedlg('Alteração ok.', mtinformation, [mbOk], 0);
       Except
         DModulo.Conexao.RollbackTrans;
-        Messagedlg('Não foi possivel alterar os dados!', mterror, [mbOk], 0);
-      end; // except
-    end;  // With
-  end;    // else
+        Messagedlg('Não foi possivel alterar os dados.', mterror, [mbOk], 0);
+      end;
+    end;
+  end;
   TrataBotoesPadrao(Sender,Padrao);
-  Status:=[Padrao];
-end;     // procedure
+  Status := [Padrao];
+end;
 
 end.

@@ -5074,7 +5074,7 @@ begin
     FrmRelOrcamentos.RLDBText1.Visible := True;
     FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
     FrmRelOrcamentos.RLLabel1.Caption    := 'NCM';
-  end else if (RgOpcoes.ItemIndex = 2) and (dsCGC = '10805128000186') then  // AUTO ELETRICA PLANAUTO NÃO IMPRIME QUANDO FOR ORÇAMENTO
+  end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
     FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel10.Visible := False;

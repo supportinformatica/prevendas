@@ -310,6 +310,7 @@ type
     procedure EdtVisitasExit(Sender: TObject);
     procedure ckbIndIEDestClick(Sender: TObject);
     procedure MskInscricaoChange(Sender: TObject);
+    procedure CbxTelefoneKeyPress(Sender: TObject; var Key: Char);
   private
      PARAM :string;
      Clickou:Boolean;
@@ -1064,7 +1065,7 @@ end;
 procedure TFrmCdCliente.BtnMdSalvarClick(Sender: TObject);
 var
   vdata:TDateTime;  // data de cadastro
-  vCodigo,AUX1,AUX2 : string;
+  vCodigo,AUX1,AUX2, dddTelefone : string;
    i : integer;
 begin
   inherited;
@@ -1095,46 +1096,6 @@ begin
     CbxCidade.SetFocus;
     exit;
   end;
-  {if RgPessoaD.ItemIndex = 0 then // SE FOR PESSOA FÍSICA
-  begin
-    if MskInscricao2.Text <> '' then // TESTA A INSCRIÇÃO ESTADUAL
-    begin
-      try
-        if not IEok(MskInscricao2.Text, CbxEstado.Text) then
-        begin
-          ShowMessage('Inscrição Estadual inválida, redigite ou deixe em branco!');
-          PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-          MskInscricao2.SetFocus;
-          exit;
-        end;
-      except
-        ShowMessage('Inscrição Estadual inválida, redigite ou deixe em branco!');
-        PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-        MskInscricao2.SetFocus;
-        exit;
-      end;
-    end;
-  end
-  else // SE FOR PESSOA JURÍDICA
-  begin
-    if MskInscricao.Text <> '' then // TESTA A INSCRIÇÃO ESTADUAL
-    begin
-      try
-        if not IEok(MskInscricao.Text, CbxEstado.Text) then
-        begin
-          ShowMessage('Inscrição Estadual inválida, redigite ou deixe em branco!');
-          PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-          MskInscricao.SetFocus;
-          exit;
-        end;
-      except
-        ShowMessage('Inscrição Estadual inválida, redigite ou deixe em branco!');
-        PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-        MskInscricao.SetFocus;
-        exit;
-      end;
-    end;            
-  end;  }
   if RgPessoaD.ItemIndex = 0 then
   begin     // testa o cpf
     if Trim(MskCpf.Text) <> '' then
@@ -1171,6 +1132,11 @@ begin
     exit;
   if status = [novo] then
   begin
+    if (CbxTelefone.Text <> '') then
+    begin
+      dddTelefone := InputBox('DDD telefone 2 digitos', 'Digite o DDD do telefone:', '');
+      dddTelefone := Copy(SoNumeros(dddTelefone), 1, 2);
+    end;
     if Length(CbxTelefone.Text) > 0 then
     begin
       with AdoQryAlterar do
@@ -1224,16 +1190,13 @@ begin
         Sql.Text := 'Insert Into Cliente (cdPessoa,cdCodigo,dsPublicoPrivado,dsExcluir,dsLimCredito,                 '+
                     'nrDiaVenc,nrDiaVenc2,cdRegiao,cdPessoa_1,dsMotivo,dsAtacado,dsRestricao,dsLocalizacao,dsPrevenda,'+
                     'vlDescVista,vlDescPrazo,dsVista,nrCartao,dsInscricaoMunicipal,DSISENTO,dsIndIEDest,cdMatriz, dsFaturaUnica ';
-
         if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
           sql.Add(',dsContrato,dtInicio,dtFim,nrVisitas,tpStatus,dsEquipamentos,nrRamais,dsOutros,cdTecnico,nrObjeto) ')
         else
           sql.Add(')');
-
         sql.Add('Values (:CDPESSOA,:CDCODIGO,:DSPUBLICOPRIVADO,:DSEXCLUIR,:DSLIMCREDITO,:NRDIAVENC,                   ');
         sql.Add(':NRDIAVENC2,:CDREGIAO,:CDPESSOA_1,:DSMOTIVO,:DSATACADO,:DSRESTRICAO,:DSLOCAL,:DSPREVENDA,            ');
         sql.Add(':DESCVIST,:DESCPRAZO,:DSVISTA,:NRCARTAO,:DSINSCRICAOMUNICIPAL,:DSISENTO,:dsIndIEDest,:cdMatriz, :dsFaturaUnica ');
-
         if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
           sql.Add(',:DSCONT,:dtInicio,:dtFim,:nrVisitas,:tpStatus,:dsEquipamentos,:nrRamais,:dsOutros,:cdTecnico,:nrObjeto) ')
         else
@@ -1246,10 +1209,10 @@ begin
         parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
         parameters.parambyname('CDCODIGO').value := EdtcdtpCli.Text;
         case RgTpVencimento.ItemIndex of
-           0: parameters.parambyname('DSPUBLICOPRIVADO').Value := 'I';
-           1: parameters.parambyname('DSPUBLICOPRIVADO').Value := '2';
-           2: parameters.parambyname('DSPUBLICOPRIVADO').Value := '3';
-           3: parameters.parambyname('DSPUBLICOPRIVADO').Value := '4';
+          0: parameters.parambyname('DSPUBLICOPRIVADO').Value := 'I';
+          1: parameters.parambyname('DSPUBLICOPRIVADO').Value := '2';
+          2: parameters.parambyname('DSPUBLICOPRIVADO').Value := '3';
+          3: parameters.parambyname('DSPUBLICOPRIVADO').Value := '4';
         end;
         if ckbIsento.Checked then
           parameters.parambyname('DSISENTO').value  := 1  // Isento de ICMS
@@ -1277,12 +1240,10 @@ begin
         parameters.parambyname('DESCVIST').value   := EdtDescVista.Text;
         parameters.parambyname('NRCARTAO').value   := EdtnrCartao.Text;
         parameters.parambyname('DESCPRAZO').value  := EdtDescPrazo.Text;
-
         if CbxFaturaUnica.Checked then
           parameters.parambyname('dsFaturaUnica').value := 1
         else
           parameters.parambyname('dsFaturaUnica').value := 0;
-
         if CkAtacado.Checked then   //  mudar se for ativo ou não
           parameters.parambyname('DSATACADO').value := 'S'
         else
@@ -1295,8 +1256,8 @@ begin
           parameters.parambyname('DSVISTA').value := 'S'
         else
           parameters.parambyname('DSVISTA').value := 'N';
-
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then begin
+        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+        begin
           parameters.parambyname('DSCONT').value         := EdtContrato.text;
           parameters.parambyname('dtInicio').value       := DateToStr(EdtDataChegada.Date);
           parameters.parambyname('dtFim').value          := DateToStr(EdtDataSaida.Date);
@@ -1316,12 +1277,12 @@ begin
             parameters.parambyname('nrObjeto').value       := EdtNrObjeto.Text
           else parameters.parambyname('nrObjeto').value  := 0;
         end;
-
         ExecSql;
-        Sql.Text := 'Insert Into Endereco (cdPessoa,nmLogradouro,cdEndereco,          '+
-                    'dsComplemento,dsCep,dsBairro,dsCidade,cdMunicipio,dsUf,nrnumero) '+
-                    'Values (:CDPESSOA,:NMLOGRADOURO,:CDENDERECO,:DSCOMPLEMENTO,      '+
-                    ':DSCEP,:DSBAIRRO,:DSCIDADE,:CDMUNICIPIO,:DSUF,:NRNUMERO)         ';
+        Sql.Text :=
+        'Insert Into Endereco (cdPessoa,nmLogradouro,cdEndereco,          '+
+        'dsComplemento,dsCep,dsBairro,dsCidade,cdMunicipio,dsUf,nrnumero) '+
+        'Values (:CDPESSOA,:NMLOGRADOURO,:CDENDERECO,:DSCOMPLEMENTO,      '+
+        ':DSCEP,:DSBAIRRO,:DSCIDADE,:CDMUNICIPIO,:DSUF,:NRNUMERO)         ';
         parameters.parambyname('CDPESSOA').value      := EdtCodigo.Text;
         parameters.parambyname('NMLOGRADOURO').value  := EdtEndereco.Text;
         parameters.parambyname('CDENDERECO').value    := EdtCodigo.Text;
@@ -1335,13 +1296,15 @@ begin
         ExecSql;
         if Length(CbxTelefone.Text) > 0 then
         begin
-          Sql.Text := 'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone) '+
-                      'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE)          ';
+          Sql.Text :=
+          'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone, nrDDD) '+
+          'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE, :nrDDD)         ';
           parameters.parambyname('NMTELEFONE').value := CbxTelefone.Text;
           parameters.parambyname('DSRAMAL').value    := EdtRamal.Text;
           parameters.parambyname('DSTELEFONE').value := EdtTipoTel.Text;
           parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
           parameters.parambyname('CDTELEFONE').value := vCodigo;
+          parameters.parambyname('nrDDD').value := dddTelefone;
           ExecSql;
         end;
         FrmPrincipalPreVenda.SalvaLogEventos('Cadastro de cliente',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
@@ -2449,6 +2412,12 @@ begin
     EdtRamal.Text := AdoQryCombFone.FieldByName('dsRamal').AsString;
     EdtTipoTel.Text := AdoQryCombFone.FieldByName('dsTelefone').AsString;
   end;
+end;
+
+procedure TFrmCdCliente.CbxTelefoneKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidarNumeroETraco(Key);
 end;
 
 procedure TFrmCdCliente.CBTpClienteChange(Sender: TObject);
