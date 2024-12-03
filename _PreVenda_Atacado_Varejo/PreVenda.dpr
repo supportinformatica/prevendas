@@ -33,7 +33,6 @@ uses
   Thread_Conexao3 in 'Thread_Conexao3.pas',
   Declaracao in 'Declaracao.pas' {frmDeclaracao},
   relDeclaracao in 'relDeclaracao.pas' {frmRelDeclaracao},
-  formBuscaCliente in 'formBuscaCliente.pas' {frmBuscaCliente},
   ListaPedidos in 'ListaPedidos.pas' {FrmListaPedidos},
   Thread_Atualizacao in '..\..\support\_Atacado_Varejo_2\Thread_Atualizacao.pas',
   HD in 'HD.pas' {frmChave},
