@@ -6532,15 +6532,13 @@ var
   wndHandle: THandle;
   wndClass: array [0 .. 50] of Char;
 begin
-  if MessageDlg('Tem certeza que deseja sair da Pré-Venda?', mtConfirmation,
+  if MessageDlg('Deseja sair da Pré-Venda?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   begin
-    // ********* esconde a barra
     persistirFormulario;
     StrPCopy(@wndClass[0], 'Shell_TrayWnd');
     wndHandle := FindWindow(@wndClass[0], nil);
     ShowWindow(wndHandle, SW_RESTORE);
-    // *********
     Application.Terminate
   end
   else
@@ -6554,95 +6552,6 @@ Procedure TFrmPrincipalPreVenda.AtualizaQryConsulta;
 begin
   With ADOSPConsulta do
   begin
-    { Close;
-      Parameters.ParamByName('@DSATIVO').Value := 'S';
-      if CheckBox1.Checked = false then
-      Parameters.ParamByName('@DSATIVO').Value := Null;
-      Parameters.ParamByName('@ATACADOVAREJO').Value := vAtacadoVarejo;
-      //Parameters.ParamByName('@CLIENTE').Value := EdtCdCliente.Text;
-      //Parameters.ParamByName('@TABELAPRECO').Value := 'S';
-      Case CmbConsulta.ItemIndex of
-      0: begin
-      if EdtConsulta.Text <> '' then
-      Parameters.ParamByName('@CDPRODUTO').Value  := StrToInt(EdtConsulta.Text)
-      else
-      Parameters.ParamByName('@CDPRODUTO').Value  := EdtConsulta.Text;
-      Parameters.ParamByName('@NMPRODUTO').Value    := Null;
-      Parameters.ParamByName('@DSREFERENCIA').Value := Null;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := Null;
-      Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      Parameters.ParamByName('@NMPRODUTO2').Value   := Null;
-      Parameters.ParamByName('@C_BARRAS').Value     := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value   := Null;
-      Parameters.ParamByName('@PESSOA').Value       := Null;
-      end;
-      1: begin
-      Parameters.ParamByName('@CDPRODUTO').Value    := Null;
-      Parameters.ParamByName('@NMPRODUTO').Value    := EdtConsulta.Text;
-      Parameters.ParamByName('@DSREFERENCIA').Value := Null;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := Null;
-      Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      Parameters.ParamByName('@NMPRODUTO2').Value   := Null;
-      Parameters.ParamByName('@C_BARRAS').Value     := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value   := Null;
-      Parameters.ParamByName('@PESSOA').Value       := Null;
-      end;
-      2: begin
-      Parameters.ParamByName('@CDPRODUTO').Value    := Null;
-      Parameters.ParamByName('@NMPRODUTO').Value    := Null;
-      Parameters.ParamByName('@DSREFERENCIA').Value := EdtConsulta.Text;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := NULL;
-      Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      Parameters.ParamByName('@NMPRODUTO2').Value   := Null;
-      Parameters.ParamByName('@C_BARRAS').Value     := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value   := Null;
-      Parameters.ParamByName('@PESSOA').Value       := Null;
-      end;
-      3: begin
-      Parameters.ParamByName('@CDPRODUTO').Value    := Null;
-      Parameters.ParamByName('@NMPRODUTO').Value    := Null;
-      Parameters.ParamByName('@DSREFERENCIA').Value := NUll;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := EdtConsulta.Text;
-      Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      Parameters.ParamByName('@NMPRODUTO2').Value   := Null;
-      Parameters.ParamByName('@C_BARRAS').Value     := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value   := Null;
-      Parameters.ParamByName('@PESSOA').Value       := Null;
-      end;
-      4: begin
-      Parameters.ParamByName('@CDPRODUTO').Value    := Null;
-      Parameters.ParamByName('@NMPRODUTO').Value    := Null;
-      Parameters.ParamByName('@DSREFERENCIA').Value := Null;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := NULL;
-      Parameters.ParamByName('@NMGRUPO').Value      := EdtConsulta.Text;
-      Parameters.ParamByName('@NMPRODUTO2').Value   := Null;
-      Parameters.ParamByName('@C_BARRAS').Value     := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value   := Null;
-      Parameters.ParamByName('@PESSOA').Value       := Null;
-      end;
-      5: begin
-      Parameters.ParamByName('@CDPRODUTO').Value    := Null;
-      Parameters.ParamByName('@NMPRODUTO').Value    := Null;
-      Parameters.ParamByName('@DSREFERENCIA').Value := Null;
-      Parameters.ParamByName('@CDCODIGODIC').Value  := NULL;
-      Parameters.ParamByName('@NMGRUPO').Value      := Null;
-      if LblEspecificacao.Caption <> 'Localizar especificação contendo: ' then
-      Parameters.ParamByName('@DSREFERENCIA').Value := Copy(LblEspecificacao.Caption,35,length(LblEspecificacao.Caption))
-      else
-      Parameters.ParamByName('@DSREFERENCIA').Value := null;
-      Parameters.ParamByName('@NMPRODUTO2').Value := EdtConsulta.Text;
-      Parameters.ParamByName('@C_BARRAS').Value   := Null;
-      Parameters.ParamByName('@LANCAMENTO').Value := Null;
-      Parameters.ParamByName('@PESSOA').Value     := Null;
-      end;
-      end; //case
-      Case CmbConsulta.ItemIndex of
-      0: Parameters.ParamByName('@OPCAO').Value   := '0'; // pesqisa por codigo do produto
-      1,5: Parameters.ParamByName('@OPCAO').Value := '1';
-      2: Parameters.ParamByName('@OPCAO').Value   := '2';
-      3: Parameters.ParamByName('@OPCAO').Value   := '3';
-      4: Parameters.ParamByName('@OPCAO').Value   := '4';
-      end; }
     Close;
     if chkOcultarProdutosSemEstoque.Checked then
       Parameters.ParamByName('@OCULTARPRODUTOSEMESTOQUE').Value := 1
@@ -6653,8 +6562,7 @@ begin
       Parameters.ParamByName('@DESCONTO').Value :=
         TNEGCliente.getPercentualDoPrecoComDescontoDecimal
         (StrToIntDef(EdtCdCliente.Text, 0))
-    end
-    else
+    end else
       Parameters.ParamByName('@DESCONTO').Value := 1;
     if ckbAtivos.Checked = false then
       Parameters.ParamByName('@DSATIVO').Value := '%'
@@ -6671,74 +6579,58 @@ begin
       Parameters.ParamByName('@PESQUISA').Value :=
         Copy(LblEspecificacao.caption, 35, Length(LblEspecificacao.caption));
       Parameters.ParamByName('@PESQUISA2').Value := EdtConsulta.Text;
-    end
-    else if RadioGroup1.ItemIndex <> 4 then begin // diferente de codigo de barras
+    end else if RadioGroup1.ItemIndex <> 4 then // diferente de codigo de barras
       Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
-    end;
     Case RadioGroup1.ItemIndex of
-      0:
-        Parameters.ParamByName('@OPCAO').Value := '0';
+      0: Parameters.ParamByName('@OPCAO').Value := '0';
         // pesqisa por codigo do produto
-      1:
-        Parameters.ParamByName('@OPCAO').Value := '1';
+      1: Parameters.ParamByName('@OPCAO').Value := '1';
         // pesqisa por nome do produto OU CODIGO DE BARRAS
-      2:
-        Parameters.ParamByName('@OPCAO').Value := '3'; // REFERENCIA FABRICA
-      3:
-        Parameters.ParamByName('@OPCAO').Value := '2'; // REFERENCIA DE INTERNA
+      2: Parameters.ParamByName('@OPCAO').Value := '3'; // REFERENCIA FABRICA
+      3: Parameters.ParamByName('@OPCAO').Value := '2'; // REFERENCIA DE INTERNA
       4:
+      begin
+        Parameters.ParamByName('@OPCAO').Value := '7';
+        if (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo da balança
+          Parameters.ParamByName('@PESQUISA').Value :=
+            Copy(EdtConsulta.Text, 1, 7)
+        else
         begin
-          Parameters.ParamByName('@OPCAO').Value := '7';
-          if (Copy(EdtConsulta.Text, 1, 1) = '2') then // codigo da balança
-            Parameters.ParamByName('@PESQUISA').Value :=
-              Copy(EdtConsulta.Text, 1, 7)
+          if EdtConsulta.Text = '' then
+            Parameters.ParamByName('@PESQUISA').Value := -1
           else
           begin
-            if EdtConsulta.Text = '' then
-              Parameters.ParamByName('@PESQUISA').Value := -1
-            else
+            if (UpperCase(vEmpresa) = 'RURALPET') AND
+              (Length(EdtConsulta.Text) = 13) AND
+              (Pos('X', EdtConsulta.Text) > 0) then
             begin
-              if (UpperCase(vEmpresa) = 'RURALPET') AND
-                (Length(EdtConsulta.Text) = 13) AND
-                (Pos('X', EdtConsulta.Text) > 0) then
-              begin
-                Parameters.ParamByName('@OPCAO').Value := '0';
-                Parameters.ParamByName('@PESQUISA').Value :=
-                  stringreplace(EdtConsulta.Text, 'X', '', [rfReplaceAll]);
-              end
-              else
-                Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
-            end;
+              Parameters.ParamByName('@OPCAO').Value := '0';
+              Parameters.ParamByName('@PESQUISA').Value :=
+                stringreplace(EdtConsulta.Text, 'X', '', [rfReplaceAll]);
+            end else
+              Parameters.ParamByName('@PESQUISA').Value := EdtConsulta.Text;
           end;
         end;
-      5:
-        Parameters.ParamByName('@OPCAO').Value := '5'; // ESPECIFICAÇÃO
-      6:
-        Parameters.ParamByName('@OPCAO').Value := '4'; // CODIGO ADICIONAL
-      7:
-        Parameters.ParamByName('@OPCAO').Value := '8'; // familia
+      end;
+      5: Parameters.ParamByName('@OPCAO').Value := '5'; // ESPECIFICAÇÃO
+      6: Parameters.ParamByName('@OPCAO').Value := '4'; // CODIGO ADICIONAL
+      7: Parameters.ParamByName('@OPCAO').Value := '8'; // familia
     end;
     ADOSPConsultaPRECO.DisplayFormat := '#0.00'; // ADD POR CLAUDIO
     ADOSPConsultaVALOR.DisplayFormat := '#0.00';
     ADOSPConsultavlAtacado.DisplayFormat := '#0.00';
     ADOSPConsultanrQtdAtacarejo.DisplayFormat := '#0.00';
-
     ADOSPConsultaESTOQUE.DisplayFormat := '#' + getFormato(vCasasQtd);
     ADOSPConsultaPEDIDO.DisplayFormat := '#0.00';
     if (UpperCase(vEmpresa) = 'BELAVISTA') then
     begin
       DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'CÓDIGO_BARRAS')].Visible := false;
-      // oculta o codigo de barras
       DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'DESCRIÇÃO')].width := 350;
-      // aumenta a largura da coluna
     end;
     if (vAutoPecas = 'A') and (UpperCase(vEmpresa) <> 'TRATORMEC') then
       DBGrid1.Columns[IndexOfDbGrid(DBGrid1, 'CÓDIGO_BARRAS')].Visible := false;
-
     if (UpperCase(vEmpresa) = 'CHALOC') and (EdtConsulta.Text = '') then
-    begin
       Parameters.ParamByName('@PESQUISA').Value := 'nao exibir nada';
-    end;
     open; // mostra os dados no dbgrid
     AjustarAposConsultaProduto;
   end;
@@ -8327,8 +8219,12 @@ procedure TFrmPrincipalPreVenda.SpeedButton1Click(Sender: TObject);
 var
   clienteSelecionado: TCliente;
 begin
-  // frmBuscaCliente:= TfrmBuscaCliente.Create(self);
-  // frmBuscaCliente.ShowModal;
+  EdtCdCliente.Text := '';
+  EdtEndereco.Text := '';
+  EdtApelido.Text := ''; // apelido
+  vUF_Cliente := '';
+  CbxCliente.Text := '';
+  CbxCliente.ItemIndex := -1;
   clienteSelecionado := TBuscaObjeto.BuscaCliente(false);
   if clienteSelecionado <> nil then
   begin
