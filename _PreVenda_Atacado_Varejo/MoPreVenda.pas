@@ -2231,7 +2231,8 @@ begin
      (dsCGC = '15066244000144') or (dsCGC = '51276698000103') or
      (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
-     (dsCGC = '55061884000186') or (dsCGC = '13116106000105')
+     (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
+     (dsCGC = '09217745000181')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5152,6 +5153,12 @@ begin
     FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLDBText6.Left + 22; // FrmRelOrcamentos.RLLabel11.Left;
     FrmRelOrcamentos.RlDescricao.width  := 262;
     FrmRelOrcamentos.QREDescricao.width := 262;
+  end;
+  if prevenda.isOrcamento and not TNEGLoja.getExibirReferenciaOrcamento then
+  begin
+    FrmRelOrcamentos.RLDBText1.Enabled := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
+    FrmRelOrcamentos.RLLabel1.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
     (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
