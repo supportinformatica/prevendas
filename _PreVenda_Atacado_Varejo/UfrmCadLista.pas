@@ -243,10 +243,7 @@ type
     function BuscaOrcamentosVinculadosAoPedidoDeCompra: String;
     function VerificaSeExisteMaisDeUmaLista(nrOrcamento:string; cdPessoa: string):Boolean;
     procedure ContabilizaLivros;
-//    procedure montaserie;
-    { Private declarations }
   public
-    { Public declarations }
       Vform:string;
       Status: TipoStatus;         // Padrao,Novo ou Alterar
       tipoForracaoAnterior: string;
@@ -254,7 +251,6 @@ type
       nrSequencialAnterior: String;
       obsAnterior: String;
       apelidoAnterior: String;
-      //Pinta a string grid de acordo com o  select passado como paramentro
   end;
 
 var
@@ -268,20 +264,8 @@ uses uFuncoesPadrao, DataModulo, RelOrcamentoLista, FrmPrincipal, BuscaObjetos,
   MoPreVenda;
 
 {$R *.dfm}
-//procedure TFrmCadLista.montaserie;
-//begin
-//  with AdoSerie do
-//  begin
-//   SQL.Text:='Select dsSerie,cdSerie from SerieEscolar order by 1';
-             //'where cdEscola = :param                  ';
-//    Parameters.ParamByName('param').Value := FrmCadLista.EdtcdEscola.Text;
-//    AdoSerie.Open;
-///    MontaComboListBoolAdo(AdoSerie,CBxSerie);
-//  end;
-//end;
 
 Procedure TFrmCadLista.TrataBotoesPadrao( Sender: TObject; Status: TStatus);
-{ abilita ou desabilita os botões do fomulario pai }
 begin
   Case Status of
     Padrao :
@@ -357,19 +341,22 @@ var qry: TADOQuery;
 begin
   qry:= TADOQuery.Create(nil);
   qry.Connection := DModulo.Conexao;
-  with qry do begin
-    sql.Text := 'select distinct O.nrOrcamentoDia from orcamento O with(nolock) '+
-                'WHERE O.dsImpresso = ''S'' and O.nrOrcamento >= 448290         '+
-                'and O.dtEmissao between :dt1 and :dt2                          '+
-                'and O.nrOrcamentoDia is not null ';
+  with qry do
+  begin
+    sql.Text :=
+    'select distinct O.nrOrcamentoDia from orcamento O with(nolock) '+
+    'WHERE O.dsImpresso = ''S'' and O.nrOrcamento >= 448290         '+
+    'and O.dtEmissao between :dt1 and :dt2                          '+
+    'and O.nrOrcamentoDia is not null ';
     Parameters.ParamByName('dt1').Value := DateOf(dtInicial.Date);
     Parameters.ParamByName('dt2').Value := DateOf(dtFinal.Date);
-
-    if cdPessoa <> '' then begin
+    if cdPessoa <> '' then
+    begin
       sql.add('and O.cdCliente = :cdPessoa ');
       Parameters.ParamByName('cdPessoa').Value := cdPessoa;
     end;
-    if nrOrcamento <> '' then begin
+    if nrOrcamento <> '' then
+    begin
       sql.add('and O.nrOrcamento = :nrOrcamento ');
       Parameters.ParamByName('nrOrcamento').Value := nrOrcamento;
     end;
@@ -384,7 +371,6 @@ procedure TFrmCadLista.AtivaCampos;
 begin
    CBxEscola.Enabled     :=True;
    CBxSerie.Enabled      :=True;
-//   CBxProduto.Enabled    :=True;
    EdtQtdObj.Enabled     :=True;
    EdtcdEscola.Enabled   :=True;
    EdtcdSerie.Enabled    :=True;
@@ -426,13 +412,16 @@ end;
 procedure TFrmCadLista.EdtApelidoExit(Sender: TObject);
 var qry: TADOQuery;
 begin
-  if (EdtApelido.Text <> '') and (EdtCdPessoa.Text <> '') then begin
-    if apelidoAnterior <> EdtApelido.Text then begin
+  if (EdtApelido.Text <> '') and (EdtCdPessoa.Text <> '') then
+  begin
+    if apelidoAnterior <> EdtApelido.Text then
+    begin
       if Application.MessageBox('Confirma a alteração do apelido?',
           'Confirmação',MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = ID_YES then begin
         qry := TAdoQuery.Create(nil);
         qry.connection := DModulo.Conexao;
-        with qry do begin
+        with qry do
+        begin
           sql.text := 'update P_Fisica set dsNaturalidade = :apelido where cdPessoa = :cdPessoa ';
           Parameters.ParamByName('apelido').Value := EdtApelido.Text;
           Parameters.ParamByName('cdPessoa').Value := EdtCdPessoa.Text;
@@ -469,15 +458,20 @@ end;
 procedure TFrmCadLista.EdtCdListaImpressaoExit(Sender: TObject);
 var qry: TADOQuery;
 begin
-  if (EdtCdListaImpressao.Text <> '') and (EdtPrevenda.Text <> '') then begin
-    if cdListaAnterior <> EdtCdListaImpressao.Text then begin
+  if (EdtCdListaImpressao.Text <> '') and (EdtPrevenda.Text <> '') then
+  begin
+    if cdListaAnterior <> EdtCdListaImpressao.Text then
+    begin
       if Application.MessageBox('Confirma a alteração da lista (Escola e Série)?',
-          'Confirmação',MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = ID_YES then begin
+          'Confirmação',MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = ID_YES then
+      begin
         qry := TAdoQuery.Create(nil);
         qry.connection := DModulo.Conexao;
-        with qry do begin
-          sql.text := 'update orcamento set cdLista = :cdLista '+
-                      'where nrOrcamento = :nrOrcamento        ';
+        with qry do
+        begin
+          sql.text :=
+          'update orcamento set cdLista = :cdLista '+
+          'where nrOrcamento = :nrOrcamento        ';
           parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
           parameters.ParamByName('cdLista').Value := EdtCdListaImpressao.Text;
           ExecSQL;
@@ -491,7 +485,8 @@ end;
 procedure TFrmCadLista.EdtCdListaImpressaoKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if Key = #42 then begin
+  if Key = #42 then
+  begin
     FrmConsultaEscolas := TFrmConsultaEscolas.Create(Application);
     FrmConsultaEscolas.ShowModal;
   end;
@@ -499,11 +494,13 @@ end;
 
 procedure TFrmCadLista.EdtCdPessoaExit(Sender: TObject);
 begin
-  if (EdtCdPessoa.Text <> '') then begin
+  if (EdtCdPessoa.Text <> '') then
+  begin
     ADOQryCliente.Open;
     ADOQryCliente.Locate('cdPessoa',EdtCdPessoa.Text,[]);
     CbxPessoa.Text :=ADOQryCliente.FieldByName('nmPessoa').AsString;
-  end else begin
+  end else
+  begin
     CbxPessoa.Text := '';
   end;
   BuscaLivrosAluno;
@@ -511,17 +508,15 @@ end;
 
 procedure TFrmCadLista.AtualizaQryConsulta;
 begin
-  With AdoQryConsulta do Begin
-    Sql.Clear;
-    //SQL.Add('Declare @texto varchar(40)');
-    //SQL.Add('Set @texto = :Parametro');
-    SQL.Text:='Select E.cdEscola,E.dsEscola as Escola,S.cdSerie as cdSerie,S.dsSerie as Serie,                      '+
-              'L.cdLista,year(L.Ano) as Ano From ListaEscolar L with(nolock) Inner Join SerieEscolar S with(nolock) '+
-              'on L.cdSerie = S.cdSerie left join Escola E with(nolock) on L.cdEscola = E.cdEscola                  '+
-              'where year(L.ano) = :anoExercicio                                                                    ';
+  With AdoQryConsulta do
+  Begin
+    SQL.Text :=
+    'Select E.cdEscola,E.dsEscola as Escola,S.cdSerie as cdSerie,S.dsSerie as Serie,                      '+
+    'L.cdLista,year(L.Ano) as Ano From ListaEscolar L with(nolock) Inner Join SerieEscolar S with(nolock) '+
+    'on L.cdSerie = S.cdSerie left join Escola E with(nolock) on L.cdEscola = E.cdEscola                  '+
+    'where year(L.ano) = :anoExercicio ';
     Parameters.ParamByName('anoExercicio').Value := CbxAnoFiltro.Text;
     case CmbConsulta.ItemIndex of
-//      0: Sql.Add('Order By 4');
       1: begin              // por codigo
         Sql.Add('and L.CdLista Like '''+EdtConsulta.Text+'%'' ');
       end; // 1
@@ -534,7 +529,6 @@ begin
     end;  //case
     sql.Add('order by 2,4');
     Open;
-    { omite estes campos na grid }
   end; // with
 end;
 
@@ -550,15 +544,14 @@ begin
   Limpa_Grid(StringGrid1);
   with ADOQryItensLista do
   begin
-    sql.clear;
-    sql.text := 'Select I.CdObjeto,I.dsObjeto,I.qtd,P.nmProduto,i.qtd * P.vlPreco as Total, '+
-                'P.cdProduto,P.dsPrateleira,P.cdFabricante,P.dsReferencia,P.vlPreco,        '+
-                'P.nrQtdReal, P.dsUnidade from ItensLista I with(nolock)                    '+
-                'inner Join Produto P with(nolock) on I.cdObjeto = P.cdproduto              '+
-                'where I.cdLista = :param                                                                                                                                  ';
+    sql.text :=
+    'Select I.CdObjeto,I.dsObjeto,I.qtd,P.nmProduto,i.qtd * P.vlPreco as Total, '+
+    'P.cdProduto,P.dsPrateleira,P.cdFabricante,P.dsReferencia,P.vlPreco,        '+
+    'P.nrQtdReal, P.dsUnidade from ItensLista I with(nolock)                    '+
+    'inner Join Produto P with(nolock) on I.cdObjeto = P.cdproduto              '+
+    'where I.cdLista = :param                                                                                                                                  ';
     Parameters.ParamByName('param').value :=DBGrid1.Fields[0].Value;
     Open;
-
     for i:=1 to ADOQryItensLista.RecordCount do
     begin
       with StringGrid1 do
@@ -579,8 +572,10 @@ procedure TFrmCadLista.AtualizaCampos;
 var
   i,l:Integer;
 begin
-  With AdoQryConsulta do begin                // move os campos para os componentes
-    if AdoQryConsulta.RecordCount = 0 then begin
+  With AdoQryConsulta do
+  begin                // move os campos para os componentes
+    if AdoQryConsulta.RecordCount = 0 then
+    begin
       LimpaTodosCampos(TbSheetMdCadastroDados);
       Limpa_Grid(StringGrid1);
       CBxEscola.text:='';
@@ -593,9 +588,7 @@ begin
     CBxSerie.Text    := AdoQryConsulta.FieldByName('Serie').AsString;
     EdtcdSerie.Text  := AdoQryConsulta.FieldByName('cdSerie').AsString;
     CbxAno.Text      := IntToStr(AdoQryConsulta.FieldByName('ano').asInteger);//FormatDateTime('yyyy', AdoQryConsulta.FieldByName('ano').AsDateTime);
-
     montaritens;
-
   end;
 end;
 
@@ -610,13 +603,15 @@ begin
   MontaComboSerie;
   MontaComboEscola;
   MontaComboAnoExercicio;
-  with StringGrid1 do begin
+  with StringGrid1 do
+  begin
     Cells[0,0] := 'Código ';
     Cells[1,0] := 'Descrição';
     Cells[2,0] := 'QTD';
     Cells[3,0] := 'Preço';
   end;
-  with SgLivros do begin
+  with SgLivros do
+  begin
     Cells[0,0]   := 'Livro';
     Cells[1,0]   := 'Observação';
     Cells[2,0]   := 'cdIteLcto';
@@ -624,7 +619,8 @@ begin
     ColWidths[2] := -1;
     ColWidths[3] := -1;
   end;
-  With CmbConsulta do begin  // adiciona itens a combo de consulta
+  With CmbConsulta do
+  begin  // adiciona itens a combo de consulta
     Items.Clear;
     Items.Add('Todos');
     Items.Add('Código');
@@ -633,17 +629,13 @@ begin
     ItemIndex := 0;
   end;
   PgCtrolMdCadastro.ActivePageIndex := 0;
-//  CbxAnoFiltro.Text := FormatDateTime('yyyy',date);
   CbxAnoFiltro.ItemIndex := CbxAnoFiltro.Items.Count - 1;
   AtualizaQryConsulta;
   montaritens;
   MontaComboCliente;
-//  montaComboProdutos;
   MontaComboFornecedor;
   DesativaCampos;
-
-  //dtInicial.Date := Date;
-  dtInicial.Date := Strtodate('01/11/2016');
+  dtInicial.Date := Strtodate('05/12/2017');
   dtFinal.Date   := Date;
 end;
 
@@ -659,7 +651,8 @@ begin
   FrmRelAlunosLivros := TFrmRelAlunosLivros.Create(Self); // Cria o formulário
  // FrmRelAlunosLivros.QRLblTitulo.Caption := 'Relação de Alunos e tipos de forros solicitados';
   FrmRelAlunosLivros.QrlPeriodo.Caption := 'De '+datetostr(dtInicial.Date)+' a '+datetostr(dtFinal.Date);
-  With FrmRelAlunosLivros.ADOQryRelDados do begin // monta a query para a impressao do orcamento
+  With FrmRelAlunosLivros.ADOQryRelDados do
+  begin // monta a query para a impressao do orcamento
     sql.Text := 'select distinct O.nrOrcamento, O.tipoForracao, O.dtEmissao,             '+
                 'O.cdCliente, P.nmPessoa, E.DsEscola, S.dsSerie, O.nrOrcamentoDia,       '+
                 'case when (select count(1) from parcela Par inner join lancto Lct on    '+
@@ -671,39 +664,43 @@ begin
                 '           > 0 then ''NÃO PAGA''                                        '+
                 '           ELSE ''PAGA''                                                '+
                 'END as statusPagamento                                                  '+
-                'from orcamento O inner join Pessoa P on O.cdCliente = P.cdPessoa        '+
-                'inner join IteOrcamento I on O.nrOrcamento = I.nrOrcamento              '+
-                'inner join Produto PR on I.cdProduto = PR.cdProduto and PR.cdGrupo = 19 '+
-                'left join ListaEscolar L on O.cdLista = L.CdLista                       '+
-                'left join SerieEscolar S on L.cdSerie = S.cdSerie                       '+
-                'left join Escola E on L.CdEscola = E.CdEscola                           '+
-                'left join P_Fisica PF on PF.cdPessoa = P.cdPessoa                       '+
-                'left join P_Juridica PJ on PJ.cdPessoa = P.cdPessoa                     '+
-                'where O.dsImpresso = ''S'' and O.nrOrcamento >= 448290                  '+
-                'and O.dtEmissao between :dt1 and :dt2                                   ';
+                'from orcamento O with(nolock) inner join Pessoa P with(nolock) on O.cdCliente = P.cdPessoa '+
+                'inner join IteOrcamento I with(nolock) on O.nrOrcamento = I.nrOrcamento              '+
+                'inner join Produto PR with(nolock) on I.cdProduto = PR.cdProduto and PR.cdGrupo = 19 '+
+                'left join ListaEscolar L with(nolock) on O.cdLista = L.CdLista   '+
+                'left join SerieEscolar S with(nolock) on L.cdSerie = S.cdSerie   '+
+                'left join Escola E with(nolock) on L.CdEscola = E.CdEscola       '+
+                'left join P_Fisica PF with(nolock) on PF.cdPessoa = P.cdPessoa   '+
+                'left join P_Juridica PJ with(nolock) on PJ.cdPessoa = P.cdPessoa '+
+                'where O.dsImpresso = ''S'' and O.nrOrcamento >= 448290           '+
+                'and O.dtEmissao between :dt1 and :dt2                            ';
     Parameters.ParamByName('dt1').Value := dateOf(dtInicial.Date);
     Parameters.ParamByName('dt2').Value := dateOf(dtFinal.Date);
-
-    if EdtCdPessoa.Text <> '' then begin
+    if EdtCdPessoa.Text <> '' then
+    begin
       sql.Add('and O.cdCliente = :cdCliente ');
       Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
     end;
-    if Trim(EdtPrevenda.Text) <> '' then begin
+    if Trim(EdtPrevenda.Text) <> '' then
+    begin
       sql.Add('and O.nrOrcamento = :nrOrcamento ');
       Parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
     end;
-    if Trim(EdtApelido.Text) <> '' then begin
+    if Trim(EdtApelido.Text) <> '' then
+    begin
       sql.add('and (case when (P.Existir = ''F'') then PF.dsNaturalidade      ');
       sql.add('when (P.Existir = ''J'') then PJ.nmContato end ) like :apelido ');
       Parameters.ParamByName('apelido').Value := '%'+EdtApelido.Text+'%';
     end;
     cdEscola := copy_campo(CbxEscolaFiltro.Text,'|',2);
-    if cdEscola <> '' then begin
+    if cdEscola <> '' then
+    begin
       sql.Add('and L.cdEscola = :cdEscola ');
       Parameters.ParamByName('cdEscola').Value := cdEscola;
     end;
     cdSerie  := copy_campo(CbxSerieFiltro.Text,'|',2);
-    if cdSerie <> '' then begin
+    if cdSerie <> '' then
+    begin
       sql.Add('and L.cdSerie = :cdSerie ');
       Parameters.ParamByName('cdSerie').Value := cdSerie;
     end;
@@ -732,7 +729,8 @@ begin
 //    sql.add('order by 5');
     Open;
   end;
-  if FrmRelAlunosLivros.ADOQryRelDados.RecordCount = 0 then begin
+  if FrmRelAlunosLivros.ADOQryRelDados.RecordCount = 0 then
+  begin
     Application.MessageBox('Nenhum dado encontrado de acordo com os filtros!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
     exit;
   end;
@@ -742,7 +740,8 @@ end;
 
 procedure TFrmCadLista.ImprimeRelatorioLivrosPorAluno;
 begin
-  if (EdtCdPessoa.Text = '') and (trim(EdtPrevenda.text) = '') then begin
+  if (EdtCdPessoa.Text = '') and (trim(EdtPrevenda.text) = '') then
+  begin
     Application.MessageBox('Selecione um aluno ou digite o numero da pré-venda!','Atenção', mb_ok + MB_ICONWARNING + MB_APPLMODAL);
     CbxPessoa.SetFocus;
     Exit;
@@ -751,7 +750,8 @@ begin
   FrmRelAlunosLivros := TFrmRelAlunosLivros.Create(Self); // Cria o formulário
   FrmRelAlunosLivros.QRLblTitulo.Caption := 'Relação de Livros';
   FrmRelAlunosLivros.QrlPeriodo.Caption := 'De '+datetostr(dtInicial.Date)+' a '+datetostr(dtFinal.Date);
-  With FrmRelAlunosLivros.ADOQryRelDados do begin // monta a query para a impressao do orcamento
+  With FrmRelAlunosLivros.ADOQryRelDados do
+  begin // monta a query para a impressao do orcamento
     sql.Text := 'SELECT distinct O.nrOrcamento, O.dtEmissao, O.cdCliente,                '+
                 'E.DsEscola,Editora.nmPessoa as nomeEditora,                             '+
                 'P.nmPessoa as nomeCliente,It.observacao,                                '+
@@ -774,57 +774,55 @@ begin
                 '           > 0 then ''NÃO PAGA''                                        '+
                 '           ELSE ''PAGA''                                                '+
                 'END as statusPagamento                                                  '+
-                'FROM Orcamento O                                                        '+
-                'INNER JOIN IteOrcamento IT                                              '+
+                'FROM Orcamento O with(nolock)                                           '+
+                'INNER JOIN IteOrcamento IT with(nolock)                                 '+
                 'ON IT.nrOrcamento = O.nrOrcamento                                       '+
-                'INNER JOIN PRODUTO PR                                                   '+
+                'INNER JOIN PRODUTO PR with(nolock)                                      '+
                 'ON PR.cdProduto = IT.cdProduto and PR.cdGrupo = 19                      '+
-                'INNER JOIN PESSOA P                                                     '+
+                'INNER JOIN PESSOA P with(nolock)                                        '+
                 'ON P.cdPessoa = O.cdCliente                                             '+
-                'left JOIN ListaEscolar L                                                '+
+                'left JOIN ListaEscolar L with(nolock)                                   '+
                 'ON L.cdLista = O.cdLista                                                '+
-                'left JOIN SerieEscolar S                                                '+
+                'left JOIN SerieEscolar S with(nolock)                                   '+
                 'ON S.cdSerie = L.cdSerie                                                '+
-                'left join Escola E on L.CdEscola = E.CdEscola                           '+
-                'inner join Pessoa Editora on Editora.cdPessoa = Pr.cdPessoa_1           '+
-                'left join P_Fisica PF on PF.cdPessoa = P.cdPessoa                       '+
-                'left join P_Juridica PJ on PJ.cdPessoa = P.cdPessoa                     '+
-                'left join LivroPedido LP on LP.nrOrcamento = O.nrOrcamento              '+
+                'left join Escola E with(nolock) on L.CdEscola = E.CdEscola                 '+
+                'inner join Pessoa Editora with(nolock) on Editora.cdPessoa = Pr.cdPessoa_1 '+
+                'left join P_Fisica PF with(nolock) on PF.cdPessoa = P.cdPessoa          '+
+                'left join P_Juridica PJ with(nolock) on PJ.cdPessoa = P.cdPessoa        '+
+                'left join LivroPedido LP with(nolock) on LP.nrOrcamento = O.nrOrcamento '+
                 '                             and LP.cdProduto = PR.cdProduto            '+
-                'left join PedidoCompra PC on LP.nrLancto = PC.nrLancto                  '+
-                'left join MemoOrcamento M on O.nrOrcamento = M.nrOrcamento              '+
+                'left join PedidoCompra PC with(nolock) on LP.nrLancto = PC.nrLancto     '+
+                'left join MemoOrcamento M with(nolock) on O.nrOrcamento = M.nrOrcamento '+
                 'WHERE O.dsImpresso = ''S'' and O.nrOrcamento >= 448290                  '+
                 'and O.dtEmissao between :dt1 and :dt2                                   ';
-
     Parameters.ParamByName('dt1').Value := DateOf(dtInicial.Date);
     Parameters.ParamByName('dt2').Value := DateOf(dtFinal.Date);
-
-    if EdtCdPessoa.Text <> '' then begin
+    if EdtCdPessoa.Text <> '' then
+    begin
       sql.Add('and O.cdCliente = :cdCliente ');
-//      sql.Add('and O.nrOrcamento = (select MAX(nrOrcamento) from Orcamento where cdCliente = :cdCliente and dsImpresso = ''S'') ');
       Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
     end;
-
-    if Trim(EdtPrevenda.Text) <> '' then begin
+    if Trim(EdtPrevenda.Text) <> '' then
+    begin
       sql.Add('and O.nrOrcamento = :nrOrcamento ');
       Parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
     end;
-    if Trim(EdtApelido.Text) <> '' then begin
+    if Trim(EdtApelido.Text) <> '' then
+    begin
       sql.add('and (case when (P.Existir = ''F'') then PF.dsNaturalidade      ');
       sql.add('when (P.Existir = ''J'') then PJ.nmContato end ) like :apelido ');
       Parameters.ParamByName('apelido').Value := '%'+EdtApelido.Text+'%';
     end;
-
     sql.add('order by 4 desc,O.nrOrcamentoDia, PR.nmproduto');
     Open;
   end;
-  if FrmRelAlunosLivros.ADOQryRelDados.RecordCount = 0 then begin
+  if FrmRelAlunosLivros.ADOQryRelDados.RecordCount = 0 then
+  begin
     Application.MessageBox('Nenhum dado encontrado de acordo com os filtros!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
     exit;
   end;
   if VerificaSeExisteMaisDeUmaLista(EdtPrevenda.Text,EdtCdPessoa.Text) then
     Application.MessageBox('Existe mais de uma lista.','Atenção', MB_OK + MB_ICONINFORMATION + MB_APPLMODAL);
-
   FrmRelAlunosLivros.QrMDRelCompleto.PreviewModal;
   FrmRelAlunosLivros.Free;
 end;
@@ -834,122 +832,131 @@ var cdEscola,cdSerie: String;
 begin
   FrmRelLivrosFaltamChegar := TFrmRelLivrosFaltamChegar.Create(self);
   FrmRelLivrosFaltamChegar.QrlPeriodo.Caption := 'De '+datetostr(dtInicial.Date)+' a '+datetostr(dtFinal.Date);
-  With FrmRelLivrosFaltamChegar.ADOQryRelDados do begin // monta a query para a impressao do orcamento
-//    sql.Text := 'select DISTINCT O.nrOrcamento, O.dtemissao as dtEmissao, O.tipoForracao, P.cdProduto, '+
-//                'P.nmProduto,PE.cdPessoa, PE.nmPessoa, dbo.TELEFONES(PE.cdPessoa) as tels,             '+ //IP.nrlancto,
-//                'case when (PE.Existir = ''F'') then PF.dsNaturalidade                                 '+
-//                '   when (PE.Existir = ''J'') then PJ.nmContato End as Apelido,                        '+
-//                'O.nrOrcamentoDia,(I.nrQtd) as qtdPrevenda,I.Solicitado as qtdPedComp, PC.dtChegada,   '+
-//                'I.Recebido as nrQtdChegada, (I.nrQtd - I.Solicitado) as faltaChegar                   '+
-//                'from PedidoCompra PC inner join Itepedcomp IP on PC.nrLancto = IP.nrLancto            '+
-//                'inner join Produto P on IP.cdProduto = P.cdProduto and P.cdGrupo = 19                 '+
-//                'inner join IteOrcamento I on I.cdProduto = IP.cdProduto                               '+
-//                'inner join Orcamento O on I.nrOrcamento = O.nrOrcamento                               '+
-//                'inner join Pessoa PE on O.cdCliente = PE.cdPessoa                                     '+
-//                'left join P_Fisica PF on PF.cdPessoa = PE.cdPessoa                                    '+
-//                'left join P_Juridica PJ on PJ.cdPessoa = Pe.cdPessoa                                  '+
-//                'where O.dsImpresso = ''S'' and O.nrOrcamento >= 448290                                '+
-//                'and PC.dtEmissao between :dt1 and :dt2                                                '+
-//                'and IP.nrQtd > 0                                                                      '+
-//                'and O.nrOrcamento in ('+ BuscaOrcamentosVinculadosAoPedidoDeCompra +')                ';
-
-    sql.Text := 'select DISTINCT O.nrOrcamento, O.dtemissao as dtEmissao, O.tipoForracao, P.cdProduto,  '+
-                'P.nmProduto,PE.cdPessoa, PE.nmPessoa, dbo.TELEFONES(PE.cdPessoa) as tels,              '+
-                'case when (PE.Existir = ''F'') then PF.dsNaturalidade                                  '+
-                '   when (PE.Existir = ''J'') then PJ.nmContato End as Apelido,                         '+
-                'O.nrOrcamentoDia,(I.nrQtd) as qtdPrevenda                                              '+
-                'from Orcamento O inner join IteOrcamento I on O.nrOrcamento = I.nrOrcamento            '+
-                'left join LivroPedido L on L.nrOrcamento = O.nrOrcamento and I.cdProduto = L.cdProduto '+
-                'left join PedidoCompra PC on L.nrLancto = PC.nrLancto                                  '+
-                'inner join Pessoa PE on O.cdCliente = PE.cdPessoa                                      '+
-                'INNER JOIN Produto P WITH(nolock) ON I.cdProduto = P.cdProduto and P.cdGrupo = 19      '+
-                'INNER JOIN Pessoa Fornecedor WITH(nolock) ON P.cdPessoa = Fornecedor.cdPessoa          '+
-                'left join P_Fisica PF on PF.cdPessoa = PE.cdPessoa                                     '+
-                'left join P_Juridica PJ on PJ.cdPessoa = Pe.cdPessoa                                   '+
-                'left join ListaEscolar LI on O.cdLista = LI.CdLista                                    '+
-                'left join SerieEscolar S on LI.cdSerie = S.cdSerie                                     '+
-                'left join Escola E on LI.CdEscola = E.CdEscola                                         '+
-                'where O.nrOrcamento >= 448290                                                          ';
-
+  With FrmRelLivrosFaltamChegar.ADOQryRelDados do
+  begin // monta a query para a impressao do orcamento
+    sql.Text :=
+    'select DISTINCT O.nrOrcamento, O.dtemissao as dtEmissao, O.tipoForracao, P.cdProduto,'+
+    'P.nmProduto,PE.cdPessoa, PE.nmPessoa, dbo.TELEFONES(PE.cdPessoa) as tels,            '+
+    'case when (PE.Existir = ''F'') then PF.dsNaturalidade                                '+
+    '     when (PE.Existir = ''J'') then PJ.nmContato End as Apelido,                     '+
+    'O.nrOrcamentoDia,(I.nrQtd) as qtdPrevenda,                                           '+
+    'case when O.cdTurno = 1 then ''M''                                                   '+
+    '     when O.cdTurno = 2 then ''T''                                                   '+
+    '     when O.cdTurno = 3 then ''N''                                                   '+
+    '     else '''' end as Turno                                                          '+
+    'from Orcamento O with(nolock) inner join IteOrcamento I with(nolock) on O.nrOrcamento = I.nrOrcamento '+
+    'left join LivroPedido L with(nolock) on L.nrOrcamento = O.nrOrcamento and I.cdProduto = L.cdProduto   '+
+    'left join PedidoCompra PC with(nolock) on L.nrLancto = PC.nrLancto                '+
+    'inner join Pessoa PE with(nolock) on O.cdCliente = PE.cdPessoa                    '+
+    'INNER JOIN Produto P with(nolock) ON I.cdProduto = P.cdProduto and P.cdGrupo = 19 '+
+    'INNER JOIN Pessoa Fornecedor with(nolock) ON P.cdPessoa = Fornecedor.cdPessoa     '+
+    'left join P_Fisica PF with(nolock) on PF.cdPessoa = PE.cdPessoa                   '+
+    'left join P_Juridica PJ with(nolock) on PJ.cdPessoa = Pe.cdPessoa                 '+
+    'left join ListaEscolar LI with(nolock) on O.cdLista = LI.CdLista                  '+
+    'left join SerieEscolar S with(nolock) on LI.cdSerie = S.cdSerie                   '+
+    'left join Escola E with(nolock) on LI.CdEscola = E.CdEscola                       '+
+    'where O.nrOrcamento >= 448290 and O.dsImpresso <> ''O'' ';
+    if CbxFiltrarLivrosSolicitados.ItemIndex <> 3 then
+      sql.Add('AND O.dsImpresso = ''S'' ');
     case RgData.ItemIndex of
-      0: begin
+      0:
+      begin
         sql.Add('and O.dtEmissao between :dt1 and :dt2 ');
         Parameters.ParamByName('dt1').Value := dateOf(dtInicial.Date);
         Parameters.ParamByName('dt2').Value := dateOf(dtFinal.Date + 1);
       end;
-      1: begin
+      1:
+      begin
         sql.Add('and PC.dtchegada between :dt1 and :dt2 ');
         Parameters.ParamByName('dt1').Value := dateOf(dtInicial.Date);
         Parameters.ParamByName('dt2').Value := dateOf(dtFinal.Date);
       end;
     end;
-
-    if EdtCdPessoa.Text <> '' then begin
+    if EdtCdPessoa.Text <> '' then
+    begin
       sql.Add('and O.cdCliente = :cdCliente ');
       Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
     end;
-    if edtcdProdFltro.Text <> '' then begin
+    if edtcdProdFltro.Text <> '' then
+    begin
       sql.Add('and I.cdProduto = :cdProduto ');
       Parameters.ParamByName('cdProduto').Value := edtcdProdFltro.Text;
     end;
-    if Trim(EdtPrevenda.Text) <> '' then begin
+    if Trim(EdtPrevenda.Text) <> '' then
+    begin
       sql.Add('and O.nrOrcamento = :nrOrcamento ');
       Parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
     end;
-    if Trim(EdtCdFornecedor.Text) <> '' then begin
+    if Trim(EdtCdFornecedor.Text) <> '' then
+    begin
       sql.Add('and Fornecedor.cdPessoa = :cdPessoa ');
       Parameters.ParamByName('cdPessoa').Value := EdtCdFornecedor.Text;
     end;
-    if Trim(EdtApelido.Text) <> '' then begin
+    if Trim(EdtApelido.Text) <> '' then
+    begin
       sql.add('and (case when (PE.Existir = ''F'') then PF.dsNaturalidade      ');
       sql.add('when (PE.Existir = ''J'') then PJ.nmContato end ) like :apelido ');
       Parameters.ParamByName('apelido').Value := '%'+EdtApelido.Text+'%';
     end;
-    if Trim(EdtPedido.Text) <> '' then begin
+    if Trim(EdtPedido.Text) <> '' then
+    begin
       sql.Add('and L.nrLancto = :nrLancto ');
       Parameters.ParamByName('nrLancto').Value := EdtPedido.Text;
     end;
     cdEscola := copy_campo(CbxEscolaFiltro.Text,'|',2);
-    if cdEscola <> '' then begin
+    if cdEscola <> '' then
+    begin
       sql.Add('and LI.cdEscola = :cdEscola ');
       Parameters.ParamByName('cdEscola').Value := cdEscola;
     end;
     cdSerie  := copy_campo(CbxSerieFiltro.Text,'|',2);
-    if cdSerie <> '' then begin
+    if cdSerie <> '' then
+    begin
       sql.Add('and LI.cdSerie = :cdSerie ');
       Parameters.ParamByName('cdSerie').Value := cdSerie;
     end;
-
     case CbxFiltrarLivrosSolicitados.ItemIndex of
       0: FrmRelLivrosFaltamChegar.QRLblTitulo.Caption := 'Relatório de Livros solicitados nos pedidos de compras pagos';
-      1: begin
+      1:
+      begin
         FrmRelLivrosFaltamChegar.QRLblTitulo.Caption := 'Relatório de Livros solicitados nos pedidos de compras pagos que Chegaram';
-        sql.Add('and I.RECEBIDO = I.nrQtd'); //CHEGARAM
+        sql.Add('and ((select isnull(sum(I.nrQtd),0) as Solicitado ');
+        sql.Add('From Iteorcamento I with(nolock) inner join Produto Pr with(nolock) ON ');
+        sql.Add('Pr.cdproduto = I.cdProduto and Pr.cdgrupo = 19    ');
+        sql.Add('Where I.nrOrcamento = O.nrOrcamento) =            ');
+        sql.Add('(select isnull(sum(I.recebido),0) as chegado      ');
+        sql.Add('from Iteorcamento I with(nolock) inner join Produto Pr with(nolock) ON ');
+        sql.Add('Pr.cdproduto = I.cdProduto and Pr.cdgrupo = 19    ');
+        sql.Add('Where I.nrOrcamento = O.nrOrcamento))             ');
       end;
-      2: begin
+      2:
+      begin
         FrmRelLivrosFaltamChegar.QRLblTitulo.Caption := 'Relatório de Livros solicitados nos pedidos de compras pagos que Faltam Chegar';
         sql.Add('and I.nrQtd > I.RECEBIDO'); //FALTA CHEGAR
       end;
-      3: begin
+      3:
+      begin
         FrmRelLivrosFaltamChegar.QRLblTitulo.Caption := 'Relatório de Livros solicitados nos pedidos de compras que Faltam Pagar';
         sql.Add('AND O.dsImpresso = ''N'' ');
       end;
     end;
-
     case CbxOrdenar.ItemIndex of
-      0: sql.Add('order by O.nrOrcamentoDia '); // Sequencial
-      1: sql.Add('order by PE.nmPessoa ');      // Cliente
-      2: sql.Add('order by O.nrOrcamento ');    // Prevenda
-      3: sql.Add('order by P.nmProduto ');      // Produto
+      0: sql.Add('order by O.nrOrcamentoDia ');// Sequencial
+      1: sql.Add('order by PE.nmPessoa ');     // Cliente
+      2: sql.Add('order by O.nrOrcamento ');   // Prevenda
+      3: sql.Add('order by P.nmProduto ');     // Produto
     end;
     Open;
+    Application.MessageBox(PChar(inttostr(FrmRelLivrosFaltamChegar.ADOQryRelDados.RecordCount)),'Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
   end;
-  if FrmRelLivrosFaltamChegar.ADOQryRelDados.RecordCount = 0 then begin
+  if FrmRelLivrosFaltamChegar.ADOQryRelDados.RecordCount = 0 then
+  begin
     Application.MessageBox('Nenhum dado encontrado de acordo com os filtros!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
     exit;
   end;
   FrmRelLivrosFaltamChegar.QRBand1.Enabled := CbxExibirProdutos.Checked;
-  if CbxExibirProdutos.Checked = false then begin
+  if CbxExibirProdutos.Checked = false then
+  begin
     FrmRelLivrosFaltamChegar.QRBand1.Height := -1;
     FrmRelLivrosFaltamChegar.QRBand1.Enabled := false;
     FrmRelLivrosFaltamChegar.QRSubDetail1.Height := -1;
@@ -963,70 +970,8 @@ begin
     FrmRelLivrosFaltamChegar.QRLblPedido.Enabled := false;
     FrmRelLivrosFaltamChegar.QRLblDataChegada.Enabled := false;
   end;
-
   FrmRelLivrosFaltamChegar.QRMdRel.Preview;
-  FrmRelLivrosFaltamChegar.Free;
-
- { FrmRelListaRestante := TFrmRelListaRestante.Create(Self); // Cria o formulário
-  FrmRelListaRestante.QRLblTitulo.Caption := 'Relatório dos produtos a chegar (De acordo com o pedido de compra)';
-  FrmRelListaRestante.QrlPeriodo.Caption := 'De '+datetostr(dtInicial.Date)+' a '+datetostr(dtFinal.Date);
-
-  With FrmRelListaRestante.ADOQryRelDados do begin // monta a query para a impressao do orcamento
-    sql.Text := 'select Ip.nrLancto as NumeroPedComp,I.nrOrcamento, O.dtEmissao, P.cdProduto, '+
-                'P.nmProduto,PE.cdPessoa, PE.nmPessoa, dbo.TELEFONES(PE.cdPessoa) as tels,    '+
-                'case when (PE.Existir = ''F'') then PF.dsNaturalidade                        '+
-                '     when (PE.Existir = ''J'') then PJ.nmContato                             '+
-                'End as Apelido,                                                              '+
-                'sum(I.nrQtd) as qtdPrevenda,                                                 '+
-                'isnull(IP.nrQtd,0) as qtdPedComp, isnull(Ip.nrQtdChegada,0) as nrQtdChegada, '+
-                'isnull(sum(IP.nrQtd - Ip.nrQtdChegada),0) as faltaChegar                     '+
-                'from Orcamento O left join IteOrcamento I on I.nrOrcamento = O.nrOrcamento   '+
-                'left join Itepedcomp IP on IP.cdProduto = I.cdProduto                        '+
-                'left join Produto P on I.cdProduto = P.cdProduto and P.cdGrupo = 19          '+ //somente livros
-                'left join Pessoa PE on O.cdCliente = PE.cdPessoa                             '+
-                'left join P_Fisica PF on PF.cdPessoa = PE.cdPessoa                           '+
-                'left join P_Juridica PJ on PJ.cdPessoa = Pe.cdPessoa                         '+
-                'where O.dsImpresso = ''S'' and O.cdLista is not null                         '+ // (IP.nrQtd - IP.nrQtdChegada) > 0 and
-                'and O.dtEmissao between :dt1 and :dt2                                        ';
-
-    Parameters.ParamByName('dt1').Value := dateOf(dtInicial.Date);
-    Parameters.ParamByName('dt2').Value := dateOf(dtFinal.Date);
-
-    if EdtCdPessoa.Text <> '' then begin
-      sql.Add('and O.cdCliente = :cdCliente ');
-      Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
-    end;
-    if edtcdProdFltro.Text <> '' then begin
-      sql.Add('and I.cdProduto = :cdProduto ');
-      Parameters.ParamByName('cdProduto').Value := edtcdProdFltro.Text;
-    end;
-    if Trim(EdtPrevenda.Text) <> '' then begin
-      sql.Add('and O.nrOrcamento = :nrOrcamento ');
-      Parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
-    end;
-    if Trim(EdtApelido.Text) <> '' then begin
-      sql.add('and (case when (PE.Existir = ''F'') then PF.dsNaturalidade      ');
-      sql.add('when (PE.Existir = ''J'') then PJ.nmContato end ) like :apelido ');
-      Parameters.ParamByName('apelido').Value := '%'+EdtApelido.Text+'%';
-    end;
-    if Trim(EdtCdFornecedor.Text) <> '' then begin
-      sql.Add('and O.nrOrcamento = :nrOrcamento ');
-      Parameters.ParamByName('nrOrcamento').Value := EdtCdFornecedor.Text;
-    end;
-
-    sql.Add('group by Ip.nrLancto, P.cdProduto, P.nmProduto, I.nrOrcamento,   ');
-    sql.Add('O.dtEmissao, PE.cdPessoa, PE.nmPessoa,IP.nrQtd, Ip.nrQtdChegada, ');
-    sql.add('PE.Existir,PF.dsNaturalidade,PE.Existir,PJ.nmContato             ');
-    Open;
-
-  end;
-  if FrmRelListaRestante.ADOQryRelDados.RecordCount = 0 then begin
-    Application.MessageBox('Nenhum dado encontrado de acordo com os filtros!','Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
-    exit;
-  end;
-  FrmRelListaRestante.QRMdRel.PreviewModal;
-  FrmRelListaRestante.Free;
-  }
+  FreeAndNil(FrmRelLivrosFaltamChegar);
 end;
 
 procedure TFrmCadLista.LimpaCamposImpressao;
@@ -1037,18 +982,9 @@ begin
   CbxProdutoFiltro.Text := '';
   EdtCdFornecedor.Text := '';
   CbxFornecedor.Text := '';
-//  EdtPrevenda.Text := '';
   EdtApelido.Text := '';
   CbxForracao.Text := '';
   EdtCdListaImpressao.Text := '';
-//  EdtSequencial.Text := '';
-//  CbxEscolaFiltro.ItemIndex := -1;
-//  CbxSerieFiltro.ItemIndex := -1;
-//  CbxEscolaFiltro.Text := '';
-//  CbxSerieFiltro.Text := '';
-//  EdtObs.Text := '';
-//  LblEscola.Caption := 'Escola: ';
-//  LblSerie.Caption := 'Série: ';
 end;
 
 procedure TFrmCadLista.MontaComboAnoExercicio;
@@ -1060,21 +996,23 @@ end;
 
 procedure TFrmCadLista.MontaComboCliente;
 begin
-  With ADOQryCliente do begin // monta a combo dos clientes
-    Sql.Text := 'SELECT P.nmPessoa,P.cdPessoa '+
-                'FROM P_Fisica T WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) ON T.cdPessoa = E.cdPessoa INNER '+
-                'JOIN Pessoa P WITH (NOLOCK) ON T.cdPessoa = P.cdPessoa INNER JOIN Cliente C WITH (NOLOCK)           '+
-                'ON C.cdPessoa = P.cdPessoa AND E.cdPessoa = P.cdPessoa Where P.ser = ''C'' and P.dsAtivo = ''S''    ';
-                if (UpperCase(vEmpresa) = 'CAMARATUBA')OR(UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
-                  SQL.Add('and C.cdCodigo <> 2 ');
-                SQL.Add('union ');
-                SQL.Add('SELECT P.nmPessoa,P.cdPessoa ');
-                SQL.Add('FROM P_Juridica T WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) ON T.cdPessoa = E.cdPessoa   ');
-                SQL.Add('INNER JOIN Pessoa P WITH (NOLOCK) ON T.cdPessoa = P.cdPessoa INNER JOIN Cliente C WITH (NOLOCK)  ');
-                SQL.Add('ON C.cdPessoa = P.cdPessoa AND E.cdPessoa = P.cdPessoa Where P.ser = ''C'' and P.dsAtivo = ''S'' ');
-                if (UpperCase(vEmpresa) = 'CAMARATUBA')OR(UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
-                  SQL.Add('and C.cdCodigo <> 2 ');
-                SQL.Add('Order By P.nmPessoa ');
+  With ADOQryCliente do
+  begin // monta a combo dos clientes
+    Sql.Text :=
+    'SELECT P.nmPessoa,P.cdPessoa '+
+    'FROM P_Fisica T WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) ON T.cdPessoa = E.cdPessoa INNER '+
+    'JOIN Pessoa P WITH (NOLOCK) ON T.cdPessoa = P.cdPessoa INNER JOIN Cliente C WITH (NOLOCK)           '+
+    'ON C.cdPessoa = P.cdPessoa AND E.cdPessoa = P.cdPessoa Where P.ser = ''C'' and P.dsAtivo = ''S''    ';
+    if (UpperCase(vEmpresa) = 'CAMARATUBA')OR(UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
+      SQL.Add('and C.cdCodigo <> 2 ');
+    SQL.Add('union ');
+    SQL.Add('SELECT P.nmPessoa,P.cdPessoa ');
+    SQL.Add('FROM P_Juridica T WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) ON T.cdPessoa = E.cdPessoa   ');
+    SQL.Add('INNER JOIN Pessoa P WITH (NOLOCK) ON T.cdPessoa = P.cdPessoa INNER JOIN Cliente C WITH (NOLOCK)  ');
+    SQL.Add('ON C.cdPessoa = P.cdPessoa AND E.cdPessoa = P.cdPessoa Where P.ser = ''C'' and P.dsAtivo = ''S'' ');
+    if (UpperCase(vEmpresa) = 'CAMARATUBA')OR(UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
+      SQL.Add('and C.cdCodigo <> 2 ');
+    SQL.Add('Order By P.nmPessoa ');
     MontaComboListBoolADO(ADOQryCliente,CbxPessoa);
   end;
 end;
@@ -1086,40 +1024,36 @@ begin
   CBxEscola.Clear;
   CbxEscolaFiltro.Clear;
   listaEscolas := TNEGEscola.GetEscolas;
-  for escola in listaEscolas do begin
+  for escola in listaEscolas do
+  begin
     CBxEscola.Items.Add(escola.dsEscola + '|'+ IntToStr(escola.cdEscola));
     CbxEscolaFiltro.Items.Add(escola.dsEscola + '|'+ IntToStr(escola.cdEscola));
   end;
   FreeAndNil(listaEscolas);
-
-//  with ADOQryCombFone do
-//  begin
-//    SQL.Text:='Select dsEscola,cdEscola from Escola order by dsEscola';
-//    Open;
-//    MontaComboListBoolAdo(ADOQryCombFone,CbxEscola);
-//  end;
 end;
 
 procedure TFrmCadLista.MontaComboFornecedor;
 begin
-  With AdoFornecedor do begin // monta a combo de fornecedor
-    Sql.Text := 'Select P.nmPessoa,P.cdPessoa,P.Existir,P.ser,E.dsBairro,E.dsCidade, '+
-                'E.nmLogradouro,E.dsCep,E.dsUf,W.dsCPF as CNPJ,W.dsIdentidade as IE,'+
-                'W.dsIdentidade as Razao,M.NrICMS,M.nrISS,F.dsFormaPagamento '+
-                'FROM ((Estado M WITH (NOLOCK) INNER JOIN (Pessoa P WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) '+
-                'ON P.cdPessoa = E.cdPessoa) ON M.dsUF = E.dsUF) INNER JOIN P_Fisica W WITH (NOLOCK) '+
-                'ON (E.cdPessoa = W.cdPessoa) AND (P.cdPessoa = W.cdPessoa) '+
-                'inner join Fornecedor F with (nolock) on F.cdPessoa = P.cdPessoa ) '+
-                'Where P.ser = ''F'' and P.dsAtivo = ''S'' '+
-                'UNION '+
-                'Select P.nmPessoa,P.cdPessoa,P.Existir,P.ser,E.dsBairro,E.dsCidade, '+
-                'E.nmLogradouro,E.dsCep,E.dsUf,W.CGC as CNPJ,W.dsInscricaoEstadual as IE,'+
-                'W.nmRazao as Razao,M.NrICMS,M.nrISS, F.dsFormaPagamento '+
-                'FROM ((Estado M WITH (NOLOCK) INNER JOIN (Pessoa P WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) '+
-                'ON P.cdPessoa = E.cdPessoa) ON M.dsUF = E.dsUF) INNER JOIN P_Juridica W WITH (NOLOCK) '+
-                'ON (E.cdPessoa = W.cdPessoa) AND (P.cdPessoa = W.cdPessoa) '+
-                'inner join Fornecedor F with (nolock) on F.cdPessoa = P.cdPessoa) '+
-                'Where P.ser = ''F'' and P.dsAtivo = ''S'' Order By P.nmPessoa ';
+  With AdoFornecedor do
+  begin // monta a combo de fornecedor
+    Sql.Text :=
+    'Select P.nmPessoa,P.cdPessoa,P.Existir,P.ser,E.dsBairro,E.dsCidade, '+
+    'E.nmLogradouro,E.dsCep,E.dsUf,W.dsCPF as CNPJ,W.dsIdentidade as IE,'+
+    'W.dsIdentidade as Razao,M.NrICMS,M.nrISS,F.dsFormaPagamento '+
+    'FROM ((Estado M WITH (NOLOCK) INNER JOIN (Pessoa P WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) '+
+    'ON P.cdPessoa = E.cdPessoa) ON M.dsUF = E.dsUF) INNER JOIN P_Fisica W WITH (NOLOCK) '+
+    'ON (E.cdPessoa = W.cdPessoa) AND (P.cdPessoa = W.cdPessoa) '+
+    'inner join Fornecedor F with (nolock) on F.cdPessoa = P.cdPessoa ) '+
+    'Where P.ser = ''F'' and P.dsAtivo = ''S'' '+
+    'UNION '+
+    'Select P.nmPessoa,P.cdPessoa,P.Existir,P.ser,E.dsBairro,E.dsCidade, '+
+    'E.nmLogradouro,E.dsCep,E.dsUf,W.CGC as CNPJ,W.dsInscricaoEstadual as IE,'+
+    'W.nmRazao as Razao,M.NrICMS,M.nrISS, F.dsFormaPagamento '+
+    'FROM ((Estado M WITH (NOLOCK) INNER JOIN (Pessoa P WITH (NOLOCK) INNER JOIN Endereco E WITH (NOLOCK) '+
+    'ON P.cdPessoa = E.cdPessoa) ON M.dsUF = E.dsUF) INNER JOIN P_Juridica W WITH (NOLOCK) '+
+    'ON (E.cdPessoa = W.cdPessoa) AND (P.cdPessoa = W.cdPessoa) '+
+    'inner join Fornecedor F with (nolock) on F.cdPessoa = P.cdPessoa) '+
+    'Where P.ser = ''F'' and P.dsAtivo = ''S'' Order By P.nmPessoa ';
     MontaComboListBoolAdo(AdoFornecedor,CbxFornecedor);
   end;
 end;
@@ -1130,11 +1064,12 @@ begin
   begin  // mota a combo dos nomes dos produtos
     if ADOQryProduto.Active = False then
     begin
-      Sql.Text := 'Select P.nmProduto,P.cdProduto,P.vlPreco,P.nrQtdReal     '+
-                  'From Produto P WITH (NOLOCK)                             '+
-                  'where NOT( P.dstipo_item IN ( ''07'', ''08'', ''10'' ))  '+
-                  'and P.dsAtivo = ''S''                                    '+
-                  'Order By P.nmProduto                                     ';
+      Sql.Text :=
+      'Select P.nmProduto,P.cdProduto,P.vlPreco,P.nrQtdReal  '+
+      'From Produto P WITH (NOLOCK)                          '+
+      'where NOT( P.dstipo_item IN (''07'', ''08'', ''10'')) '+
+      'and P.dsAtivo = ''S''                                 '+
+      'Order By P.nmProduto                                  ';
       open;
       MontaComboListBoolAdo(ADOQryProduto,CBxProduto);
       CbxProdutoFiltro.Items := CBxProduto.Items;
@@ -1148,7 +1083,8 @@ var serie: TSerieEscolar;
 begin
   CBxSerie.Clear;
   listaSeries := TNEGSerieEscolar.GetSeries;
-  for serie in listaSeries do begin
+  for serie in listaSeries do
+  begin
     CBxSerie.Items.Add(serie.dsSerie + '|'+ inttostr(serie.cdSerie));
   end;
   FreeAndNil(listaSeries);
@@ -1161,7 +1097,8 @@ var serie: TSerieEscolar;
 begin
   CbxSerieFiltro.Clear;
   listaSeries := TNEGSerieEscolar.GetSeries;
-  for serie in listaSeries do begin
+  for serie in listaSeries do
+  begin
     CbxSerieFiltro.Items.Add(serie.dsSerie + '|'+ inttostr(serie.cdSerie));
   end;
   FreeAndNil(listaSeries);
@@ -1187,7 +1124,8 @@ begin
     BtnExport.Enabled := true;
   end
   else
-  if PgCtrolMdCadastro.ActivePage = TBSheetMdImpressao then begin
+  if PgCtrolMdCadastro.ActivePage = TBSheetMdImpressao then
+  begin
     TrataBotoesPadrao(Sender,Impressao);
     Status:=[Impressao];
     BtnExport.Enabled := false;
@@ -1223,7 +1161,8 @@ begin
   Limpa_Grid(SgLivros);
   RgData.Enabled := false;
   case RgTipoRel.ItemIndex of
-    0: begin
+    0:
+    begin
       cbxProdutoFiltro.Enabled := True;
       dtInicial.Enabled := true;
       dtFinal.Enabled   := true;
@@ -1240,9 +1179,10 @@ begin
         1: LblPeriodo.Caption := 'Período das Chegadas dos Livros';
       end;
     end;
-    1: begin
+    1:
+    begin
       cbxProdutoFiltro.Enabled := false;
-      dtInicial.Date := Strtodate('01/11/2016');
+      dtInicial.Date := Strtodate('05/12/2017');
       dtInicial.Enabled := true;
       dtFinal.Enabled   := true;
       LblLivros.Visible := false;
@@ -1254,7 +1194,8 @@ begin
       CbxFiltrarLivrosSolicitados.Enabled := false;
       CbxFiltrarRelacaoAlunosPreVenda.Enabled := true;
     end;
-    2: begin
+    2:
+    begin
       cbxProdutoFiltro.Enabled := false;
       dtInicial.Enabled := true;
       dtFinal.Enabled   := true;
@@ -1340,12 +1281,12 @@ end;
 
 procedure TFrmCadLista.BtnMdImprimirClick(Sender: TObject);
 begin
-  if dtInicial.Date > dtFinal.date then begin
+  if dtInicial.Date > dtFinal.date then
+  begin
     Application.MessageBox('Data inicial maior que a data final!','Atenção', mb_ok + MB_ICONWARNING + MB_APPLMODAL);
     dtInicial.SetFocus;
     exit;
   end;
-
   case RgTipoRel.ItemIndex of
     0: ImprimeRelatorioLivrosSolicitadosAChegar;
     1: ImprimeRelatorioAlunosResumido;
@@ -1380,30 +1321,28 @@ procedure TFrmCadLista.btnOrcamentoClick(Sender: TObject);
 begin
   // Imprime o Orçamento
   //if EdtcdLista.Text <> '' then begin
-  if ADOQryConsulta.RecordCount > 0 then begin
+  if ADOQryConsulta.RecordCount > 0 then
+  begin
     frmRelOrcamentoLista := TfrmRelOrcamentoLista.Create(Self); // Cria o formulário
-    With frmRelOrcamentoLista.ADOQryRelDados do begin // monta a query para a impressao do orcamento
+    With frmRelOrcamentoLista.ADOQryRelDados do
+    begin // monta a query para a impressao do orcamento
       Sql.Text := 'Select I.CdObjeto,I.dsObjeto,I.qtd,P.nmProduto,          '+
                   'i.qtd * P.vlPreco as Total,P.cdProduto,                  '+
                   'P.dsPrateleira,P.cdFabricante,P.dsReferencia,            '+
                   'P.vlPreco, P.nrQtdReal, P.dsUnidade,                     '+
                   'E.DsEscola, S.dsSerie                                    '+
-                  'from ListaEscolar L inner join ItensLista I with(nolock) '+
+                  'from ListaEscolar L with(nolock) inner join ItensLista I with(nolock) '+
                   ' on L.cdLista = I.cdLista                                '+
-                  'left JOIN SerieEscolar S ON S.cdSerie = L.cdSerie        '+
-                  'left join Escola E on L.CdEscola = E.CdEscola            '+
-                  ' inner Join Produto P with(nolock)                       '+
-                  '     on I.cdObjeto = P.cdproduto                         '+
-                  'where I.cdLista = :cdLista                               ';
+                  'left JOIN SerieEscolar S with(nolock) ON S.cdSerie = L.cdSerie '+
+                  'left join Escola E with(nolock) on L.CdEscola = E.CdEscola     '+
+                  'inner Join Produto P with(nolock) on I.cdObjeto = P.cdproduto  '+
+                  'where I.cdLista = :cdLista';
       case PgCtrolMdCadastro.ActivePageIndex of
         0: Parameters.ParamByName('cdLista').Value := ADOQryConsulta.FieldByName('cdLista').AsInteger;
         1: Parameters.ParamByName('cdLista').Value := EdtcdLista.Text;
       end;
       Open;
     end;
-//    frmRelOrcamentoLista.QrlCnpj.Caption := 'CNPJ: ' +
-//    frmRelOrcamentoLista.ADOQryConfig.FieldByName('dsCgc').AsString + '     I.E.: ' +
-//    frmRelOrcamentoLista.ADOQryConfig.FieldByName('dsInscricao').AsString;
     frmRelOrcamentoLista.QuickRep1.Preview;  // imprime o orcamento
     frmRelOrcamentoLista.Free;
   end;
@@ -1416,12 +1355,14 @@ var qry: TADOQuery;
     serie: TSerieEscolar;
 begin
   Limpa_Grid(SgLivros);
-  if (EdtCdPessoa.Text = '') and (trim(EdtPrevenda.text) = '') then begin
+  if (EdtCdPessoa.Text = '') and (trim(EdtPrevenda.text) = '') then
+  begin
     Exit;
   end;
   qry := TAdoQuery.Create(nil);
   qry.connection := DModulo.Conexao;
-  with qry do begin
+  with qry do
+  begin
     sql.Text := 'SELECT distinct O.nrOrcamento, O.dtEmissao, O.cdCliente,          '+
                 'E.cdEscola,E.DsEscola,Editora.nmPessoa as nomeEditora, O.cdLista, '+
                 'P.nmPessoa as nomeCliente,It.observacao,                          '+
@@ -1444,29 +1385,25 @@ begin
                 'left join MemoOrcamento M on O.nrOrcamento = M.nrOrcamento        '+
                 'WHERE O.nrOrcamento >= 448290 and O.dsImpresso=''S''              '+
                 'and O.dtEmissao between :dt1 and :dt2                             ';
-
     Parameters.ParamByName('dt1').Value := DateOf(dtInicial.Date);
     Parameters.ParamByName('dt2').Value := DateOf(dtFinal.Date);
-
-    if EdtCdPessoa.Text <> '' then begin
+    if EdtCdPessoa.Text <> '' then
+    begin
       sql.Add('and O.cdCliente = :cdCliente ');
-//      sql.Add('and O.nrOrcamento = (select MAX(nrOrcamento) from Orcamento where cdCliente = :cdCliente and dsImpresso = ''S'') ');
       Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
     end;
-    if Trim(EdtPrevenda.Text) <> '' then begin
+    if Trim(EdtPrevenda.Text) <> '' then
+    begin
       sql.Add('and O.nrOrcamento = :nrOrcamento ');
       Parameters.ParamByName('nrOrcamento').Value := EdtPrevenda.Text;
     end;
-//    if trim(EdtSequencial.Text) <> '' then begin
-//      sql.Add('and O.nrOrcamentoDia = :nrOrcamentoDia ');
-//      Parameters.ParamByName('nrOrcamentoDia').Value := EdtSequencial.Text;
-//    end;
     sql.add('order by 4, PR.nmproduto');
-
     open;
     i:= 1;
-    while not Eof do begin
-      with SgLivros do begin
+    while not Eof do
+    begin
+      with SgLivros do
+      begin
         Cells[0,i] := FieldByName('TITULO').AsString;      //'Livro';
         Cells[1,i] := FieldByName('observacao').AsString;  //'Observação';
         Cells[2,i] := FieldByName('cdIteLcto').AsString;   //'cdIteLcto';
@@ -1476,8 +1413,8 @@ begin
       Inc(i);
       Next;
     end;
-
-    if recordCount > 0 then begin
+    if recordCount > 0 then
+    begin
       if qry.FieldByName('tipoForracao').AsString <> '' then
         CbxForracao.Text := qry.FieldByName('tipoForracao').AsString
       else
@@ -1490,15 +1427,11 @@ begin
         CbxEscolaFiltro.Text := escola.dsEscola + '|' + IntToStr(escola.cdEscola);
         serie := TNEGSerieEscolar.GetSerie(qry.FieldByName('cdSerie').AsInteger);
         CbxSerieFiltro.text := serie.dsSerie + '|' + IntToStr(serie.cdSerie);
-//        LblEscola.Caption := 'Escola: '+qry.FieldByName('dsEscola').AsString;
-//        LblSerie.Caption := 'Série: '+qry.FieldByName('serie').AsString;
-      end
-      else begin
+      end else
+      begin
         EdtCdListaImpressao.text := '';
         CbxEscolaFiltro.Text := '';
         CbxSerieFiltro.Text := '';
-//        LblEscola.Caption := '';
-//        LblSerie.Caption := '';
       end;
       close;
     end;
@@ -1514,21 +1447,21 @@ var qry: TADOQuery;
 begin
   qry := TAdoQuery.Create(nil);
   qry.connection := DModulo.Conexao;
-  with qry do begin
-    sql.text := 'select distinct PC.dsObs2                                                   '+
-                'from Orcamento O inner join IteOrcamento I on I.nrOrcamento = O.nrOrcamento '+
-                'inner join Itepedcomp IP on IP.cdProduto = I.cdProduto                      '+
-                'inner join PedidoCompra PC on IP.nrLancto = PC.nrLancto                     '+
-                'inner join Produto P on I.cdProduto = P.cdProduto and P.cdGrupo = 19        '+
-                'inner join Pessoa PE on O.cdCliente = PE.cdPessoa                           '+
-                'left join P_Fisica PF on PF.cdPessoa = PE.cdPessoa                          '+
-                'left join P_Juridica PJ on PJ.cdPessoa = Pe.cdPessoa                        '+
-                'where O.dsImpresso = ''S'' and O.nrOrcamento >= 448290                      '+
-                'and PC.dtEmissao between :dt1 and :dt2                                      '+
-                'and PC.dsObs2 is not null ';
+  with qry do
+  begin
+    sql.text :=
+    'select distinct PC.dsObs2                                            '+
+    'from Orcamento O with(nolock) inner join IteOrcamento I with(nolock) on I.nrOrcamento = O.nrOrcamento '+
+    'inner join Itepedcomp IP with(nolock) on IP.cdProduto = I.cdProduto  '+
+    'inner join PedidoCompra PC with(nolock) on IP.nrLancto = PC.nrLancto '+
+    'inner join Produto P with(nolock) on I.cdProduto = P.cdProduto and P.cdGrupo = 19 '+
+    'inner join Pessoa PE with(nolock) on O.cdCliente = PE.cdPessoa     '+
+    'left join P_Fisica PF with(nolock) on PF.cdPessoa = PE.cdPessoa    '+
+    'left join P_Juridica PJ with(nolock) on PJ.cdPessoa = Pe.cdPessoa  '+
+    'where O.dsImpresso = ''S'' and O.nrOrcamento >= 448290             '+
+    'and PC.dtEmissao between :dt1 and :dt2 and PC.dsObs2 is not null   ';
     Parameters.ParamByName('dt1').Value := dateOf(dtInicial.Date);
     Parameters.ParamByName('dt2').Value := dateOf(dtFinal.Date + 1);
-
     if EdtCdPessoa.Text <> '' then begin
       sql.Add('and O.cdCliente = :cdCliente ');
       Parameters.ParamByName('cdCliente').Value := EdtCdPessoa.Text;
@@ -1554,19 +1487,18 @@ begin
       sql.Add('and PC.nrLancto = :nrLancto ');
       Parameters.ParamByName('nrLancto').Value := EdtPedido.Text;
     end;
-
     open;
     nrOrcamentos := '';
     listaNrOrcamentos := '';
-    while not eof do begin
+    while not eof do
+    begin
       nrOrcamentos := nrOrcamentos + FieldByName('dsObs2').AsString +',';
       Next;
     end;
     nrOrcamentos := Copy(nrOrcamentos,1,Length(nrOrcamentos)-1);
-
     totVirgulas := RepeticoesCaractere(',',nrOrcamentos);
-
-    for I := 1 to totVirgulas + 1 do begin
+    for I := 1 to totVirgulas + 1 do
+    begin
       x := QuotedStr(copy_campo(nrOrcamentos,',',i));
       listaNrOrcamentos := listaNrOrcamentos + x + ',';
     end;
@@ -1595,8 +1527,10 @@ end;
 procedure TFrmCadLista.StringGrid1DrawCell(Sender: TObject; ACol,
   ARow: Integer; Rect: TRect; State: TGridDrawState);
 begin
-if not (gdSelected in state) then begin
-    if (ARow <> 0) and ((ARow mod 2) = 0)  then begin
+  if not (gdSelected in state) then
+  begin
+    if (ARow <> 0) and ((ARow mod 2) = 0)  then
+    begin
       StringGrid1.Canvas.Brush.Color := $00CFD7D8;//$00FFEFDF; // define cor de fundo
       StringGrid1.Canvas.FillRect(Rect); // pinta a célula
       StringGrid1.Canvas.Font.Color := clBlack;
@@ -1611,8 +1545,10 @@ var qry: TAdoQuery;
 begin
   qry := TAdoQuery.Create(nil);
   qry.connection := DModulo.Conexao;
-  for i := 1 to SgLivros.RowCount do begin
-    if SgLivros.Cells[0,i] <> '' then begin
+  for i := 1 to SgLivros.RowCount do
+  begin
+    if SgLivros.Cells[0,i] <> '' then
+    begin
       with qry do begin
         sql.text := 'update iteOrcamento set Observacao = :observacao            '+
                     'where nrOrcamento = :nrOrcamento and cdIteLcto = :cdIteLcto ';
@@ -1634,7 +1570,7 @@ begin
     if MessageDlg('Deseja excluir esta linha?',mtConfirmation,[mbYes,mbNo],0) <> mrYes then
     begin
       Application.onmessage := FormPrincipal.NaoProcessaMsg;
-      CBxProduto.SetFocus;
+      edtcdProd.SetFocus;
       Application.onmessage := FormPrincipal.ProcessaMsg;
       exit;
     end;
@@ -1667,7 +1603,7 @@ begin
       end;
     end;
   end;
-  CBxProduto.SetFocus;
+  edtcdProd.SetFocus;
 end;
 
 procedure TFrmCadLista.EdtQtdObjExit(Sender: TObject);
@@ -1763,7 +1699,7 @@ begin
         qry.connection := DModulo.Conexao;
         with qry do begin
           sql.text := 'select O.cdCliente, P.nmPessoa as nomeCliente, O.nrOrcamento     '+
-                      'from orcamento O inner join Pessoa P on O.cdCliente = P.cdPessoa '+
+                      'from orcamento O with(nolock) inner join Pessoa P with(nolock) on O.cdCliente = P.cdPessoa '+
                       'where O.nrOrcamentoDia = :nrOrcamentoDia                         ';
           Parameters.ParamByName('nrOrcamentoDia').Value := EdtSequencial.Text;
           open;
@@ -1793,19 +1729,11 @@ var codigoEscola: String;
 begin
   codigoEscola := copy_campo(CBxEscola.Text,'|',2);
   CBxSerie.Clear;
-  if codigoEscola <> '' then begin
+  if codigoEscola <> '' then
+  begin
     EdtcdEscola.Text := codigoEscola;
     MontaComboSerie;
   end;
-//  if (CBxEscola.Text <> '') then begin
-//    ADOQryCombFone.Open;
-//    if ADOQryCombFone.Locate('dsEscola',CBxEscola.Text,[]) then
-//      EdtcdEscola.Text :=ADOQryCombFone.FieldByName('cdEscola').AsString
-//    else
-//      EdtCdEscola.Clear;
-//  end else begin
-//    EdtCdEscola.Clear;
-//  end;
 end;
 
 procedure TFrmCadLista.CbxEscolaFiltroChange(Sender: TObject);
@@ -1887,15 +1815,6 @@ begin
   codigoSerie := copy_campo(CBxSerie.Text,'|',2);
   if codigoSerie <> '' then
     EdtcdSerie.Text := codigoSerie;
-//  if (CBxSerie.Text <> '') then begin
-//    AdoSerie.Open;
-//    if AdoSerie.Locate('dsSerie',cbxserie.Text,[]) then
-//      EdtcdSerie.Text := AdoSerie.FieldByName('cdSerie').AsString
-//    else
-//      EdtcdSerie.Clear;
-//  end else begin
-//    EdtcdSerie.Clear;
-//  end;
 end;
 
 procedure TFrmCadLista.ContabilizaLivros;
@@ -1903,7 +1822,8 @@ var i: Integer;
     tot: Integer;
 begin
   tot := 0;
-  for I := 1 to StringGrid1.RowCount do begin
+  for I := 1 to StringGrid1.RowCount do
+  begin
     if StringGrid1.Cells[0,i] <> '' then
       tot := tot + 1;
   end;
@@ -1912,11 +1832,13 @@ end;
 
 procedure TFrmCadLista.CBxProdutoChange(Sender: TObject);
 begin
-  if (CBxProduto.ItemIndex <> -1) and (CBxProduto.Text <> '') then begin
+  if (CBxProduto.ItemIndex <> -1) and (CBxProduto.Text <> '') then
+  begin
     ADOQryProduto.Open;
     ADOQryProduto.Locate('nmProduto',CBxProduto.Text,[]);
     edtcdProd.Text :=ADOQryProduto.FieldByName('cdProduto').AsString;
-  end else begin
+  end else
+  begin
     edtcdProd.Clear;
   end;
 end;
@@ -1929,21 +1851,22 @@ begin
   DecodeDate(date, myYear, myMonth, myDay);
   data := IntToStr(myDay)  + '/' + IntToStr(myMonth) + '/' +  CbxAno.Text;// + ' 00:00:00' ;
   try
-    if trim(EdtcdEscola.Text) = '' then begin
+    if trim(EdtcdEscola.Text) = '' then
+    begin
       Application.MessageBox('Selecione uma Escola!','Atenção',MB_OK + MB_ICONWARNING + MB_APPLMODAL);
       CBxEscola.SetFocus;
       exit;
     end;
-    if trim(EdtcdSerie.Text) = '' then begin
+    if trim(EdtcdSerie.Text) = '' then
+    begin
       Application.MessageBox('Selecione uma Série!','Atenção',MB_OK + MB_ICONWARNING + MB_APPLMODAL);
       CBxSerie.SetFocus;
       exit;
     end;
-
-    if Status = [Novo] then begin
-      //If not CamposObrigatoriosPreenchidos(TBSheetMdCadastroDados) then exit;
+    if Status = [Novo] then
+    begin
       With ADOQryAlterar do
-      begin   // parametros para a query de inclusão de novo registro
+      begin
         Dmodulo.Conexao.BeginTrans;
         Try
           Close;
@@ -1993,10 +1916,10 @@ begin
         end;
       end;
     end;
-
     if Status = [Alterar] then
     begin
-      With ADOQryAlterar do begin  // parametros para a query de alteracao
+      With ADOQryAlterar do
+      begin
         Dmodulo.Conexao.BeginTrans;
         Try
           close;
@@ -2034,19 +1957,14 @@ begin
           on E: Exception do
           begin
             DMOdulo.Conexao.RollbackTrans;
-            //BtnMdCancelarClick(Sender);
             MessageDlg ('Não foi possivel Alterar! Motivo: '+E.Message, mtWarning, [mbOk], 0);
           end;
-//          Messagedlg('Não é possivel Alterar!', mtinformation, [mbOk], 0);
         end;
       end;
     end;
-    // ativa botoes, desabilita edicao e atualiza query
     DesativaCampos;
     TrataBotoesPadrao(Sender,Padrao);
     Status := [Padrao];
-    //AtualizaQryConsulta;
-    //montaritens;
   except
     DModulo.Conexao.RollbackTrans;
   end;
@@ -2063,20 +1981,11 @@ end;
 
 procedure TFrmCadLista.DBGrid1DblClick(Sender: TObject);
 begin
-  if Vform ='C'then begin
+  if Vform ='C'then
+  begin
     Limpa_Grid(StringGrid1);
     AtualizaCampos;
     PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-   // montaComboProdutos;
-//    With ADOQryProduto do begin  // mota a combo dos nomes dos produtos
-//      if ADOQryProduto.Active = False then begin
-//        Sql.Text := 'Select P.nmProduto,P.cdProduto,P.vlPreco,P.nrQtdReal '+
-//                    'From Produto P WITH (NOLOCK) WHERE P.dsAtivo = ''S'' Order By P.nmProduto    ';
-//        open;
-//        MontaComboListBoolAdo(ADOQryProduto,CBxProduto);
-//      end;
-//    end;
-//  desativacampos;
     TrataBotoespadrao(sender,padrao);
     Status := [Padrao];
   end;
@@ -2085,7 +1994,8 @@ end;
 procedure TFrmCadLista.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
-  if (TAuxDBGrid(dbgrid1).DataLink.ActiveRecord + 1 = TAuxDBGrid(dbgrid1).Row)  or(gdSelected in State)then begin
+  if (TAuxDBGrid(dbgrid1).DataLink.ActiveRecord + 1 = TAuxDBGrid(dbgrid1).Row)  or(gdSelected in State)then
+  begin
     dbgrid1.Canvas.Brush.Color  := clSkyBlue;
     dbgrid1.Canvas.Font.Style   := dbgrid1.Canvas.Font.Style + [fsBold];
   end;
@@ -2258,11 +2168,6 @@ begin
         Top := MulDiv(19, DialogUnits.Y, 8);
         Width := MulDiv(340, DialogUnits.X, 4);
         Style := csDropDownList;
-        //MaxLength := 255;
-        // aqui vc pode adicionar a data de como vai ser exibida no input:
-        //EditMask := '99/99/9999';
-        // PasswordChar := '*';
-        //SelectAll;
         cbxFornecedor.Items.Add('Vinitac');
         cbxFornecedor.Items.Add('NF/NE');
         cbxFornecedor.Items.Add('Só Forrar');
@@ -2335,12 +2240,6 @@ begin
       end;
       itemPrevenda:= TItemPrevenda.Create(DBGrid2.Fields[0].AsInteger);
       itemPrevenda.precoVenda:= DBGrid2.Fields[3].Value;
-
-{ TODO -oClaudioO -c : remover comentário abaixo qnd for compilar prevenda ATACADO E VAREJO 04/12/2015 10:40:43 }
-//       TNEGPrevenda.setItemNaPrevenda(FrmPrincipalPreVenda.prevenda, itemPrevenda);
-//       FrmPrincipalPreVenda.AtualizarGridComItensDaPrevenda;
-//       FrmPrincipalPreVenda.AtualizarCamposTotalizadores;
-
       FrmPrincipalPreVenda.EdtPreco.text := FrmPrincipalPreVenda.ADOSPConsultaVALOR.asString;
       FrmPrincipalPreVenda.LancaProdutos(DBGrid2.Fields[2].Value,'','');
       FrmPrincipalPreVenda.EdtPreco.text := '0,00';
@@ -2349,13 +2248,11 @@ begin
   end;
   FrmPrincipalPreVenda.edtQtdItens.Text := IntToStr(ADOQryItensLista.RecordCount);
   ADOQryExcluir.Close;
-  //FrmPrincipalPreVenda.ListBox1.Visible:=True;
   FrmPrincipalPreVenda.ListBox1.Items.Add('Escola:'+trim(DBGrid1.Fields[1].AsString) +' Série: '+trim(DBGrid1.Fields[2].AsString));
   FrmPrincipalPreVenda.edtcdLista.Text := AdoQryConsulta.fieldByName('cdLista').asString;//EdtcdLista.Text;
   FrmPrincipalPreVenda.SgDados.setfocus;
   close;
 end;
-
 
 procedure TFrmCadLista.TBSheetMdCadastroConsultaShow(Sender: TObject);
 begin
@@ -2373,8 +2270,7 @@ begin
      Exit;
   ADOQryProduto.Open;
   if ADOQryProduto.Locate('cdproduto',edtcdProd.Text,[]) then
-     CBxProduto.itemIndex:= CBxProduto.Items.IndexOf(ADOQryProduto.FieldByName('nmProduto').AsString)
-     //CBxProduto.Text :=ADOQryProduto.FieldByName('nmProduto').AsString
+    CBxProduto.itemIndex:= CBxProduto.Items.IndexOf(ADOQryProduto.FieldByName('nmProduto').AsString)
   else
   begin
     CBxProduto.itemIndex:= -1;
@@ -2386,9 +2282,11 @@ procedure TFrmCadLista.edtcdProdExit(Sender: TObject);
 var
   produto : TDOMProduto;
 begin
-  if edtcdProd.Text <> '' then begin
+  if edtcdProd.Text <> '' then
+  begin
     produto := TNEGProduto.buscarProduto(StrToInt(edtcdProd.Text));
-    if produto <> nil then begin
+    if produto <> nil then
+    begin
       CBxProduto.Text := produto.descricao;
     end;
   end;
@@ -2398,20 +2296,14 @@ procedure TFrmCadLista.edtcdProdFltroExit(Sender: TObject);
 var
   produto : TDOMProduto;
 begin
-  if edtcdProdFltro.Text <> '' then begin
+  if edtcdProdFltro.Text <> '' then
+  begin
     produto := TNEGProduto.buscarProduto(StrToInt(edtcdProdFltro.Text));
-    if produto <> nil then begin
+    if produto <> nil then
+    begin
       CbxProdutoFiltro.Text := produto.descricao;
     end;
   end;
-//  if (edtcdProdFltro.Text <> '') then
-//  begin
-//    ADOQryProduto.Open;
-//    ADOQryProduto.Locate('cdProduto',edtcdProdFltro.Text,[]);
-//    CbxProdutoFiltro.Text := ADOQryProduto.FieldByName('nmProduto').AsString;
-//  end
-//  else
-//    CbxProdutoFiltro.Text := '';
 end;
 
 procedure TFrmCadLista.edtcdProdFltroKeyPress(Sender: TObject; var Key: Char);
@@ -2419,9 +2311,11 @@ var
   produto : TDOMProduto;
 begin
   ValidarNumero(Key);
-  if Key = #42 then begin
+  if Key = #42 then
+  begin
     produto := TBuscaObjeto.BuscaProduto(cdOperador);
-    if produto <> nil then begin
+    if produto <> nil then
+    begin
       CbxProdutoFiltro.Text := produto.descricao;
       edtcdProdFltro.Text := IntToStr(produto.cdProduto);
     end;
@@ -2433,29 +2327,17 @@ procedure TFrmCadLista.edtcdProdKeyPress(Sender: TObject; var Key: Char);
 var
   produto : TDOMProduto;
 begin
-  if Key = #42 then begin
+  if Key = #42 then
+  begin
     produto := TBuscaObjeto.BuscaProduto(cdOperador);
-    if produto <> nil then begin
+    if produto <> nil then
+    begin
       CBxProduto.Text := produto.descricao;
       edtcdProd.Text := IntToStr(produto.cdProduto);
     end;
     Key := #0;
   end;
   ValidarNumero(Key);
-
-//  if {(Key = Char(101)) or (Key = Char(69)) or }(Key = Char(42)) then
-//  begin  // Tabeça de preços E
-//    FrmCdEstoque:= TFrmCdEstoque.Create(Application);
-//    //FrmCdEstoque.Position := poMainFormCenter;  comentei porque estava dando erro com o VCLSKIN
-//    FrmCdEstoque.vTipoForm:= 13;
-//    FrmCdEstoque.CBxTpItem.Items.Delete(12);
-//    FrmCdEstoque.CBxTpItem.Items.Delete(7);
-//    FrmCdEstoque.CBxTpItem.ItemIndex := 0; //itens de revenda
-//    //FrmCdEstoque.EdtConsulta.SetFocus;
-//    Key:= #0;
-//    FrmCdEstoque.ShowModal;
-//    exit;
-//  end;
 end;
 
 procedure TFrmCadLista.CBxProdutoExit(Sender: TObject);
@@ -2477,6 +2359,3 @@ begin
 end;
 
 end.
-
-
-

@@ -3,7 +3,7 @@ object FrmCadLista: TFrmCadLista
   Top = 116
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Cadastro de Lista'
+  Caption = 'Cadastro de lista escolar'
   ClientHeight = 602
   ClientWidth = 739
   Color = clBtnFace
@@ -2243,7 +2243,6 @@ object FrmCadLista: TFrmCadLista
           Width = 81
           Height = 21
           Date = 42309.000000000000000000
-          Time = 0.509588773151335800
           TabOrder = 14
           OnChange = dtInicialChange
         end
@@ -2253,7 +2252,6 @@ object FrmCadLista: TFrmCadLista
           Width = 81
           Height = 21
           Date = 42025.000000000000000000
-          Time = 0.509588773151335800
           TabOrder = 15
           OnChange = dtFinalChange
         end

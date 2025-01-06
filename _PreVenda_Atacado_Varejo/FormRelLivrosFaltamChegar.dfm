@@ -3,13 +3,14 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
   ClientWidth = 1315
   Visible = False
   ExplicitWidth = 1331
-  ExplicitHeight = 715
   PixelsPerInch = 96
   TextHeight = 13
   inherited QRMdRel: TQuickRep
     Top = 64
     Width = 979
     Height = 1267
+    BeforePrint = QRMdRelBeforePrint
+    DataSet = ADOQryRelDados
     Functions.DATA = (
       '0'
       '0'
@@ -67,16 +68,16 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
       end
       inherited QRLblPrograma: TQRLabel
         Top = 25
-        Width = 116
+        Width = 112
         Height = 24
         Size.Values = (
           52.916666666666670000
           0.000000000000000000
           55.121527777777780000
-          255.763888888888900000)
+          246.944444444444400000)
         FontSize = 10
         ExplicitTop = 25
-        ExplicitWidth = 116
+        ExplicitWidth = 112
         ExplicitHeight = 24
       end
       inherited QRLblTitulo: TQRLabel
@@ -153,6 +154,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           553.420138888888900000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Per'#237'odo dos Pedidos de Compra:'
@@ -181,6 +183,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           392.465277777777800000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = '01/01/2015 a 06/01/2015'
@@ -209,6 +212,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           105.833333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Cliente'
@@ -237,6 +241,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           145.520833333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Prevenda'
@@ -265,6 +270,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           74.965277777777780000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Data'
@@ -293,6 +299,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           114.652777777777800000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Apelido'
@@ -321,6 +328,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           132.291666666666700000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Telefone'
@@ -349,6 +357,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           134.496527777777800000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Forra'#231#227'o'
@@ -377,6 +386,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           57.326388888888890000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Seq'
@@ -405,6 +415,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           55.121527777777780000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Sol.'
@@ -433,6 +444,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           83.784722222222220000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         Caption = 'Cheg.'
@@ -450,170 +462,39 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         FontSize = 8
       end
     end
-    object QRGroup1: TQRGroup
+    object QRBand2: TQRBand
       Left = 23
-      Top = 149
+      Top = 227
       Width = 934
-      Height = 41
-      Frame.DrawTop = True
-      Frame.DrawBottom = True
+      Height = 19
       AlignToBottom = False
-      BeforePrint = QRGroup1BeforePrint
-      Color = clWhite
+      BeforePrint = QRBand2BeforePrint
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
       Size.Values = (
-        90.399305555555560000
+        41.892361111111110000
         2059.340277777778000000)
       PreCaluculateBandHeight = False
       KeepOnOnePage = False
-      Expression = 'ADOQryRelDados.nrOrcamento'
-      Master = QRMdRel
-      ReprintOnNewPage = False
-      object QRDBText2: TQRDBText
-        Left = 217
-        Top = 2
-        Width = 240
-        Height = 17
+      BandType = rbSummary
+      object QRLabel5: TQRLabel
+        Left = 1
+        Top = 3
+        Width = 55
+        Height = 14
         Size.Values = (
-          37.482638888888890000
-          478.454861111111100000
-          4.409722222222222000
-          529.166666666666700000)
+          30.868055555555560000
+          2.204861111111111000
+          6.614583333333333000
+          121.267361111111100000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
-        AutoSize = False
+        Caption = 'Listados ->'
         Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'nmPessoa'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText7: TQRDBText
-        Left = 47
-        Top = 2
-        Width = 66
-        Height = 17
-        Size.Values = (
-          37.041666666666670000
-          103.187500000000000000
-          5.291666666666667000
-          145.520833333333300000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'nrOrcamento'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText8: TQRDBText
-        Left = 118
-        Top = 2
-        Width = 95
-        Height = 17
-        Size.Values = (
-          37.041666666666670000
-          259.291666666666700000
-          5.291666666666667000
-          209.020833333333300000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'dtEmissao'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText10: TQRDBText
-        Left = 558
-        Top = 2
-        Width = 125
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1230.312500000000000000
-          4.409722222222222000
-          275.607638888888900000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'Apelido'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText11: TQRDBText
-        Left = 685
-        Top = 2
-        Width = 153
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1510.329861111111000000
-          4.409722222222222000
-          337.343750000000000000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = True
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'tels'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -621,296 +502,31 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         Font.Style = []
         ParentFont = False
         Transparent = False
-        WordWrap = False
         ExportAs = exptText
         WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
+        VerticalAlignment = tlTop
         FontSize = 7
       end
-      object QRLblQtd: TQRLabel
-        Left = 464
-        Top = 22
-        Width = 82
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1023.055555555556000000
-          48.506944444444440000
-          180.798611111111100000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        Caption = 'Qtd Prevenda'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRLblProduto: TQRLabel
-        Left = 125
-        Top = 21
-        Width = 333
-        Height = 16
-        Size.Values = (
-          35.277777777777780000
-          275.607638888888900000
-          46.302083333333330000
-          734.218750000000000000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Caption = 'Produto'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRLlbCodigo: TQRLabel
-        Left = 83
-        Top = 22
-        Width = 41
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          183.003472222222200000
-          48.506944444444440000
-          90.399305555555560000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        Caption = 'C'#243'digo'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRLblSolicitada: TQRLabel
-        Left = 551
-        Top = 21
-        Width = 68
-        Height = 16
-        Size.Values = (
-          35.277777777777780000
-          1214.878472222222000000
-          46.302083333333330000
-          149.930555555555600000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = True
-        Caption = 'Solicitada'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRLblChegou: TQRLabel
-        Left = 628
-        Top = 21
-        Width = 59
-        Height = 16
-        Size.Values = (
-          35.277777777777780000
-          1384.652777777778000000
-          46.302083333333330000
-          130.086805555555600000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        AutoStretch = True
-        Caption = 'Chegou'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRDBText6: TQRDBText
-        Left = 464
-        Top = 2
-        Width = 89
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1023.055555555556000000
-          4.409722222222222000
-          196.232638888888900000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'tipoForracao'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText12: TQRDBText
-        Left = 1
+      object QrlListados: TQRLabel
+        Left = 61
         Top = 3
-        Width = 36
-        Height = 16
+        Width = 7
+        Height = 14
         Size.Values = (
-          35.907738095238100000
-          1.889880952380952000
-          5.669642857142857000
-          79.375000000000000000)
+          30.868055555555560000
+          134.496527777777800000
+          6.614583333333333000
+          15.434027777777780000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'nrOrcamentoDia'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRLblPedido: TQRLabel
-        Left = 701
-        Top = 22
-        Width = 40
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1545.607638888889000000
-          48.506944444444440000
-          88.194444444444440000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        Caption = 'Pedido'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QRLblDataChegada: TQRLabel
-        Left = 754
-        Top = 22
-        Width = 84
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1662.465277777778000000
-          48.506944444444440000
-          185.208333333333300000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        Caption = 'Data Chegada'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QrlChegou: TQRLabel
-        Left = 893
-        Top = 2
-        Width = 37
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1968.940972222222000000
-          4.409722222222222000
-          81.579861111111100000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taRightJustify
-        AlignToBand = False
-        AutoSize = False
         Caption = '0'
         Color = clWhite
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -918,156 +534,15 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         ExportAs = exptText
         WrapStyle = BreakOnSpaces
         VerticalAlignment = tlTop
-        FontSize = 8
-      end
-      object QrlSolicitou: TQRLabel
-        Left = 850
-        Top = 2
-        Width = 25
-        Height = 17
-        Size.Values = (
-          37.482638888888890000
-          1874.131944444444000000
-          4.409722222222222000
-          55.121527777777780000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taRightJustify
-        AlignToBand = False
-        AutoSize = False
-        Caption = '0'
-        Color = clWhite
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        VerticalAlignment = tlTop
-        FontSize = 8
-      end
-    end
-    object QRBand1: TQRBand
-      Left = 23
-      Top = 190
-      Width = 934
-      Height = 22
-      AlignToBottom = False
-      BeforePrint = QRBand1BeforePrint
-      Color = clWhite
-      TransparentBand = False
-      ForceNewColumn = False
-      ForceNewPage = False
-      Size.Values = (
-        48.506944444444440000
-        2059.340277777778000000)
-      PreCaluculateBandHeight = False
-      KeepOnOnePage = False
-      BandType = rbDetail
-      object QRDBText1: TQRDBText
-        Left = 124
-        Top = 1
-        Width = 333
-        Height = 16
-        Size.Values = (
-          35.277777777777780000
-          273.402777777777800000
-          2.204861111111111000
-          734.218750000000000000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'nmProduto'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText9: TQRDBText
-        Left = 82
-        Top = 1
-        Width = 41
-        Height = 16
-        Size.Values = (
-          35.907738095238100000
-          181.428571428571400000
-          1.889880952380952000
-          90.714285714285710000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'cdProduto'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
-      end
-      object QRDBText3: TQRDBText
-        Left = 464
-        Top = 1
-        Width = 72
-        Height = 16
-        Size.Values = (
-          35.277777777777780000
-          1023.055555555556000000
-          2.204861111111111000
-          158.750000000000000000)
-        XLColumn = 0
-        XLNumFormat = nfGeneral
-        Alignment = taLeftJustify
-        AlignToBand = False
-        AutoSize = False
-        Color = clWhite
-        DataSet = ADOQryRelDados
-        DataField = 'qtdPrevenda'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Transparent = False
-        ExportAs = exptText
-        WrapStyle = BreakOnSpaces
-        FullJustify = False
-        MaxBreakChars = 0
-        FontSize = 8
+        FontSize = 7
       end
     end
     object QRSubDetail1: TQRSubDetail
       Left = 23
-      Top = 212
+      Top = 208
       Width = 934
       Height = 19
       AlignToBottom = False
-      Color = clWhite
       TransparentBand = False
       ForceNewColumn = False
       ForceNewPage = False
@@ -1092,6 +567,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           138.906250000000000000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1100,7 +576,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         DataField = 'solicitado'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1109,7 +585,8 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
-        FontSize = 8
+        VerticalAlignment = tlTop
+        FontSize = 7
       end
       object QRDBText4: TQRDBText
         Left = 628
@@ -1123,6 +600,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           132.291666666666700000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1131,7 +609,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         DataField = 'chegado'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1140,7 +618,8 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
-        FontSize = 8
+        VerticalAlignment = tlTop
+        FontSize = 7
       end
       object QRDBText14: TQRDBText
         Left = 754
@@ -1154,6 +633,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           163.159722222222200000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1162,7 +642,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         DataField = 'dtchegada'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1171,7 +651,8 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
-        FontSize = 8
+        VerticalAlignment = tlTop
+        FontSize = 7
       end
       object QRDBText13: TQRDBText
         Left = 701
@@ -1185,6 +666,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
           105.833333333333300000)
         XLColumn = 0
         XLNumFormat = nfGeneral
+        ActiveInPreview = False
         Alignment = taLeftJustify
         AlignToBand = False
         AutoSize = False
@@ -1193,7 +675,7 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         DataField = 'nrLancto'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1202,7 +684,679 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
         WrapStyle = BreakOnSpaces
         FullJustify = False
         MaxBreakChars = 0
-        FontSize = 8
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+    end
+    object QRBand1: TQRBand
+      Left = 23
+      Top = 190
+      Width = 934
+      Height = 18
+      AlignToBottom = False
+      BeforePrint = QRBand1BeforePrint
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        39.687500000000000000
+        2059.340277777778000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      BandType = rbDetail
+      object QRDBText1: TQRDBText
+        Left = 124
+        Top = 1
+        Width = 333
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          273.402777777777800000
+          2.204861111111111000
+          734.218750000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'nmProduto'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText9: TQRDBText
+        Left = 82
+        Top = 1
+        Width = 41
+        Height = 16
+        Size.Values = (
+          35.907738095238100000
+          181.428571428571400000
+          1.889880952380952000
+          90.714285714285710000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'cdProduto'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText3: TQRDBText
+        Left = 464
+        Top = 1
+        Width = 72
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          1023.055555555556000000
+          2.204861111111111000
+          158.750000000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'qtdPrevenda'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+    end
+    object QRGroup1: TQRGroup
+      Left = 23
+      Top = 149
+      Width = 934
+      Height = 41
+      Frame.DrawTop = True
+      Frame.DrawBottom = True
+      AlignToBottom = False
+      BeforePrint = QRGroup1BeforePrint
+      TransparentBand = False
+      ForceNewColumn = False
+      ForceNewPage = False
+      Size.Values = (
+        90.399305555555560000
+        2059.340277777778000000)
+      PreCaluculateBandHeight = False
+      KeepOnOnePage = False
+      Expression = 'ADOQryRelDados.nrOrcamento'
+      Master = QRMdRel
+      ReprintOnNewPage = False
+      object QRDBText2: TQRDBText
+        Left = 227
+        Top = 2
+        Width = 222
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          500.503472222222200000
+          4.409722222222222000
+          489.479166666666700000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'nmPessoa'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText7: TQRDBText
+        Left = 62
+        Top = 2
+        Width = 66
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          136.701388888888900000
+          4.409722222222222000
+          145.520833333333300000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'nrOrcamento'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText8: TQRDBText
+        Left = 130
+        Top = 2
+        Width = 95
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          286.631944444444400000
+          4.409722222222222000
+          209.461805555555600000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'dtEmissao'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText10: TQRDBText
+        Left = 536
+        Top = 2
+        Width = 106
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1181.805555555556000000
+          4.409722222222222000
+          233.715277777777800000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'Apelido'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText11: TQRDBText
+        Left = 693
+        Top = 2
+        Width = 153
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1527.968750000000000000
+          4.409722222222222000
+          337.343750000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = True
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'tels'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        WordWrap = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblQtd: TQRLabel
+        Left = 464
+        Top = 22
+        Width = 72
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1023.055555555556000000
+          48.506944444444440000
+          158.750000000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        Caption = 'Qtd Prevenda'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblProduto: TQRLabel
+        Left = 125
+        Top = 21
+        Width = 333
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          275.607638888888900000
+          46.302083333333330000
+          734.218750000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Caption = 'Produto'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLlbCodigo: TQRLabel
+        Left = 83
+        Top = 22
+        Width = 36
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          183.003472222222200000
+          48.506944444444440000
+          79.375000000000000000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        Caption = 'C'#243'digo'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblSolicitada: TQRLabel
+        Left = 551
+        Top = 21
+        Width = 68
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          1214.878472222222000000
+          46.302083333333330000
+          149.930555555555600000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = True
+        Caption = 'Solicitada'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblChegou: TQRLabel
+        Left = 628
+        Top = 21
+        Width = 59
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          1384.652777777778000000
+          46.302083333333330000
+          130.086805555555600000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        AutoStretch = True
+        Caption = 'Chegou'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText6: TQRDBText
+        Left = 454
+        Top = 2
+        Width = 76
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1001.006944444444000000
+          4.409722222222222000
+          167.569444444444400000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'tipoForracao'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText12: TQRDBText
+        Left = 1
+        Top = 3
+        Width = 60
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          2.204861111111111000
+          6.614583333333333000
+          132.291666666666700000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'nrOrcamentoDia'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblPedido: TQRLabel
+        Left = 701
+        Top = 22
+        Width = 35
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1545.607638888889000000
+          48.506944444444440000
+          77.170138888888890000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        Caption = 'Pedido'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRLblDataChegada: TQRLabel
+        Left = 754
+        Top = 22
+        Width = 73
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1662.465277777778000000
+          48.506944444444440000
+          160.954861111111100000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        Caption = 'Data Chegada'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QrlChegou: TQRLabel
+        Left = 893
+        Top = 2
+        Width = 37
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1968.940972222222000000
+          4.409722222222222000
+          81.579861111111100000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        Caption = '0'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QrlSolicitou: TQRLabel
+        Left = 858
+        Top = 2
+        Width = 25
+        Height = 17
+        Size.Values = (
+          37.482638888888890000
+          1891.770833333333000000
+          4.409722222222222000
+          55.121527777777780000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taRightJustify
+        AlignToBand = False
+        AutoSize = False
+        Caption = '0'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        VerticalAlignment = tlTop
+        FontSize = 7
+      end
+      object QRDBText15: TQRDBText
+        Left = 648
+        Top = 3
+        Width = 37
+        Height = 16
+        Size.Values = (
+          35.277777777777780000
+          1428.750000000000000000
+          6.614583333333333000
+          81.579861111111110000)
+        XLColumn = 0
+        XLNumFormat = nfGeneral
+        ActiveInPreview = False
+        Alignment = taLeftJustify
+        AlignToBand = False
+        AutoSize = False
+        Color = clWhite
+        DataSet = ADOQryRelDados
+        DataField = 'Turno'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+        ExportAs = exptText
+        WrapStyle = BreakOnSpaces
+        FullJustify = False
+        MaxBreakChars = 0
+        VerticalAlignment = tlTop
+        FontSize = 7
       end
     end
   end
@@ -1224,6 +1378,10 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
       
         '   when (PE.Existir = '#39'J'#39') then PJ.nmContato End as Apelido,    ' +
         '                   '
+      'case when O.cdTurno = 1 then '#39'M'#39' '
+      '     when O.cdTurno = 2 then '#39'T'#39' '
+      '     when O.cdTurno = 3 then '#39'N'#39' '
+      '     else '#39#39' end as Turno,            '
       'O.nrOrcamentoDia,(I.nrQtd) as qtdPrevenda'
       
         'from Orcamento O inner join IteOrcamento I on O.nrOrcamento = I.' +
@@ -1295,11 +1453,12 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
   object AdoQryPedidos: TADOQuery
     Connection = DModulo.Conexao
     CursorType = ctStatic
+    CommandTimeout = 60
     Parameters = <>
     SQL.Strings = (
       
-        'Select P.nrLancto, I.nrQtd as solicitado, I.recebido as chegado,' +
-        '            '
+        'Select P.nrLancto,L.solicitado, L.recebido as chegado,          ' +
+        '  '
       'CASE WHEN I.recebido < I.nrQtd THEN '#39' '#39'                  '
       
         '     ELSE convert(nvarchar(MAX), P.dtchegada, 103) END AS dtcheg' +
@@ -1316,21 +1475,22 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
     object AdoQryPedidosnrLancto: TIntegerField
       FieldName = 'nrLancto'
     end
-    object AdoQryPedidossolicitado: TFloatField
-      FieldName = 'solicitado'
-    end
-    object AdoQryPedidoschegado: TFloatField
-      FieldName = 'chegado'
-    end
     object AdoQryPedidosdtchegada: TWideMemoField
       FieldName = 'dtchegada'
       ReadOnly = True
       BlobType = ftWideMemo
     end
+    object AdoQryPedidossolicitado: TIntegerField
+      FieldName = 'solicitado'
+    end
+    object AdoQryPedidoschegado: TIntegerField
+      FieldName = 'chegado'
+    end
   end
   object ADOQryResumo: TADOQuery
     Connection = DModulo.Conexao
     CursorType = ctStatic
+    CommandTimeout = 60
     Parameters = <>
     SQL.Strings = (
       
@@ -1346,7 +1506,8 @@ inherited FrmRelLivrosFaltamChegar: TFrmRelLivrosFaltamChegar
       
         'inner join IteOrcamento I on I.nrOrcamento = L.nrOrcamento and I' +
         '.cdProduto = L.cdProduto'
-      'where L.nrOrcamento = 451938 and L.cdProduto = 5810')
+      'where L.nrOrcamento = 451938 and L.cdProduto = 5810'
+      '')
     Left = 368
     Top = 24
   end
