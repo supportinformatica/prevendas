@@ -3156,7 +3156,6 @@
     end
     object ADOSPConsultaPRATELEIRA: TStringField
       FieldName = 'PRATELEIRA'
-      Size = 10
     end
     object ADOSPConsultaESTOQUE: TFloatField
       FieldName = 'ESTOQUE'
