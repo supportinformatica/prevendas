@@ -301,7 +301,7 @@ begin
       if FrmPrincipalPreVenda.vQtd >= 9999 then
       begin //pediram para tirar eu so aumentei o limite Thiago
         Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-        MessageDlg ('Você expirou a quantidade de tentativas!',mtError,[mbOk],0);
+        MessageDlg('Você expirou a quantidade de tentativas!', mtError, [mbOk], 0);
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
         FrmPedeSenha.Close;
         //FrmPrincipalPreVenda.Close;
@@ -309,7 +309,7 @@ begin
         exit;
       end;
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      MessageDlg('Acesso Negado!',mtInformation,[mbOk],0);
+      MessageDlg('Acesso Negado!', mtInformation, [mbOk], 0);
       Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
       EditSenha.SelectAll;
       exit;
@@ -336,13 +336,11 @@ begin
         vVetor[I,5] := FieldByName('dsVisualizar').AsString;
         vVetor[I,6] := FieldByName('dsImprimir').AsString;
         vVetor[I,7] := FieldByName('dsBaixa').AsString;
-//        if (ADOQuery2.FieldByName('nrTag').AsString = '32') and (FieldByName('dsAlterar').AsString = 'X') then
-//          FrmPrincipalPreVenda.vCaixa := 'S';
         I := I + 1;
         Next;
-      end; // while
+      end;
       close;
-    end; // with query2
+    end;
     //PESQUISA SE TEM PRODUTOS PARA ENTRAR EM PROMOÇÃO
     Verifica_Existencia_Promocao(Dateof(strToDate(vData_Banco)));
     FrmPrincipalPreVenda.Enabled := True;

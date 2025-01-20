@@ -18342,12 +18342,6 @@ var
   vTexto: String[50];
   L, vRequisicao: Integer;
 begin
-  // claudio 10-09-2015
-  // if ADOQryNome.Locate('nmPessoa',CbxNome.Text,[]) then
-  // EdtCdNome.Text := ADOQryNome.FieldbyName('cdPessoa').AsString
-  // else
-  // EdtCdNome.Clear;
-
   if (trim(EdtCdCliente.Text) = '') or (trim(EdtCdNome.Text) = '') then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
@@ -18370,7 +18364,7 @@ begin
   end;
   Application.OnMessage := NaoProcessaMsg;
   vTexto := InputBox('Impressão de requisição',
-    'Entre com o nome da empresa onde está solicitando o material!', '');
+    'Entre com o nome da empresa onde está solicitando o material:', '');
   Application.OnMessage := ProcessaMsg;
   With ADOQrySalvar do
   begin
@@ -18384,8 +18378,8 @@ begin
         if SgDados.Cells[0, L] = '' then
           Break;
         sql.Text :=
-          'Insert Into Requisicao (nrRequisicao,dtrequisicao,cdVendedor,cdProduto,cdCliente,dsEmpresa) '
-          + 'Values (:REQ,:DATA,:CODIGO,:PROD,:CLIENTE,:EMPRESA)                                         ';
+        'Insert Into Requisicao (nrRequisicao,dtrequisicao,cdVendedor,cdProduto,cdCliente,dsEmpresa) '+
+        'Values (:REQ, :DATA, :CODIGO, :PROD, :CLIENTE, :EMPRESA)';
         Parameters.ParamByName('REQ').Value := vRequisicao;
         Parameters.ParamByName('DATA').Value := vData_Banco;
         Parameters.ParamByName('PROD').Value := StrToIntDef(SgDados.Cells[0, L],
@@ -18397,7 +18391,7 @@ begin
         ExecSQL;
       end;
       DModulo.Conexao.CommitTrans;
-      MessageDlg('Requisição OK!', mtConfirmation, [mbOK], 0);
+      MessageDlg('Requisição salva com sucesso.', mtConfirmation, [mbOK], 0);
       ImprimirRequisicao(vTexto, vRequisicao);
     Except
       on e: Exception do
@@ -18407,7 +18401,7 @@ begin
           'TFrmPrincipalPreVenda.Imprimir1Click', e.Message, EdtLancto.Text);
         MessageDlg('Não foi possível salvar!', mterror, [mbOK], 0);
       end;
-    end; // except
+    end;
   end;
   Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
   Limpar_Tela;
@@ -18441,12 +18435,12 @@ begin
     Editor.Lines.Add(' ============================================');
     Editor.Lines.Add('             REQUISICAO DE COMPRA            ');
     Editor.Lines.Add('          ' + UpperCase(nmEmpresa));
-    // Editor.Lines.Add('            CAMARATUUBA AUTO PECAS           ');
     Editor.Lines.Add(' ============================================');
-    Editor.Lines.Add(' Requisicao N. ' + intToStr(vRequisicao) + '   Data:   ' +
-      DateToStr(Date));
+    Editor.Lines.Add(' Requisicao..: ' + intToStr(vRequisicao) + '   Data:   ' + DateToStr(Date));
+    Editor.Lines.Add(' Requisitante: ' + UpperCase(Copy(vnmVendedor, 1, 30)));
+    Editor.Lines.Add(' Nome: ' + UpperCase(Copy(vCliente, 1, 40)));
     Editor.Lines.Add(' ============================================');
-    Editor.Lines.Add(' Descricao                              Qtd');
+    Editor.Lines.Add(' Descricao                              Quant');
     for L := 1 to SgDados.RowCount - 1 do
     begin // Salvando os itens da pré-venda.
       if SgDados.Cells[0, L] = '' then
@@ -18488,7 +18482,6 @@ begin
         'print.bat')), sw_ShowNormal);
     if not FileExists(PAnsichar(AnsiString(ExtractFilePath(Application.ExeName) +
     'Print.bat'))) then
-    // Caso não encontre o arquivo tenta criar
       ShowMessage('Arquivo Print.bat não foi encontrado!');
   end;
 end;
