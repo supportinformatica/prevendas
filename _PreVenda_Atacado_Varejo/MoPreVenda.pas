@@ -3616,7 +3616,7 @@ begin
             prevenda.itens[i].precoVenda := prevenda.itens[i].precoVenda -
               (valorAjustar / prevenda.itens[i].quantidade);
           prevenda.itens[i].precoVenda :=
-            SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1);
+            SimpleRoundTo(prevenda.itens[i].precoVenda, -2); //vCasasPreco * -1
         end
         else
           prevenda.itens[i].precoVenda := (prevenda.itens[i].precoBruto);

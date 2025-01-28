@@ -497,7 +497,12 @@ begin
   end;
   if obrigarProfissional(FrmPrincipalPreVenda.dsCGC) then
     CBXSelecionaProfissionais.Checked := True;
-  preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
+  if FrmPrincipalPreVenda.prevenda <> nil then
+  begin
+    edtFrete.Text := FormatCurr('0.00', FrmPrincipalPreVenda.prevenda.vlTaxaEntrega);
+    preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + FrmPrincipalPreVenda.prevenda.vlTaxaEntrega, '');
+  end else
+    preencherGridParcelas(1, StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0), '');
   if FrmPrincipalPreVenda.selecionarParcelasCartao then
   begin
     RadioGroup1.ItemIndex := 0;
@@ -512,8 +517,7 @@ begin
   end;
   ckbPrevEntrega.Checked := FrmPrincipalPreVenda.CbPrevisao.Checked;
   dtPrevEntrega.Date := FrmPrincipalPreVenda.previsaoEntrega;
-  if FrmPrincipalPreVenda.prevenda <> nil then
-    edtFrete.Text := FormatCurr('0.00', FrmPrincipalPreVenda.prevenda.vlTaxaEntrega);
+
   if ckbPrevEntrega.Checked or FrmPrincipalPreVenda.habilitarPrevisaoEntrega(FrmPrincipalPreVenda.dsCGC) then
   begin
     chkbxEnviarCopiaEmail.Visible := True;
