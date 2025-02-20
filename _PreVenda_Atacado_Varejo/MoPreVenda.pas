@@ -304,6 +304,8 @@ type
     Label13: TEdit;
     ADODeposito2: TADOQuery;
     dsDeposito2: TDataSource;
+    ADOSPConsultavlPrecoMinimo: TCurrencyField;
+    ADOSPConsultavlPrecoMaximo: TCurrencyField;
     procedure ProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure NaoProcessaMsg(var Msg: Tmsg; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -432,7 +434,6 @@ type
     procedure Logoff1Click(Sender: TObject);
     procedure EdtLanctoEnter(Sender: TObject);
     procedure Panel3Resize(Sender: TObject);
-    procedure edtReferenciaExit(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure LucronaVenda1Click(Sender: TObject);
     procedure chkbxEtiquetaClick(Sender: TObject);
@@ -451,9 +452,9 @@ type
       Shift: TShiftState);
     procedure DtLanctoChange(Sender: TObject);
     procedure CbPrevisaoClick(Sender: TObject);
-
+    procedure EdtQtdEnter(Sender: TObject);
+    procedure CbxAmbienteExit(Sender: TObject);
   private
-
     versaoEXE : string;
     valorAjustar: Real;
     indexGridAux: Integer; // grava a ultima linha editada na grid manualmente
@@ -969,6 +970,8 @@ var
   FrmPrincipalPreVenda: TFrmPrincipalPreVenda;
   vInternet: Boolean; // true - conectado  false - desconectado
   vSalvar: Integer;
+  trabalhacomM2 : boolean;
+  digitaAmbiente : boolean;
   vdtBloqueio: Integer;
   TestaFinanceiroNaConfirmacao: Boolean;
   // Indica se o teste do financeiro do cliente é feito na confirmação ou na escolha do cliente
@@ -1052,7 +1055,7 @@ uses uFuncoesPadrao, DataModulo, FrmPrincipal, relOrcamentosPBFARMA,
   NEGPremio,DOMPessoa, NEGPessoa,unitLogoMaker,
   BuscaObjetos, FrmTresEtiquetasRural, AlterProdutoPosAdded,
   uThreadChaveAcesso, FormRegistroSistema, uThreadBlockChave, RelOrcamentos40,
-  comobj, LucroVenda, NEGACBrPosPrint, CdCreditoCliente;
+  comobj, LucroVenda, NEGACBrPosPrint, CdCreditoCliente, FrmQtdMQuadrado;
 
 {$R *.DFM}
 
@@ -1951,15 +1954,16 @@ begin
     vOcultaReferenciaNaImpressao := FieldByName('dsOcultaReferencia')
       .AsString = 'S';
     dsCGC := FieldByName('dsCGC').AsString;
-    vConferencia := FieldByName('ConferenciaPrevenda').AsBoolean;
-    vdtBloqueio := FieldByName('dsDiasAtrazo').AsInteger;
+    trabalhacomM2 := trabalhaM2(SoNumeros(dsCGC));
+    digitaAmbiente := digitacaoAmbiente(SoNumeros(dsCGC));
+    vConferencia  := FieldByName('ConferenciaPrevenda').AsBoolean;
+    vdtBloqueio   := FieldByName('dsDiasAtrazo').AsInteger;
     vPorcDesconto := FieldByName('dsPorcDesconto').AsFloat;
     vEstqNegativo := FieldByName('dsBloqEstqNegativo').AsString;
     vSelecionaCFOP := FieldByName('campo_48').AsString;
     vOtimiza := FieldByName('campo_41').AsString;
     vAutoLogoff := FieldByName('PrevendaAutoLogoff').AsString = 'S';
-    vBloquearDescontoAtacado := FieldByName('bloquearDescontoAtacado')
-      .AsBoolean;
+    vBloquearDescontoAtacado := FieldByName('bloquearDescontoAtacado').AsBoolean;
     vSelecionaForma := FieldByName('Campo_7').AsString;
     vJurosCobrado := FieldByName('nrJurosDia').AsFloat;
     vEscolheProduto := FieldByName('dsEscolheProduto').AsString;
@@ -2232,7 +2236,7 @@ begin
      (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
      (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
-     (dsCGC = '09217745000181')
+     (dsCGC = '09217745000181') or (dsCGC = '23004452000147')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -2242,8 +2246,7 @@ begin
   begin
     EdtCFOP.Visible := True;
     Label21.Visible := True;
-  end
-  else
+  end else
   begin
     EdtCFOP.Visible := false;
     Label21.Visible := false;
@@ -2289,10 +2292,11 @@ begin
     end;
     Cells[14, 0] := 'Entrega';
     ColWidths[14] := 180;
-    if (UpperCase(vEmpresa) = 'AMBIENTE') then
+    if digitaAmbiente or (UpperCase(vEmpresa) = 'AMBIENTE') then
     begin
       Cells[15, 0] := 'Ambiente';
       MiCadastroAmbientes.Visible := True;
+      ColWidths[15] := 250;
     end
     else
       ColWidths[15] := -1;
@@ -2332,7 +2336,15 @@ begin
   possuiPermissaoVenderAbaixoDoCusto := False;
   listaProdutosAcrescimo := TList<Integer>.Create;
   nomePc := pubNomeComputador;
-  if (UpperCase(vEmpresa) = 'AMBIENTE') then
+  if digitaAmbiente then
+  begin
+    CbxAmbiente.Visible := True;
+    CbxAmbiente.MaxLength := 30;
+    CbxAmbiente.Hint := 'Digite ou selecione um ambiente. Digite no máximo 30 caracteres.';
+    LblAmbiente.Visible := True;
+    MontaComboAmbiente;
+    CbxAmbiente.Style := csDropDown;
+  end else if (UpperCase(vEmpresa) = 'AMBIENTE') then
   begin
     MontaComboAmbiente;
     CbxAmbiente.Visible := True;
@@ -2344,7 +2356,7 @@ begin
     Label23.Visible := True;
     Label22.Visible := True;
   end
-  else if (UpperCase(vEmpresa) <> 'AMBIENTE') then
+  else if (UpperCase(vEmpresa) <> 'AMBIENTE') and not digitaAmbiente then
   begin
     Label1.Left := Label1.Left - 190;
     Label5.Left := Label5.Left - 190;
@@ -2623,6 +2635,44 @@ begin
   EdtDescUnit.Text := '0,00';
   setLabel23(0);
   CbLote.ItemIndex := -1;
+end;
+
+procedure TFrmPrincipalPreVenda.EdtQtdEnter(Sender: TObject);
+begin
+  if trabalhacomM2 and (ADOSPConsulta.FieldByName('UNIDADE').AsString = 'M2') and (ADOSPConsulta.FieldByName('EMBALAGEM').AsString <> '') then
+  begin                // (StrToCurrDef(edtQtd.Text, 0) = 0) and
+    try
+      if FormQtdMQuadrado = nil then
+        FormQtdMQuadrado := TFormQtdMQuadrado.Create(Application);
+      FormQtdMQuadrado.edtQtdSolicitada.Text := EdtQtd.Text;
+      FormQtdMQuadrado.edtEmbalagem.Text := ADOSPConsulta.FieldByName('EMBALAGEM').AsString;
+      FormQtdMQuadrado.edtEstoqueCX.Text := FormatFloat('0', ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency);
+      FormQtdMQuadrado.edtEstoqueM2.Text := FormatFloat('0.00',ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency * ADOSPConsulta.FieldByName('EMBALAGEM').AsCurrency);
+      FormQtdMQuadrado.edtPreco.Text := EdtPreco.Text;
+      Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
+      FormQtdMQuadrado.ShowModal;
+      if StrToCurrDef(EdtQtd.Text, 0) > 0 then
+      begin
+        if EdtDescUnit.Visible then
+        begin
+          EdtDescUnit.SelectAll;
+          EdtDescUnit.SetFocus;
+        end else
+        begin
+          EdtQtd.SelectAll;
+          edtqtd.SetFocus;
+        end;
+      end else
+      begin
+        EdtConsulta.SelectAll;
+        EdtConsulta.setfocus;
+      end;
+      Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
+      FreeAndNil(FormQtdMQuadrado);
+    except
+      FreeAndNil(FormQtdMQuadrado);
+    end;
+  end;
 end;
 
 Procedure TFrmPrincipalPreVenda.EdtQtdExit(Sender: TObject);
@@ -2956,7 +3006,6 @@ begin
   end else if ((UpperCase(vEmpresa) = 'JNUNES') and
     (ADOSPConsulta.FieldByName('Código').AsInteger <> 20479)) then
     FrmPrincipalPreVenda.vDescricaoGama := ADOSPConsulta.FieldByName('DESCRIÇÃO').AsString;
-  { TODO -oclaudioo -c : VALIDAR AS QTDS DISPONIVEIS NOS LOTES NA CONFIRMAÇÃO DA PREVENDA 07/05/2013 11:22:38 }
   if ADOSPConsulta.FieldByName('Preco').AsFloat > ADOSPConsulta.FieldByName
     ('Valor').AsFloat then
     vProdutoPromocao := 'S';
@@ -3088,6 +3137,10 @@ begin
     T := Round(quantidade);
   for L := T to Round(quantidade) do
   begin
+//    EdtDesconto.Text := '0,00';
+//    EdtSubTotal.Text := EdtTotal.Text;
+    if prevenda <> nil then
+      prevenda.descontoPercentual := 0;
     itemPrevenda := TItemPrevenda.Create(ADOSPConsulta.FieldByName('Código').AsInteger);
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
@@ -3118,7 +3171,7 @@ begin
     else
       itemPrevenda.quantidade := quantidade;
     itemPrevenda.nrQtdAtacarejo := ADOSPConsulta.FieldByName('nrQtdAtacarejo').AsCurrency;
-    itemPrevenda.precoVenda := StrToFloat(EdtPreco.Text);
+    itemPrevenda.precoVenda := SimpleRoundTo(StrToFloat(EdtPreco.Text), vCasasPreco * -1);
     itemPrevenda.precoBruto := SimpleRoundTo(getValorVendaProduto, vCasasPreco * -1);
     // RoundTo(ADOSPConsultaVALOR.AsFloat,vCasasPreco*-1);
     subtotal := itemPrevenda.quantidade * itemPrevenda.precoVenda;
@@ -3126,8 +3179,13 @@ begin
     itemPrevenda.tipoForro := tipoForro;
     if UpperCase(vFlagEtiqueta) = 'SABORESDAVILA' then
       itemprevenda.prateleira := CbxAmbiente.Text;
-    itemPrevenda.codigoBarras := ADOSPConsulta.FieldByName
-      ('CÓDIGO_BARRAS').AsString;
+    if digitaAmbiente then
+    begin
+      itemprevenda.dsAmbiente := CbxAmbiente.Text;
+      itemPrevenda.ambiente := TNEGAmbiente.getAmbienteFake(StrToIntDef(EdtCdAmbiente.Text, -1), CbxAmbiente.Text);
+    end else if (UpperCase(vEmpresa) = 'AMBIENTE') then
+      itemPrevenda.ambiente := TNEGAmbiente.getAmbiente(StrToIntDef(EdtCdAmbiente.Text, 500));  // 500 é quando não tem ambiente
+    itemPrevenda.codigoBarras := ADOSPConsulta.FieldByName('CÓDIGO_BARRAS').AsString;
     if vSelecionaCFOP = 'S' then
       itemPrevenda.cfop := EdtCFOP.Text;
     if (((StrToFloat(FormatFloatQ(vCasasPreco, StrToFloat(EdtPreco.Text))) >
@@ -3146,8 +3204,6 @@ begin
       // ADOSPConsulta.FieldByName('valor').AsFloat;
       itemPrevenda.vlAtacado := ADOSPConsulta.FieldByName('valor').AsFloat;
     end;
-    if (UpperCase(vEmpresa) = 'AMBIENTE') then
-      itemPrevenda.ambiente := TNEGAmbiente.getAmbiente(StrToIntDef(EdtCdAmbiente.Text, -1));
     if (UpperCase(vEmpresa) <> 'BG') and (UpperCase(vEmpresa) <> 'KADU') and (UpperCase(vEmpresa) <> 'PROAUTO') then //and (UpperCase(vEmpresa) <> 'MOTOPECAS')
     begin
       if ((StrToFloat(FormatFloatQ(vCasasPreco, ADOSPConsultaPRECO.AsFloat)) >
@@ -3444,10 +3500,11 @@ begin
         vlSubTotal := vlSubTotal + prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda
       else
         vlSubTotal := vlSubTotal + prevenda.itens[i].quantidade * (prevenda.itens[i].precoBruto * (1 - (StrToCurrDef(EdtDesconto.Text, 0) / 100)));
+      vlSubTotal := SimpleRoundTo(vlSubTotal, -2);
     end;
     EdtSubTotal.Text := FormatCurr('0.00', vlSubTotal);
   end else
-    EdtSubTotal.Text := FormatCurr('0.00', StrToCurrDef(EdtTotal.Text, 0) - (StrToCurrDef(EdtTotal.Text, 0) * (StrToCurrDef(EdtDesconto.Text, 0) / 100)));
+    EdtSubTotal.Text := FormatCurr('0.00', SimpleRoundTo(StrToCurrDef(EdtTotal.Text, 0) - (StrToCurrDef(EdtTotal.Text, 0) * (StrToCurrDef(EdtDesconto.Text, 0) / 100)), -2));
   EdtSubTotal.Refresh;
   liberouVenda := False;
   if UpperCase(vEmpresa) = 'PROAUTO' then
@@ -3616,15 +3673,14 @@ begin
             prevenda.itens[i].precoVenda := prevenda.itens[i].precoVenda -
               (valorAjustar / prevenda.itens[i].quantidade);
           prevenda.itens[i].precoVenda :=
-            SimpleRoundTo(prevenda.itens[i].precoVenda, -2); //vCasasPreco * -1
+            SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1);
         end
         else
           prevenda.itens[i].precoVenda := (prevenda.itens[i].precoBruto);
       end;
     end;
     // prevenda.itens[i].SubTotal := prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda;
-    SgDados.Cells[3, i + 1] := FormatFloatQ(vCasasPreco,
-      SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1));
+    SgDados.Cells[3, i + 1] := FormatFloatQ(vCasasPreco, SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1));
     prevenda.itens[i].precoVenda := StrToFloat(SgDados.Cells[3, i + 1]);
     prevenda.itens[i].SubTotal := prevenda.itens[i].quantidade * prevenda.itens
       [i].precoVenda;
@@ -3771,7 +3827,7 @@ begin
   SgDados.Cells[2, i] := FormatFloatQ(vCasasQtd,
     ADOQryProcura.FieldByName('nrQtd').AsFloat);
   SgDados.Cells[3, i] := FormatFloatQ(vCasasPreco,
-    ADOQryProcura.FieldByName('vlPreco').AsFloat);
+    SimpleRoundTo(ADOQryProcura.FieldByName('vlPreco').AsFloat, vCasasPreco * -1));
   SgDados.Cells[4, i] := FormatFloatQ(vCasasPreco,
     (ADOQryProcura.FieldByName('nrQtd').AsFloat * ADOQryProcura.FieldByName
     ('vlPreco').AsFloat));
@@ -3846,7 +3902,7 @@ begin
   SgDados.Cells[2, i] := FormatFloatQ(vCasasQtd,
     (ADOQryProduto.FieldByName('nrqtdreal').AsFloat));
   SgDados.Cells[3, i] := FormatFloatQ(vCasasPreco,
-    ADOQryProcura.FieldByName('vlPreco').AsFloat);
+    SimpleRoundTo(ADOQryProcura.FieldByName('vlPreco').AsFloat, vCasasPreco * -1));
   SgDados.Cells[4, i] := FormatFloatQ(vCasasPreco,
     (ADOQryProduto.FieldByName('nrqtdreal').AsFloat * ADOQryProcura.FieldByName
     ('vlPreco').AsFloat));
@@ -4230,13 +4286,39 @@ end;
 
 procedure TFrmPrincipalPreVenda.CbxAmbienteChange(Sender: TObject);
 begin
-  if CbxAmbiente.ItemIndex <> -1 then
+  if not digitaAmbiente and (CbxAmbiente.ItemIndex <> -1) then
   begin
     AdoAmbiente.open;
     AdoAmbiente.Locate('dsAmbiente', CbxAmbiente.Text, []);
     EdtCdAmbiente.Text := AdoAmbiente.FieldByName('cdAmbiente').AsString;
-  end else
-    EdtCdAmbiente.Clear;
+  end else if CbxAmbiente.ItemIndex > 0 then
+    EdtCdAmbiente.Text := IntToStr(CbxAmbiente.itemIndex)
+  else
+    EdtCdAmbiente.Text := '500'; // 500 é quando não tem Ambiente selecionado
+end;
+
+procedure TFrmPrincipalPreVenda.CbxAmbienteExit(Sender: TObject);
+var
+  i : Integer;
+  adicionar : Boolean;
+begin
+  if digitaAmbiente then
+  begin
+    if (CbxAmbiente.Text <> '') then  // combo esta vazia
+      adicionar := True
+    else
+      adicionar := False;
+    for i := 0 to CbxAmbiente.Items.Count -1 do
+    begin
+      if CbxAmbiente.Text = CbxAmbiente.Items[i] then
+      begin
+        adicionar := False;
+        break;
+      end;
+    end;
+    if adicionar then
+      CbxAmbiente.Items.Add(CbxAmbiente.Text);
+  end;
 end;
 
 //  Preenche os edits relacionados após o usuário alterar o cliente na cbxCliente.
@@ -4333,18 +4415,18 @@ var
   descontoAcimaLimite, descontoSemPermissao, descontoEmClienteAtacado: Boolean;
   i: Integer;
   permissao615 : string;
+  abaixoDoPrecoMinimo, acimaDoPrecoMaximo : boolean;
 begin
   if StrToFloatDef(EdtQtd.Text, 0) <= 0 then
     exit;
-  if (UpperCase(vEmpresa) = 'RURALPET') and (CbLote.Items.Count > 0) and (CbLote.ItemIndex = -1) then
-  begin
-    MessageDlg('Obrigatório selecionar um lote para esse item.', mtWarning, [mbOK], 0);
-    exit;
-  end;
+//  if (UpperCase(vEmpresa) = 'RURALPET') and (CbLote.Items.Count > 0) and (CbLote.ItemIndex = -1) then
+//  begin                     NÃO É MAIS NOSSO CLIENTE
+//    MessageDlg('Obrigatório selecionar um lote para esse item.', mtWarning, [mbOK], 0);
+//    exit;
+//  end;
   if (CbxCliente.ItemIndex < 0) then
-  // and (UPPERCASE(vEmpresa) <> 'CAMARATUBA')
   begin
-    Application.MessageBox('Informe o cliente', 'Atenção',
+    Application.MessageBox('Informe o cliente.', 'Atenção',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     LimparPesquisa;
     CbxCliente.Setfocus;
@@ -4353,7 +4435,7 @@ begin
   if (ADOSPConsulta.RecordCount = 0) then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    ShowMessage('Nenhum item foi selecionado');
+    ShowMessage('Nenhum item foi selecionado.');
     EdtConsulta.Setfocus;
     EdtConsulta.SelectAll;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -4362,7 +4444,7 @@ begin
   IF (UpperCase(vEmpresa) = 'GAMA') and (trim(EdtCFOP.Text) = '') and EdtCFOP.Visible then
   begin
     Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-    ShowMessage('Preencha o campo CFOP');
+    ShowMessage('Preencha o campo CFOP.');
     EdtCFOP.SelectAll;
     EdtCFOP.Setfocus;
     Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
@@ -4371,17 +4453,35 @@ begin
   if (UpperCase(vEmpresa) = 'TREVO') and
     ((StrToFloatDef(EdtPreco.Text, 0) > 0) and (StrToFloatDef(EdtQtd.Text,
     0) > 0)) and (edtLogin.Text = '') then
+  begin
     if Solicitar_Login('S') = false then
     begin
       EdtConsulta.SelectAll;
       EdtConsulta.Setfocus;
       exit;
     end;
+  end;
   if trim(EdtPreco.Text) = '' then
     EdtPreco.Text := FormatFloatQ(vCasasPreco, 0.0);
   if Length(EdtSubTotal.Text) < 1 then
     EdtSubTotal.Text := '0';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, StrToFloat(EdtPreco.Text));
+  abaixoDoPrecoMinimo := StrToCurr(EdtPreco.Text) < ADOSPConsultavlPrecoMinimo.AsCurrency;
+  acimaDoPrecoMaximo  := StrToCurr(EdtPreco.Text) > ADOSPConsultavlPrecoMaximo.AsCurrency;
+  if abaixoDoPrecoMinimo and (ADOSPConsultavlPrecoMinimo.AsCurrency > 0) then
+  begin
+    Application.MessageBox(Pchar('O preço mínimo desse item é R$ '+ FormatCurr('0.00', ADOSPConsultavlPrecoMinimo.AsCurrency)), 'Venda abaixo do preço mínimo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+    EdtQtd.SelectAll;
+    EdtQtd.Setfocus;
+    exit;
+  end;
+  if acimaDoPrecoMaximo and (ADOSPConsultavlPrecoMaximo.AsCurrency > 0) then
+  begin
+    Application.MessageBox(Pchar('O preço máximo desse item é R$ '+ FormatCurr('0.00', ADOSPConsultavlPrecoMaximo.AsCurrency)), 'Venda acima do preço máximo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+    EdtQtd.SelectAll;
+    EdtQtd.Setfocus;
+    exit;
+  end;
   // preco de venda
   vAuxiPreco := StrToFloat(FormatFloatQ(vCasasPreco, getValorVendaProduto));
   // ADOSPConsulta.FieldByName('Valor').AsFloat) );
@@ -4409,7 +4509,6 @@ begin
   end
   else if (StrToFloatDef(EdtDescUnit.Text, 0) > 0) and
     ((UpperCase(vEmpresa) = 'CARDOSOACESSORIOS')) then
-  // (UpperCase(vEmpresa) = 'CAMARATUBA')OR
   begin
     if TNEGCliente.isCliente_Crediario(EdtCdCliente.Text) then
     begin
@@ -4635,11 +4734,6 @@ begin
       ValidarNumero(Key, Texto);
     end;
   end;
-end;
-
-procedure TFrmPrincipalPreVenda.edtReferenciaExit(Sender: TObject);
-begin
-  //
 end;
 
 procedure TFrmPrincipalPreVenda.EdtPrecoKeyPress(Sender: TObject;
@@ -4997,20 +5091,15 @@ begin
   with relOrcamento do
   begin
     RLLabel5.Left := RLLabel5.Left + movimento;
-    RLLabel13.Left := RLLabel3.Left + movimento;
     RLDBText2.Left := RLDBText2.Left + movimento;
     QRLabel12.Left := QRLabel12.Left + movimento;
-    RLLabel14.Left := RLLabel4.Left + movimento;
     QreUnidade.Left := QreUnidade.Left + movimento;
     QRLabel7.Left := QRLabel7.Left + movimento;
-    RLLabel17.Left := RLLabel7.Left + movimento;
     QREQtd.Left := QREQtd.Left + movimento;
     QRLabel8.Left := QRLabel8.Left + movimento;
-    RLLabel18.Left := RLLabel8.Left + movimento;
     QREPreco.Left := QREPreco.Left + movimento;
     RLLblUnitario.Left := RLLblUnitario.Left + movimento;
     RLLabel2.Left := RLLabel2.Left + movimento;
-    RLLabel19.Left := RLLabel9.Left + movimento;
     RLDBResult3.Left := RLDBResult3.Left + movimento;
     RLLblDesconto.Left := RLLblDesconto.Left + movimento;
   end;
@@ -5027,7 +5116,6 @@ var
   qry: TADOQuery;
   diretorio : string;
 begin
-  // Imprime Somente o Orçamento
   if vPAFECF and ((vOrcamento = 'N') or (RgOpcoes.ItemIndex in [0, 4])) then
     exit;
   if vMemo.Text <> '' then
@@ -5054,7 +5142,6 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible   := False;
     end;
   end;
-
   if (UpperCase(vEmpresa) = 'ATIVA') then
   begin
     FrmRelOrcamentos.RLLabel1.Visible := True;
@@ -5062,19 +5149,19 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
     FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
   end else
-  if dsCGC = '10305634000106' then // d rios
+  if dsCGC = '10305634000106' then // drios
   begin
     FrmRelOrcamentos.RLLabel1.Visible := True;
     FrmRelOrcamentos.RLDBText1.Visible := True;
     FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
-    FrmRelOrcamentos.RLLabel1.Caption    := 'C. Barras';
+    FrmRelOrcamentos.RLLabel1.Caption := 'C. Barras';
   end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
   begin
     FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel1.Visible := True;
     FrmRelOrcamentos.RLDBText1.Visible := True;
     FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
-    FrmRelOrcamentos.RLLabel1.Caption    := 'NCM';
+    FrmRelOrcamentos.RLLabel1.Caption := 'NCM';
   end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
     FrmRelOrcamentos.RLDBText6.Visible := False;
@@ -5177,15 +5264,27 @@ begin
   FrmRelOrcamentos.RLBand1.height := 185;
   FrmRelOrcamentos.RLBPAF.height  := 0;
   FrmRelOrcamentos.RLBand3.height := 130; //120
-  { Se for HOSPITALAR troco a coluna de Prateleira por Lote. }
-  if (usarLoteValidade = True) then // and (UpperCase(vEmpresa) <> 'ATIVAOLD')
+  if not digitaAmbiente then
   begin
+    FrmRelOrcamentos.RLBand4.Visible := False; // não aparece a banda com o ambiente
+  end else
+  if digitaAmbiente then
+  begin
+    FrmRelOrcamentos.RlDescricao.width  := 362;
+    FrmRelOrcamentos.QREDescricao.width := 362;
+    FrmRelOrcamentos.RLLabel15.Left := FrmRelOrcamentos.RLLabel23.Left + 50;
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.DataField := 'dsReferencia';
+    FrmRelOrcamentos.RLLabel1.Caption := 'Referência';
+  end else if (usarLoteValidade = True) then
+  begin               // Se for HOSPITALAR troco a coluna de Prateleira por Lote.
     FrmRelOrcamentos.RLLabel5.caption  := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel13.caption := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel24.Caption := 'Descrição \ Validade \  Lote';
     FrmRelOrcamentos.RLDBText2.AutoSize  := True;
     FrmRelOrcamentos.RLDBText2.DataField := 'nrLote';
-    FrmRelOrcamentos.RLBand2.height := 34;  //27
+    FrmRelOrcamentos.RLBand2.height := 30;  //34
     FrmRelOrcamentos.RLDBText2.Top  := 13;
     FrmRelOrcamentos.RLDBText2.left := FrmRelOrcamentos.RLDBText6.Left + 22;   // ficará embaixo da descrição
     FrmRelOrcamentos.RLDBText2.Alignment := taLeftJustify;
@@ -6559,6 +6658,7 @@ Procedure TFrmPrincipalPreVenda.AtualizaQryConsulta;
 begin
   With ADOSPConsulta do
   begin
+//    EdtQtd.Text := '0,00';
     Close;
     if chkOcultarProdutosSemEstoque.Checked then
       Parameters.ParamByName('@OCULTARPRODUTOSEMESTOQUE').Value := 1
@@ -6769,6 +6869,7 @@ end;
 procedure TFrmPrincipalPreVenda.BtnMdPrimeiroClick(Sender: TObject);
 begin
   ADOSPConsulta.first;
+  edtQtd.Text := '0,00';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
   // ADOSPConsulta.FieldByName('Valor').AsFloat);
   if EdtCFOP.Visible = True then // se tiver marcado no configuracao para exibir
@@ -6797,6 +6898,7 @@ end;
 procedure TFrmPrincipalPreVenda.BtnMdProximoClick(Sender: TObject);
 begin
   ADOSPConsulta.Next;
+  edtQtd.Text := '0,00';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
   // ADOSPConsulta.FieldByName('Valor').AsFloat);
   if EdtCFOP.Visible = True then // se tiver marcado no configuracao para exibir
@@ -6879,6 +6981,7 @@ end;
 
 procedure TFrmPrincipalPreVenda.DBGrid1CellClick(Column: TColumn);
 begin
+  EdtQtd.Text := '0,00';
   EdtPreco.Text := FormatFloatQ(vCasasPreco, getValorVendaProduto);
   // ADOSPConsulta.FieldByName('Valor').AsFloat);
   if EdtCFOP.Visible = True then // se tiver marcado no configuracao para exibir
@@ -8489,7 +8592,7 @@ begin
       prevenda.itens[i].precoBruto := StrToFloat(Cells[9, i + 1]);
       if prevenda.itens[i].ambiente <> nil then
       begin
-        Cells[14, i + 1] := intToStr(prevenda.itens[i].ambiente.codigo);
+//        Cells[14, i + 1] := intToStr(prevenda.itens[i].ambiente.codigo);
         Cells[15, i + 1] := prevenda.itens[i].ambiente.descricao;
       end else
         Cells[14, i + 1] := prevenda.itens[i].localEntrega;
@@ -8616,7 +8719,7 @@ begin
       SgDados.Cells[2, i] := FormatFloatQ(vCasasQtd,
         StrToFloatDef(SgDados.Cells[2, i], 0)); // quantidade
       SgDados.Cells[3, i] := FormatFloatQ(vCasasPreco,
-        StrToFloat(SgDados.Cells[3, i])); // preco de venda
+        SimpleRoundTo(StrToFloat(SgDados.Cells[3, i]), vCasasPreco * -1)); // preco de venda
       SgDados.Cells[4, i] := FormatFloatQ(vCasasPreco,
         StrToFloat(SgDados.Cells[2, i]) * StrToFloat(SgDados.Cells[3, i]));
       if not item_cancelado(i) then
@@ -9790,6 +9893,13 @@ begin
       RgOpcoes.ItemIndex := 0;
       exit;
     end;
+  end;
+  if CbxAmbiente.Visible then
+  begin
+    EdtCdAmbiente.Clear;
+    CbxAmbiente.Clear;
+    CbxAmbiente.Text := '';
+    MontaComboAmbiente;
   end;
   CbxNome.Text := '';
   EdtCdNome.Text := '';
@@ -16932,6 +17042,8 @@ procedure TFrmPrincipalPreVenda.SalvaLogEventos(dsEvento: String;
   dtEvento: TDateTime; hrEvento, dsLancamento, dsDocumento: String;
   vlvalor: Real; cdUsuario: Integer; cdOpcao: String);
 begin
+  if versaoEXE = '' then
+    versaoEXE := GetVersaoArq;
   With DModulo.ADOQuery1 do
   begin
     sql.Text :=
@@ -17146,13 +17258,13 @@ begin
         prevenda.conferida := false;
         // prevenda.numeroPrevenda := StrtoInt(EdtLancto.Text);
         prevenda.dataEmissao := DtLancto.Date;
-        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked, True);
+        TNEGPrevenda.inserirPrevenda(prevenda, chkbxBaixarEstoque.Checked, True, digitaAmbiente, versaoEXE);
         if listaLiberacoes <> nil then
         begin
           for liberacao in listaLiberacoes do
           begin
             TNEGLoja.SalvaLogEventos(liberacao._descricao, IntToStr(prevenda.numeroPrevenda),
-                  '', liberacao._valor, liberacao._operador, '16');
+                  '', liberacao._valor, liberacao._operador, '16', versaoEXE);
           end;
         end;
         DModulo.Conexao.CommitTrans;
@@ -17185,7 +17297,7 @@ begin
                 for i := 0 to listaProdutosAcrescimo.Count -1 do
                 begin
                   TNEGLoja.SalvaLogEventos('Produto com Acréscimo Pré-Venda', IntToStr(prevenda.numeroPrevenda),
-                  IntToStr(listaProdutosAcrescimo.Items[i]), 0 , prevenda.vendedor.codigo, '16');
+                  IntToStr(listaProdutosAcrescimo.Items[i]), 0 , prevenda.vendedor.codigo, '16', versaoEXE);
                 end;
                 DModulo.Conexao.CommitTrans;
                 listaProdutosAcrescimo.Clear;

@@ -47,6 +47,12 @@ Function Maiuscula(St:char):char;
 
 function Minuscula(St:char):char;
 
+function trabalhaM2(cnpj : string) : boolean;
+
+function digitacaoAmbiente(cnpj : string) : boolean;
+
+function transformarM2(quantidade, embalagem : string) : string;
+
 function calculaDV(Numero : String) : String;
 
 function Capitular(palavra:string):STRING;
@@ -1189,11 +1195,47 @@ end;
 
 
 function Minuscula(St:char):char;
-var a:integer;
+var a : integer;
 begin
-  for a:=1 to 1 do
-  if(St in['A'..'Z'])or(St in['À'..'Ý'])then Inc(St,32);
-  Result:=St;
+  for a := 1 to 1 do
+    if (St in['A'..'Z']) or (St in['À'..'Ý']) then
+      Inc(St,32);
+  Result := St;
+end;
+
+function trabalhaM2(cnpj : string) : boolean;
+begin
+  if (CNPJ = '10175478000106') then
+    Result := True
+  else
+    Result := False;
+end;
+
+function digitacaoAmbiente(cnpj : string) : boolean;
+begin
+  if (CNPJ = '10175478000106') then
+    Result := True
+  else
+    Result := False;
+end;
+
+function transformarM2(quantidade, embalagem : string) : string;
+var
+  qtd : Currency;
+  m : Currency;
+  resto : Currency;
+begin
+  qtd := StrToCurrDef(quantidade, 0);
+  m := StrToCurrDef(embalagem, 0);
+  try
+    resto := frac(qtd/m);
+    if resto > 0 then
+      Result := FormatCurr('0', Trunc(qtd/m) + 1) // parte inteira +1
+    else
+      Result := FormatCurr('0', Trunc(qtd/m));    // parte inteira
+  except
+    Result := '0';
+  end;
 end;
 
 function calculaDV(Numero : String) : String;

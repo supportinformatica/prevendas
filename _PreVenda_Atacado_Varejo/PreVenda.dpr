@@ -114,7 +114,8 @@ uses
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001UnityAxis.pas',
   Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis in 'SistemaEtiquetas\shared\helpers\gondolas\atacadoVarejo001\Prevenda.Helpers.CalculateGondolaAtacadoVarejo001PriceAtacadoAxis.pas',
   NEGPrevenda in '..\..\support\NEG\NEGPrevenda.pas',
-  NEGTipoCliente in '..\..\support\NEG\NEGTipoCliente.pas';
+  NEGTipoCliente in '..\..\support\NEG\NEGTipoCliente.pas',
+  FrmQtdMQuadrado in 'FrmQtdMQuadrado.pas' {FormQtdMQuadrado};
 
 {$R *.RES}
 var
@@ -131,6 +132,7 @@ begin
   Application.CreateForm(TFrmPrincipalPreVenda, FrmPrincipalPreVenda);
   Application.CreateForm(TFrmDataProduzidoValidade, FrmDataProduzidoValidade);
   Application.CreateForm(TfrmAlterProdutoPosAdded, frmAlterProdutoPosAdded);
+  Application.CreateForm(TFormQtdMQuadrado, FormQtdMQuadrado);
   TBuscaObjeto.AbreLauncher;
     if FrmPrincipalPreVenda.GetFlagEmpresa <> 'TREVO' then
     begin

@@ -930,8 +930,8 @@
           57
           44
           40
-          70
-          138
+          145
+          204
           64
           52
           53
@@ -1189,7 +1189,6 @@
             Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
-            Title.Alignment = taCenter
             Title.Caption = 'Estoque'
             Title.Color = clBtnFace
             Title.Font.Charset = ANSI_CHARSET
@@ -1417,7 +1416,7 @@
       ExplicitLeft = 422
     end
     object Label21: TLabel
-      Left = 164
+      Left = 155
       Top = 30
       Width = 28
       Height = 13
@@ -1430,7 +1429,6 @@
       Font.Style = [fsBold]
       ParentFont = False
       PopupMenu = PopupMenu1
-      ExplicitLeft = 186
     end
     object Label22: TLabel
       Left = 215
@@ -1466,7 +1464,7 @@
       ExplicitLeft = 314
     end
     object LblAmbiente: TLabel
-      Left = 215
+      Left = 192
       Top = 31
       Width = 55
       Height = 13
@@ -1479,7 +1477,6 @@
       Font.Style = [fsBold]
       ParentFont = False
       Visible = False
-      ExplicitLeft = 237
     end
     object SpeedButton2: TSpeedButton
       Left = 3
@@ -1535,6 +1532,7 @@
       ShowHint = True
       TabOrder = 5
       Text = '0,00'
+      OnEnter = EdtQtdEnter
       OnExit = EdtQtdExit
       OnKeyPress = EdtQtdKeyPress
     end
@@ -1654,9 +1652,9 @@
       OnKeyPress = EdtDescUnitKeyPress
     end
     object EdtCFOP: TEdit
-      Left = 164
+      Left = 155
       Top = 45
-      Width = 50
+      Width = 36
       Height = 21
       Hint = 'Quantidade de venda do produto'
       Anchors = [akTop, akRight]
@@ -1695,24 +1693,27 @@
       OnChange = CbLoteChange
     end
     object CbxAmbiente: TComboBox
-      Left = 215
+      Left = 192
       Top = 45
-      Width = 188
+      Width = 211
       Height = 21
       Hint = 'Descri'#231#227'o do produto'
       Style = csDropDownList
       Anchors = [akTop, akRight]
+      CharCase = ecUpperCase
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
+      MaxLength = 30
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
       Visible = False
       OnChange = CbxAmbienteChange
+      OnExit = CbxAmbienteExit
     end
     object EdtCdAmbiente: TEdit
       Left = 288
@@ -1914,7 +1915,7 @@
     Height = 43
     Hint = 'Confirmar Pr'#233'-Venda'
     Anchors = [akRight, akBottom]
-    Caption = 'Confirmar'
+    Caption = 'F9 Confirmar'
     Font.Charset = ANSI_CHARSET
     Font.Color = clNavy
     Font.Height = -9
@@ -2481,8 +2482,8 @@
     OnKeyPress = CbxNomeKeyPress
   end
   object edtValorBruto: TEdit
-    Left = 211
-    Top = 590
+    Left = 224
+    Top = 602
     Width = 80
     Height = 26
     Hint = 'Valor a Faturar'
@@ -2755,7 +2756,6 @@
     ParentShowHint = False
     ShowHint = True
     TabOrder = 4
-    OnExit = edtReferenciaExit
   end
   object Label13: TEdit
     Left = 811
@@ -2787,7 +2787,7 @@
     Left = 25
     Top = 238
     object elaPrincipal1: TMenuItem
-      Caption = 'Tela Principal'
+      Caption = 'Tela principal'
       object Help1: TMenuItem
         Caption = 'Pr'#233'-Venda'
         ShortCut = 112
@@ -2804,27 +2804,27 @@
         OnClick = Oramento1Click
       end
       object HiperCard1: TMenuItem
-        Caption = 'Consultar por Descri'#231#227'o'
+        Caption = 'Consultar por descri'#231#227'o'
         ShortCut = 115
         OnClick = HiperCard1Click
       end
       object VisaNet1: TMenuItem
-        Caption = 'Consultar por Refer'#234'ncia de F'#225'brica'
+        Caption = 'Consultar por fefer'#234'ncia de f'#225'brica'
         ShortCut = 116
         OnClick = VisaNet1Click
       end
       object AmericanExpress1: TMenuItem
-        Caption = 'Consultar por Refer'#234'ncia Interna'
+        Caption = 'Consultar por refer'#234'ncia interna'
         ShortCut = 117
         OnClick = AmericanExpress1Click
       end
       object CdigoAdicional1: TMenuItem
-        Caption = 'Consultar por C'#243'digo de Barras'
+        Caption = 'Consultar por c'#243'digo de barras'
         ShortCut = 118
         OnClick = CdigoAdicional1Click
       end
       object Produtossimilares1: TMenuItem
-        Caption = 'Consultar Produtos similares'
+        Caption = 'Consultar produtos similares'
         ShortCut = 119
         OnClick = Produtossimilares1Click
       end
@@ -2844,7 +2844,7 @@
         OnClick = Desconto1Click
       end
       object ConsultaEspecificacao1: TMenuItem
-        Caption = 'Consultar Especifica'#231#245'es do Produto...'
+        Caption = 'Consultar especifica'#231#245'es do produto...'
         ShortCut = 123
         OnClick = ConsultaEspecificacao1Click
       end
@@ -2860,13 +2860,18 @@
       object N2: TMenuItem
         Caption = '-'
       end
+      object MiCadastroAmbientes: TMenuItem
+        Caption = 'Cadastro de ambientes'
+        Visible = False
+        OnClick = MiCadastroAmbientesClick
+      end
       object ransferncia1: TMenuItem
         Caption = 'Transfer'#234'ncia'
         ShortCut = 16468
         OnClick = ransferncia1Click
       end
       object Visualizarapelidodocliente1: TMenuItem
-        Caption = 'Visualizar Apelido do Cliente'
+        Caption = 'Visualizar apelido do cliente'
         ShortCut = 16449
         OnClick = Visualizarapelidodocliente1Click
       end
@@ -2881,28 +2886,23 @@
     end
     object Consultas1: TMenuItem
       Caption = 'Consultas'
-      object MiCadastroAmbientes: TMenuItem
-        Caption = 'Cadastro de Ambientes'
-        Visible = False
-        OnClick = MiCadastroAmbientesClick
-      end
       object ConsultaProduto1: TMenuItem
-        Caption = 'Consultar o Custo do Produto...'
+        Caption = 'Consultar o custo do produto...'
         ShortCut = 16453
         OnClick = ConsultaProduto1Click
       end
       object Banese1: TMenuItem
-        Caption = 'Consultar por C'#243'digo'
+        Caption = 'Consultar por c'#243'digo'
         ShortCut = 16499
         OnClick = Banese1Click
       end
       object ConsultarporCdigoAdicional1: TMenuItem
-        Caption = 'Consultar por C'#243'digo Adicional'
+        Caption = 'Consultar por c'#243'digo adicional'
         ShortCut = 16455
         OnClick = ConsultarporCdigoAdicional1Click
       end
       object Especificao1: TMenuItem
-        Caption = 'Consultar por Especifica'#231#227'o / Aplica'#231#227'o'
+        Caption = 'Consultar por especifica'#231#227'o / aplica'#231#227'o'
         ShortCut = 16496
         OnClick = Especificao1Click
       end
@@ -2915,7 +2915,7 @@
         Caption = '-'
       end
       object ConsultarListas1: TMenuItem
-        Caption = 'Consultar Listas'
+        Caption = 'Consultar listas'
         ShortCut = 16460
         Visible = False
         OnClick = ConsultarListas1Click
@@ -2931,7 +2931,7 @@
         OnClick = Consultadecrditodocliente1Click
       end
       object ConsultarCrdito1: TMenuItem
-        Caption = 'Consultar Cr'#233'dito Vendedores...'
+        Caption = 'Consultar cr'#233'dito vendedores...'
         ShortCut = 16451
         OnClick = ConsultarCrdito1Click
       end
@@ -2950,17 +2950,17 @@
     object Escola1: TMenuItem
       Caption = 'Escola'
       object CadastrodeEscola1: TMenuItem
-        Caption = 'Cadastro de Escola'
+        Caption = 'Cadastro de escola...'
         ShortCut = 16467
         OnClick = CadastrodeEscola1Click
       end
       object CadastrodeSrie1: TMenuItem
-        Caption = 'Cadastro de S'#233'rie '
+        Caption = 'Cadastro de s'#233'rie...'
         ShortCut = 16452
         OnClick = CadastrodeSrie1Click
       end
       object CadastrodeLista1: TMenuItem
-        Caption = 'Cadastro de Lista'
+        Caption = 'Cadastro de lista...'
         ShortCut = 16454
         OnClick = CadastrodeLista1Click
       end
@@ -3037,7 +3037,7 @@
       OnClick = miÚltimasVendasDoProdutoAoClienteClick
     end
     object ro1: TMenuItem
-      Caption = 'Trocar de Usu'#225'rio'
+      Caption = 'Trocar de usu'#225'rio'
       ShortCut = 16472
       OnClick = ro1Click
     end
@@ -3225,6 +3225,12 @@
     object ADOSPConsultanmFamilia: TStringField
       FieldName = 'nmFamilia'
       Size = 100
+    end
+    object ADOSPConsultavlPrecoMinimo: TCurrencyField
+      FieldName = 'vlPrecoMinimo'
+    end
+    object ADOSPConsultavlPrecoMaximo: TCurrencyField
+      FieldName = 'vlPrecoMaximo'
     end
   end
   object ADOQryProcura: TADOQuery

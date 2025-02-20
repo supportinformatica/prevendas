@@ -32,7 +32,6 @@ type
     procedure BtnMdExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
-    { Private declarations }
     procedure AtualizaQryConsulta;
     procedure AtivaCampos;
     procedure DesativaCampos;
@@ -40,7 +39,7 @@ type
     function BuscaUltimoCodigo: string;
     procedure preencheCampos;
   public
-    { Public declarations }
+
   end;
 
 var
@@ -59,14 +58,17 @@ end;
 
 procedure TFrmCdAmbiente.AtualizaQryConsulta;
 begin
-  with ADOQryConsulta do begin
-    sql.Text := 'select * from ambiente where 1 = 1';
-    if EdtConsulta.Text <> '' then begin
-      if CmbConsulta.ItemIndex = 1 then begin
+  with ADOQryConsulta do
+  begin
+    sql.Text := 'select * From Ambiente with (nolock) where 1 = 1';
+    if EdtConsulta.Text <> '' then
+    begin
+      if CmbConsulta.ItemIndex = 1 then
+      begin
         sql.Add('and cdAmbiente = :cdAmbiente');
         Parameters.ParamByName('cdAmbiente').Value := EdtConsulta.Text;
-      end
-      else if CmbConsulta.ItemIndex = 2 then begin
+      end else if CmbConsulta.ItemIndex = 2 then
+      begin
         sql.Add('and dsAmbiente like :dsAmbiente');
         Parameters.ParamByName('dsAmbiente').Value := EdtConsulta.Text + '%';
       end;
@@ -102,11 +104,13 @@ begin
   inherited;
   qry := TADOQuery.Create(nil);
   qry.Connection := DModulo.Conexao;
-  with qry do begin
-    sql.Text := 'select cdAmbiente from iteOrcamento where cdAmbiente = :cdAmbiente ';
+  with qry do
+  begin
+    sql.Text := 'select cdAmbiente from iteOrcamento with (nolock) where cdAmbiente = :cdAmbiente ';
     parameters.ParamByName('cdAmbiente').Value := ADOQryConsultacdAmbiente.AsInteger;
     open;
-    if RecordCount > 0 then begin
+    if RecordCount > 0 then
+    begin
       Application.MessageBox('Não é possivel excluir esse ambiente pois ele já está vinculado à várias pré vendas!','Atenção', mb_ok + MB_ICONERROR + MB_APPLMODAL);
       Exit;
     end;
@@ -114,7 +118,8 @@ begin
   end;
   FreeAndNil(qry);
   if Application.MessageBox('Confirma a exlusão deste ambiente?', 'Confirmação', MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = IDYES then begin
-    with AdoQrysalvar do begin
+    with AdoQrysalvar do
+    begin
       try
         DModulo.Conexao.BeginTrans;
         sql.Text := 'delete ambiente where cdAmbiente = :cdAmbiente ';
@@ -156,22 +161,25 @@ end;
 procedure TFrmCdAmbiente.BtnMdSalvarClick(Sender: TObject);
 begin
   inherited;
-  if EdtDsAmbiente.Text = '' then begin
+  if EdtDsAmbiente.Text = '' then
+  begin
     Application.MessageBox('Digite a descrição do ambiente!','Atenção', mb_ok + MB_ICONINFORMATION + MB_APPLMODAL);
     EdtDsAmbiente.setFocus;
     exit;
   end;
-  with AdoQrysalvar do begin
+  with AdoQrysalvar do
+  begin
     try
       DModulo.Conexao.BeginTrans;
-      if status = [novo] then begin
+      if status = [novo] then
+      begin
         sql.Text := 'insert into ambiente (dsAmbiente) '+
                     'values (:dsAmbiente) ';
         parameters.ParamByName('dsAmbiente').Value := EdtDsAmbiente.Text;
         execSql;
         Application.MessageBox('Ambiente salvo com sucesso!','Atenção', mb_ok + MB_ICONINFORMATION + MB_APPLMODAL);
-      end
-      else begin
+      end else
+      begin
         sql.Text := 'update ambiente set dsAmbiente = :dsAmbiente where cdAmbiente = :cdAmbiente ';
         parameters.ParamByName('dsAmbiente').Value := EdtDsAmbiente.Text;
         parameters.ParamByName('cdAmbiente').Value := ADOQryConsultacdAmbiente.AsInteger;
@@ -199,7 +207,8 @@ var qry: TADOQuery;
 begin
   qry := TADOQuery.Create(nil);
   qry.Connection := DModulo.Conexao;
-  with qry do begin
+  with qry do
+  begin
     SQL.text := 'select max(cdAmbiente)+1 as ultimo from ambiente';
     Open;
     if FieldByName('ultimo').IsNull then
@@ -259,12 +268,13 @@ end;
 procedure TFrmCdAmbiente.PgCtrolMdCadastroChange(Sender: TObject);
 begin
   inherited;
-  if PgCtrolMdCadastro.ActivePageIndex = 1 then begin
+  if PgCtrolMdCadastro.ActivePageIndex = 1 then
+  begin
     LimpaCampos;
     DesativaCampos;
     preencheCampos;
-  end
-  else if PgCtrolMdCadastro.ActivePageIndex = 0 then begin
+  end else if PgCtrolMdCadastro.ActivePageIndex = 0 then
+  begin
     LimpaCampos;
     DesativaCampos;
   end;

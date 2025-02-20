@@ -1,7 +1,8 @@
 inherited FrmCdAmbiente: TFrmCdAmbiente
   AutoSize = False
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'Cadastro de Ambientes'
+  Caption = 'Cadastro de ambientes'
   ClientHeight = 330
   ClientWidth = 387
   Position = poMainFormCenter
@@ -91,10 +92,10 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
       ExplicitWidth = 280
       ExplicitHeight = 302
       inherited DBGrid1: TDBGrid
-        Left = 3
-        Top = 76
-        Width = 281
-        Height = 228
+        Left = 1
+        Top = 52
+        Width = 283
+        Height = 249
         OnDblClick = DBGrid1DblClick
         Columns = <
           item
@@ -112,8 +113,19 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
       end
       inherited PnlMdConsulta: TPanel
         Width = 280
+        Height = 49
         ExplicitWidth = 280
+        ExplicitHeight = 49
+        inherited LblMdConsulta: TLabel
+          Top = 4
+          ExplicitTop = 4
+        end
+        inherited LblCmbConsulta: TLabel
+          Top = 4
+          ExplicitTop = 4
+        end
         inherited CmbConsulta: TComboBox
+          Top = 20
           ItemIndex = 2
           Text = 'Descri'#231#227'o'
           OnChange = CmbConsultaChange
@@ -121,17 +133,20 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
             'Todos'
             'C'#243'digo '
             'Descri'#231#227'o')
+          ExplicitTop = 20
         end
         inherited EdtConsulta: TEdit
+          Top = 20
           Width = 157
           OnChange = EdtConsultaChange
+          ExplicitTop = 20
           ExplicitWidth = 157
         end
       end
     end
     inherited TBSheetMdCadastroDados: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      ExplicitLeft = 4
+      ExplicitTop = 25
       ExplicitWidth = 280
       ExplicitHeight = 302
       inherited Bevel1: TBevel
@@ -191,8 +206,8 @@ inherited FrmCdAmbiente: TFrmCdAmbiente
     end
     inherited TBSheetMdCdRelatorio: TTabSheet
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      ExplicitLeft = 4
+      ExplicitTop = 25
       ExplicitWidth = 280
       ExplicitHeight = 302
     end

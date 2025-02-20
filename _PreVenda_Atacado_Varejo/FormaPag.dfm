@@ -146,7 +146,7 @@ object FrmFormaPag: TFrmFormaPag
   object BtnConfirmar: TBitBtn
     Left = 426
     Top = 316
-    Width = 104
+    Width = 107
     Height = 38
     Hint = 'Confirmar forma de pagamento'
     Caption = 'F9 Confirmar'
@@ -216,7 +216,7 @@ object FrmFormaPag: TFrmFormaPag
     ParentShowHint = False
     PopupMenu = PopupMenu1
     ShowHint = True
-    Spacing = 0
+    Spacing = 2
     TabOrder = 13
     OnClick = BtnConfirmarClick
     OnKeyPress = BtnConfirmarKeyPress
@@ -258,7 +258,7 @@ object FrmFormaPag: TFrmFormaPag
   object BtnCancelar: TBitBtn
     Left = 545
     Top = 316
-    Width = 104
+    Width = 107
     Height = 38
     Hint = 'Retornar para a pr'#233'-venda'
     Caption = 'F10 &Cancelar'
@@ -285,7 +285,7 @@ object FrmFormaPag: TFrmFormaPag
     ParentShowHint = False
     PopupMenu = PopupMenu1
     ShowHint = True
-    Spacing = 5
+    Spacing = 3
     TabOrder = 14
     OnClick = BtnCancelarClick
     OnKeyPress = BtnCancelarKeyPress

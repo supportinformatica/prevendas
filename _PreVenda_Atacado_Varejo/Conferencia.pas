@@ -180,7 +180,7 @@ begin
       ExecSQL;
       DModulo.Conexao.CommitTrans;
       TNEGLoja.SalvaLogEventos('Realização de conferência',
-            edtPreVenda.Text, '', 0, StrtoInt(edtcdFuncionario.Text), '16');
+            edtPreVenda.Text, '', 0, StrtoInt(edtcdFuncionario.Text), '16', '');
       MessageDlg('Conferência realizada com sucesso.', mtInformation, [mbOK], 0);
       Cancelar;
       edtPreVenda.SetFocus;

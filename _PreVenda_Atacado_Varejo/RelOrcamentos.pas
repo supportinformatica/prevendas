@@ -11,7 +11,6 @@ type
   TfrmRelOrcamentos = class(TForm)
     QRMdRel: TRLReport;
     RLBand1: TRLBand;
-    RLBand2: TRLBand;
     RLBand3: TRLBand;
     QrlCnpj: TRLLabel;
     QRLblTitulo: TRLLabel;
@@ -139,6 +138,15 @@ type
     qrlInstragran: TRLLabel;
     qrlfacebook: TRLLabel;
     RLBarcode: TRLBarcode;
+    QRLblPrevisao: TRLLabel;
+    RLLabel25: TRLLabel;
+    RLLabel26: TRLLabel;
+    lblFrete: TRLLabel;
+    lblValorTotal: TRLLabel;
+    rlgrp1: TRLGroup;
+    RLBand4: TRLBand;
+    RLDBText7: TRLDBText;
+    RLBand2: TRLBand;
     Image1: TImage;
     RLPanel1: TRLPanel;
     QRECodigo: TRLDBText;
@@ -156,11 +164,6 @@ type
     RLLblUnitario: TRLLabel;
     RLLblDesconto: TRLLabel;
     RLLblTotal: TRLLabel;
-    QRLblPrevisao: TRLLabel;
-    RLLabel25: TRLLabel;
-    RLLabel26: TRLLabel;
-    lblFrete: TRLLabel;
-    lblValorTotal: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand2AfterPrint(Sender: TObject);
@@ -221,8 +224,8 @@ begin
   adoQryCabecalho.Open;
   ADOQryConfig.Open;
   QRLblPrograma.Caption := ADOQryConfig.FieldByName('dsEndereco').AsString;
-  QRLblEmpresa.Caption  := AdoQryConfig.FieldByName('nmEmpresa').AsString;
-  QrlTel.Caption   := 'Tel: '+AdoQryConfig.FieldByName('telefone').AsString;
+  QRLblEmpresa.Caption := AdoQryConfig.FieldByName('nmEmpresa').AsString;
+  QrlTel.Caption := 'Tel: '+AdoQryConfig.FieldByName('telefone').AsString;
   QrlEmail.Caption := 'Email: '+AdoQryConfig.FieldByName('email').AsString;
   if vOcultaDesconto = 'S' then
   begin
@@ -332,7 +335,6 @@ begin
   temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
   temp := SimpleRoundTo(temp, -2);
   totalLiquido := totalLiquido + temp;
-//  lblFrete.Caption := FormatCurr('0.00', ADOSPRelDados.FieldByName('Frete').AsCurrency);
 end;
 
 procedure TfrmRelOrcamentos.RLBand2BeforePrint(Sender: TObject;

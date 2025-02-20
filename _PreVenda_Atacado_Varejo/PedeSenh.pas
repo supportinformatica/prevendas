@@ -477,10 +477,8 @@ begin
 end;
 
 procedure TFrmPedeSenha.ChamaFormMensagensAtualizacao;
-//var
-//  qry: TAdoQuery;
 begin
-//  qry := TADOQuery.Create(nil);
+
 end;
 
 procedure TFrmPedeSenha.Cancelar1Click(Sender: TObject);
@@ -494,7 +492,6 @@ begin
     Close;
   end;
 end;
-
 
 procedure TFrmPedeSenha.EditSenhaKeyPress(Sender: TObject; var Key: Char);
 begin
@@ -524,7 +521,6 @@ procedure TFrmPedeSenha.ExibeLabelResgistro;
 begin
   //lblRegistro.Visible := FrmPrincipalPreVenda.isClienteRegistrado;
 end;
-
 
 function TFrmPedeSenha.RetornaWS(UF: string) : string;
 begin
