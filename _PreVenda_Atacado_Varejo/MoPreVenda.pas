@@ -5130,18 +5130,23 @@ begin
   with qry do
   begin
     Connection := DModulo.Conexao;
-    sql.Text := 'Select dsCGC from CONFIGURACAO WITH (NOLOCK)';
+    sql.Text := 'Select dsCGC From CONFIGURACAO WITH (NOLOCK)';
     open;
     if (RecordCount > 0) and (SoNumeros(FieldByName('dsCGC').AsString) = '08872144000140') then // HIPERMOVEIS
     begin
       FrmRelOrcamentos.qrlInstragran.Visible := True;
-      FrmRelOrcamentos.qrlfacebook.Visible   := True;
+      FrmRelOrcamentos.qrlfacebook.Visible := True;
     end else
     begin
       FrmRelOrcamentos.qrlInstragran.Visible := False;
-      FrmRelOrcamentos.qrlfacebook.Visible   := False;
+      FrmRelOrcamentos.qrlfacebook.Visible := False;
     end;
   end;
+  if dsCGC = '40484448000142' then // CONSTRUFORT
+  begin
+     FrmRelOrcamentos.RLLabel3.Visible := False;
+     FrmRelOrcamentos.lblPorcDesconto.Visible := False;
+  end else
   if (UpperCase(vEmpresa) = 'ATIVA') then
   begin
     FrmRelOrcamentos.RLLabel1.Visible := True;
