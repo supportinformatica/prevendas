@@ -904,14 +904,14 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       end
       object RlblFormaPgto: TRLLabel
         Left = 2
-        Top = 21
-        Width = 66
+        Top = 29
+        Width = 88
         Height = 14
         Caption = '                     '
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
+        Font.Height = -12
+        Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
@@ -1071,6 +1071,19 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Style = []
         ParentFont = False
         BeforePrint = lblTotalBeforePrint
+      end
+      object rrlPesoBruto: TRLLabel
+        Left = 1
+        Top = 15
+        Width = 68
+        Height = 14
+        Caption = 'Peso Bruto:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
       end
     end
     object RLBPAF: TRLBand
@@ -1477,7 +1490,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
       Top = 351
       Width = 718
       Height = 34
-      DataFields = 'cdAmbiente'
+      DataFields = 'dsAmbiente'
       object RLBand4: TRLBand
         Left = 0
         Top = 0

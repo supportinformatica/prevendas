@@ -182,7 +182,7 @@ object FormQtdMQuadrado: TFormQtdMQuadrado
     Text = '0'
   end
   object edtQtdVenda: TLabeledEdit
-    Left = 127
+    Left = 124
     Top = 36
     Width = 126
     Height = 21
@@ -197,14 +197,14 @@ object FormQtdMQuadrado: TFormQtdMQuadrado
     Text = '0'
   end
   object edtPreco: TLabeledEdit
-    Left = 16
+    Left = 124
     Top = 130
-    Width = 94
+    Width = 50
     Height = 21
     Color = clInfoBk
-    EditLabel.Width = 67
+    EditLabel.Width = 50
     EditLabel.Height = 13
-    EditLabel.Caption = 'Pre'#231'o Unit'#225'rio'
+    EditLabel.Caption = 'P. Unit'#225'rio'
     PopupMenu = PopupMenu1
     ReadOnly = True
     TabOrder = 5
@@ -212,9 +212,9 @@ object FormQtdMQuadrado: TFormQtdMQuadrado
     OnKeyPress = edtQtdSolicitadaKeyPress
   end
   object edtTotal: TLabeledEdit
-    Left = 127
+    Left = 185
     Top = 130
-    Width = 126
+    Width = 65
     Height = 21
     Color = clInfoBk
     EditLabel.Width = 54
@@ -227,9 +227,9 @@ object FormQtdMQuadrado: TFormQtdMQuadrado
     OnKeyPress = edtQtdSolicitadaKeyPress
   end
   object edtEstoqueCX: TLabeledEdit
-    Left = 127
-    Top = 81
-    Width = 60
+    Left = 16
+    Top = 130
+    Width = 94
     Height = 21
     Hint = 'Disponibilidade de caixas em estoque'
     TabStop = False
@@ -304,9 +304,9 @@ object FormQtdMQuadrado: TFormQtdMQuadrado
     OnClick = btnCalcularClick
   end
   object edtEstoqueM2: TLabeledEdit
-    Left = 200
+    Left = 124
     Top = 81
-    Width = 55
+    Width = 126
     Height = 21
     Hint = 'Disponibilidade de M2 em estoque'
     TabStop = False

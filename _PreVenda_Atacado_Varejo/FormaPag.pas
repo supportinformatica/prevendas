@@ -48,6 +48,8 @@ type
     Label7: TLabel;
     edtFrete: TEdit;
     Label8: TLabel;
+    edtPesoBruto: TEdit;
+    Label9: TLabel;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnConfirmarKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -408,7 +410,7 @@ begin
   if StrToCurr(edtFrete.Text) < 0 then
     edtFrete.Text := '0,00';
   edtAcresCartao.Text := FormatCurr('0.00', StrToCurrDef(FrmPrincipalPreVenda.EdtSubTotal.Text, 0) + StrToCurrDef(edtFrete.Text, 0));
-//  recalcularFrete;
+  edtDifal.Text := FrmPrincipalPreVenda.calcularDIFAL(StrToCurrDef(edtFrete.Text, 0));
 end;
 
 procedure TFrmFormaPag.edtFreteKeyPress(Sender: TObject; var Key: Char);
@@ -489,12 +491,13 @@ procedure TFrmFormaPag.FormCreate(Sender: TObject);
 var
   texto: string;
 begin
-  if (UpperCase(vEmpresa) = 'TRESLEOES') then
-  begin
-    lblDifal.Visible := True;
-    edtDifal.Visible := True;
-    edtDifal.Text := FrmPrincipalPreVenda.calcularDIFAL;
-  end;
+//  if (UpperCase(vEmpresa) = 'TRESLEOES') then
+//  begin
+//    lblDifal.Visible := True;
+//    edtDifal.Visible := True;
+//    edtDifal.Text := FrmPrincipalPreVenda.calcularDIFAL;
+//  end;
+//  edtPesoBruto.Text := FormatCurr('#,##0.00', FrmPrincipalPreVenda.calcularPrecoBruto);
   if obrigarProfissional(FrmPrincipalPreVenda.dsCGC) then
     CBXSelecionaProfissionais.Checked := True;
   if FrmPrincipalPreVenda.prevenda <> nil then

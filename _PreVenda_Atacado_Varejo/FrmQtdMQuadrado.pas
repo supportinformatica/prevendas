@@ -50,8 +50,6 @@ uses
 procedure TFormQtdMQuadrado.btnCalcularClick(Sender: TObject);
 begin
   calcular;
-  if StrToCurrDef(edtQtdVenda.Text, 0) > StrToCurrDef(edtEstoqueCX.Text, 0) then
-    ShowMessage('Quantidade indisponível em estoque.');
 end;
 
 procedure TFormQtdMQuadrado.BtnCancelarClick(Sender: TObject);
@@ -63,6 +61,8 @@ end;
 procedure TFormQtdMQuadrado.BtnConfirmarClick(Sender: TObject);
 begin
   calcular;
+  if (vEstqNegativo <> 'S') and (StrToCurrDef(edtQtdSolicitada.Text, 0) > StrToCurrDef(edtEstoqueM2.Text, 0)) then
+    Application.MessageBox('Quantidade indisponível em estoque.', 'Atenção', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
   if StrToCurrDef(edtQtdVenda.Text, 0) > 0 then
     FrmPrincipalPreVenda.EdtQtd.Text := FormatCurr('0.00', Strtocurr(edtQtdVenda.Text) * Strtocurr(edtEmbalagem.Text));
   close;
@@ -100,7 +100,7 @@ procedure TFormQtdMQuadrado.FormClose(Sender: TObject;
 begin
   Action := caFree;
   if StrToCurrDef(edtQtdVenda.Text, 0) > 0 then
-    FormatCurr('0.00', Strtocurr(edtQtdVenda.Text) * Strtocurr(edtEmbalagem.Text))
+    FrmPrincipalPreVenda.EdtQtd.Text := FormatCurr('0.00', Strtocurr(edtQtdVenda.Text) * Strtocurr(edtEmbalagem.Text))
   else
   begin
     FrmPrincipalPreVenda.EdtConsulta.SetFocus;

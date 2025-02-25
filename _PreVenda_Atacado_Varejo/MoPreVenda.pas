@@ -827,7 +827,8 @@ type
     // LblMensagem: Tletreiro;
     // procedure EnviaProdutosHospitalar;
     function habilitarPrevisaoEntrega(cnpj : string) : Boolean;
-    function calcularDIFAL:string;
+    function calcularDIFAL(frete : real) : string;
+    function calcularPesoBruto : Currency;
     function selecionarParcelasCartao : Boolean;
     function getValorVendaProduto: Real;
     procedure LimparPesquisa;
@@ -1024,6 +1025,7 @@ var
   vlTotalAnterior: Real;
   vExibir: Boolean;
   vOcultaReferenciaNaImpressao: Boolean;
+  vTipoEmpresa : string;
   vBloqueioPreVenda: Boolean;
   vAutoLogoff: Boolean;
   vBloquearDescontoAtacado: Boolean;
@@ -1954,6 +1956,7 @@ begin
     vOcultaReferenciaNaImpressao := FieldByName('dsOcultaReferencia')
       .AsString = 'S';
     dsCGC := FieldByName('dsCGC').AsString;
+    vTipoEmpresa  := FieldByName('tpEmpresa').AsString;
     trabalhacomM2 := trabalhaM2(SoNumeros(dsCGC));
     digitaAmbiente := digitacaoAmbiente(SoNumeros(dsCGC));
     vConferencia  := FieldByName('ConferenciaPrevenda').AsBoolean;
@@ -2646,8 +2649,8 @@ begin
         FormQtdMQuadrado := TFormQtdMQuadrado.Create(Application);
       FormQtdMQuadrado.edtQtdSolicitada.Text := EdtQtd.Text;
       FormQtdMQuadrado.edtEmbalagem.Text := ADOSPConsulta.FieldByName('EMBALAGEM').AsString;
-      FormQtdMQuadrado.edtEstoqueCX.Text := FormatFloat('0', ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency);
-      FormQtdMQuadrado.edtEstoqueM2.Text := FormatFloat('0.00',ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency * ADOSPConsulta.FieldByName('EMBALAGEM').AsCurrency);
+      FormQtdMQuadrado.edtEstoqueCX.Text := FormatFloat('0', ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency / ADOSPConsulta.FieldByName('EMBALAGEM').AsCurrency);
+      FormQtdMQuadrado.edtEstoqueM2.Text := FormatFloat('0.00',ADOSPConsulta.FieldByName('ESTOQUE').AsCurrency);
       FormQtdMQuadrado.edtPreco.Text := EdtPreco.Text;
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
       FormQtdMQuadrado.ShowModal;
@@ -2930,7 +2933,7 @@ var
   L, T: Integer;
   und: TUnidade;
   QtdLote: Real;
-  itemPrevenda: TItemPrevenda;
+  itemPrevenda : TItemPrevenda;
   abaixoDoCustoFinal, produtoComAcrescimo: Boolean;
   produtoLancado: TDOMProduto;
   custoFinal : string;
@@ -4178,7 +4181,8 @@ begin
           FrmFormaPag.Memo1.Lines.Add('ENDERECO: ');
           FrmFormaPag.Memo1.Lines.Add('PTO REFERENCIA: ');
         end;
-        // auxiLiberacao := false;
+        FrmFormaPag.edtPesoBruto.Text := FormatCurr('#,##0.00', FrmPrincipalPreVenda.calcularPesoBruto);
+        FrmFormaPag.edtDifal.Text := FrmPrincipalPreVenda.calcularDIFAL(prevenda.vlTaxaEntrega);
         FrmFormaPag.ShowModal;
       end else
       begin
@@ -4344,7 +4348,7 @@ begin
         EdtApelido.Text := ADOQryCliente.FieldByName('dsPreVenda').AsString;
       vUF_Cliente := ADOQryCliente.FieldByName('dsUF').AsString;
       vIE_Cliente := ADOQryCliente.FieldByName('IE').AsString;
-      if (vIE_Cliente = '') and (ADOQryCliente.FieldByName('dsIndIEDest').AsInteger = 0) then
+      if (vIE_Cliente = '') or (ADOQryCliente.FieldByName('dsIndIEDest').AsInteger = 1) then
         clienteNaoContribuinteDeICMS := True
       else
         clienteNaoContribuinteDeICMS := False;
@@ -5145,7 +5149,9 @@ begin
   if dsCGC = '40484448000142' then // CONSTRUFORT
   begin
      FrmRelOrcamentos.RLLabel3.Visible := False;
+     FrmRelOrcamentos.RLLabel3.Enabled := False;
      FrmRelOrcamentos.lblPorcDesconto.Visible := False;
+     FrmRelOrcamentos.lblPorcDesconto.Enabled := False;
   end else
   if (UpperCase(vEmpresa) = 'ATIVA') then
   begin
@@ -5300,6 +5306,7 @@ begin
   varQtdItens := StrToIntDef(edtQtdItens.Text, 0);
   if (varQtdItens > 13) then
     FrmRelOrcamentos.QrMdRel.PageSetup.PaperHeight := 297;
+  FrmRelOrcamentos.rrlPesoBruto.Caption := 'Peso Bruto: ' + FormatCurr('#,##0.00', FrmPrincipalPreVenda.calcularPesoBruto);
   With FrmRelOrcamentos.ADOSPRelDados do
   begin
     Close;
@@ -9222,7 +9229,7 @@ begin
       edtQtdItens.Text := '0';
       EdtDesconto.Text := LimpaEdtDesconto;
       codigoClienteAtual := copy_campo(CbxCliente.Text, '|', 2);
-      BtnAprazo.Enabled  := True;
+      BtnAprazo.Enabled := True;
       EdtConsulta.Setfocus;
     end else
     begin
@@ -9232,6 +9239,9 @@ begin
   begin
     codigoClienteAtual := copy_campo(CbxCliente.Text, '|', 2);
   end;
+  if (vUF <> vUF_Cliente) and clienteNaoContribuinteDeICMS and (UpperCase(vEmpresa) = 'TRESLEOES') then
+    Application.MessageBox('Será cobrado o imposto DIFAL referente aos produtos tributados de ICMS no ato da emissão da nota fiscal modelo 55.',
+      'Atenção', mb_Ok + MB_ICONINFORMATION);
   if TestaRestricao then
     exit;
   if clienteComRestricaoFinanceira(restricaoFinanceira, EdtSubTotal.Text) then
@@ -9248,8 +9258,7 @@ begin
         CbxCliente.Setfocus;
         Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
         exit;
-      end
-      else
+      end else
       begin
         EdtConsulta.SelectAll;
         EdtConsulta.Setfocus;
@@ -17083,13 +17092,13 @@ begin
   FrmCadSerieEscola.Show;
 end;
 
-function TFrmPrincipalPreVenda.calcularDIFAL: string;
+function TFrmPrincipalPreVenda.calcularDIFAL(frete : real): string;
 var
   i : Integer;
   difal, baseCalculo : Currency;
   aliquotaICMSUFDest, aliquotaICMSInterna : Currency;
 begin
-  if (vUF = vUF_Cliente) or (Length(prevenda.itens[0].cst) > 3) or not clienteNaoContribuinteDeICMS then
+  if (vUF = vUF_Cliente) or (vTipoEmpresa = 'S') or (Length(prevenda.itens[0].cst) > 3) or not clienteNaoContribuinteDeICMS then
   begin  // simples não tem difal
     Result := '0,00';
   end else
@@ -17098,7 +17107,6 @@ begin
     baseCalculo := 0;
     //Alíquota interestadual: é a alíquota aplicada pelo estado de origem na transação.
     //Ela é definida pela legislação vigente e pode variar de acordo com o tipo de mercadoria.
-
     //Alíquota interna: é a alíquota aplicada pelo estado de destino. Assim como a alíquota interestadual,
     //ela também é estabelecida pela legislação e varia conforme o estado.
     aliquotaICMSInterna := getAliqInternaDestinatario(vUF_Cliente);
@@ -17109,18 +17117,33 @@ begin
         begin
           baseCalculo := (prevenda.itens[i].precoVenda * prevenda.itens[i].quantidade);
           aliquotaICMSUFDest := getAliqInterestadual(vUF_Cliente, vUF, prevenda.itens[i].cst);
-          difal := difal + (baseCalculo * ((aliquotaICMSInterna - aliquotaICMSUFDest) / 100));
         end;
       end;
     end;
-    Result := FormatFloat('0.00' ,difal);
+    if baseCalculo > 0 then
+    begin
+      baseCalculo := baseCalculo + frete;
+      difal := difal + (baseCalculo * ((aliquotaICMSInterna - aliquotaICMSUFDest) / 100));
+    end;
+    Result := FormatFloat('0.00', difal);
   end;
+end;
+
+function TFrmPrincipalPreVenda.calcularPesoBruto: Currency;
+var
+  i : Integer;
+  peso : Currency;
+begin
+  peso := 0.0;
+  for i := 0 to prevenda.itens.Count -1 do
+  begin
+    peso := peso + (prevenda.itens[i].pesoBruto * prevenda.itens[i].quantidade);
+  end;
+  Result := SimpleRoundTo(peso, -2);
 end;
 
 procedure TFrmPrincipalPreVenda.CadastrodeLista1Click(Sender: TObject);
 begin
-  // Application.CreateForm(TFrmCadLista,FrmCadLista);
-  // FrmCadLista.FormStyle := fsStayOnTop;
   if trim(copy_campo(CbxCliente.Text, '|', 2)) = '' then
   begin
     Application.MessageBox

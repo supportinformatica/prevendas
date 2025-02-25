@@ -102,16 +102,15 @@ object FrmFormaPag: TFrmFormaPag
     ParentFont = False
   end
   object lblDifal: TLabel
-    Left = 541
-    Top = 4
+    Left = 293
+    Top = 184
     Width = 21
     Height = 13
     Anchors = [akTop, akRight]
     Caption = 'Difal'
-    Visible = False
   end
   object Label7: TLabel
-    Left = 127
+    Left = 210
     Top = 184
     Width = 35
     Height = 13
@@ -142,6 +141,14 @@ object FrmFormaPag: TFrmFormaPag
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 127
+    Top = 184
+    Width = 52
+    Height = 13
+    Anchors = [akTop, akRight]
+    Caption = 'Peso Bruto'
   end
   object BtnConfirmar: TBitBtn
     Left = 426
@@ -505,17 +512,19 @@ object FrmFormaPag: TFrmFormaPag
     Visible = False
   end
   object edtDifal: TEdit
-    Left = 541
-    Top = 19
+    Left = 293
+    Top = 198
     Width = 65
     Height = 21
+    Hint = 'Valor do ICMS DIFAL a pagar.'
     TabStop = False
     Anchors = [akTop, akRight]
     Color = clInfoBk
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 17
     Text = '0,00'
-    Visible = False
   end
   object ckbPrevEntrega: TCheckBox
     Left = 2
@@ -545,9 +554,9 @@ object FrmFormaPag: TFrmFormaPag
     OnChange = dtPrevEntregaChange
   end
   object edtFrete: TEdit
-    Left = 127
+    Left = 210
     Top = 198
-    Width = 121
+    Width = 63
     Height = 21
     Hint = 
       'Para emitir nota fiscal com frete ser'#225' necess'#225'rio cadastrar todo' +
@@ -559,6 +568,21 @@ object FrmFormaPag: TFrmFormaPag
     OnExit = edtFreteExit
     OnKeyPress = edtFreteKeyPress
     OnKeyUp = edtFreteKeyUp
+  end
+  object edtPesoBruto: TEdit
+    Left = 127
+    Top = 198
+    Width = 65
+    Height = 21
+    Hint = 'Peso bruto dos itens.'
+    TabStop = False
+    Anchors = [akTop, akRight]
+    Color = clInfoBk
+    ParentShowHint = False
+    ReadOnly = True
+    ShowHint = True
+    TabOrder = 19
+    Text = '0,00'
   end
   object ADOSPLiberacao1: TADOStoredProc
     Connection = DModulo.Conexao

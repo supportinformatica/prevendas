@@ -1205,7 +1205,7 @@ end;
 
 function trabalhaM2(cnpj : string) : boolean;
 begin
-  if (CNPJ = '10175478000106') then
+  if (CNPJ = '13270672000169') then
     Result := True
   else
     Result := False;
@@ -1213,7 +1213,7 @@ end;
 
 function digitacaoAmbiente(cnpj : string) : boolean;
 begin
-  if (CNPJ = '10175478000106') then
+  if (CNPJ = '13270672000169') then
     Result := True
   else
     Result := False;

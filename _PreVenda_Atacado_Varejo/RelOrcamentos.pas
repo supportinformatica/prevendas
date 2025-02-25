@@ -164,6 +164,7 @@ type
     RLLblUnitario: TRLLabel;
     RLLblDesconto: TRLLabel;
     RLLblTotal: TRLLabel;
+    rrlPesoBruto: TRLLabel;
     procedure FormCreate(Sender: TObject);
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand2AfterPrint(Sender: TObject);
