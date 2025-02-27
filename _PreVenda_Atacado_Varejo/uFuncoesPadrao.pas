@@ -46,11 +46,6 @@ function SoNumeros(Const Texto:String):String;
 Function Maiuscula(St:char):char;
 
 function Minuscula(St:char):char;
-
-function trabalhaM2(cnpj : string) : boolean;
-
-function digitacaoAmbiente(cnpj : string) : boolean;
-
 function transformarM2(quantidade, embalagem : string) : string;
 
 function calculaDV(Numero : String) : String;
@@ -1201,22 +1196,6 @@ begin
     if (St in['A'..'Z']) or (St in['À'..'Ý']) then
       Inc(St,32);
   Result := St;
-end;
-
-function trabalhaM2(cnpj : string) : boolean;
-begin
-  if (CNPJ = '13270672000169') then
-    Result := True
-  else
-    Result := False;
-end;
-
-function digitacaoAmbiente(cnpj : string) : boolean;
-begin
-  if (CNPJ = '13270672000169') then
-    Result := True
-  else
-    Result := False;
 end;
 
 function transformarM2(quantidade, embalagem : string) : string;

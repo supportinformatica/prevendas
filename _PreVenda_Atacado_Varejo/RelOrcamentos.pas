@@ -407,7 +407,7 @@ begin
   lblSubTotal.Caption := FormatFloat('###,##0.00', SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('###,##0.00', SimpleRoundTo(totalLiquido,-2));
   lblFrete.Caption := FormatCurr('0.00', ADOSPRelDados.FieldByName('Frete').AsCurrency);
-  lblValorTotal.Caption := FormatCurr('0.00', SimpleRoundTo(totalLiquido,-2) + ADOSPRelDados.FieldByName('Frete').AsCurrency);
+  lblValorTotal.Caption := FormatCurr('###,##0.00', SimpleRoundTo(totalLiquido,-2) + ADOSPRelDados.FieldByName('Frete').AsCurrency);
 end;
 
 procedure TfrmRelOrcamentos.RLDBResult3BeforePrint(Sender: TObject;

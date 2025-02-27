@@ -971,8 +971,8 @@ var
   FrmPrincipalPreVenda: TFrmPrincipalPreVenda;
   vInternet: Boolean; // true - conectado  false - desconectado
   vSalvar: Integer;
-  trabalhacomM2 : boolean;
   digitaAmbiente : boolean;
+  trabalhacomM2 : boolean;
   vdtBloqueio: Integer;
   TestaFinanceiroNaConfirmacao: Boolean;
   // Indica se o teste do financeiro do cliente é feito na confirmação ou na escolha do cliente
@@ -1957,8 +1957,8 @@ begin
       .AsString = 'S';
     dsCGC := FieldByName('dsCGC').AsString;
     vTipoEmpresa  := FieldByName('tpEmpresa').AsString;
-    trabalhacomM2 := trabalhaM2(SoNumeros(dsCGC));
-    digitaAmbiente := digitacaoAmbiente(SoNumeros(dsCGC));
+    digitaAmbiente := FieldByName('bitAmbiente').AsBoolean;
+    trabalhacomM2 := FieldByName('bitM2').AsBoolean;
     vConferencia  := FieldByName('ConferenciaPrevenda').AsBoolean;
     vdtBloqueio   := FieldByName('dsDiasAtrazo').AsInteger;
     vPorcDesconto := FieldByName('dsPorcDesconto').AsFloat;
