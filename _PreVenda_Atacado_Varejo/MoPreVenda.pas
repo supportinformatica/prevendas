@@ -1228,37 +1228,31 @@ begin
   if ((diaDaSemana = 'SABADO') or (diaDaSemana = 'DOMINGO') or
     (isFeriadoNacional(strtodate(vData_Banco)))) then
     exit;
-
   clienteRegistrado := isClienteRegistrado;
   EmTolerancia := EstaEmTolerancia();
   // testa se a data do sistema esta de acordo com a de brasilia
   // testa se o cliente esta registrado
   // testa se o cliente esta no periodo de tolerancia
   // libera quado o cliente não for registrado e a data for correta e tiver prazo de uso do sistema
-
   // verifico nessa thread se possui o arquivo de bloqueio, se existir entra na thread pra pegar a chave nova
   threadBloqueio := threadBlockChave.Create(false);
   threadBloqueio.FreeOnTerminate := True;
-
   while FrmPrincipal.finalizouThreadBloqueio = false do
   begin
     Sleep(500);
   end;
-
   // esse caso é para os clientes que tinha a chave antiga.
   // if (bloquearChave = false) then begin
   // if (DataSequencial_Maior_DataBrasilia) then //qd colocar a chave nos outros módulos, tirar essa linha
   // exit;                                     //e tirar todas as comparações do nrVlAvulso e comparar só com a data da chave
   // end;
-
   // se o cliente for novo ou a chave for invalida abro form de registro
   if (clienteRegistrado = false) or (isChaveInvalida) then
   begin
     FrmRegistroSistema := TFrmRegistroSistema.Create(Application);
     FrmRegistroSistema.chaveInvalida := isChaveInvalida;
     FrmRegistroSistema.ShowModal;
-  end
-  else
+  end else
   begin // o cliente possui todos os requisitos e já foi registrado, então busco a chave via internet
     // verifico se está no prazo para baixar o arquivo do ftp para não fazer isso toda vez q entrar no sistema
     if (EmTolerancia) or (FrmPrincipal.bloquearChave) then
@@ -2089,23 +2083,6 @@ begin
     chkbxBaixarEstoque.Visible := True;
     chkbxOrcamentoExterno.Visible := True;
   end;
-//  if UpperCase(vEmpresa) = 'ODONTO' then
-//  begin
-//    Label14.caption := 'V.Desconto';
-//    Label14.Visible := True;
-//    Label15.Visible := True;
-//    Shape2.Visible := True;
-//    Shape3.Visible := True;
-//    Label16.Visible := false;
-//    Shape5.Visible := false;
-//    Shape6.Visible := false;
-//    LblReserva.Visible := false;
-//    Label12.Visible := false;
-//    Label13.Visible := false;
-//    Label11.Visible := false;
-//    Shape1.Visible := false;
-//    Shape4.Visible := false;
-//  end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') then
   begin
@@ -2135,7 +2112,7 @@ begin
     Shape4.Visible  := True;
     Label13.Visible := True;
   end;
-  if (UpperCase(vEmpresa) = 'NACIONAL') OR (UpperCase(vEmpresa) = 'RURALPET') then
+  if (UpperCase(vEmpresa) = 'NACIONAL') then
   begin
     CriarIniSQLDeposito;
     Label12.caption := 'DEPÓSITO';
@@ -2150,7 +2127,22 @@ begin
     Shape2.Visible := True;
     Shape3.Visible := True;
     Relatriodecontagem1.Visible := True;
-    // exibe a opção de relatorio de contagem de estoque
+  end;
+  if (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then // tenuge
+  begin
+    CriarIniSQLDeposito;
+    Label12.caption := 'FILIAL';
+    Label14.caption := 'LOJA';
+    Label16.caption := 'OFICINA';
+    Label11.Visible := True;
+    Shape1.Visible := True;
+    Shape4.Visible := True;
+    Label13.Visible := false;
+    Label14.Visible := True;
+    Label15.Visible := True;
+    Shape2.Visible := True;
+    Shape3.Visible := True;
+    Relatriodecontagem1.Visible := True;
   end;
   if TNEGLoja.getExibirQuantidadesReservadasPreVenda then
   begin
@@ -2230,7 +2222,7 @@ begin
   end;
   if (UPPERCASE(vEmpresa) = 'MOTOBOX') or
      (UPPERCASE(vEmpresa) = 'MOTOPECAS') or
-     (dsCGC = '13951392000388') or (dsCGC = '07067845000143') or
+     (dsCGC = '13951392000388') or (dsCGC = '26058670000152') or
      (dsCGC = '32879272000108') or (dsCGC = '32879272000361') or
      (dsCGC = '03334531000109') or (dsCGC = '15555876000171') or
      (dsCGC = '07328830000191') or (dsCGC = '11594965000176') or
@@ -2239,7 +2231,7 @@ begin
      (dsCGC = '32256187000185') or (dsCGC = '40484448000142') or
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
      (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
-     (dsCGC = '09217745000181') or (dsCGC = '23004452000147')
+     (dsCGC = '23004452000147') or (dsCGC = '07330739000100')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5057,33 +5049,33 @@ var
 begin
   case numero_de_casas of
     1:
-      begin
-        Arred := RoundTo(numero, -1);
-        if Arred > numero then
-          Arred := Arred - 0.1;
-        result := Arred;
-      end;
+    begin
+      Arred := RoundTo(numero, -1);
+      if Arred > numero then
+        Arred := Arred - 0.1;
+      result := Arred;
+    end;
     2:
-      begin
-        Arred := RoundTo(numero, -2);
-        if Arred > numero then
-          Arred := Arred - 0.01;
-        result := Arred;
-      end;
+    begin
+      Arred := RoundTo(numero, -2);
+      if Arred > numero then
+        Arred := Arred - 0.01;
+      result := Arred;
+    end;
     3:
-      begin
-        Arred := RoundTo(numero, -3);
-        if Arred > numero then
-          Arred := Arred - 0.001;
-        result := Arred;
-      end;
+    begin
+      Arred := RoundTo(numero, -3);
+      if Arred > numero then
+        Arred := Arred - 0.001;
+      result := Arred;
+    end;
     4:
-      begin
-        Arred := RoundTo(numero, -4);
-        if Arred > numero then
-          Arred := Arred - 0.0001;
-        result := Arred;
-      end;
+    begin
+      Arred := RoundTo(numero, -4);
+      if Arred > numero then
+        Arred := Arred - 0.0001;
+      result := Arred;
+    end;
   else
     result := numero; // senão estiver entre 1 e 4, não arredonda
   end;
@@ -5096,6 +5088,8 @@ begin
   begin
     RLLabel5.Left := RLLabel5.Left + movimento;
     RLDBText2.Left := RLDBText2.Left + movimento;
+    RLDBText2.Visible := False;
+    RLDBText2.Enabled := False;
     QRLabel12.Left := QRLabel12.Left + movimento;
     QreUnidade.Left := QreUnidade.Left + movimento;
     QRLabel7.Left := QRLabel7.Left + movimento;
@@ -5181,8 +5175,8 @@ begin
     FrmRelOrcamentos.RLLabel11.Visible := False;
   end else if vOcultaReferenciaNaImpressao then
   begin
-    FrmRelOrcamentos.RLLabel1.Visible := false;
-    FrmRelOrcamentos.RLDBText1.Visible := false;
+    FrmRelOrcamentos.RLLabel1.Visible := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
     moverCamposImpressao(FrmRelOrcamentos, FrmRelOrcamentos.RLLabel1.Left -
       FrmRelOrcamentos.QRLabel6.Left);
     FrmRelOrcamentos.QRLabel6.Left := FrmRelOrcamentos.RLLabel1.Left;
@@ -5288,7 +5282,8 @@ begin
     FrmRelOrcamentos.RLDBText1.Visible := True;
     FrmRelOrcamentos.RLDBText1.DataField := 'dsReferencia';
     FrmRelOrcamentos.RLLabel1.Caption := 'Referência';
-  end else if (usarLoteValidade = True) then
+  end;
+  if (usarLoteValidade = True) then
   begin               // Se for HOSPITALAR troco a coluna de Prateleira por Lote.
     FrmRelOrcamentos.RLLabel5.caption  := ''; // 'Validade    Lote';
     FrmRelOrcamentos.RLLabel13.caption := ''; // 'Validade    Lote';
@@ -5551,7 +5546,6 @@ begin
          diretorio), 'Atenção', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
     end;
     diretorio := ExtractFileDir(Application.ExeName) + '\PdfOrc\';
-//    ShowMessage(diretorio);
     FrmRelOrcamentos.RLPDFFilter1.FileName :=
     Pchar(diretorio + EdtLancto.Text + '.pdf');
     email := diretorio;
@@ -6827,6 +6821,7 @@ begin
       if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
         or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
         or (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO')
+        or (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249')
       then
         Consulta_Deposito
       else if Label12.Visible = True then
@@ -6899,7 +6894,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') or
+    (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
@@ -6928,7 +6924,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') or
+    (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
@@ -6956,7 +6953,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') or
+    (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(Sender);
@@ -6984,7 +6982,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') then
+    (UpperCase(vEmpresa) = 'RURALPET') or (UpperCase(vEmpresa) = 'BATAUTO') or
+    (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
     Consulta_Deposito;
   if (UpperCase(vEmpresa) = 'BATAUTO') then
     Consulta_Deposito2;
@@ -7011,7 +7010,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA') or
     (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL') or
-    (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') then
+    (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') or
+    (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
     Consulta_Deposito
   else
     Consultapedidodecompra1Click(self);
@@ -7420,14 +7420,15 @@ begin
       LimpaGrid;
     end;
     vObs := prevenda.observacao;
-    if (prevenda.vendedor) <> nil then begin
+    if (prevenda.vendedor) <> nil then
+    begin
       if UpperCase(intToStr(prevenda.vendedor.codigo)) <> trim(EdtCdNome.Text) then
       begin
         EdtCdNome.Text := intToStr(prevenda.vendedor.codigo);
         CbxNome.Text := prevenda.vendedor.nome;
       end;
-    end
-    else begin
+    end else
+    begin
       CbxNome.Text := vnmVendedor;
       EdtCdNome.Text := vcdVendedor;
     end;
@@ -8602,12 +8603,9 @@ begin
       Cells[9, i + 1] := FormatFloatQ(vCasasPreco,
         SimpleRoundTo(prevenda.itens[i].precoBruto, vCasasPreco * -1));
       prevenda.itens[i].precoBruto := StrToFloat(Cells[9, i + 1]);
-      if prevenda.itens[i].ambiente <> nil then
-      begin
-//        Cells[14, i + 1] := intToStr(prevenda.itens[i].ambiente.codigo);
+      Cells[14, i + 1] := prevenda.itens[i].localEntrega;
+      if (prevenda.itens[i].ambiente <> nil) then
         Cells[15, i + 1] := prevenda.itens[i].ambiente.descricao;
-      end else
-        Cells[14, i + 1] := prevenda.itens[i].localEntrega;
       if prevenda.itens[i].Promocao_desconto_Item then
         Cells[17, i + 1] := '1'
       else
@@ -8620,7 +8618,6 @@ begin
         if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
           (RgOpcoes.ItemIndex = 1))) then
         begin
-
           if vEstqNegativo <> 'S' then
           begin
             if produto_temp.tipoComposicao = composto then
@@ -8636,8 +8633,7 @@ begin
           end else
             ArraylinhasDestacadas[i + 1] := false;
         end;
-      end
-      else
+      end else
         ArraylinhasDestacadas[i + 1] := false;
     end;
     temp := (prevenda.itens[i].precoBruto * prevenda.itens[i].quantidade);
@@ -9413,7 +9409,8 @@ begin
       montaComboLote(ADOSPConsulta.FieldByName('Código').AsString);
     if (UpperCase(vEmpresa) = 'REZENDE') or (UpperCase(vEmpresa) = 'BELAVISTA')
       or (UpperCase(vEmpresa) = 'PROAUTO') or (UpperCase(vEmpresa) = 'NACIONAL')
-      or (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') then
+      or (UpperCase(vEmpresa) = 'RURALPET') or  (UpperCase(vEmpresa) = 'BATAUTO') or
+      (SoNumeros(dsCGC) = '39805209000168') or (SoNumeros(dsCGC) = '39805209000249') then
       Consulta_Deposito
     else if Label12.Visible = True then
       Consultapedidodecompra1.Click;
