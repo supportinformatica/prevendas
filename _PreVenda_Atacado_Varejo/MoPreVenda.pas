@@ -1077,19 +1077,16 @@ begin
     open;
     temCOD_FTP := RecordCount > 0;
     Close;
-
     // agora verifico se o codigo do cliente do ftp está vazio
     sql.Text := 'select cdCodFTP from configuracao';
     open;
     campoCodFTPPreenchido := FieldByName('cdCodFTP').AsString <> '';
     Close;
-
     // agora verifico se o cliente tem o cnpj cadastrado
     sql.Text := 'select dsCGC from configuracao';
     open;
     temCNPJ := FieldByName('dsCGC').AsString <> '';
     Close;
-
     // verifico se o campo da chave criptografada existe
     sql.Text := 'SELECT 1 FROM syscolumns WHERE name = ''dsRegistro'' ';
     open;
@@ -1101,12 +1098,10 @@ begin
         'ALTER TABLE CONFIGURACAO ADD dsRegistro varchar(50), Emergencia bit, EmTolerancia bit ';
       ExecSQL;
     end;
-
     sql.Text := 'select dsRegistro from configuracao';
     open;
     campoResgistroPreenchido := qry.FieldByName('dsRegistro').AsString <> '';
     Close;
-
   end;
   result := (temCOD_FTP) and (temCNPJ) and (temCampoCriptografado) and
     (campoCodFTPPreenchido) and (campoResgistroPreenchido);
@@ -1162,14 +1157,11 @@ var
   qry: TADOQuery;
   EmTolerancia: Boolean;
   chave, DtExpiracao: string;
-
 begin
   qry := TADOQuery.Create(nil);
   qry.Connection := DModulo.Conexao;
-
   with qry do
   begin
-
     // funcao que retorna a data de expriração
     DtExpiracao := DateToStr(RetornaDtExpira);
     // se a data de expiração faltar menos de 5 dias coloco o flag para sim - true = 1
@@ -1178,8 +1170,7 @@ begin
       sql.Text := 'update configuracao set EmTolerancia = 1';
       ExecSQL;
       EmTolerancia := True;
-    end
-    else
+    end else
     begin
       sql.Text := 'update configuracao set EmTolerancia = 0';
       ExecSQL;
@@ -1205,12 +1196,9 @@ begin
     Close;
   end;
   FreeAndNil(qry);
-
   dataBrasilia := DateOf(ObterDataHoraInternet);
-
   if DateToStr(dataBrasilia) = '30/12/1899' then
     dataBrasilia := dataSequencial;
-
   result := dataSequencial > dataBrasilia;
 end;
 
@@ -1369,12 +1357,13 @@ begin
   query.Connection := DModulo.Conexao;
   with query do
   begin
-    sql.Text := 'SELECT CASE ' +
-      '(SELECT EXISTIR FROM PESSOA with (nolock) WHERE cdPessoa = :cdCliente) WHEN ''F'' THEN '
-      + '(SELECT F.DescontoMaxPFisica FROM Produto P with (nolock) INNER JOIN Fornecedor F with (nolock) ON P.cdPessoa = F.cdPessoa '
-      + '			WHERE cdProduto = :cdProduto1) ' + 'WHEN ''J'' THEN ' +
-      '(SELECT F.DescontoMaxPJuridica FROM Produto P with (nolock) INNER JOIN Fornecedor F with (nolock) ON P.cdPessoa = F.cdPessoa '
-      + '			WHERE cdProduto = :cdProduto2) ' + 'END AS LimiteDescontoFor ';
+    sql.Text :=
+    'SELECT CASE ' +
+    '(SELECT EXISTIR FROM PESSOA with (nolock) WHERE cdPessoa = :cdCliente) WHEN ''F'' THEN '
+    + '(SELECT F.DescontoMaxPFisica FROM Produto P with (nolock) INNER JOIN Fornecedor F with (nolock) ON P.cdPessoa = F.cdPessoa '
+    + '			WHERE cdProduto = :cdProduto1) ' + 'WHEN ''J'' THEN ' +
+    '(SELECT F.DescontoMaxPJuridica FROM Produto P with (nolock) INNER JOIN Fornecedor F with (nolock) ON P.cdPessoa = F.cdPessoa '
+    + '			WHERE cdProduto = :cdProduto2) ' + 'END AS LimiteDescontoFor ';
     Parameters.ParamByName('cdProduto1').Value := cdProduto;
     Parameters.ParamByName('cdProduto2').Value := cdProduto;
     Parameters.ParamByName('cdCliente').Value := cdCliente;
@@ -1404,19 +1393,16 @@ begin
     open;
     temCOD_FTP := RecordCount > 0;
     Close;
-
     // agora verifico se o codigo do cliente do ftp está vazio
     sql.Text := 'select cdCodFTP from configuracao WITH (NOLOCK)';
     open;
     campoCodFTPPreenchido := FieldByName('cdCodFTP').AsString <> '';
     Close;
-
     // agora verifico se o cliente tem o cnpj cadastrado
     sql.Text := 'select dsCGC from configuracao WITH (NOLOCK)';
     open;
     temCNPJ := FieldByName('dsCGC').AsString <> '';
     Close;
-
     // verifico se o campo da chave criptografada existe
     sql.Text := 'SELECT 1 FROM syscolumns WHERE name = ''dsRegistro'' ';
     open;
@@ -1428,12 +1414,10 @@ begin
         'ALTER TABLE CONFIGURACAO ADD dsRegistro varchar(50), Emergencia bit, EmTolerancia bit ';
       ExecSQL;
     end;
-
     sql.Text := 'select dsRegistro from configuracao WITH (NOLOCK)';
     open;
     campoResgistroPreenchido := qry.FieldByName('dsRegistro').AsString <> '';
     Close;
-
   end;
   result := (temCOD_FTP) and (temCNPJ) and (temCampoCriptografado) and
     (campoCodFTPPreenchido) and (campoResgistroPreenchido);
@@ -1543,110 +1527,124 @@ begin
     with DModulo.ADOCommand1 do
     begin
       CommandText := '';
-      CommandText := 'DECLARE @TESTE AS INTEGER ' + 'SET @TESTE = ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsMetragem'') '
-        + 'IF (@TESTE = 0) BEGIN ' + ' ALTER TABLE IteOrcamento ADD ' +
-        ' dsMetragem varchar(10) ' + 'END ';
-      Execute;
-
       CommandText :=
-        'DECLARE @TESTE AS INTEGER                                              '
-        + 'SET @TESTE =                                                           '
-        + '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS       '
-        + 'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsServico'') '
-        + 'IF (@TESTE = 0) BEGIN                                                  '
-        + ' ALTER TABLE IteOrcamento ADD                                          '
-        + ' dsServico  varchar(150)                                               '
-        + 'END                                                                    ';
+      'DECLARE @TESTE AS INTEGER ' + 'SET @TESTE = ' +
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
+      'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsMetragem'') '
+      + 'IF (@TESTE = 0) BEGIN ' + ' ALTER TABLE IteOrcamento ADD ' +
+      ' dsMetragem varchar(10) ' + 'END ';
       Execute;
-
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER                                                '
+      + 'SET @TESTE =                                                           '
+      + '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS       '
+      + 'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsServico'')  '
+      + 'IF (@TESTE = 0) BEGIN                                                  '
+      + ' ALTER TABLE IteOrcamento ADD                                          '
+      + ' dsServico  varchar(150)                                               '
+      + 'END';
+      Execute;
       // Cria SerieEscolar
-      CommandText := ' DECLARE @TESTE AS INTEGER        ' +
-        'SET @TESTE =                    ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''Escola'')  ' + 'IF (@TESTE = 0) BEGIN           '
-        + ' CREATE TABLE Escola (          ' +
-        ' CdEscola int NOT NULL,         ' + ' DsEscola varchar(60) NULL )    '
-        + ' ALTER TABLE Escola             ' +
-        ' ADD PRIMARY KEY (CdEscola ASC) ' + 'END                             ';
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER        ' +
+      'SET @TESTE =                    ' +
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
+      'WHERE TABLE_NAME = ''Escola'')  ' + 'IF (@TESTE = 0) BEGIN           '
+      + ' CREATE TABLE Escola (          ' +
+      ' CdEscola int NOT NULL,         ' + ' DsEscola varchar(60) NULL )    '
+      + ' ALTER TABLE Escola           ' +
+      ' ADD PRIMARY KEY (CdEscola ASC) ' +
+      'END';
       Execute;
       CommandText := '';
-      CommandText := ' DECLARE @TESTE AS INTEGER        ' +
-        'SET @TESTE =                    ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''IteOrcamento'')  ' +
-        ' Alter TABLE IteOrcamento       ' + ' ALTER Column vlDesconto real   ';
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER        ' +
+      'SET @TESTE =                    ' +
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
+      'WHERE TABLE_NAME = ''IteOrcamento'')  ' +
+      ' Alter TABLE IteOrcamento       ' + ' ALTER Column vlDesconto real   ';
       Execute;
       CommandText := '';
-      CommandText := 'DECLARE @TESTE AS INTEGER      ' +
-        'SET @TESTE =                   ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS  ' +
-        'WHERE TABLE_NAME = ''SerieEscolar'')                              ' +
-        ' IF (@TESTE = 0) BEGIN         ' + ' CREATE TABLE SerieEscolar (   ' +
-        ' cdSerie   int NOT NULL,       ' + ' dsSerie   varchar(50) NULL,   ' +
-        ' CdEscola  int NOT NULL )      ' + 'ALTER TABLE SerieEscolar       ' +
-        ' ADD PRIMARY KEY (cdSerie ASC) ' + 'ALTER TABLE SerieEscolar       ' +
-        ' ADD FOREIGN KEY (CdEscola)    ' + ' REFERENCES Escola  (CdEscola) ' +
-        ' ON DELETE NO ACTION           ' + ' ON UPDATE NO ACTION           ' +
-        ' END                           ';
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER      ' +
+      'SET @TESTE =                   ' +
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS  ' +
+      'WHERE TABLE_NAME = ''SerieEscolar'')                              ' +
+      ' IF (@TESTE = 0) BEGIN         ' + ' CREATE TABLE SerieEscolar (   ' +
+      ' cdSerie   int NOT NULL,       ' + ' dsSerie   varchar(50) NULL,   ' +
+      ' CdEscola  int NOT NULL )      ' + 'ALTER TABLE SerieEscolar       ' +
+      ' ADD PRIMARY KEY (cdSerie ASC) ' + 'ALTER TABLE SerieEscolar       ' +
+      ' ADD FOREIGN KEY (CdEscola)    ' + ' REFERENCES Escola  (CdEscola) ' +
+      ' ON DELETE NO ACTION           ' + ' ON UPDATE NO ACTION           ' +
+      'END';
       Execute;
       CommandText := '';
-      CommandText := 'DECLARE @TESTE AS INTEGER  ' +
-        'SET @TESTE =               ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''ListaEscolar'') ' +
-        ' IF (@TESTE = 0) BEGIN               ' +
-        ' CREATE TABLE ListaEscolar ( ' + ' CdLista  int NOT NULL,   ' +
-        ' Ano      datetime NULL,  ' + ' cdSerie  int NOT NULL,   ' +
-        ' CdEscola int NOT NULL  ) ' + ' ALTER TABLE ListaEscolar ' +
-        ' ADD PRIMARY KEY (CdLista ASC) ' + ' ALTER TABLE ListaEscolar   ' +
-        ' ADD FOREIGN KEY (CdEscola) ' + ' REFERENCES Escola  (CdEscola) ' +
-        ' ON DELETE NO ACTION  ' + ' ON UPDATE NO ACTION  ' +
-        ' ALTER TABLE ListaEscolar ' + ' ADD FOREIGN KEY (cdSerie) ' +
-        ' REFERENCES SerieEscolar  (cdSerie) ' + ' ON DELETE NO ACTION ' +
-        ' ON UPDATE NO ACTION ' + 'END   ';
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER  ' +
+      'SET @TESTE =               ' +
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
+      'WHERE TABLE_NAME = ''ListaEscolar'') ' +
+      ' IF (@TESTE = 0) BEGIN               ' +
+      ' CREATE TABLE ListaEscolar ( ' + ' CdLista  int NOT NULL,   ' +
+      ' Ano      datetime NULL,  ' + ' cdSerie  int NOT NULL,   ' +
+      ' CdEscola int NOT NULL  ) ' + ' ALTER TABLE ListaEscolar ' +
+      ' ADD PRIMARY KEY (CdLista ASC) ' + ' ALTER TABLE ListaEscolar   ' +
+      ' ADD FOREIGN KEY (CdEscola) ' + ' REFERENCES Escola  (CdEscola) ' +
+      ' ON DELETE NO ACTION  ' + ' ON UPDATE NO ACTION  ' +
+      ' ALTER TABLE ListaEscolar ' + ' ADD FOREIGN KEY (cdSerie) ' +
+      ' REFERENCES SerieEscolar  (cdSerie) ' + ' ON DELETE NO ACTION ' +
+      'ON UPDATE NO ACTION '+
+      'END';
       Execute;
       CommandText := '';
-      CommandText := 'DECLARE @TESTE AS INTEGER ' + 'SET @TESTE =              '
-        + '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''ItensLista'') ' +
-        ' IF (@TESTE = 0) BEGIN             ' + ' CREATE TABLE ItensLista ( ' +
-        ' CdItemLista int IDENTITY, ' + ' CdObjeto    int NOT NULL, ' +
-        ' dsObjeto    varchar(50) NULL, ' + ' Qtd         int NULL, ' +
-        ' CdLista     int NOT NULL ) ' + ' ALTER TABLE ItensLista ' +
-        ' ADD PRIMARY KEY (CdItemLista ASC) ' + ' ALTER TABLE ItensLista ' +
-        ' ADD FOREIGN KEY (CdLista) ' + ' REFERENCES ListaEscolar  (CdLista) ' +
-        ' ON DELETE NO ACTION ' + ' ON UPDATE NO ACTION ' + 'END   ';
+      CommandText :=
+      'DECLARE @TESTE AS INTEGER ' + 'SET @TESTE =              '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''ItensLista'') '+
+      ' IF (@TESTE = 0) BEGIN     '+
+      ' CREATE TABLE ItensLista ( '+
+      ' CdItemLista int IDENTITY, '+
+      ' CdObjeto    int NOT NULL, '+
+      ' dsObjeto    varchar(50) NULL,'+
+      ' Qtd         int NULL,      '+
+      ' CdLista     int NOT NULL ) '+
+      ' ALTER TABLE ItensLista     '+
+      ' ADD PRIMARY KEY (CdItemLista ASC) '+
+      ' ALTER TABLE ItensLista    '+
+      ' ADD FOREIGN KEY (CdLista) '+
+      ' REFERENCES ListaEscolar  (CdLista) '+
+      ' ON DELETE NO ACTION '+
+      ' ON UPDATE NO ACTION '+
+      'END';
       Execute;
       CommandText :=
-        'DECLARE @TESTE AS INTEGER                                        ' +
-        'SET @TESTE =                                                     ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-        'WHERE TABLE_NAME = ''Profissional'' )                            ' +
-        'IF (@TESTE = 0) BEGIN                                            ' +
-        ' CREATE TABLE Profissional (                                     ' +
-        '       cdPessoa         int Not Null   )                         ' +
-        'ALTER TABLE Profissional ADD PRIMARY KEY (cdPessoa ASC)          ' +
-        'END                                                              ';
+      'DECLARE @TESTE AS INTEGER                                        '+
+      'SET @TESTE =                                                     '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''Profissional'' )                            '+
+      'IF (@TESTE = 0) BEGIN                                            '+
+      ' CREATE TABLE Profissional (                                     '+
+      '       cdPessoa         int Not Null   )                         '+
+      'ALTER TABLE Profissional ADD PRIMARY KEY (cdPessoa ASC)          '+
+      'END                                                              ';
       Execute;
       CommandText :=
-        'DECLARE @TESTE AS INTEGER                                          ' +
-        'SET @TESTE =                                                       ' +
-        '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS   ' +
-        'WHERE TABLE_NAME = ''ITEORCAMENTO'' and COLUMN_NAME = ''dsCFOP'' ) ' +
-        'IF (@TESTE = 0) BEGIN                                              ' +
-        ' ALTER TABLE ITEORCAMENTO ADD dsCFOP varchar(4)                    ' +
-        'END                                                                ';
+      'DECLARE @TESTE AS INTEGER                                          '+
+      'SET @TESTE =                                                       '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS   '+
+      'WHERE TABLE_NAME = ''ITEORCAMENTO'' and COLUMN_NAME = ''dsCFOP'' ) '+
+      'IF (@TESTE = 0) BEGIN                                              '+
+      ' ALTER TABLE ITEORCAMENTO ADD dsCFOP varchar(4)                    '+
+      'END                                                                ';
       Execute;
       CommandText :=
-        'DECLARE @TESTE AS INTEGER                                               '
-        + 'SET @TESTE =                                                            '
-        + '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS        '
-        + 'WHERE TABLE_NAME = ''ORCAMENTO'' and COLUMN_NAME = ''cdProfissional'' ) '
-        + 'IF (@TESTE = 0) BEGIN                                                   '
-        + ' ALTER TABLE ORCAMENTO ADD cdProfissional int Null                      '
-        + 'END                                                                     ';
+      'DECLARE @TESTE AS INTEGER                                               '+
+      'SET @TESTE =                                                            '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS        '+
+      'WHERE TABLE_NAME = ''ORCAMENTO'' and COLUMN_NAME = ''cdProfissional'' ) '+
+      'IF (@TESTE = 0) BEGIN                                                   '+
+      ' ALTER TABLE ORCAMENTO ADD cdProfissional int Null                      '+
+      'END                                                                     ';
       Execute;
     end;
   except
@@ -1692,11 +1690,13 @@ begin
     scaleBy(screen.width - 400, sw);
   end;
   for i := ComponentCount - 1 downto 0 do
+  begin
     with Components[i] do
     begin
       if GetPropInfo(ClassInfo, 'Font') <> nil then
         Font.Size := (width div w) * Font.Size;
     end;
+  end;
 end;
 
 function Cryptografia(Action, Src: String): String;
@@ -1740,8 +1740,7 @@ begin
       Dest := Dest + Format('%1.2x', [SrcAsc]);
       OffSet := SrcAsc;
     end;
-  end
-  Else if (Action = UpperCase('D')) then
+  end else if (Action = UpperCase('D')) then
   begin
     OffSet := StrToInt('$' + Copy(Src, 1, 2));
     SrcPos := 3;
@@ -1781,11 +1780,8 @@ end;
 
 procedure TFrmPrincipalPreVenda.ProcessaMsg;
 begin
-  if Msg.Message = WM_KEYDOWN then
-    if Msg.wParam = VK_RETURN then
-    begin
-      Keybd_event(VK_TAB, 0, 0, 0);
-    end;
+  if (Msg.Message = WM_KEYDOWN) and (Msg.wParam = VK_RETURN) then
+    Keybd_event(VK_TAB, 0, 0, 0);
 end;
 
 function TFrmPrincipalPreVenda.ExisteDescontoFornecedorInvalido: Boolean;
@@ -1848,42 +1844,8 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.LiberaCopia;
-// var DtExp :TDateTime;
-// nomePC : String;
-// diaDaSemana: String;
-// qryChave : TADOQuery;
 begin
-  // if (ValidaComputadorSupport = false)  then
-  // if RegistraCliente = False then
-  // Application.Terminate;
 
-  { if (ValidaComputadorSupport = false) then begin
-    nomePC := pubNomeComputador;
-    diaDaSemana := UpperCase(NomeDoDia(StrToDate(vData_Banco)));
-    //não solicita a chave no fim de semana
-    if ((diaDaSemana = 'SABADO') or (diaDaSemana = 'DOMINGO') or (isFeriadoNacional(StrToDate(vData_Banco)))) then exit;
-    if ((nomePC <> 'DESENV01') and (nomePC <> 'DESENV02') and (nomePC <> 'DESENV03') and (nomePC <> 'KENN-PC') and
-    (nomePC <> 'DESENV04') and (nomePC <> 'NOTEANDRE') and (nomePC <> 'ADM01')  and (nomePC <> 'DESENV05')  and
-    (nomePC <> 'NOTEFABIANO') and (nomePC <> 'ATEND06') and (nomePC <> 'ATEND03') and (nomePC <> 'ATENDI') and
-    (nomePC <> 'ATEND02') and (nomePC <> 'ATEND01') and (nomePC <> 'NOTEFISCAL') and (nomePC <> 'NOTETHIAGO') and (nomePC <> 'NOTEHERBERTH')) then begin
-
-    qryChave := TADOQuery.Create(nil);
-    qryChave.Connection := DModulo.Conexao;
-    with qryChave do begin
-    close;
-    SQL.Text := 'SELECT nrVlAvulso FROM sequencial WITH (NOLOCK) ';
-    //SQL.Text := 'SELECT dtExpiraCopia FROM CONFIGURACAO WITH (NOLOCK) ';
-    Open;
-    dtExp := FloatToDateTime(FieldByName('nrVlAvulso').AsInteger);
-    close;
-    if ((DtExp < StrToDate(vData_Banco)) or ((DtExp - 8) < StrToDate(vData_Banco))) then begin  //prazo vencido
-    frmChave := TfrmChave.Create(Self);
-    frmChave.ShowModal;
-    end;
-    end; //with
-    end;
-    end;
-  }
 end;
 
 procedure TFrmPrincipalPreVenda.listarUsuariosNaCombo;
@@ -1930,8 +1892,7 @@ begin
       FrmPrincipalPreVenda.Free;
       exit;
     end;
-  end
-  else
+  end else
     EdtTotal.Text := '0,00';
   intemIndexRgOpcoesOLD := RgOpcoes.ItemIndex;
   EdtTotal.Refresh;
@@ -1972,8 +1933,6 @@ begin
     vcidade := FieldByName('dsCidade').AsString + ',';
     vUF := FieldByName('dsUF').AsString;
     vPergunta_Apos_Comprovante := FieldByName('ImpPreVenda').AsString;
-    // se for 1 faz a pergunta p o comprovante de 80 colunas se for 2 imprime direto
-    // vSenha_Alteracao := FieldByName('dsSenha1').AsString;
     vCliDevedor := FieldByName('dsBloqAtrazo').AsString;
     vLimiteCredito := FieldByName('nrLimiteCredito').AsFloat;
     vCheqDev := FieldByName('dsChequeDev').AsString;
@@ -2035,9 +1994,9 @@ begin
   end;
   { abaixo se nao for do grupo LITORAL eu oculto a referencia da prevenda }
   if (FrmPrincipalPreVenda.dsCGC <> '11334892000183') and
-    (FrmPrincipalPreVenda.dsCGC <> '09540332000133') and
-    (FrmPrincipalPreVenda.dsCGC <> '02751835000109') and
-    (FrmPrincipalPreVenda.dsCGC <> '14223073000157') then
+     (FrmPrincipalPreVenda.dsCGC <> '09540332000133') and
+     (FrmPrincipalPreVenda.dsCGC <> '02751835000109') and
+     (FrmPrincipalPreVenda.dsCGC <> '14223073000157') then
   begin
     edtReferencia.Visible := false;
     Label25.Visible := false;
@@ -2156,21 +2115,10 @@ begin
       'Quantidades do item selecionado que estão em Ordens de Serviço';
     Shape2.Visible := True;
     Label16.caption := 'RESERVA';
-//    if (UpperCase(vEmpresa) = 'PTINTAS_') then
-//    begin
-//      Shape1.height := Shape3.height;
-//      Label11.Top := Label13.Top;
-//      Label12.caption := 'DISPONÍVEL';
-//      Label13.Visible := false;
-//      Label11.Hint := 'Quantidade disponível';
-//      Label12.Hint := '';
-//    end else
-//    begin
-      edtDisponivel.Visible := True;
-      Shape7.Visible := True;
-      Label17.Visible := True;
-      Shape8.Visible := True;
-//    end;
+    edtDisponivel.Visible := True;
+    Shape7.Visible := True;
+    Label17.Visible := True;
+    Shape8.Visible := True;
   end;
   Label11.Hint := 'Informações do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
@@ -2211,7 +2159,7 @@ begin
   then
   begin
     FrmPrincipalPreVenda.caption :=
-      'Impressão de etiquetas       Support Informática  79 3214-5161';
+      'Impressão de etiquetas       Support Informática  79 3302-5707';
     Label29.caption := 'Operador';
     Label2.Visible := false;
     Label3.Visible := false;
@@ -2232,7 +2180,7 @@ begin
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
      (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
      (dsCGC = '23004452000147') or (dsCGC = '07330739000100') or
-     (dsCGC = '55046116000153')
+     (dsCGC = '55046116000153') or (dsCGC = '39664873000215')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
