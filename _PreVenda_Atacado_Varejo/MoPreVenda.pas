@@ -5309,8 +5309,8 @@ begin
     FrmRelOrcamentos.QrlComp.caption   := FieldByName('dsComplemento').AsString;
     FrmRelOrcamentos.QrlUf2.caption    := FieldByName('dsUf').AsString;
     FrmRelOrcamentos.QreRota2.caption  := FieldByName('dsRegiao').AsString;
-    sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
-      'Where cdPessoa = :CDPESSOA ';
+    sql.Text := 'Select distinct iSNULL(nrDDD, '''') + nmTelefone as nmTelefone From Telefone WITH (NOLOCK) '+
+    'Where cdPessoa = :CDPESSOA ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
     FrmRelOrcamentos.QrlTelefone.caption := FieldByName('nmTelefone').AsString;
@@ -5969,7 +5969,7 @@ begin
       FieldByName('dsComplemento').AsString;
     frmRelOrcamentosAmbiente.QrlUf2.caption := FieldByName('dsUf').AsString;
     sql.Text :=
-    'Select distinct nmTelefone From Telefone WITH (NOLOCK) '+
+    'Select distinct iSNULL(nrDDD, '''') + nmTelefone as nmTelefone From Telefone WITH (NOLOCK) '+
     'Where cdPessoa = :CDPESSOA';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
@@ -6255,7 +6255,7 @@ begin
     frmRelOrcamentosPB.QrlComp.caption := FieldByName('dsComplemento').AsString;
     frmRelOrcamentosPB.QrlUf2.caption := FieldByName('dsUf').AsString;
     // FrmRelOrcamentosPB.QRLabel21.Caption   := FormatFloat('0.00',StrToFloat(EdtTotal.Text) - StrToFloat(EdtSubTotal.Text));
-    sql.Text := 'Select distinct nmTelefone From Telefone WITH (NOLOCK) ' +
+    sql.Text := 'Select distinct iSNULL(nrDDD, '''') + nmTelefone as nmTelefone From Telefone WITH (NOLOCK) ' +
       'Where cdPessoa = :CDPESSOA ';
     Parameters.ParamByName('CDPESSOA').Value := EdtCdCliente.Text;
     open;
