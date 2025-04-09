@@ -237,8 +237,12 @@ begin
     QreUnidade.DataField := 'dsMetragem'
   else
     QreUnidade.DataField := 'dsUnidade';
-  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then
+  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then  // campos distribuidora (imagem do produto)
   begin
+    RLDBText2.Visible := False;
+    RLLblUnitario.Top := RLLblUnitario.Top + 15;
+    RLLblDesconto.Top := RLLblDesconto.Top + 15;
+    RLLblTotal.Top := RLLblTotal.Top + 15;
     RLPanel1.Top := RLPanel1.Top + 15;
     RLBand2.Borders.FixedBottom := True;
     RLBand2.Height := 53;
@@ -351,7 +355,7 @@ begin
     (UpperCase(vEmpresa) = 'ANADRI') or (FrmPrincipalPreVenda.dsCGC = '49843302000110') or
     (FrmPrincipalPreVenda.dsCGC = '47305252000192') or (FrmPrincipalPreVenda.dsCGC = '30105285000196') or
     (FrmPrincipalPreVenda.dsCGC = '33185213000194') or (FrmPrincipalPreVenda.dsCGC = '52961019000106') or
-    (FrmPrincipalPreVenda.dsCGC = '43081798000156') then
+    (FrmPrincipalPreVenda.dsCGC = '43081798000156') or (FrmPrincipalPreVenda.dsCGC = '26620942000166') then
   begin
     with AdoQuery1 do
     begin

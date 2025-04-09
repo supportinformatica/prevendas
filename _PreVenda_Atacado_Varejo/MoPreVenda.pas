@@ -2928,7 +2928,8 @@ begin
   if ((UpperCase(vEmpresa) = 'JNUNES') and (ADOSPConsulta.FieldByName('Código').AsInteger = 20479)) or
      (UpperCase(vEmpresa) = 'GAMA') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or
      (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or
-     (dsCGC = '43081798000156') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') then
+     (dsCGC = '43081798000156') or (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
+     (dsCGC = '26620942000166') then
   begin
     FrmDescricao := TFrmDescricao.Create(FrmDescricao);
     FrmDescricao.EdtDescricao.Text := ADOSPConsulta.FieldByName('DESCRIÇÃO').AsString;
@@ -2938,7 +2939,8 @@ begin
     FrmDescricao.EdtQtdSai.Text := FormatFloat('0.00000', StrToFloatDef(EdtQtd.Text, 0));
     FrmDescricao.EdtFator.Text := '1,00000';
     if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or
-       (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
+       (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or
+       (dsCGC = '43081798000156') or (dsCGC = '26620942000166') then
     begin
       FrmDescricao.Panel2.Visible := false;
       FrmDescricao.height := 112;
@@ -3089,7 +3091,8 @@ begin
     if (UpperCase(vEmpresa) = 'JNUNES') or (UpperCase(vEmpresa) = 'GAMA') or
        (UpperCase(vEmpresa) = 'JETLASER') or (UpperCase(vEmpresa) = 'ANADRI') or
        (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-       (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
+       (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
+       (dsCGC = '26620942000166') then
       itemPrevenda.descricao := vDescricaoGama;
     // não coloquei no "senão" porque a descrição original já vem na criação do objeto.
     if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
@@ -3759,7 +3762,8 @@ begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
     (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
+    (dsCGC = '26620942000166') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -3834,7 +3838,8 @@ begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString
   else if (UpperCase(vEmpresa) = 'GAMA') or (UpperCase(vEmpresa) = 'JETLASER') or
     (UpperCase(vEmpresa) = 'ANADRI') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
+    (dsCGC = '26620942000166') then
   begin
     SgDados.Cells[1, i] := ADOQryProcura.FieldByName('dsServico').AsString;
     SgDados.Cells[10, i] := ADOQryProcura.FieldByName('dsMetragem').AsString;
@@ -5202,7 +5207,8 @@ begin
     FrmRelOrcamentos.RLLabel1.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') then
+    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
+    (dsCGC = '26620942000166') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar invertido o local do campo para o cliente e loja assinarem.
