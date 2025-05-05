@@ -9704,7 +9704,8 @@ end;
 function TFrmPrincipalPreVenda.orgaoPublicoBatAuto: Boolean;
 begin
   if (prevenda.Cliente.tipoCliente.tipo = 'Órgãos públicos') and ((dsCGC = '04217440000156') or
-     (dsCGC = '04217440000237') or (dsCGC = '33903814000195') or (dsCGC = '44744088000121')) then
+     (dsCGC = '04217440000237') or (dsCGC = '33903814000195') or (dsCGC = '44744088000121') or
+     (dsCGC = '44744088000202')) then
     Result := True
   else
     Result := False;
