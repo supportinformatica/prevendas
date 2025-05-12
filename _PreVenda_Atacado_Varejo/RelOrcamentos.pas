@@ -239,6 +239,8 @@ begin
     QreUnidade.DataField := 'dsUnidade';
   if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then  // campos distribuidora (imagem do produto)
   begin
+    RLDBText1.DataField := 'dsPrateleira';
+    RLLabel1.Caption := 'Prateleira';
     RLDBText2.Visible := False;
     RLLblUnitario.Top := RLLblUnitario.Top + 15;
     RLLblDesconto.Top := RLLblDesconto.Top + 15;
