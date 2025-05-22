@@ -4281,7 +4281,7 @@ begin
     begin
       Label10.Caption   := 'Observação';
       EdtCdCliente.Text := ADOQryCliente.FieldByName('cdPessoa').AsString;
-      cdTabelaPreco    := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
+      cdTabelaPreco := ADOQryCliente.FieldByName('cdTabelaPreco').AsInteger;
       EdtEndereco.Text := ADOQryCliente.FieldByName('nmLogradouro').AsString;
       if (UpperCase(vEmpresa) = 'CAMARATUBA') or
         (UpperCase(vEmpresa) = 'CARDOSOACESSORIOS') then
@@ -6619,7 +6619,6 @@ Procedure TFrmPrincipalPreVenda.AtualizaQryConsulta;
 begin
   With ADOSPConsulta do
   begin
-//    EdtQtd.Text := '0,00';
     Close;
     if chkOcultarProdutosSemEstoque.Checked then
       Parameters.ParamByName('@OCULTARPRODUTOSEMESTOQUE').Value := 1
@@ -8199,6 +8198,8 @@ end;
 
 procedure TFrmPrincipalPreVenda.DBGrid1DrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  qry : TADOQuery;
 begin
   // Para mudar a cor da linha no DbGrid
   if (TAuxDBGrid(DBGrid1).DataLink.ActiveRecord + 1 = TAuxDBGrid(DBGrid1).Row)
@@ -8247,8 +8248,30 @@ begin
     DBGrid1.Canvas.Font.Color := clRed;
     DBGrid1.Canvas.FillRect(Rect);
     DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-  end
-  else
+  end else if (cdTabelaPreco > 0) and (ADOSPConsultadsAtivo.AsString = 'S') and
+     (ADOSPConsultaESTOQUE.AsFloat > 0) and (dsCGC = '05935087000102') then  // orta viva
+  begin
+    qry := TADOQuery.Create(nil);
+    qry.Connection := DModulo.Conexao;
+    with qry do
+    begin
+      sql.Text :=
+      'SELECT 1 FROM TabelaPreco TP with (nolock) '+
+      'INNER JOIN ItemTabelaPreco ITP with (nolock) ON TP.cdTabelaPreco = ITP.cdTabelaPreco '+
+      'INNER JOIN Produto P with (nolock) ON ITP.cdProduto = P.cdProduto '+
+      'WHERE TP.cdTabelaPreco = :tabela and P.cdProduto = :codigo and TP.dsAtivo = ''S''';
+      Parameters.ParamByName('tabela').Value := cdTabelaPreco;
+      Parameters.ParamByName('codigo').Value := ADOSPConsultaCÓDIGO.AsInteger;
+      open;
+    end;
+    if qry.RecordCount > 0 then
+    begin
+      DBGrid1.Canvas.Font.Color := clGreen;
+      DBGrid1.Canvas.FillRect(Rect);
+      DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end;
+    FreeAndNil(qry);
+  end else
   begin
     DBGrid1.Canvas.Font.Color := clBlack;
     DBGrid1.Canvas.FillRect(Rect);
