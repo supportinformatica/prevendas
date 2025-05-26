@@ -8269,6 +8269,11 @@ begin
       DBGrid1.Canvas.Font.Color := clGreen;
       DBGrid1.Canvas.FillRect(Rect);
       DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end else
+    begin
+      DBGrid1.Canvas.Font.Color := clBlack;
+      DBGrid1.Canvas.FillRect(Rect);
+      DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
     end;
     FreeAndNil(qry);
   end else
