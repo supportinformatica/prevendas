@@ -73,11 +73,11 @@ type
     QrlRg: TQRLabel;
     QrlUf: TQRLabel;
     procedure FormCreate(Sender: TObject);
+    procedure QRBand1BeforePrint(Sender: TQRCustomBand; var PrintBand: Boolean);
   private
-    { Private declarations }
+
   public
-    { Public declarations }
-    
+
   end;
 
 var
@@ -88,11 +88,20 @@ implementation
 uses DataModulo;
 {$R *.DFM}
 
-
 procedure TFrmRelOrcamento.FormCreate(Sender: TObject);
 begin
   inherited;
   QRLblPrograma.Caption := ADOQryConfig.FieldByName('dsEndereco').AsString;
+end;
+
+procedure TFrmRelOrcamento.QRBand1BeforePrint(Sender: TQRCustomBand;
+  var PrintBand: Boolean);
+begin
+  inherited;
+  if QRBand1.Color = clwhite then
+    QRBand1.Color := cl3dlight
+  else
+    QRBand1.Color := clwhite;
 end;
 
 end.

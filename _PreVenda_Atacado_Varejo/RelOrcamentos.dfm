@@ -1528,6 +1528,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
+        Color = cl3DLight
+        ParentColor = False
+        Transparent = False
         AfterPrint = RLBand2AfterPrint
         BeforePrint = RLBand2BeforePrint
         object Image1: TImage
@@ -1549,6 +1552,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
+          Transparent = False
           object QRECodigo: TRLDBText
             Left = 0
             Top = 0
@@ -1564,6 +1568,8 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
+            BeforePrint = QRECodigoBeforePrint
           end
           object QREDescricao: TRLDBText
             Left = 181
@@ -1580,6 +1586,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
           end
           object QRETotal: TRLDBText
             Left = 699
@@ -1597,6 +1604,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
             BeforePrint = QRETotalBeforePrint
           end
           object QreUnidade: TRLDBText
@@ -1615,6 +1623,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
           end
           object QREPreco: TRLDBResult
             Left = 623
@@ -1632,6 +1641,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
             BeforePrint = QREPrecoBeforePrint
           end
           object QREQtd: TRLDBResult
@@ -1649,6 +1659,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
             BeforePrint = QREQtdBeforePrint
           end
           object RLDBResult3: TRLDBResult
@@ -1667,6 +1678,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
             BeforePrint = RLDBResult3BeforePrint
           end
           object RLDBText2: TRLDBText
@@ -1685,6 +1697,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
           end
           object RLLinhaProduto: TRLDraw
             Left = 0
@@ -1692,6 +1705,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Width = 718
             Height = 1
             Pen.Style = psDot
+            Transparent = False
             Visible = False
           end
           object RlDescricao: TRLLabel
@@ -1707,6 +1721,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
+            Transparent = False
             Visible = False
           end
           object RLDBText1: TRLDBText
@@ -1724,6 +1739,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
           end
           object RLDBText6: TRLDBText
             Left = 109
@@ -1740,6 +1756,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
             Font.Style = []
             ParentFont = False
             Text = ''
+            Transparent = False
             Visible = False
           end
         end

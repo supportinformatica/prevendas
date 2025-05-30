@@ -186,6 +186,8 @@ type
     procedure QREOrcamentoAfterPrint(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RLBand3AfterPrint(Sender: TObject);
+    procedure QRECodigoBeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
   private
     totalLiquido, totalBruto : Currency;
   public
@@ -292,6 +294,15 @@ begin
   end;
 end;
 
+procedure TfrmRelOrcamentos.QRECodigoBeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+//  if RLBand2.Color = clwhite then
+//    rlband2.Color := cl3DLight
+//  else
+//    rlband2.Color := clwhite;
+end;
+
 procedure TfrmRelOrcamentos.QREOrcamentoAfterPrint(Sender: TObject);
 begin
   RLBarcode.Caption := QREOrcamento.Caption;
@@ -349,6 +360,10 @@ procedure TfrmRelOrcamentos.RLBand2BeforePrint(Sender: TObject;
 var
   estoque:Real;
 begin
+  if RLBand2.Color = clwhite then
+    rlband2.Color := cl3DLight
+  else
+    rlband2.Color := clwhite;
   if (ADOSPRelDados.FieldByName('nrQtd').asFloat * ADOSPRelDados.FieldByName('vlPreco').AsFloat) > 999999 then
     RLBand2.Font.Size := 6
   else
