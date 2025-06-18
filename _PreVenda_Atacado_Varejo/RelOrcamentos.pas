@@ -148,7 +148,6 @@ type
     RLDBText7: TRLDBText;
     RLBand2: TRLBand;
     Image1: TImage;
-    RLPanel1: TRLPanel;
     QRECodigo: TRLDBText;
     QREDescricao: TRLDBText;
     QRETotal: TRLDBText;
@@ -181,13 +180,9 @@ type
       var PrintIt: Boolean);
     procedure lblValorDescontoBeforePrint(Sender: TObject; var AText: string;
       var PrintIt: Boolean);
-    procedure lblTotalBeforePrint(Sender: TObject; var AText: string;
-      var PrintIt: Boolean);
     procedure QREOrcamentoAfterPrint(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RLBand3AfterPrint(Sender: TObject);
-    procedure QRECodigoBeforePrint(Sender: TObject; var AText: string;
-      var PrintIt: Boolean);
   private
     totalLiquido, totalBruto : Currency;
   public
@@ -239,20 +234,6 @@ begin
     QreUnidade.DataField := 'dsMetragem'
   else
     QreUnidade.DataField := 'dsUnidade';
-  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then  // campos distribuidora (imagem do produto)
-  begin
-    RLDBText1.DataField := 'dsPrateleira';
-    RLLabel1.Caption := 'Prateleira';
-    RLDBText2.Visible := False;
-    RLLblUnitario.Top := RLLblUnitario.Top + 15;
-    RLLblDesconto.Top := RLLblDesconto.Top + 15;
-    RLLblTotal.Top := RLLblTotal.Top + 15;
-    RLPanel1.Top := RLPanel1.Top + 15;
-    RLBand2.Borders.FixedBottom := True;
-    RLBand2.Height := 53;
-    RLLabel5.Caption := '';
-    Image1.Visible := True;
-  end;
 end;
 
 procedure TfrmRelOrcamentos.FormShow(Sender: TObject);
@@ -272,13 +253,6 @@ begin
   AText := FormatFloatQ(vCasasPreco,SimpleRoundTo(StrtoFloat(AText),vCasasPreco*-1));
 end;
 
-procedure TfrmRelOrcamentos.lblTotalBeforePrint(Sender: TObject;
-  var AText: string; var PrintIt: Boolean);
-begin
-//  if ((StrToCurr(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) <= StrToCurr(StringReplace(AText,'.','',[rfReplaceAll])))) then
-//    lblSubTotal.Caption := AText;
-end;
-
 procedure TfrmRelOrcamentos.lblValorDescontoBeforePrint(Sender: TObject;
   var AText: string; var PrintIt: Boolean);
 var
@@ -292,15 +266,6 @@ begin
   begin
     AText := FormatFloatQ(vCasasPreco,0);
   end;
-end;
-
-procedure TfrmRelOrcamentos.QRECodigoBeforePrint(Sender: TObject;
-  var AText: string; var PrintIt: Boolean);
-begin
-//  if RLBand2.Color = clwhite then
-//    rlband2.Color := cl3DLight
-//  else
-//    rlband2.Color := clwhite;
 end;
 
 procedure TfrmRelOrcamentos.QREOrcamentoAfterPrint(Sender: TObject);
@@ -364,6 +329,10 @@ begin
     rlband2.Color := cl3DLight
   else
     rlband2.Color := clwhite;
+  RLDBResult3.Font.Color := rlband2.Color;
+  QREPreco.Font.Color := rlband2.Color;
+	QRETotal.Font.Color := rlband2.Color;
+
   if (ADOSPRelDados.FieldByName('nrQtd').asFloat * ADOSPRelDados.FieldByName('vlPreco').AsFloat) > 999999 then
     RLBand2.Font.Size := 6
   else

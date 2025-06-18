@@ -5127,14 +5127,7 @@ begin
     FrmRelOrcamentos.RLLabel10.Visible := False;
     FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel11.Visible := False;
-  end else if vOcultaReferenciaNaImpressao then
-  begin
-    FrmRelOrcamentos.RLLabel1.Visible := False;
-    FrmRelOrcamentos.RLDBText1.Visible := False;
-    moverCamposImpressao(FrmRelOrcamentos, FrmRelOrcamentos.RLLabel1.Left -
-      FrmRelOrcamentos.QRLabel6.Left);
-    FrmRelOrcamentos.QRLabel6.Left := FrmRelOrcamentos.RLLabel1.Left;
-    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLLabel1.Left;
+
   end;
   if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
@@ -5192,19 +5185,32 @@ begin
     FrmRelOrcamentos.RlDescricao.width  := 228;
     FrmRelOrcamentos.QREDescricao.width := 228;
   end else
-  begin
-    FrmRelOrcamentos.RLLabel24.Left := FrmRelOrcamentos.QRLabel6.Left + 22;
-    FrmRelOrcamentos.RlDescricao.Left  := FrmRelOrcamentos.RLDBText6.Left + 22;
-    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
-    FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLDBText6.Left + 22; // FrmRelOrcamentos.RLLabel11.Left;
-    FrmRelOrcamentos.RlDescricao.width  := 262;
-    FrmRelOrcamentos.QREDescricao.width := 262;
-  end;
   if prevenda.isOrcamento and not TNEGLoja.getExibirReferenciaOrcamento then
   begin
     FrmRelOrcamentos.RLDBText1.Enabled := False;
     FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel1.Visible := False;
+  end else if vOcultaReferenciaNaImpressao then
+  begin
+    FrmRelOrcamentos.RLLabel1.Visible := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
+    moverCamposImpressao(FrmRelOrcamentos, FrmRelOrcamentos.RLLabel1.Left -
+      FrmRelOrcamentos.QRLabel6.Left);
+    FrmRelOrcamentos.QRLabel6.Left := FrmRelOrcamentos.RLLabel1.Left;
+    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLLabel1.Left;
+    FrmRelOrcamentos.RLLabel24.Left := FrmRelOrcamentos.QREDescricao.Left;
+    FrmRelOrcamentos.RLDBText2.Visible := True;
+  end else
+  begin
+    FrmRelOrcamentos.RLLabel24.Left := 140; //44 FrmRelOrcamentos.QRLabel6.Left + 22;
+    FrmRelOrcamentos.RlDescricao.Left := 140; // FrmRelOrcamentos.RLLabel23.Left; // FrmRelOrcamentos.RLDBText6.Left + 22;
+    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RlDescricao.Left;
+    FrmRelOrcamentos.RLDBText2.Visible := True;
+//    FrmRelOrcamentos.QREDescricao.Left := FrmRelOrcamentos.RLDBText6.Left + 22;
+    FrmRelOrcamentos.RLLabel23.Left := FrmRelOrcamentos.RLDBText6.Left + 22; // FrmRelOrcamentos.RLLabel11.Left;
+    FrmRelOrcamentos.RlDescricao.width  := 230; //262
+    FrmRelOrcamentos.QREDescricao.width := 230;
+    FrmRelOrcamentos.RLDBText2.width := 67;
   end;
   if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
     (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
@@ -5220,6 +5226,14 @@ begin
   begin
     FrmRelOrcamentos.RLDBResult3.DataField := '';
     FrmRelOrcamentos.RLDBResult3.DataFormula := '(vlPreco-((vlPreco*nrDesconto)/100))';
+  end else
+  begin
+    FrmRelOrcamentos.RLDBResult3.Width := 0;
+    FrmRelOrcamentos.RLDBResult3.Height := 0;
+		FrmRelOrcamentos.QREPreco.Width := 0;
+		FrmRelOrcamentos.QREPreco.Height := 0;
+		FrmRelOrcamentos.QRETotal.Width := 0;
+    FrmRelOrcamentos.QRETotal.Height := 0;
   end;
   FrmRelOrcamentos.RLBand1.height := 185;
   FrmRelOrcamentos.RLBPAF.height  := 0;
@@ -5281,6 +5295,37 @@ begin
   end else if (UpperCase(vEmpresa) = 'TELESOM') then
   begin
     FrmRelOrcamentos.RLSystemInfo2.Info := TRLInfoType(1);
+  end;
+  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then  // campos distribuidora (imagem do produto)
+  begin
+    with FrmRelOrcamentos do
+    begin
+      RLDBText1.DataField := 'dsPrateleira';
+      RLLabel1.Caption := 'Prateleira';
+      RLDBText2.Visible := False;
+      RLDBText2.Enabled := False;
+      RLDBText2.Transparent := True;
+      RLDBText2.Width := 0;
+      RLDBText2.SendToBack;
+      QRECodigo.Top := QRECodigo.Top + 15;
+      RLDBText1.Top := RLDBText1.Top + 15;
+      RLDBText6.Top := RLDBText6.Top + 15;
+      RlDescricao.Top := RlDescricao.Top + 15;
+      QREDescricao.Top := QREDescricao.Top + 15;
+      QREDescricao.Width := QREDescricao.Width - 20;
+      RlDescricao.Width := RlDescricao.Width - 20;
+      QREQtd.ToP := QREQtd.Top + 15;
+      QreUnidade.Top := QreUnidade.Top + 15;
+      RLLblUnitario.Top := RLLblUnitario.Top + 15;
+      RLLblDesconto.Top := RLLblDesconto.Top + 15;
+      RLLblTotal.Top := RLLblTotal.Top + 15;
+      RLBand2.Borders.FixedBottom := True;
+      RLBand2.Height := 53;
+      RLLabel5.Caption := '';
+      Image1.Visible := True;
+      Image1.BringToFront;
+      Image1.Transparent := False;
+    end;
   end;
   with FrmRelOrcamentos.ADOQryCliente do
   begin

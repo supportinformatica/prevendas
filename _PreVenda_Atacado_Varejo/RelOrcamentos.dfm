@@ -1014,7 +1014,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        BeforePrint = lblTotalBeforePrint
       end
       object RLLabel25: TRLLabel
         Left = 593
@@ -1055,7 +1054,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        BeforePrint = lblTotalBeforePrint
       end
       object lblValorTotal: TRLLabel
         Left = 687
@@ -1070,7 +1068,6 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        BeforePrint = lblTotalBeforePrint
       end
       object rrlPesoBruto: TRLLabel
         Left = 1
@@ -1541,228 +1538,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Stretch = True
           Visible = False
         end
-        object RLPanel1: TRLPanel
-          Left = 0
-          Top = 4
-          Width = 718
-          Height = 25
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          Transparent = False
-          object QRECodigo: TRLDBText
-            Left = 0
-            Top = 0
-            Width = 37
-            Height = 13
-            AutoSize = False
-            DataField = 'cdProduto'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            BeforePrint = QRECodigoBeforePrint
-          end
-          object QREDescricao: TRLDBText
-            Left = 181
-            Top = -1
-            Width = 190
-            Height = 13
-            AutoSize = False
-            DataField = 'nmProduto'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-          end
-          object QRETotal: TRLDBText
-            Left = 699
-            Top = 3
-            Width = 5
-            Height = 5
-            Alignment = taRightJustify
-            AutoSize = False
-            DataFormula = 'NrQtd*(vlPreco-((vlPreco*nrDesconto)/100))'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            BeforePrint = QRETotalBeforePrint
-          end
-          object QreUnidade: TRLDBText
-            Left = 434
-            Top = 0
-            Width = 29
-            Height = 13
-            Alignment = taRightJustify
-            AutoSize = False
-            DataField = 'dsUnidade'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-          end
-          object QREPreco: TRLDBResult
-            Left = 623
-            Top = 3
-            Width = 5
-            Height = 5
-            Alignment = taRightJustify
-            AutoSize = False
-            DataFormula = '(vlPreco-((vlPreco*nrDesconto)/100))'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            BeforePrint = QREPrecoBeforePrint
-          end
-          object QREQtd: TRLDBResult
-            Left = 428
-            Top = 0
-            Width = 89
-            Height = 11
-            Alignment = taRightJustify
-            DataFormula = 'NrQtd * 1'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            BeforePrint = QREQtdBeforePrint
-          end
-          object RLDBResult3: TRLDBResult
-            Left = 564
-            Top = 3
-            Width = 5
-            Height = 5
-            Alignment = taRightJustify
-            AutoSize = False
-            DataField = 'vlDesconto'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            BeforePrint = RLDBResult3BeforePrint
-          end
-          object RLDBText2: TRLDBText
-            Left = 379
-            Top = 0
-            Width = 55
-            Height = 13
-            Alignment = taRightJustify
-            AutoSize = False
-            DataField = 'dsPrateleira'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-          end
-          object RLLinhaProduto: TRLDraw
-            Left = 0
-            Top = 15
-            Width = 718
-            Height = 1
-            Pen.Style = psDot
-            Transparent = False
-            Visible = False
-          end
-          object RlDescricao: TRLLabel
-            Left = 178
-            Top = 0
-            Width = 212
-            Height = 13
-            AutoSize = False
-            Caption = '                         '
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Transparent = False
-            Visible = False
-          end
-          object RLDBText1: TRLDBText
-            Left = 42
-            Top = 0
-            Width = 90
-            Height = 11
-            AutoSize = False
-            DataField = 'dsReferencia'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-          end
-          object RLDBText6: TRLDBText
-            Left = 109
-            Top = 0
-            Width = 66
-            Height = 12
-            AutoSize = False
-            DataField = 'cdCodigoDIC'
-            DataSource = DS
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            Text = ''
-            Transparent = False
-            Visible = False
-          end
-        end
         object RLLblUnitario: TRLLabel
           Left = 527
-          Top = 4
+          Top = 0
           Width = 59
           Height = 17
           Alignment = taRightJustify
@@ -1778,7 +1556,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         end
         object RLLblDesconto: TRLLabel
           Left = 589
-          Top = 4
+          Top = 0
           Width = 59
           Height = 17
           Alignment = taRightJustify
@@ -1794,7 +1572,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         end
         object RLLblTotal: TRLLabel
           Left = 652
-          Top = 4
+          Top = 0
           Width = 63
           Height = 17
           Alignment = taRightJustify
@@ -1807,6 +1585,207 @@ object frmRelOrcamentos: TfrmRelOrcamentos
           Font.Style = []
           ParentFont = False
           Transparent = False
+        end
+        object QRECodigo: TRLDBText
+          Left = 0
+          Top = 0
+          Width = 37
+          Height = 13
+          AutoSize = False
+          DataField = 'cdProduto'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+        end
+        object QREDescricao: TRLDBText
+          Left = 181
+          Top = -1
+          Width = 190
+          Height = 13
+          AutoSize = False
+          DataField = 'nmProduto'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+        end
+        object QREPreco: TRLDBResult
+          Left = 623
+          Top = 0
+          Width = 5
+          Height = 5
+          Alignment = taRightJustify
+          AutoSize = False
+          DataFormula = '(vlPreco-((vlPreco*nrDesconto)/100))'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          BeforePrint = QREPrecoBeforePrint
+        end
+        object QREQtd: TRLDBResult
+          Left = 428
+          Top = 0
+          Width = 89
+          Height = 11
+          Alignment = taRightJustify
+          DataFormula = 'NrQtd * 1'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+          BeforePrint = QREQtdBeforePrint
+        end
+        object QRETotal: TRLDBText
+          Left = 699
+          Top = 0
+          Width = 5
+          Height = 5
+          Alignment = taRightJustify
+          AutoSize = False
+          DataFormula = 'NrQtd*(vlPreco-((vlPreco*nrDesconto)/100))'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          BeforePrint = QRETotalBeforePrint
+        end
+        object QreUnidade: TRLDBText
+          Left = 434
+          Top = 0
+          Width = 29
+          Height = 13
+          Alignment = taRightJustify
+          AutoSize = False
+          DataField = 'dsUnidade'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+        end
+        object RLDBResult3: TRLDBResult
+          Left = 564
+          Top = 0
+          Width = 5
+          Height = 5
+          Alignment = taRightJustify
+          AutoSize = False
+          DataField = 'vlDesconto'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          BeforePrint = RLDBResult3BeforePrint
+        end
+        object RLDBText1: TRLDBText
+          Left = 42
+          Top = 0
+          Width = 90
+          Height = 11
+          AutoSize = False
+          DataField = 'dsReferencia'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText2: TRLDBText
+          Left = 369
+          Top = 0
+          Width = 65
+          Height = 13
+          AutoSize = False
+          DataField = 'dsPrateleira'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText6: TRLDBText
+          Left = 109
+          Top = 0
+          Width = 66
+          Height = 12
+          AutoSize = False
+          DataField = 'cdCodigoDIC'
+          DataSource = DS
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Text = ''
+          Transparent = False
+          Visible = False
+        end
+        object RlDescricao: TRLLabel
+          Left = 178
+          Top = 0
+          Width = 212
+          Height = 13
+          AutoSize = False
+          Caption = '                         '
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+          Visible = False
+        end
+        object RLLinhaProduto: TRLDraw
+          Left = 0
+          Top = 15
+          Width = 718
+          Height = 1
+          Pen.Style = psDot
+          Transparent = False
+          Visible = False
         end
       end
     end
