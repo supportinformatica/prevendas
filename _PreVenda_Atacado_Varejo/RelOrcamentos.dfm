@@ -839,16 +839,16 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRL2: TRLLabel
-        Left = 594
+        Left = 572
         Top = 1
-        Width = 54
+        Width = 60
         Height = 14
         Caption = 'Total R$:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object QRLabel18: TRLLabel
@@ -1002,9 +1002,9 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         BeforePrint = lblValorDescontoBeforePrint
       end
       object lblTotal: TRLLabel
-        Left = 687
+        Left = 684
         Top = 1
-        Width = 29
+        Width = 32
         Height = 14
         Alignment = taRightJustify
         Caption = '0,00'
@@ -1012,39 +1012,39 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object RLLabel25: TRLLabel
-        Left = 593
+        Left = 572
         Top = 15
-        Width = 55
+        Width = 60
         Height = 14
         Caption = 'Frete R$:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object RLLabel26: TRLLabel
-        Left = 566
+        Left = 538
         Top = 29
-        Width = 82
+        Width = 94
         Height = 14
         Caption = 'Valor total R$:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object lblFrete: TRLLabel
-        Left = 687
+        Left = 684
         Top = 15
-        Width = 29
+        Width = 32
         Height = 14
         Alignment = taRightJustify
         Caption = '0,00'
@@ -1052,13 +1052,13 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object lblValorTotal: TRLLabel
-        Left = 687
+        Left = 684
         Top = 29
-        Width = 29
+        Width = 32
         Height = 14
         Alignment = taRightJustify
         Caption = '0,00'
@@ -1066,7 +1066,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
       end
       object rrlPesoBruto: TRLLabel
