@@ -839,7 +839,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object QRL2: TRLLabel
-        Left = 572
+        Left = 569
         Top = 1
         Width = 60
         Height = 14
@@ -1002,7 +1002,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         BeforePrint = lblValorDescontoBeforePrint
       end
       object lblTotal: TRLLabel
-        Left = 684
+        Left = 682
         Top = 1
         Width = 32
         Height = 14
@@ -1016,7 +1016,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel25: TRLLabel
-        Left = 572
+        Left = 569
         Top = 15
         Width = 60
         Height = 14
@@ -1029,7 +1029,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object RLLabel26: TRLLabel
-        Left = 538
+        Left = 535
         Top = 29
         Width = 94
         Height = 14
@@ -1042,7 +1042,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object lblFrete: TRLLabel
-        Left = 684
+        Left = 682
         Top = 15
         Width = 32
         Height = 14
@@ -1056,7 +1056,7 @@ object frmRelOrcamentos: TfrmRelOrcamentos
         ParentFont = False
       end
       object lblValorTotal: TRLLabel
-        Left = 684
+        Left = 682
         Top = 29
         Width = 32
         Height = 14
