@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ADODB;
 
 type
   TfrmAlterProdutoPosAdded = class(TForm)
@@ -33,9 +33,9 @@ type
     procedure edtPrecoBrutoChange(Sender: TObject);
     procedure edtQuantidadeChange(Sender: TObject);
   private
-    { Private declarations }
+
   public
-    { Public declarations }
+    codigo : integer;
     unidade, quantidade, precoBruto, precoLiq : string;
     procedure CalcularDesconto;
   end;
@@ -45,12 +45,45 @@ var
 
 implementation
 
-uses UFuncoesPadrao;
+uses UFuncoesPadrao, DataModulo;
 
 {$R *.dfm}
 
 procedure TfrmAlterProdutoPosAdded.btnAtualizarClick(Sender: TObject);
+var
+  abaixoDoPrecoMinimo : Boolean;
+  acimaDoPrecoMaximo : Boolean;
+  qry : TADOQuery;
 begin
+  qry := TADOQuery.Create(nil);
+  with qry do
+  begin
+    Connection := DModulo.Conexao;
+    sql.Text :=
+    'Select ISNULL(vlPrecoMinimo, 0) precoMinimo, ISNULL(vlPrecoMaximo, 0) precoMaximo '+
+    'From produto with (nolock) '+
+    'Where cdProduto = :codigo  ';
+    Parameters.ParamByName('codigo').Value := codigo;
+    open;
+    abaixoDoPrecoMinimo := StrToCurrDef(edtPrecoLiquido.Text, 0) < qry.FieldByName('precoMinimo').AsCurrency;
+    acimaDoPrecoMaximo  := StrToCurrDef(edtPrecoLiquido.Text, 0) > qry.FieldByName('precoMaximo').AsCurrency;
+    if abaixoDoPrecoMinimo and (qry.FieldByName('precoMinimo').AsCurrency > 0) then
+    begin
+      Application.MessageBox(Pchar('O preço mínimo desse item é R$ '+ FormatCurr('0.00', qry.FieldByName('precoMinimo').AsCurrency)), 'Venda abaixo do preço mínimo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+      edtPrecoBruto.SelectAll;
+      edtPrecoBruto.Setfocus;
+      FreeAndNil(qry);
+      exit;
+    end;
+    if acimaDoPrecoMaximo and (qry.FieldByName('precoMaximo').AsCurrency > 0) then
+    begin
+      Application.MessageBox(Pchar('O preço máximo desse item é R$ '+ FormatCurr('0.00', qry.FieldByName('precoMaximo').AsCurrency)), 'Venda abaixo do preço mínimo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
+      edtPrecoBruto.SelectAll;
+      edtPrecoBruto.Setfocus;
+      FreeAndNil(qry);
+      exit;
+    end;
+  end;
   close;
 end;
 
@@ -73,8 +106,7 @@ begin
   _precoBruto := _precoBruto * 100; //transformo em centavos
   _desconto := StrToFloatDef(edtDesconto.Text,0) / 100;  //valor em percentual
   _precoLiquido := (_precoBruto - (_precoBruto * _desconto)) / 100;
-  _subtotal := (_precoLiquido *  _quantidade);
-
+  _subtotal := (_precoLiquido * _quantidade);
   edtPrecoLiquido.Text := FormatFloat('0.00',_precoLiquido);
   edtSubtotal.Text     := FormatFloat('0.00',_subtotal);
 end;
@@ -117,7 +149,7 @@ begin
   unidade := edtUnidade.Text;
   precoBruto := edtPrecoBruto.Text;
   quantidade := edtQuantidade.Text;
-  precoLiq   := edtPrecoLiquido.Text;
+  precoLiq := edtPrecoLiquido.Text;
 end;
 
 end.

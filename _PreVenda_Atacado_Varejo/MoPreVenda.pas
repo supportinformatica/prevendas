@@ -50,7 +50,6 @@ type
 
   type
     TLiveracao = class
-
       _descricao : string;
       _valor : Real;
       _operador : Integer;
@@ -4152,14 +4151,24 @@ begin
   if MessageDlg('Deseja excluir esta linha?', mtConfirmation, [mbYes, mbNo], 0)
     <> mrYes then
   begin
-    if (FrmPrincipalPreVenda.dsCGC = '28028513000120') or (FrmPrincipalPreVenda.dsCGC = '38030572000196') then // DELIJARDINS
+    if (FrmPrincipalPreVenda.dsCGC = '13270672000169') or (FrmPrincipalPreVenda.dsCGC = '38030572000196') then // VILA SELECT e DELIJARDINS
     begin
       frmAlterProdutoPosAdded := TFrmAlterProdutoPosAdded.Create(self);
+      frmAlterProdutoPosAdded.codigo := StrToIntDef(SgDados.Cells[0, SgDados.Row], 0);
       frmAlterProdutoPosAdded.lblProduto.Caption := SgDados.Cells[1, SgDados.Row];
       frmAlterProdutoPosAdded.edtUnidade.Text := SgDados.Cells[10, SgDados.Row];
       frmAlterProdutoPosAdded.edtQuantidade.Text := SgDados.Cells[2, SgDados.Row];
       frmAlterProdutoPosAdded.edtPrecoLiquido.Text := SgDados.Cells[3, SgDados.Row];
-      frmAlterProdutoPosAdded.edtPrecoBruto.Text  := SgDados.Cells[9, SgDados.Row];
+      frmAlterProdutoPosAdded.edtPrecoBruto.Text := SgDados.Cells[9, SgDados.Row];
+      if trabalhacomM2 and (SgDados.Cells[10, SgDados.Row] = 'M2')  then
+      begin
+        frmAlterProdutoPosAdded.edtUnidade.ReadOnly := True;
+        frmAlterProdutoPosAdded.edtQuantidade.ReadOnly := True;
+        frmAlterProdutoPosAdded.edtUnidade.Color := clInfoBk;
+        frmAlterProdutoPosAdded.edtQuantidade.Color := clInfoBk;
+        frmAlterProdutoPosAdded.edtUnidade.TabStop := False;
+        frmAlterProdutoPosAdded.edtQuantidade.TabStop := False;
+      end;
       frmAlterProdutoPosAdded.ShowModal;
       prevenda.itens[SgDados.Row - 1].unidade.unidade := frmAlterProdutoPosAdded.edtUnidade.Text;
       prevenda.itens[SgDados.Row - 1].quantidade := StrToFloat(frmAlterProdutoPosAdded.edtQuantidade.Text);
@@ -4172,6 +4181,7 @@ begin
         prevenda.itens[SgDados.Row - 1].Promocao_desconto_Item := False;
       CarregarItensGrid(prevenda, True, intToStr(SgDados.Row)); // false
       SgDadosExit(self);
+      EdtConsulta.Setfocus;
     end else
       EdtConsulta.Setfocus;
     exit;
@@ -4420,16 +4430,20 @@ begin
   acimaDoPrecoMaximo  := StrToCurr(EdtPreco.Text) > ADOSPConsultavlPrecoMaximo.AsCurrency;
   if abaixoDoPrecoMinimo and (ADOSPConsultavlPrecoMinimo.AsCurrency > 0) then
   begin
+    Application.OnMessage := NaoProcessaMsg;
     Application.MessageBox(Pchar('O preço mínimo desse item é R$ '+ FormatCurr('0.00', ADOSPConsultavlPrecoMinimo.AsCurrency)), 'Venda abaixo do preço mínimo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
-    EdtQtd.SelectAll;
-    EdtQtd.Setfocus;
+    EdtPreco.SelectAll;
+    EdtPreco.Setfocus;
+    Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     exit;
   end;
   if acimaDoPrecoMaximo and (ADOSPConsultavlPrecoMaximo.AsCurrency > 0) then
   begin
+    Application.OnMessage := NaoProcessaMsg;
     Application.MessageBox(Pchar('O preço máximo desse item é R$ '+ FormatCurr('0.00', ADOSPConsultavlPrecoMaximo.AsCurrency)), 'Venda acima do preço máximo definido no seu cadastro', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
-    EdtQtd.SelectAll;
-    EdtQtd.Setfocus;
+    EdtPreco.SelectAll;
+    EdtPreco.Setfocus;
+    Application.OnMessage := FrmPrincipalPreVenda.ProcessaMsg;
     exit;
   end;
   // preco de venda
