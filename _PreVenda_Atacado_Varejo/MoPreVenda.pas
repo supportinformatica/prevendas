@@ -5141,7 +5141,6 @@ begin
     FrmRelOrcamentos.RLLabel10.Visible := False;
     FrmRelOrcamentos.RLDBText1.Visible := False;
     FrmRelOrcamentos.RLLabel11.Visible := False;
-
   end;
   if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
@@ -5170,20 +5169,8 @@ begin
   end;
   if (UpperCase(vEmpresa) = 'MOSR') then
   begin
-//    FrmRelOrcamentos.QREOrcamento.Font.Size := 11;
     FrmRelOrcamentos.QreRota.Visible := True;
     FrmRelOrcamentos.QreRota2.Visible := True;
-//    FrmRelOrcamentos.RLLinhaProduto.Visible := True;
-//    FrmRelOrcamentos.RLDBResult3.Visible := False;
-//    FrmRelOrcamentos.QREPreco.Visible  := False;
-//    FrmRelOrcamentos.QRETotal.Visible  := False;
-//    FrmRelOrcamentos.QRLabel8.Visible  := False;
-//    FrmRelOrcamentos.RLLabel2.Visible  := False;
-//    FrmRelOrcamentos.QRLabel9.Visible  := False;
-//    FrmRelOrcamentos.RLLabel18.Enabled := false;
-//    FrmRelOrcamentos.RLLabel18.Visible := False;
-//    FrmRelOrcamentos.RLLabel19.Visible := False;
-//    FrmRelOrcamentos.RLLabel20.Visible := False;
   end;
   if (UpperCase(vEmpresa) = 'LAMARAO') then
   begin
@@ -5240,15 +5227,13 @@ begin
   begin
     FrmRelOrcamentos.RLDBResult3.DataField := '';
     FrmRelOrcamentos.RLDBResult3.DataFormula := '(vlPreco-((vlPreco*nrDesconto)/100))';
-  end else
-  begin
-    FrmRelOrcamentos.RLDBResult3.Width := 0;
-    FrmRelOrcamentos.RLDBResult3.Height := 0;
-		FrmRelOrcamentos.QREPreco.Width := 0;
-		FrmRelOrcamentos.QREPreco.Height := 0;
-		FrmRelOrcamentos.QRETotal.Width := 0;
-    FrmRelOrcamentos.QRETotal.Height := 0;
   end;
+  FrmRelOrcamentos.RLDBResult3.Width := 0;
+  FrmRelOrcamentos.RLDBResult3.Height := 0;
+  FrmRelOrcamentos.QREPreco.Width := 0;
+  FrmRelOrcamentos.QREPreco.Height := 0;
+  FrmRelOrcamentos.QRETotal.Width := 0;
+  FrmRelOrcamentos.QRETotal.Height := 0;
   FrmRelOrcamentos.RLBand1.height := 185;
   FrmRelOrcamentos.RLBPAF.height  := 0;
   FrmRelOrcamentos.RLBand3.height := 130; //120
