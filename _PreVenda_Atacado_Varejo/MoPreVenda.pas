@@ -2179,7 +2179,8 @@ begin
      (dsCGC = '08219676000182') or (dsCGC = '22517010000131') or
      (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
      (dsCGC = '23004452000147') or (dsCGC = '07330739000100') or
-     (dsCGC = '55046116000153') or (dsCGC = '39664873000215')
+     (dsCGC = '55046116000153') or (dsCGC = '39664873000215') or
+     (dsCGC = '08309756000129')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5246,10 +5247,13 @@ begin
     FrmRelOrcamentos.RlDescricao.width  := 362;
     FrmRelOrcamentos.QREDescricao.width := 362;
     FrmRelOrcamentos.RLLabel15.Left := FrmRelOrcamentos.RLLabel23.Left + 50;
-    FrmRelOrcamentos.RLLabel1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.DataField := 'dsReferencia';
-    FrmRelOrcamentos.RLLabel1.Caption := 'Referência';
+//    if not vOcultaReferenciaNaImpressao then
+//    begin
+      FrmRelOrcamentos.RLLabel1.Visible := True;
+      FrmRelOrcamentos.RLDBText1.Visible := True;
+      FrmRelOrcamentos.RLDBText1.DataField := 'dsReferencia';
+      FrmRelOrcamentos.RLLabel1.Caption := 'Referência';
+//    end;
   end;
   if (usarLoteValidade = True) then
   begin               // Se for HOSPITALAR troco a coluna de Prateleira por Lote.
@@ -5295,7 +5299,8 @@ begin
   begin
     FrmRelOrcamentos.RLSystemInfo2.Info := TRLInfoType(1);
   end;
-  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') then  // campos distribuidora (imagem do produto)
+  if (FrmPrincipalPreVenda.dsCGC = '21338426000120') or
+    (FrmPrincipalPreVenda.dsCGC = '27818031000100') then //campos distribuidora, escritório de artes (imagem do produto)
   begin
     with FrmRelOrcamentos do
     begin
@@ -5311,8 +5316,19 @@ begin
       RLDBText6.Top := RLDBText6.Top + 15;
       RlDescricao.Top := RlDescricao.Top + 15;
       QREDescricao.Top := QREDescricao.Top + 15;
-      QREDescricao.Width := QREDescricao.Width - 20;
-      RlDescricao.Width := RlDescricao.Width - 20;
+      if vOcultaReferenciaNaImpressao then // essa configuração é para não sair desalinhado a imagem no relatorio
+      begin
+        RLLabel1.Visible := False;
+        RLDBText1.Visible := False;
+        RLLblDesconto.Visible := False;
+        QREDescricao.Width := QREDescricao.Width - 45;
+        RlDescricao.Width := RlDescricao.Width - 45;
+        Image1.left := Image1.left + 215;
+      end else
+      begin
+        QREDescricao.Width := QREDescricao.Width - 20;
+        RlDescricao.Width := RlDescricao.Width - 20;
+      end;
       QREQtd.ToP := QREQtd.Top + 15;
       QreUnidade.Top := QreUnidade.Top + 15;
       RLLblUnitario.Top := RLLblUnitario.Top + 15;

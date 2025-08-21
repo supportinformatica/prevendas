@@ -362,7 +362,7 @@ implementation
 {uses dbclient, bdeprov, grids, math, mplayer, menus, olectrls,
      comobj, outline, printers, dsgnintf, scktcomp;}
 
-uses  math, mplayer, menus, olectrls,
+uses  math, mplayer, menus, olectrls, Vcl.Imaging.pngimage,
      comobj, outline, printers, scktcomp, DateUtils, DataModulo;
 
 function ObterDataHoraInternet: TDateTime;
@@ -3120,65 +3120,67 @@ end;
 function CarregarImagemURL(var imagem :TImage; url: string) : Boolean;
 var
   Jpeg: TJpegImage;
-  //Bitmap: TBitmap;
+  Png: TPngImage;
   Strm: TMemoryStream;
-  ConWeb : TNetHTTPClient;
+  ConWeb: TNetHTTPClient;
+  Ext: string;
 begin
-  Result := true;
+  Result := True;
   if url = '' then
   begin
     imagem.Picture := nil;
-    exit;
+    Exit;
   end;
+  // Substituição de domínio, se necessário
+  url := StringReplace(url, 'https://supportinformatica.net', 'http://131.72.68.180', []);
+  // Pega extensão para tentativa de detecção
+  Ext := LowerCase(ExtractFileExt(url));
+  Screen.Cursor := crHourGlass;
+  Strm := TMemoryStream.Create;
+  ConWeb := TNetHTTPClient.Create(nil);
   try
-    try
-      url := StringReplace(url,'https','http',[]);
-      Screen.Cursor := crHourGlass;
-      Jpeg := TJpegImage.Create;
-      Strm := TMemoryStream.Create;
-      ConWeb := TNetHTTPClient.Create(nil);
-      //ConWeb.IOHandler := TIdSSLIOHandlerSocketOpenSSL.Create(ConWeb);
-      ConWeb.HandleRedirects := true;
-      //ConWeb.ConnectTimeout := 3000;
-      //ConWeb.ReadTimeout := 3000;
-      //ConWeb.BoundPort := 0;
-      //ConWeb.BoundIP := '';
-      ConWeb.Get(url, Strm);
-      //ConWeb.IOHandler.Free;
-      ConWeb.Free;
-      if (Strm.Size > 0) then
+    ConWeb.HandleRedirects := True;
+    ConWeb.Get(url, Strm);
+    if Strm.Size > 0 then
+    begin
+      Strm.Position := 0;
+      if (Ext = '.jpg') or (Ext = '.jpeg') then
       begin
-        Strm.Position := 0;
-        Jpeg.LoadFromStream(Strm);
-//        Bitmap := TBitmap.Create;
-//        if (Jpeg.Width > imagem.Width) or (Jpeg.Height > imagem.Height) then
-//        begin
-//          // Redimensiona a imagem
-//          Bitmap.Width := imagem.Width;
-//          Bitmap.Height := imagem.Height;
-//          Bitmap.Canvas.StretchDraw(Rect(0, 0, imagem.Width, imagem.Height), Jpeg);
-//          Imagem.Picture.Assign(Bitmap);
-//        end
-//        else begin
-          // Se a imagem já for menor que as dimensões desejadas, carrega-a diretamente
-          Imagem.Picture.Assign(Jpeg);
-        //end;
-      end;
-    except
-      on E : Exception do begin
-        Screen.Cursor := crDefault;
-        imagem.Picture := nil;
-        Result := false;
-        raise Exception.Create(E.Message);
+        Jpeg := TJpegImage.Create;
+        try
+          Jpeg.LoadFromStream(Strm);
+          imagem.Picture.Assign(Jpeg);
+        finally
+          Jpeg.Free;
+        end;
+      end
+      else if (Ext = '.png') then
+      begin
+        Png := TPngImage.Create;
+        try
+          Png.LoadFromStream(Strm);
+          imagem.Picture.Assign(Png);
+        finally
+          Png.Free;
+        end;
+      end
+      else
+      begin
+        // Tentativa genérica: tentar carregar como bitmap
+        imagem.Picture.Bitmap.LoadFromStream(Strm);
       end;
     end;
-  finally
-    Screen.Cursor := crDefault;
-    Strm.Free;
-//    if Bitmap <> nil then
-//      Bitmap.Free;
-    Jpeg.Free;
+  except
+    on E: Exception do
+    begin
+      imagem.Picture := nil;
+      Result := False;
+      raise Exception.Create('Erro ao carregar imagem: ' + E.Message);
+    end;
   end;
+  ConWeb.Free;
+  Strm.Free;
+  Screen.Cursor := crDefault;
 end;
 
 function uploadImagemFTP(CNPJ : string) : string;
