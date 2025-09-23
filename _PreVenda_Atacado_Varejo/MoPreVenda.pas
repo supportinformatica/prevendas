@@ -3332,12 +3332,13 @@ begin
       estoqueNecessario := quantidade + vqtd;
       estoqueDisponivel := estoqueFisico - vqtd;
     end;
-    // produto:= TNEGProduto.buscarProduto(cdproduto);
     tipoComposicao := Produto.tipoComposicao;
-    if dsCGC = '37887672000170' then //KADU
+    if (dsCGC = '45017017000190') or (dsCGC = '37887672000170') then // center clima e kadu
+    begin
       if Produto.tipoComposicao = fabricado then
         Produto.tipoComposicao := composto;
-    // claudio, quanddo for orçamento não importa o estoque
+    end;
+    // quanddo for orçamento não importa o estoque
     if (RgOpcoes.ItemIndex <> 2) and (vOrcamento <> 'O') and
       (((estoqueFisico < estoqueNecessario) and (Produto.tipoComposicao <>
       composto)) or ((Produto.tipoComposicao = composto) and
@@ -8050,10 +8051,10 @@ begin
     EdtConsulta.Setfocus;
   end;
   chkbxOrcamentoExterno.Checked := false;
-  if (dsCGC = '32879272000108') or (dsCGC = '32879272000361') then
-    chkbxBaixarEstoque.Checked := false
-  else
-    chkbxBaixarEstoque.Checked := false;
+//  if (dsCGC = '32879272000108') or (dsCGC = '32879272000361') then
+//    chkbxBaixarEstoque.Checked := false
+//  else
+  chkbxBaixarEstoque.Checked := false;
   vBloqueiaDesconto := false;
   ListBox1.Clear;
   ListBox1.Visible := false;

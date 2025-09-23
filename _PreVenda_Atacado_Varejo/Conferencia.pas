@@ -45,17 +45,18 @@ type
     procedure Salvar1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    { Private declarations }
     prevenda: TPrevenda;
     funcionario : TFuncionario;
+    function codigoBalancaComPreco(codigo : string):boolean;
     function LocalizarItemGrid(cdBarras: string): Integer;
-    function ConferirItem(linha: integer): Boolean;
+    function ConferirItem(linha: integer; qtd : Currency = 1): Boolean;
     procedure CarregarItensGrid(prevenda: TPrevenda; ponteiro: string = '');
+    function buscarPrecoItem(prevenda: TPrevenda; codProduto : string):Currency;
     procedure TodosConferidos();
     procedure SalvarConferencia;
     procedure Cancelar;
   public
-    { Public declarations }
+
   end;
 
 var
@@ -75,7 +76,8 @@ end;
 
 procedure TfrmConferencia.edtcdFuncionarioExit(Sender: TObject);
 begin
-  if edtcdFuncionario.Text = '' then Exit;
+  if edtcdFuncionario.Text = '' then
+    Exit;
   funcionario := TNEGFuncionario.getFuncionario(StrToInt(edtcdFuncionario.Text));
   edtnmFuncionario.Text := funcionario.nome;
 end;
@@ -136,10 +138,10 @@ procedure TfrmConferencia.FormCreate(Sender: TObject);
 begin
   with sgitens do
   begin
-    Cells[0,0] := 'Cód Barras';
+    Cells[0,0] := 'Código Barras';
     Cells[1,0] := 'Descrição';
-    Cells[4,0] := 'Qtd Solicitada';
-    Cells[2,0] := 'Qtd Conferida';
+    Cells[2,0] := 'Qtd conferida';
+    Cells[4,0] := 'Qtd solicitada';
   end;
   sgitens.Repaint;
   edtcdFuncionario.Text := FrmPrincipalPreVenda.vcdVendedor;
@@ -151,7 +153,7 @@ var
   I: integer;
 begin
   Result := -1;
-  for I := 1 to sgitens.RowCount do
+  for i := 1 to sgitens.RowCount do
   begin
     if (cdBarras = sgitens.Cells[0, I]) then//and (sgitens.Cells[3, I] = '0') then
     begin
@@ -211,20 +213,18 @@ end;
 procedure TfrmConferencia.sgitensKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if (Key = VK_DELETE) and (NOT(sgitens.Col = 2) or (sgitens.Cells[0,sgitens.Row] <> '')) then
+  if (Key = VK_DELETE) and ((codigoBalancaComPreco(sgitens.Cells[0,sgitens.Row])) or NOT(sgitens.Col = 2) or (sgitens.Cells[0,sgitens.Row] <> '')) then
     key := VK_CANCEL;
 end;
 
 procedure TfrmConferencia.sgitensKeyPress(Sender: TObject; var Key: Char);
 begin
-   if NOT(sgitens.Col = 2) or (sgitens.Cells[0,sgitens.Row] <> '') then //tem cod barra
-   begin
-     Key := #0;
-//     MessageDlg('Não é possível editar uma parcela já paga.',mtWarning,[mbOK],0);
-   end else
-   begin
-     ValidarNumero(Key);
-   end;
+  if (codigoBalancaComPreco(sgitens.Cells[0,sgitens.Row])) then
+    ValidarNumero(Key)
+  else if NOT(sgitens.Col = 2) or (sgitens.Cells[0,sgitens.Row] <> '') then //tem cod barra
+    Key := #0
+  else
+    ValidarNumero(Key);
 end;
 
 procedure TfrmConferencia.sgitensKeyUp(Sender: TObject; var Key: Word;
@@ -265,6 +265,18 @@ begin
   SalvarConferencia;
 end;
 
+function TfrmConferencia.buscarPrecoItem(prevenda: TPrevenda;
+  codProduto: string): Currency;
+var
+  i : integer;
+begin
+  for i := 0 to prevenda.itens.Count -1 do
+  begin
+    if prevenda.itens[i].codigoBarras = codProduto then
+      Result := prevenda.itens[i].precoVenda;
+  end;
+end;
+
 procedure TfrmConferencia.BitBtn2Click(Sender: TObject);
 begin
   if MessageDlg('Deseja realmente sair da tela de conferência?',mtConfirmation,[mbYes,mbNo],0) = mrYes then
@@ -285,10 +297,33 @@ begin
 end;
 
 procedure TfrmConferencia.btnPesquisarClick(Sender: TObject);
+var
+  codigoBarras : string;
+  qtd : Currency;
 begin
   if edtcdBarrasProduto.Text <> '' then
   begin
-    ConferirItem(LocalizarItemGrid(edtcdBarrasProduto.Text));
+    if (Length(edtcdBarrasProduto.Text) > 6) and (copy(edtcdBarrasProduto.Text, 1, 1) = '2') then // balança
+    begin
+      codigoBarras := copy(edtcdBarrasProduto.Text, 1, 7);
+      if FrmPrincipalPreVenda.vTipoCodigoBalanca = 1 then // calcula pelo preço
+      begin
+        // como ele pode alterar o preço no cadastro de produto, vou deixa para ele digitar a quantidade
+        qtd := 0;
+//        qtd := StrToCurr(FormatCurr('0.00',
+//              (strtofloat(copy(edtcdBarrasProduto.Text, 8, 2) + ',' +
+//              copy(edtcdBarrasProduto.Text, 10, 3)) / buscarPrecoItem(prevenda, codigoBarras)) * 10));
+      end else // calcula pelo peso
+      begin
+        qtd := StrToCurr(FormatFloatQ(vCasasQtd, strtoCurr(copy(edtcdBarrasProduto.Text, 8, 2)
+               + ',' + copy(edtcdBarrasProduto.Text, 10, 3))));
+      end;
+    end else
+    begin
+      codigoBarras := edtcdBarrasProduto.Text;
+      qtd := 1;
+    end;
+    ConferirItem(LocalizarItemGrid(codigoBarras), qtd);
     edtcdBarrasProduto.Clear;
     edtcdBarrasProduto.SetFocus;
     sgitens.Repaint;
@@ -341,11 +376,11 @@ begin
   begin
     with sgItens do
     begin
-      Cells[0, I + 1] := adoItens.FieldByName('cdFabricante').AsString;//prevenda.itens[I].codigoBarras;  //codigo
-      Cells[1, I + 1] := adoItens.FieldByName('nmProduto').AsString;//prevenda.itens[I].descricao;
-      Cells[2, I + 1] := '0';
+      Cells[0, I + 1] := adoItens.FieldByName('cdFabricante').AsString; // codigoBarras;
+      Cells[1, I + 1] := adoItens.FieldByName('nmProduto').AsString;    // descricao;
+      Cells[2, I + 1] := '0';                                           //
       Cells[3, I + 1] := '0';
-      Cells[4, I + 1] := FormatFloatQ(vCasasQtd,adoItens.FieldByName('Qtd').AsFloat);//FormatFloatQ(vCasasQtd, prevenda.itens[I].quantidade);
+      Cells[4, I + 1] := FormatCurr('0.00', adoItens.FieldByName('Qtd').AsCurrency); // qtd Prevenda
     end;
     adoItens.Next;
   end;
@@ -355,16 +390,24 @@ begin
     sgItens.RowCount := adoItens.recordCount + 1;//prevenda.itens.Count + 1;
 end;
 
-function TfrmConferencia.ConferirItem(linha: integer): boolean;
+function TfrmConferencia.codigoBalancaComPreco(codigo: string): boolean;
+begin
+  if (Length(codigo) > 6) and (copy(codigo, 1, 1) = '2')
+      and (FrmPrincipalPreVenda.vTipoCodigoBalanca = 1) then
+    Result := True
+  else
+    Result := False;
+end;
+
+function TfrmConferencia.ConferirItem(linha: integer; qtd : Currency = 1): boolean;
 begin
   if linha <= 0 then
   begin
-//    raise Exception.Create('Produto não encontrado.');
     Messagedlg('Produto não encontrado.', mtWarning, [mbOk], 0);
     Result := False;
     Exit;
   end;
-  sgitens.Cells[2, linha] := FloatToStr(strtoFloat(sgitens.Cells[2, linha]) + 1);
+  sgitens.Cells[2, linha] := FloatToStr(strtoFloat(sgitens.Cells[2, linha]) + qtd);
   if strtoFloat(sgitens.Cells[4, linha]) = strtoFloat(sgitens.Cells[2, linha]) then
     sgitens.Cells[3, linha] := '1' //bateu igual
   else

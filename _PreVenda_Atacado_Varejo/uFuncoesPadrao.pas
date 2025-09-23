@@ -2990,10 +2990,8 @@ begin
   result:= formato;
 end;
 
-{
-* Mesma função do FormatFloat com um parâmetro diferente, ao invés do formato passamos
-* a quantidade de casas decimais.
-}
+{ * Mesma função do FormatFloat com um parâmetro diferente, ao invés do formato passamos
+* a quantidade de casas decimais. }
 function FormatFloatQ(quantidadeCasasDecimais:Integer; valor:Extended):string;
 var
   formato: string;
