@@ -2180,7 +2180,9 @@ begin
      (dsCGC = '55061884000186') or (dsCGC = '13116106000105') or
      (dsCGC = '23004452000147') or (dsCGC = '07330739000100') or
      (dsCGC = '55046116000153') or (dsCGC = '39664873000215') or
-     (dsCGC = '08309756000129') or (dsCGC = '05533502000100')
+     (dsCGC = '08309756000129') or (dsCGC = '05533502000100') or
+     (dsCGC = '10393562000104') or (dsCGC = '10393562000287') or
+     (dsCGC = '10393562000368') or (dsCGC = '10393562000449')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -2194,7 +2196,7 @@ begin
   begin
     EdtCFOP.Visible := false;
     Label21.Visible := false;
-    EdtConsulta.width := EdtConsulta.width + EdtCFOP.width; // 197
+    EdtConsulta.width := EdtConsulta.width + EdtCFOP.width;
   end;
   if vMudaPreco = 'S' then
   begin
