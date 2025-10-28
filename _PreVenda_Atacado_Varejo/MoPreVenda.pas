@@ -7858,13 +7858,13 @@ begin
       Next;
     end;
     sql.Text :=
-    'Select P.dsEspecificacao, P.dscaminho, P.nrCustofinal_v, P.vlPreco,          '+
-    'P.vlAtacado, P.dsMercosul, C.dsClassificacao, P.vlCustoAvulso, P.nrQtdContab '+
-    'From Produto P WITH (NOLOCK) left join clfiscal C WITH (NOLOCK)              '+
+    'Select P.dsEspecificacao, P.dscaminho, P.nrCustofinal_v, P.vlPreco,    '+
+    'P.vlAtacado, P.dsMercosul, C.dsClassificacao, P.vlCustoAvulso, P.nrQtdContab,'+
+    'P.vlprecominimo, P.vlprecoMaximo, P.vlAtacadoMinimo, P.vlAtacadoMaximo '+
+    'From Produto P WITH (NOLOCK) left join clfiscal C WITH (NOLOCK)        '+
     'ON P.dsMercosul = C.cdClassificacao '+
     'Where P.cdProduto = :CDPRODUTO      ';
-    Parameters.ParamByName('CDPRODUTO').Value :=
-      ADOSPConsulta.FieldByName('Código').AsString;
+    Parameters.ParamByName('CDPRODUTO').Value := ADOSPConsulta.FieldByName('Código').AsString;
     open;
   end;
   FrmEspecificacao.Memo1.Text := ADOQryEspecificacao.FieldByName
@@ -7888,21 +7888,27 @@ begin
     FormatFloat('0.00', ADOQryEspecificacao.FieldByName('vlPreco').AsFloat);
   FrmEspecificacao.lblQtdFiscal.caption :=
     FormatFloat('0.00', ADOQryEspecificacao.FieldByName('nrQtdContab').AsFloat);
-  if (vAtacadoVarejo = 'V') and (UpperCase(vEmpresa) = 'NACIONAL') then
-  // caso o cliente seja de varejo n mostra o preço de atacado
+  if (vAtacadoVarejo = 'V') then
+  begin
+    FrmEspecificacao.lblMinimo.Caption := FormatCurr('0.00', ADOQryEspecificacao.FieldByName('vlprecominimo').AsCurrency);
+    FrmEspecificacao.lblMaximo.Caption := FormatCurr('0.00', ADOQryEspecificacao.FieldByName('vlprecoMaximo').AsCurrency);
+  end else
+  begin
+    FrmEspecificacao.lblMinimo.Caption := FormatCurr('0.00', ADOQryEspecificacao.FieldByName('vlAtacadoMinimo').AsCurrency);
+    FrmEspecificacao.lblMaximo.Caption := FormatCurr('0.00', ADOQryEspecificacao.FieldByName('vlAtacadoMaximo').AsCurrency);
+  end;
+  if (vAtacadoVarejo = 'V') and (UpperCase(vEmpresa) = 'NACIONAL') then //caso o cliente seja de varejo n mostra o preço de atacado
   begin
     FrmEspecificacao.LblAtacado.caption := '0';
   end else
   begin
-    FrmEspecificacao.LblAtacado.caption :=
-      FormatFloat('0.00', ADOQryEspecificacao.FieldByName('vlAtacado').AsFloat);
+    FrmEspecificacao.LblAtacado.caption := FormatFloat('0.00', ADOQryEspecificacao.FieldByName('vlAtacado').AsFloat);
   end;
   FrmEspecificacao.LblClFiscal.caption := ADOQryEspecificacao.FieldByName
-    ('dsMercosul').AsString + ' - ' + ADOQryEspecificacao.FieldByName
-    ('dsClassificacao').AsString;
+    ('dsMercosul').AsString + ' - ' + ADOQryEspecificacao.FieldByName('dsClassificacao').AsString;
   try
     FrmEspecificacao.Image1.Picture := nil;
-    if Pos('http',ADOQryEspecificacao.fieldbyname('dscaminho').AsString) > 0 then
+    if Pos('http', ADOQryEspecificacao.fieldbyname('dscaminho').AsString) > 0 then
       CarregarImagemURL(FrmEspecificacao.Image1, ADOQryEspecificacao.fieldbyname('dscaminho').AsString)
     else
       FrmEspecificacao.Image1.Picture.LoadFromFile(ADOQryEspecificacao.fieldbyname('dscaminho').AsString);

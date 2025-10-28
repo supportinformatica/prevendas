@@ -47,6 +47,10 @@ type
     LblRefInterna: TLabel;
     Label7: TLabel;
     lblQtdFiscal: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    lblMinimo: TLabel;
+    lblMaximo: TLabel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure Memo1KeyPress(Sender: TObject; var Key: Char);
     procedure FotoKeyPress(Sender: TObject; var Key: Char);

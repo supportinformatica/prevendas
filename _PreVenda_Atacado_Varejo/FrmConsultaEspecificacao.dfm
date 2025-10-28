@@ -30,7 +30,7 @@ object FrmEspecificacao: TFrmEspecificacao
     Height = 384
     Hint = 'Consulta especifica'#231#227'o'
     Align = alClient
-    ExplicitLeft = -1
+    ExplicitTop = -1
   end
   object Bevel1: TBevel
     Left = 0
@@ -39,16 +39,16 @@ object FrmEspecificacao: TFrmEspecificacao
     Height = 384
     Hint = 'Consulta especifica'#231#227'o'
     Align = alClient
-    ExplicitLeft = -1
+    ExplicitLeft = 1
   end
   object Label57: TLabel
     Left = 405
     Top = 1
-    Width = 175
+    Width = 173
     Height = 13
-    Caption = 'Clique na Imagem para Ampliar'
+    Caption = 'Clique na imagem para ampliar'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -61,7 +61,7 @@ object FrmEspecificacao: TFrmEspecificacao
     Height = 13
     Caption = 'Especifica'#231#245'es gerais'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -70,25 +70,25 @@ object FrmEspecificacao: TFrmEspecificacao
   object Label64: TLabel
     Left = 8
     Top = 240
-    Width = 59
-    Height = 16
+    Width = 49
+    Height = 13
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblProduto: TLabel
-    Left = 190
+    Left = 167
     Top = 240
-    Width = 59
-    Height = 16
+    Width = 49
+    Height = 13
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
@@ -96,12 +96,12 @@ object FrmEspecificacao: TFrmEspecificacao
   object LblReferencia: TLabel
     Left = 8
     Top = 272
-    Width = 112
-    Height = 16
-    Caption = 'Ref. de F'#225'brica:'
+    Width = 90
+    Height = 13
+    Caption = 'Ref. de f'#225'brica:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
@@ -109,12 +109,12 @@ object FrmEspecificacao: TFrmEspecificacao
   object Label59: TLabel
     Left = 8
     Top = 288
-    Width = 127
-    Height = 16
-    Caption = 'C'#243'digo de Barras:'
+    Width = 101
+    Height = 13
+    Caption = 'C'#243'digo de barras:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
@@ -122,80 +122,80 @@ object FrmEspecificacao: TFrmEspecificacao
   object Label62: TLabel
     Left = 8
     Top = 304
-    Width = 79
-    Height = 16
+    Width = 65
+    Height = 13
     Caption = 'Fabricante:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblFab: TLabel
-    Left = 133
+    Left = 110
     Top = 304
     Width = 286
     Height = 16
     AutoSize = False
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblCdBarras: TLabel
-    Left = 133
+    Left = 110
     Top = 288
-    Width = 59
-    Height = 16
+    Width = 49
+    Height = 13
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblRefer: TLabel
-    Left = 133
+    Left = 110
     Top = 272
-    Width = 59
-    Height = 16
+    Width = 49
+    Height = 13
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblCod: TLabel
-    Left = 133
+    Left = 110
     Top = 240
     Width = 49
     Height = 16
     AutoSize = False
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label10: TLabel
-    Left = 439
-    Top = 363
-    Width = 148
-    Height = 15
-    Caption = 'Pressione "ESC" para sair'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
-    Font.Name = 'Times New Roman'
+    Left = 441
+    Top = 365
+    Width = 137
+    Height = 13
+    Caption = 'Pressione ESC para sair'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
@@ -206,61 +206,61 @@ object FrmEspecificacao: TFrmEspecificacao
     Height = 13
     Caption = 'C'#243'digos adicionais do produto'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label1: TLabel
-    Left = 441
-    Top = 288
-    Width = 108
-    Height = 16
-    Caption = 'Pre'#231'o Atacado:'
+    Left = 463
+    Top = 272
+    Width = 88
+    Height = 13
+    Caption = 'Pre'#231'o atacado:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblAtacado: TLabel
-    Left = 581
-    Top = 288
+    Left = 586
+    Top = 272
     Width = 29
     Height = 16
     Alignment = taRightJustify
     Caption = '0,00'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 441
-    Top = 272
-    Width = 96
-    Height = 16
-    Caption = 'Pre'#231'o Varejo:'
+    Left = 463
+    Top = 256
+    Width = 77
+    Height = 13
+    Caption = 'Pre'#231'o varejo:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object lblVarejo: TLabel
-    Left = 581
-    Top = 272
+    Left = 586
+    Top = 256
     Width = 29
     Height = 16
     Alignment = taRightJustify
     Caption = '0,00'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -281,79 +281,80 @@ object FrmEspecificacao: TFrmEspecificacao
     OnMouseDown = Image1MouseDown
   end
   object Label2: TLabel
-    Left = 88
-    Top = 364
-    Width = 144
-    Height = 15
-    Caption = 'Ampliar Imagem   Ctrl + A'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
-    Font.Name = 'Times New Roman'
+    Left = 77
+    Top = 366
+    Width = 126
+    Height = 13
+    Caption = 'Ampliar imagem Ctrl+A'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label4: TLabel
-    Left = 262
-    Top = 364
-    Width = 151
-    Height = 15
-    Caption = 'Tamanho Original  Ctrl + V'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
-    Font.Name = 'Times New Roman'
+    Left = 249
+    Top = 366
+    Width = 136
+    Height = 13
+    Caption = 'Tamanho original Ctrl+V'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label5: TLabel
     Left = 8
     Top = 322
-    Width = 38
-    Height = 16
+    Width = 32
+    Height = 13
     Caption = 'NCM:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblClFiscal: TLabel
-    Left = 133
+    Left = 110
     Top = 324
-    Width = 49
+    Width = 346
     Height = 13
+    AutoSize = False
     Caption = 'Produto:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -11
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label6: TLabel
-    Left = 441
-    Top = 256
-    Width = 82
-    Height = 16
-    Caption = 'Custo Final:'
+    Left = 463
+    Top = 240
+    Width = 65
+    Height = 13
+    Caption = 'Custo final:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object lblAquisicao: TLabel
-    Left = 581
-    Top = 256
+    Left = 586
+    Top = 240
     Width = 29
     Height = 16
     Alignment = taRightJustify
     Caption = '0,00'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -362,35 +363,49 @@ object FrmEspecificacao: TFrmEspecificacao
   object Label60: TLabel
     Left = 8
     Top = 256
-    Width = 84
-    Height = 16
-    Caption = 'Ref. Interna:'
+    Width = 72
+    Height = 13
+    Caption = 'Ref. interna:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clNavy
-    Font.Height = -13
+    Font.Color = clBlack
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object LblRefInterna: TLabel
-    Left = 133
+    Left = 110
     Top = 256
-    Width = 76
-    Height = 16
+    Width = 65
+    Height = 13
     Caption = 'Ref Interna'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
-    Font.Height = -13
+    Font.Color = clNavy
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label7: TLabel
-    Left = 441
-    Top = 304
-    Width = 75
+    Left = 463
+    Top = 288
+    Width = 63
+    Height = 13
+    Caption = 'Qtd. fiscal:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblQtdFiscal: TLabel
+    Left = 586
+    Top = 288
+    Width = 29
     Height = 16
-    Caption = 'Qtd Fiscal:'
+    Alignment = taRightJustify
+    Caption = '0,00'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
     Font.Height = -13
@@ -398,15 +413,55 @@ object FrmEspecificacao: TFrmEspecificacao
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lblQtdFiscal: TLabel
-    Left = 581
+  object Label8: TLabel
+    Left = 463
+    Top = 304
+    Width = 82
+    Height = 13
+    Caption = 'Pre'#231'o m'#237'nimo:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 463
+    Top = 322
+    Width = 83
+    Height = 13
+    Caption = 'Pre'#231'o m'#225'ximo:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblMinimo: TLabel
+    Left = 586
     Top = 304
     Width = 29
     Height = 16
     Alignment = taRightJustify
     Caption = '0,00'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
+    Font.Color = clNavy
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblMaximo: TLabel
+    Left = 586
+    Top = 320
+    Width = 29
+    Height = 16
+    Alignment = taRightJustify
+    Caption = '0,00'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
@@ -425,12 +480,12 @@ object FrmEspecificacao: TFrmEspecificacao
     OnKeyPress = Memo1KeyPress
   end
   object btnNext: TBitBtn
-    Left = 43
-    Top = 341
-    Width = 33
+    Left = 577
+    Top = 339
+    Width = 38
     Height = 25
     Cursor = crHandPoint
-    Hint = 'Pr'#243'ximo'
+    Hint = 'Pr'#243'ximo produto'
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000C40E0000C40E00000000000000000000FFFFFFFFFFFF
@@ -465,12 +520,12 @@ object FrmEspecificacao: TFrmEspecificacao
     OnClick = btnNextClick
   end
   object btnPrior: TBitBtn
-    Left = 8
-    Top = 341
-    Width = 33
+    Left = 528
+    Top = 339
+    Width = 38
     Height = 25
     Cursor = crHandPoint
-    Hint = 'Anterior'
+    Hint = 'Produto anterior'
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000C40E0000C40E00000000000000000000FFFFFFFFFFFF
