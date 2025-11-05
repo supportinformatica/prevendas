@@ -1527,71 +1527,81 @@ begin
     begin
       CommandText := '';
       CommandText :=
-      'DECLARE @TESTE AS INTEGER ' + 'SET @TESTE = ' +
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-      'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsMetragem'') '
-      + 'IF (@TESTE = 0) BEGIN ' + ' ALTER TABLE IteOrcamento ADD ' +
-      ' dsMetragem varchar(10) ' + 'END ';
+      'DECLARE @TESTE AS INTEGER '+
+      'SET @TESTE = '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsMetragem'') '+
+      'IF (@TESTE = 0) BEGIN ' + ' ALTER TABLE IteOrcamento ADD '+
+      ' dsMetragem varchar(10) ' +
+      'END ';
       Execute;
       CommandText :=
-      'DECLARE @TESTE AS INTEGER                                                '
-      + 'SET @TESTE =                                                           '
-      + '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS       '
-      + 'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsServico'')  '
-      + 'IF (@TESTE = 0) BEGIN                                                  '
-      + ' ALTER TABLE IteOrcamento ADD                                          '
-      + ' dsServico  varchar(150)                                               '
-      + 'END';
+      'DECLARE @TESTE AS INTEGER '+
+      'SET @TESTE =              '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS      '+
+      'WHERE TABLE_NAME = ''IteOrcamento'' AND COLUMN_NAME  = ''dsServico'') '+
+      'IF (@TESTE = 0) BEGIN         '+
+      ' ALTER TABLE IteOrcamento ADD '+
+      ' dsServico  varchar(150)      '+
+      'END';
       Execute;
       // Cria SerieEscolar
       CommandText :=
-      'DECLARE @TESTE AS INTEGER        ' +
-      'SET @TESTE =                    ' +
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-      'WHERE TABLE_NAME = ''Escola'')  ' + 'IF (@TESTE = 0) BEGIN           '
-      + ' CREATE TABLE Escola (          ' +
-      ' CdEscola int NOT NULL,         ' + ' DsEscola varchar(60) NULL )    '
-      + ' ALTER TABLE Escola           ' +
-      ' ADD PRIMARY KEY (CdEscola ASC) ' +
+      'DECLARE @TESTE AS INTEGER       '+
+      'SET @TESTE =                    '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''Escola'')  '+
+      'IF (@TESTE = 0) BEGIN           '+
+      ' CREATE TABLE Escola (          '+
+      ' CdEscola int NOT NULL,         '+
+      ' DsEscola varchar(60) NULL )    '+
+      ' ALTER TABLE Escola             ' +
+      ' ADD PRIMARY KEY (CdEscola ASC) '+
       'END';
       Execute;
       CommandText := '';
       CommandText :=
-      'DECLARE @TESTE AS INTEGER        ' +
-      'SET @TESTE =                    ' +
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-      'WHERE TABLE_NAME = ''IteOrcamento'')  ' +
-      ' Alter TABLE IteOrcamento       ' + ' ALTER Column vlDesconto real   ';
+      'DECLARE @TESTE AS INTEGER '+
+      'SET @TESTE =              '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''IteOrcamento'') '+
+      ' Alter TABLE IteOrcamento ' + ' ALTER Column vlDesconto real ';
       Execute;
       CommandText := '';
       CommandText :=
-      'DECLARE @TESTE AS INTEGER      ' +
-      'SET @TESTE =                   ' +
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS  ' +
-      'WHERE TABLE_NAME = ''SerieEscolar'')                              ' +
-      ' IF (@TESTE = 0) BEGIN         ' + ' CREATE TABLE SerieEscolar (   ' +
-      ' cdSerie   int NOT NULL,       ' + ' dsSerie   varchar(50) NULL,   ' +
-      ' CdEscola  int NOT NULL )      ' + 'ALTER TABLE SerieEscolar       ' +
-      ' ADD PRIMARY KEY (cdSerie ASC) ' + 'ALTER TABLE SerieEscolar       ' +
-      ' ADD FOREIGN KEY (CdEscola)    ' + ' REFERENCES Escola  (CdEscola) ' +
-      ' ON DELETE NO ACTION           ' + ' ON UPDATE NO ACTION           ' +
+      'DECLARE @TESTE AS INTEGER      '+
+      'SET @TESTE =                   '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''SerieEscolar'')                             '+
+      ' IF (@TESTE = 0) BEGIN         '+
+      ' CREATE TABLE SerieEscolar (   '+
+      ' cdSerie   int NOT NULL,       '+
+      ' dsSerie   varchar(50) NULL,   '+
+      ' CdEscola  int NOT NULL )      '+
+      'ALTER TABLE SerieEscolar       '+
+      ' ADD PRIMARY KEY (cdSerie ASC) '+
+      'ALTER TABLE SerieEscolar       '+
+      ' ADD FOREIGN KEY (CdEscola)    '+
+      ' REFERENCES Escola  (CdEscola) '+
+      ' ON DELETE NO ACTION           '+
+      ' ON UPDATE NO ACTION           '+
       'END';
       Execute;
       CommandText := '';
       CommandText :=
-      'DECLARE @TESTE AS INTEGER  ' +
-      'SET @TESTE =               ' +
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS ' +
-      'WHERE TABLE_NAME = ''ListaEscolar'') ' +
-      ' IF (@TESTE = 0) BEGIN               ' +
-      ' CREATE TABLE ListaEscolar ( ' + ' CdLista  int NOT NULL,   ' +
-      ' Ano      datetime NULL,  ' + ' cdSerie  int NOT NULL,   ' +
-      ' CdEscola int NOT NULL  ) ' + ' ALTER TABLE ListaEscolar ' +
-      ' ADD PRIMARY KEY (CdLista ASC) ' + ' ALTER TABLE ListaEscolar   ' +
-      ' ADD FOREIGN KEY (CdEscola) ' + ' REFERENCES Escola  (CdEscola) ' +
-      ' ON DELETE NO ACTION  ' + ' ON UPDATE NO ACTION  ' +
+      'DECLARE @TESTE AS INTEGER '+
+      'SET @TESTE =              '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
+      'WHERE TABLE_NAME = ''ListaEscolar'') '+
+      ' IF (@TESTE = 0) BEGIN               '+
+      ' CREATE TABLE ListaEscolar ( ' + ' CdLista  int NOT NULL,'+
+      ' Ano      datetime NULL,  ' + ' cdSerie  int NOT NULL,   '+
+      ' CdEscola int NOT NULL) ' + ' ALTER TABLE ListaEscolar  '+
+      ' ADD PRIMARY KEY (CdLista ASC) ' + ' ALTER TABLE ListaEscolar   '+
+      ' ADD FOREIGN KEY (CdEscola) ' + ' REFERENCES Escola  (CdEscola) '+
+      ' ON DELETE NO ACTION  ' + ' ON UPDATE NO ACTION  '+
       ' ALTER TABLE ListaEscolar ' + ' ADD FOREIGN KEY (cdSerie) ' +
-      ' REFERENCES SerieEscolar  (cdSerie) ' + ' ON DELETE NO ACTION ' +
+      ' REFERENCES SerieEscolar (cdSerie) ' + ' ON DELETE NO ACTION ' +
       'ON UPDATE NO ACTION '+
       'END';
       Execute;
@@ -1604,11 +1614,11 @@ begin
       ' CREATE TABLE ItensLista ( '+
       ' CdItemLista int IDENTITY, '+
       ' CdObjeto    int NOT NULL, '+
-      ' dsObjeto    varchar(50) NULL,'+
-      ' Qtd         int NULL,      '+
-      ' CdLista     int NOT NULL ) '+
-      ' ALTER TABLE ItensLista     '+
-      ' ADD PRIMARY KEY (CdItemLista ASC) '+
+      ' dsObjeto varchar(50) NULL,'+
+      ' Qtd        int NULL,      '+
+      ' CdLista    int NOT NULL ) '+
+      ' ALTER TABLE ItensLista    '+
+      ' ADD PRIMARY KEY (CdItemLista ASC)  '+
       ' ALTER TABLE ItensLista    '+
       ' ADD FOREIGN KEY (CdLista) '+
       ' REFERENCES ListaEscolar  (CdLista) '+
@@ -1617,33 +1627,32 @@ begin
       'END';
       Execute;
       CommandText :=
-      'DECLARE @TESTE AS INTEGER                                        '+
-      'SET @TESTE =                                                     '+
+      'DECLARE @TESTE AS INTEGER '+
+      'SET @TESTE =              '+
       '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS '+
-      'WHERE TABLE_NAME = ''Profissional'' )                            '+
-      'IF (@TESTE = 0) BEGIN                                            '+
-      ' CREATE TABLE Profissional (                                     '+
-      '       cdPessoa         int Not Null   )                         '+
-      'ALTER TABLE Profissional ADD PRIMARY KEY (cdPessoa ASC)          '+
-      'END                                                              ';
+      'WHERE TABLE_NAME = ''Profissional'' ) '+
+      'IF (@TESTE = 0) BEGIN                 '+
+      ' CREATE TABLE Profissional (cdPessoa int Not Null)      '+
+      'ALTER TABLE Profissional ADD PRIMARY KEY (cdPessoa ASC) '+
+      'END                                                     ';
       Execute;
       CommandText :=
-      'DECLARE @TESTE AS INTEGER                                          '+
-      'SET @TESTE =                                                       '+
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS   '+
-      'WHERE TABLE_NAME = ''ITEORCAMENTO'' and COLUMN_NAME = ''dsCFOP'' ) '+
-      'IF (@TESTE = 0) BEGIN                                              '+
-      ' ALTER TABLE ITEORCAMENTO ADD dsCFOP varchar(4)                    '+
-      'END                                                                ';
+      'DECLARE @TESTE AS INTEGER                       '+
+      'SET @TESTE =                                    '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS  '+
+      'WHERE TABLE_NAME = ''ITEORCAMENTO'' and COLUMN_NAME = ''dsCFOP'') '+
+      'IF (@TESTE = 0) BEGIN                           '+
+      ' ALTER TABLE ITEORCAMENTO ADD dsCFOP varchar(4) '+
+      'END                                             ';
       Execute;
       CommandText :=
-      'DECLARE @TESTE AS INTEGER                                               '+
-      'SET @TESTE =                                                            '+
-      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS        '+
-      'WHERE TABLE_NAME = ''ORCAMENTO'' and COLUMN_NAME = ''cdProfissional'' ) '+
-      'IF (@TESTE = 0) BEGIN                                                   '+
-      ' ALTER TABLE ORCAMENTO ADD cdProfissional int Null                      '+
-      'END                                                                     ';
+      'DECLARE @TESTE AS INTEGER                          '+
+      'SET @TESTE =                                       '+
+      '(SELECT COUNT(COLUMN_NAME) AS OK FROM INFORMATION_SCHEMA.COLUMNS       '+
+      'WHERE TABLE_NAME = ''ORCAMENTO'' and COLUMN_NAME = ''cdProfissional'') '+
+      'IF (@TESTE = 0) BEGIN                              '+
+      ' ALTER TABLE ORCAMENTO ADD cdProfissional int Null '+
+      'END                                                ';
       Execute;
     end;
   except
@@ -1818,7 +1827,7 @@ begin
   if prevenda.itens.Count = 0 then
   begin
     Application.OnMessage := NaoProcessaMsg;
-    MessageDlg('Não foi lançado nenhum item para essa Pré-Venda \ orçamento!',
+    MessageDlg('Não foi lançado nenhum item para essa Pré-venda \ orçamento!',
       mtWarning, [mbOK], 0);
     EdtDesconto.Text := '0,00000';
     EdtSubTotal.Text := '0,00';
@@ -1882,7 +1891,7 @@ begin
   if GetLastError = ERROR_ALREADY_EXISTS then
   begin
     if MessageDlg
-      ('Este programa já está sendo executado neste computador! Deseja abrir outra Pré-Venda mesmo assim?',
+      ('Este programa já está sendo executado neste computador! Deseja abrir outra Pré-venda mesmo assim?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
     begin
       Application.Terminate; // TESTE
@@ -2312,7 +2321,7 @@ begin
     EdtDescUnit.Left := EdtDescUnit.Left - 190;
     EdtPreco.Left := EdtPreco.Left - 190;
   end;
-  self.caption := 'Pré-Venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
+  self.caption := 'Pré-venda - Support Informática  79 3302-5707  supportinformatica.net  Compilação: ' + GetVersaoArq;
   CbxCliente.ItemIndex := 0;
   CbxClienteChange(self);
   previsaoEntrega := StrToDate(vdata_banco);
@@ -5113,40 +5122,7 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible := False;
     end;
   end;
-  if dsCGC = '40484448000142' then // CONSTRUFORT
-  begin
-     FrmRelOrcamentos.RLLabel3.Visible := False;
-     FrmRelOrcamentos.RLLabel3.Enabled := False;
-     FrmRelOrcamentos.lblPorcDesconto.Visible := False;
-     FrmRelOrcamentos.lblPorcDesconto.Enabled := False;
-  end else
-  if (UpperCase(vEmpresa) = 'ATIVA') then
-  begin
-    FrmRelOrcamentos.RLLabel1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.Visible := True;
-    FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
-    FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
-  end else
-  if dsCGC = '10305634000106' then // drios
-  begin
-    FrmRelOrcamentos.RLLabel1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
-    FrmRelOrcamentos.RLLabel1.Caption := 'C. Barras';
-  end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
-  begin
-    FrmRelOrcamentos.RLDBText6.Visible := False;
-    FrmRelOrcamentos.RLLabel1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.Visible := True;
-    FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
-    FrmRelOrcamentos.RLLabel1.Caption := 'NCM';
-  end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
-  begin
-    FrmRelOrcamentos.RLDBText6.Visible := False;
-    FrmRelOrcamentos.RLLabel10.Visible := False;
-    FrmRelOrcamentos.RLDBText1.Visible := False;
-    FrmRelOrcamentos.RLLabel11.Visible := False;
-  end;
+
   if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
     FrmRelOrcamentos.QREPreco.Visible  := False;
@@ -5190,8 +5166,7 @@ begin
     FrmRelOrcamentos.RLLabel5.Left  := FrmRelOrcamentos.RLLabel5.Left + 32;
     FrmRelOrcamentos.RlDescricao.width  := 228;
     FrmRelOrcamentos.QREDescricao.width := 228;
-  end else
-  if prevenda.isOrcamento and not TNEGLoja.getExibirReferenciaOrcamento then
+  end else if prevenda.isOrcamento and not TNEGLoja.getExibirReferenciaOrcamento then
   begin
     FrmRelOrcamentos.RLDBText1.Enabled := False;
     FrmRelOrcamentos.RLDBText1.Visible := False;
@@ -5218,9 +5193,41 @@ begin
     FrmRelOrcamentos.QREDescricao.width := 230;
     FrmRelOrcamentos.RLDBText2.width := 67;
   end;
-  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or (dsCGC = '30105285000196') or
-    (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or (dsCGC = '43081798000156') or
-    (dsCGC = '26620942000166') then
+  if dsCGC = '40484448000142' then // CONSTRUFORT
+  begin
+     FrmRelOrcamentos.RLLabel3.Visible := False;
+     FrmRelOrcamentos.RLLabel3.Enabled := False;
+     FrmRelOrcamentos.lblPorcDesconto.Visible := False;
+     FrmRelOrcamentos.lblPorcDesconto.Enabled := False;
+  end else if (UpperCase(vEmpresa) = 'ATIVA') then
+  begin
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLLabel1.Caption := 'Prateleira';
+    FrmRelOrcamentos.RLDBText1.DataField := 'dsPrateleira';
+  end else if dsCGC = '10305634000106' then // drios
+  begin
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.DataField := 'cdFabricante';
+    FrmRelOrcamentos.RLLabel1.Caption := 'C. Barras';
+  end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
+  begin
+    FrmRelOrcamentos.RLDBText6.Visible := False;
+    FrmRelOrcamentos.RLLabel1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
+    FrmRelOrcamentos.RLLabel1.Caption := 'NCM';
+  end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
+  begin
+    FrmRelOrcamentos.RLDBText6.Visible := False;
+    FrmRelOrcamentos.RLLabel10.Visible := False;
+    FrmRelOrcamentos.RLDBText1.Visible := False;
+    FrmRelOrcamentos.RLLabel11.Visible := False;
+  end;
+  if (UpperCase(vEmpresa) = 'JNUNES') or (dsCGC = '49843302000110') or (dsCGC = '47305252000192') or
+    (dsCGC = '30105285000196') or (dsCGC = '33185213000194') or (dsCGC = '52961019000106') or
+    (dsCGC = '43081798000156') or (dsCGC = '26620942000166') then
     FrmRelOrcamentos.QREDescricao.DataField := 'dsServico';
   if UpperCase(vEmpresa) = 'BELAVISTA' then
   // Hiper móveis pediu p ficar invertido o local do campo para o cliente e loja assinarem.
@@ -5429,13 +5436,13 @@ begin
   if vPAFECF then
   begin
     if RgOpcoes.ItemIndex = 0 then
-      FrmRelOrcamentos.QRLblTitulo2.caption := 'Pré-Venda'
+      FrmRelOrcamentos.QRLblTitulo2.caption := 'Pré-venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
         FrmRelOrcamentos.QRLblTitulo2.caption := 'Orçamento'
       else if vOrcamento = 'N' then
-        FrmRelOrcamentos.QRLblTitulo2.caption := 'Pré-Venda'
+        FrmRelOrcamentos.QRLblTitulo2.caption := 'Pré-venda'
     end else if RgOpcoes.ItemIndex = 2 then
       FrmRelOrcamentos.QRLblTitulo2.caption := 'Orçamento'
     else if RgOpcoes.ItemIndex = 4 then
@@ -5443,13 +5450,13 @@ begin
   end else
   begin
     if RgOpcoes.ItemIndex = 0 then
-      FrmRelOrcamentos.QRLblTitulo.caption := 'Pré-Venda'
+      FrmRelOrcamentos.QRLblTitulo.caption := 'Pré-venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
         FrmRelOrcamentos.QRLblTitulo.caption := 'Orçamento'
       else if vOrcamento = 'N' then
-        FrmRelOrcamentos.QRLblTitulo.caption := 'Pré-Venda'
+        FrmRelOrcamentos.QRLblTitulo.caption := 'Pré-venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
       FrmRelOrcamentos.QRLblTitulo.caption := 'Orçamento'
@@ -5747,13 +5754,13 @@ begin
     frmRelOrcamentos40.AdoQryOrcamento.FieldByName('hrHora').AsString;
   frmRelOrcamentos40.AdoQryOrcamento.Close;
   if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentos40.QRLblTitulo.caption := 'Pré-Venda'
+    frmRelOrcamentos40.QRLblTitulo.caption := 'Pré-venda'
   else if RgOpcoes.ItemIndex = 1 then
   begin
     if vOrcamento = 'O' then
       frmRelOrcamentos40.QRLblTitulo.caption := 'Orçamento'
     else if vOrcamento = 'N' then
-      frmRelOrcamentos40.QRLblTitulo.caption := 'Pré-Venda'
+      frmRelOrcamentos40.QRLblTitulo.caption := 'Pré-venda'
   end
   else if RgOpcoes.ItemIndex = 2 then
     frmRelOrcamentos40.QRLblTitulo.caption := 'Orçamento'
@@ -5904,7 +5911,7 @@ begin
       Body.Add('Esta mensagem refere-se ao Orçamento emitido no dia ' +
         FormatDateTime('dd-mm-yyyy', DtLancto.Date))
     else
-      Body.Add('Esta mensagem refere-se a Pré-Venda emitida no dia ' +
+      Body.Add('Esta mensagem refere-se a Pré-venda emitida no dia ' +
         FormatDateTime('dd-mm-yyyy', DtLancto.Date));
     // Body.Add('[SUPPORT INFORMATICA LTDA]');
     // Body.add('[04.041.252/0001-10])');
@@ -5919,7 +5926,7 @@ begin
     if tipo = 'O' then
       Subject := 'Orçamento n°' + numero
     else
-      Subject := 'Pré-Venda n°' + numero;
+      Subject := 'Pré-venda n°' + numero;
     TIdAttachmentFile.Create(MSG_XML.MessageParts, TFileName(pdf_enviado));
     // Anexo dos arquivos
   end;
@@ -6076,13 +6083,13 @@ begin
     frmRelOrcamentosAmbiente.AdoQryOrcamento.FieldByName('hrHora').AsString;
   frmRelOrcamentosAmbiente.AdoQryOrcamento.Close;
   if RgOpcoes.ItemIndex = 0 then
-    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-Venda'
+    frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-venda'
   else if RgOpcoes.ItemIndex = 1 then
   begin
     if vOrcamento = 'O' then
       frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Orçamento'
     else if vOrcamento = 'N' then
-      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-Venda'
+      frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Pré-venda'
   end else if RgOpcoes.ItemIndex = 2 then
     frmRelOrcamentosAmbiente.QRLblTitulo.caption := 'Orçamento';
   FrmRelOrcamentos.QRLblPrevisao.Enabled := CbPrevisao.Checked;
@@ -6371,13 +6378,13 @@ begin
   if vPAFECF then
   begin
     if RgOpcoes.ItemIndex = 0 then
-      frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pré-Venda'
+      frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pré-venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
         frmRelOrcamentosPB.QRLblTitulo2.caption := 'Orçamento'
       else if vOrcamento = 'N' then
-        frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pré-Venda'
+        frmRelOrcamentosPB.QRLblTitulo2.caption := 'Pré-venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
       frmRelOrcamentosPB.QRLblTitulo2.caption := 'Orçamento';
@@ -6385,13 +6392,13 @@ begin
   else
   begin
     if RgOpcoes.ItemIndex = 0 then
-      frmRelOrcamentosPB.QRLblTitulo.caption := 'Pré-Venda'
+      frmRelOrcamentosPB.QRLblTitulo.caption := 'Pré-venda'
     else if RgOpcoes.ItemIndex = 1 then
     begin
       if vOrcamento = 'O' then
         frmRelOrcamentosPB.QRLblTitulo.caption := 'Orçamento'
       else if vOrcamento = 'N' then
-        frmRelOrcamentosPB.QRLblTitulo.caption := 'Pré-Venda'
+        frmRelOrcamentosPB.QRLblTitulo.caption := 'Pré-venda'
     end
     else if RgOpcoes.ItemIndex = 2 then
       frmRelOrcamentosPB.QRLblTitulo.caption := 'Orçamento';
@@ -6643,7 +6650,7 @@ end;
 procedure TFrmPrincipalPreVenda.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-  if Application.MessageBox('Tem certeza que deseja sair da Pré-Venda?',
+  if Application.MessageBox('Tem certeza que deseja sair da Pré-venda?',
     'Confirmação', mb_IconExclamation + Mb_YesNo) = IdNo then
     CanClose := false
   else
@@ -6663,7 +6670,7 @@ var
   wndHandle: THandle;
   wndClass: array [0 .. 50] of Char;
 begin
-  if MessageDlg('Deseja sair da Pré-Venda?', mtConfirmation,
+  if MessageDlg('Deseja sair da Pré-venda?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   begin
     persistirFormulario;
@@ -7392,7 +7399,7 @@ begin
       prevenda := TNEGPrevenda.getPrevenda(StrToInt(EdtLancto.Text), True);
       prevenda.isAlteracao := True;
     except
-      MessageDlg('Pré-Venda/Orçamento não encontrado!', mtInformation,
+      MessageDlg('Pré-venda/Orçamento não encontrado!', mtInformation,
         [mbOK], 0);
       EdtLancto.Enabled := True;
       EdtLancto.Color := clWindow;
@@ -7409,7 +7416,7 @@ begin
       ((vConferencia = True) or (vBloqueioPreVenda = True)) then
     begin
       Application.OnMessage := NaoProcessaMsg;
-      Application.MessageBox('Pré-Venda/Orçamento já está em uso no caixa!',
+      Application.MessageBox('Pré-venda/Orçamento já está em uso no caixa!',
         'Atenção', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       prevenda := nil;
       EdtLancto.Setfocus;
@@ -7421,7 +7428,7 @@ begin
     begin
       Application.OnMessage := NaoProcessaMsg;
       Application.MessageBox
-        ('A conferência desta Pré-Venda/Orçamento será cancelada automaticamente ao salvar a alteração!',
+        ('A conferência desta Pré-venda/Orçamento será cancelada automaticamente ao salvar a alteração!',
         'Atenção', mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
       // EdtLancto.SetFocus;
       // EdtLancto.SelectAll;
@@ -7483,7 +7490,7 @@ begin
     if (vOrcamento = 'O') then
     begin // se for orcamento preguntar se ele vai transormar em pre-venda
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
-      if MessageDlg('Deseja transformar esse orçamento em Pré-Venda?',
+      if MessageDlg('Deseja transformar esse orçamento em Pré-venda?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
         vOrcamento := 'N';
@@ -9659,11 +9666,45 @@ begin
 end;
 
 procedure TFrmPrincipalPreVenda.cbxEntregaChange(Sender: TObject);
+var
+  i : Integer;
 begin
   if SgDados.Cells[1, SgDados.Row] = '' then
   begin
     cbxEntrega.ItemIndex := -1;
     cbxEntrega.Text := '';
+  end else if (SgDados.Row = 1) and (SgDados.RowCount > 2) and (cbxEntrega.ItemIndex <> -1) then
+  begin
+    if MessageDlg('Deseja aplicar esse local de entrega para os demais itens?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      with SgDados do
+      begin
+        if (cbxEntrega.ItemIndex <> -1) then
+        begin
+          for i := 1 to SgDados.RowCount -1 do
+          begin
+            if SgDados.Cells[1, i] <> '' then
+            begin
+              prevenda.itens[i -1].localEntrega := cbxEntrega.Text;
+              Cells[14, i] := cbxEntrega.Text;
+            end;
+          end;
+          SgDados.Refresh;
+        end;
+      end;
+    end else
+    begin
+      with SgDados do
+      begin
+        if (cbxEntrega.ItemIndex <> -1) then
+        begin
+          prevenda.itens[Row -1].localEntrega := cbxEntrega.Text;
+          Cells[14, Row] := cbxEntrega.Text;
+          SgDados.Refresh;
+        end;
+      end;
+    end;
   end else
   begin
     with SgDados do
@@ -10068,7 +10109,7 @@ begin
   begin // antes if (vOrcamento <> 'O') and (vImpressao_40 = 'S') then begin
     if (UpperCase(vEmpresa) = 'SODUCATO') then
     begin
-      if MessageDlg('Deseja imprimir o Comprovante Pequeno da Pré-Venda \ Orçamento de nº '
+      if MessageDlg('Deseja imprimir o Comprovante Pequeno da Pré-venda \ Orçamento de nº '
         + EdtLancto.Text + ' ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         exit;
     end;
@@ -17375,7 +17416,7 @@ begin
                 DModulo.Conexao.BeginTrans;
                 for i := 0 to listaProdutosAcrescimo.Count -1 do
                 begin
-                  TNEGLoja.SalvaLogEventos('Produto com Acréscimo Pré-Venda', IntToStr(prevenda.numeroPrevenda),
+                  TNEGLoja.SalvaLogEventos('Produto com Acréscimo Pré-venda', IntToStr(prevenda.numeroPrevenda),
                   IntToStr(listaProdutosAcrescimo.Items[i]), 0 , prevenda.vendedor.codigo, '16', versaoEXE);
                 end;
                 DModulo.Conexao.CommitTrans;
@@ -17387,7 +17428,7 @@ begin
             end;
             Application.OnMessage := FormPrincipal.NaoProcessaMsg;
             // if RgOpcoes.ItemIndex = 2 then //Orcamento
-            MessageDlg('Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 +
+            MessageDlg('Pré-venda/Orçamento salvo com sucesso! ' + #13#10 +
               'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text, mtInformation,
               [mbOK], 0);
             if (chkbxOrcamentoExterno.Checked = True) then
@@ -17395,7 +17436,7 @@ begin
             else if (UpperCase(vEmpresa) = 'COPYART') then
             begin
               if nrOrcamentoDia > 0 then
-                Msg := 'Pré-Venda/Orçamento salvo com sucesso! ' + #13#10 +
+                Msg := 'Pré-venda/Orçamento salvo com sucesso! ' + #13#10 +
                   'Nº ' + FrmPrincipalPreVenda.EdtLancto.Text + #13#10 + #13#10
                   + 'Sequencial: ' + intToStr(nrOrcamentoDia)
               else
@@ -17405,7 +17446,7 @@ begin
               begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') then
                 begin
-                  if (MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                  if (MessageDlg('Deseja imprimir a Pré-venda \ Orçamento de nº '
                     + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                     [mbYes, mbNo], 0) = mrYes) then
                     FrmPrincipalPreVenda.ImprimeComprovante
@@ -17416,13 +17457,13 @@ begin
                 begin
                   if nrOrcamentoDia > 0 then
                   begin
-                    if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
+                    if MessageDlg('Deseja imprimir a Pré-venda \ Orçamento de nº ' + FrmPrincipalPreVenda.EdtLancto.Text + '?' + #13#10 +
                       #13#10 + 'Sequencial: ' + intToStr(nrOrcamentoDia), mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                   end else
                   begin
                     if MessageDlg
-                      ('Deseja imprimir a Pré-Venda \ Orçamento de nº ' +
+                      ('Deseja imprimir a Pré-venda \ Orçamento de nº ' +
                       FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                       FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -17437,7 +17478,7 @@ begin
                 begin
                   if FrmPrincipalPreVenda.vPergunta_Apos_Comprovante = '1' then
                   begin
-                    if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                    if MessageDlg('Deseja imprimir a Pré-venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -17452,7 +17493,7 @@ begin
                 if (FrmPrincipalPreVenda.vImpressao_40 = 'S') or
                   (UpperCase(vEmpresa) = 'PROAUTO') then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                  if MessageDlg('Deseja imprimir a Pré-venda \ Orçamento de nº '
                     + FrmPrincipalPreVenda.EdtLancto.Text + ' em 40 colunas ?',
                     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeComprovante(StrToInt(prevenda.codigoFormaPagamento));
@@ -17461,7 +17502,7 @@ begin
 //                  FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
                 if FrmPrincipalPreVenda.vImpressao_80 = 'S' then
                 begin
-                  if MessageDlg('Deseja imprimir a Pré-Venda \ Orçamento de nº '
+                  if MessageDlg('Deseja imprimir a Pré-venda \ Orçamento de nº '
                       + FrmPrincipalPreVenda.EdtLancto.Text + '?', mtConfirmation,
                       [mbYes, mbNo], 0) = mrYes then
                     FrmPrincipalPreVenda.ImprimeOrcamento(StrToInt(prevenda.codigoFormaPagamento));
@@ -18421,7 +18462,7 @@ begin
     and (TNEGLoja.getVersaoBanco < 9.21) then
   begin // ATACAREJO
     MessageDlg
-      ('Favor entrar em contato com a Support Informática solicitando a atualização do RodaScript para continuar utilizando a Pré-Venda.',
+      ('Favor entrar em contato com a Support Informática solicitando a atualização do RodaScript para continuar utilizando a Pré-venda.',
       mtWarning, [mbOK], 0);
     result := false;
   end;
@@ -23308,7 +23349,7 @@ var
 begin
   if EdtLancto.Text = '' then
   begin
-    Application.MessageBox('Digite o número da Pré-Venda / OS!', 'Atenção',
+    Application.MessageBox('Digite o número da Pré-venda / O.S.!', 'Atenção',
       mb_Ok + MB_ICONWARNING + MB_APPLMODAL);
     EdtLancto.Setfocus;
     exit;
@@ -23326,7 +23367,7 @@ begin
       Parameters.ParamByName('nrOrcamento').Value := EdtLancto.Text;
       ExecSQL;
       DModulo.Conexao.CommitTrans;
-      Application.MessageBox('Pré-Venda / OS desbloqueada com sucesso!',
+      Application.MessageBox('Pré-venda / O.S. desbloqueada com sucesso!',
         'Informação', mb_Ok + MB_ICONINFORMATION + MB_APPLMODAL);
     except
       DModulo.Conexao.RollbackTrans;
@@ -26106,9 +26147,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26118,7 +26157,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,3,0,4,1,1,N,"ZANQUY CENTRO"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26189,9 +26227,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26201,7 +26237,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,3,0,4,1,1,N,"ZAVIXE"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26271,9 +26306,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26345,9 +26378,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26429,9 +26460,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26441,7 +26470,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,6,0,4,1,1,N,"QUIVER"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26508,7 +26536,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
@@ -26519,7 +26546,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,2,0,4,1,1,N,"YZLU PREMIO"');
     Editor.Lines.Add('A35,27,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26589,9 +26615,7 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
-
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
     Editor.Lines.Add('ZB');
@@ -26601,7 +26625,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,3,0,4,1,1,N,"ZANQUY LARANJEIRAS"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26678,7 +26701,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,6,0,4,1,1,N,"  IMA"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26745,7 +26767,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
@@ -26756,7 +26777,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A104,2,0,4,1,1,N,"YZLU CALCADOS"');
     Editor.Lines.Add('A35,27,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26823,7 +26843,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
@@ -26834,7 +26853,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A64,2,0,4,1,1,N,"YZLU JOAOPESSOA"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -26904,7 +26922,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     p := TNEGProduto.buscarProduto(StrToInt(SgDados.Cells[0, L]));
     Editor.Lines.Add('N');
     Editor.Lines.Add('R0,0');
@@ -26915,7 +26932,6 @@ begin
     Editor.Lines.Add('S3');
     Editor.Lines.Add('O');
     Editor.Lines.Add('JB');
-
     Editor.Lines.Add('A64,2,0,4,1,1,N,"YZLU SANTANA"');
     Editor.Lines.Add('A35,42,0,3,1,1,N,"' + Copy(SgDados.Cells[1, L], 1, 25) +
       '"'); // descricao
@@ -27793,7 +27809,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Editor.Lines.Add('c0000');
     Editor.Lines.Add('KI503');
     Editor.Lines.Add('O0220');
@@ -27957,7 +27972,6 @@ begin
     exibirPreco := True
   else
     exibirPreco := false;
-
   // if (Trim(EdtCdCliente.Text)<> '') and (Trim(EdtCdNome.Text) <> '') then
   // SalvaEtiquetas;
   Editor.Lines.Clear;
@@ -28119,7 +28133,6 @@ begin
     Editor.Lines.Add('PC');
     Editor.Lines.Add('A2');
     Editor.Lines.Add('D11');
-
     Editor.Lines.Add('121100000700009' + trim(Copy(SgDados.Cells[1, L],
       1, 20)));
     Editor.Lines.Add('121100000580009' + trim(Copy(SgDados.Cells[1, L],
@@ -29224,7 +29237,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Editor.Lines.Add('c0000');
     Editor.Lines.Add('KI503');
     Editor.Lines.Add('O0220');
@@ -29242,7 +29254,6 @@ begin
     Editor.Lines.Add('131100000690055' + trim(Copy(SgDados.Cells[1, L],
       21, 20)));
     Editor.Lines.Add('191100200060090' + SgDados.Cells[6, L]);
-
     if isProdutoPromocao(StrToInt(SgDados.Cells[0, L])) = True then
     begin
       Editor.Lines.Add('191100200460055De:');
@@ -29299,7 +29310,6 @@ begin
   begin // Salvando os itens da pré-venda.
     if SgDados.Cells[0, L] = '' then
       Break;
-
     Editor.Lines.Add('c0000');
     Editor.Lines.Add('KI503');
     Editor.Lines.Add('O0220');
@@ -29312,7 +29322,6 @@ begin
     Editor.Lines.Add('PC');
     Editor.Lines.Add('A2');
     Editor.Lines.Add('D11');
-
     Editor.Lines.Add('1F2202900080128' + SgDados.Cells[6, L]);
     Editor.Lines.Add('191100100470010' + trim(Copy(SgDados.Cells[1, L],
       1, 20)));
@@ -30383,7 +30392,6 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
-
       Editor.Lines.Add('A42,32,0,4,1,2,N,"' +SgDados.Cells[0, L]+ '-' +SgDados.Cells[1, L]+'"');
       Editor.Lines.Add('');
       Editor.Lines.Add('LO144,86,532,73');
@@ -30452,7 +30460,6 @@ begin
       Editor.Lines.Add('');
       Editor.Lines.Add('N');
       Editor.Lines.Add('');
-
       Editor.Lines.Add('A32,20,0,1,2,2,N,"' +Copy(Produto.descricao, 1, 25)+ '"');
       Editor.Lines.Add('A32,52,0,1,2,2,N,"' +Copy(SgDados.Cells[1, L], 26, 15)+ '"');
       Editor.Lines.Add('');
