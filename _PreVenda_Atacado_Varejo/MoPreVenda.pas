@@ -2131,26 +2131,23 @@ begin
   Label11.Hint := 'Informações do pedido de compra do item selecionado';
   edtDisponivel.Hint :=
     'Quantidade do item selecionado baseada no estoque local subtraindo das reservas de pré-vendas';
-  if (UpperCase(vEmpresa) = 'LLPARAFUSOS') or
-    (UpperCase(vEmpresa) = 'BIJOUARTS') or
-    (UpperCase(vEmpresa) = 'BIJOUARTSOS214') or
-    (UpperCase(vEmpresa) = 'BIJOUARTSZEBRA') or
-    (UpperCase(vEmpresa) = 'PIPELINE') or (UpperCase(vEmpresa) = 'LITORAL655')
-  then
+  if (UpperCase(vEmpresa) = 'LLPARAFUSOS') or (UpperCase(vEmpresa) = 'BIJOUARTS') or
+    (UpperCase(vEmpresa) = 'BIJOUARTSOS214') or (UpperCase(vEmpresa) = 'BIJOUARTSZEBRA') or
+    (UpperCase(vEmpresa) = 'PIPELINE') or (UpperCase(vEmpresa) = 'LITORAL655') then
   begin
-    Label14.Visible := false;
-    Label15.Visible := false;
-    Shape2.Visible := false;
-    Shape3.Visible := false;
-    Label16.Visible := false;
-    Shape5.Visible := false;
-    Shape6.Visible := false;
-    LblReserva.Visible := false;
-    Label12.Visible := false;
-    Label13.Visible := false;
-    Label11.Visible := false;
-    Shape1.Visible := false;
-    Shape4.Visible := false;
+    Label14.Visible := False;
+    Label15.Visible := False;
+    Shape2.Visible := False;
+    Shape3.Visible := False;
+    Label16.Visible := False;
+    Shape5.Visible := False;
+    Shape6.Visible := False;
+    LblReserva.Visible := False;
+    Label12.Visible := False;
+    Label13.Visible := False;
+    Label11.Visible := False;
+    Shape1.Visible := False;
+    Shape4.Visible := False;
   end;
   if (Empresas_UmaEtiqueta_porColuna = True) or (UpperCase(vFlagEtiqueta) = 'IMA') or (UpperCase(vFlagEtiqueta) = 'ZANQUY') or
     (UpperCase(vFlagEtiqueta) = 'YZLUCENTRO') or (UpperCase(vFlagEtiqueta) = 'GRUPOLOJASALEXANDRE') or
@@ -2169,12 +2166,12 @@ begin
     FrmPrincipalPreVenda.caption :=
       'Impressão de etiquetas       Support Informática  79 3302-5707';
     Label29.caption := 'Operador';
-    Label2.Visible := false;
-    Label3.Visible := false;
-    Label4.Visible := false;
-    EdtDesconto.Visible := false;
-    EdtSubTotal.Visible := false;
-    EdtTotal.Visible := false;
+    Label2.Visible := False;
+    Label3.Visible := False;
+    Label4.Visible := False;
+    EdtDesconto.Visible := False;
+    EdtSubTotal.Visible := False;
+    EdtTotal.Visible := False;
   end;
   if (UPPERCASE(vEmpresa) = 'MOTOBOX') or
      (UPPERCASE(vEmpresa) = 'MOTOPECAS') or
@@ -2192,7 +2189,9 @@ begin
      (dsCGC = '08309756000129') or (dsCGC = '05533502000100') or
      (dsCGC = '10393562000104') or (dsCGC = '10393562000287') or
      (dsCGC = '10393562000368') or (dsCGC = '10393562000449') or
-     (dsCGC = '20307080000130') or (dsCGC = '09524113000160')
+     (dsCGC = '20307080000130') or (dsCGC = '09524113000160') or
+     (dsCGC = '04620694000110') or (dsCGC = '03178643000118') or
+     (dsCGC = '09102306000123') or (dsCGC = '12462220000116')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
@@ -5122,7 +5121,6 @@ begin
       FrmRelOrcamentos.qrlfacebook.Visible := False;
     end;
   end;
-
   if orgaoPublicoBatAuto then // Bat Auto oculta os preços para esse tipo de cliente
   begin
     FrmRelOrcamentos.QREPreco.Visible  := False;
@@ -5213,6 +5211,8 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'C. Barras';
   end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
   begin
+    FrmRelOrcamentos.RLLabel24.Left := 181;
+    FrmRelOrcamentos.QREDescricao.Left := 181;
     FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel1.Visible := True;
     FrmRelOrcamentos.RLDBText1.Visible := True;

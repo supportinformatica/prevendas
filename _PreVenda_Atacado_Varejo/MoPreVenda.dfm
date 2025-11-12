@@ -734,7 +734,7 @@
   end
   object imgTransparente: TImage
     Left = 810
-    Top = 149
+    Top = 144
     Width = 15
     Height = 15
     AutoSize = True
@@ -892,7 +892,7 @@
         Left = 0
         Top = 2
         Width = 792
-        Height = 173
+        Height = 180
         Hint = 'Itens da pr'#233' venda'
         Anchors = [akLeft, akTop, akRight, akBottom]
         Color = clInfoBk
@@ -2174,9 +2174,9 @@
   end
   object RadioGroup1: TRadioGroup
     Left = 1
-    Top = 57
+    Top = 55
     Width = 164
-    Height = 122
+    Height = 124
     Caption = 'Pesquisar por'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
@@ -2187,12 +2187,12 @@
     Items.Strings = (
       'C'#243'digo - Ctrl + F4'
       'Descri'#231#227'o - F4'
-      'Ref F'#225'brica - F5'
-      'Ref Interna - F6'
-      'C'#243'digo de Barras  - F7'
+      'Ref. f'#225'brica - F5'
+      'Ref. interna - F6'
+      'C'#243'digo de barras  - F7'
       'Especific/Aplica'#231' - Crtl + F1'
-      'C'#243'digo Adicional - Crtl + G'
-      'Fam'#237'lia do Produto')
+      'C'#243'digo adicional - Crtl + G'
+      'Fam'#237'lia do produto')
     ParentFont = False
     PopupMenu = PopupMenu1
     TabOrder = 12
@@ -2334,7 +2334,7 @@
   end
   object RgOpcoes: TRadioGroup
     Left = 1
-    Top = 1
+    Top = 0
     Width = 164
     Height = 58
     Hint = 'O que deseja fazer?'
@@ -2346,7 +2346,7 @@
     Font.Style = []
     ItemIndex = 0
     Items.Strings = (
-      'Pr'#233' Venda - F1'
+      'Pr'#233' venda - F1'
       'Alterar - F2'
       'Or'#231'amento - F3')
     ParentFont = False
