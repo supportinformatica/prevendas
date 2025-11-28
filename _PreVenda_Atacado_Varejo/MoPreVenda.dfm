@@ -2478,7 +2478,6 @@
     PopupMenu = PopupMenu1
     ShowHint = True
     TabOrder = 5
-    OnChange = CbxNomeChange
     OnKeyPress = CbxNomeKeyPress
   end
   object edtValorBruto: TEdit
