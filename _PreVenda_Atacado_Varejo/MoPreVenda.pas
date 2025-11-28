@@ -20947,7 +20947,7 @@ begin
     Editor.Lines.Add('131100000600028COD.:' + SgDados.Cells[0, L] + '');
     // codigo
     Editor.Lines.Add('1F4405300010150' + SgDados.Cells[6, L] + ''); // barra
-    Editor.Lines.Add('141100000330028R$.:' + FormatFloat('0.00',
+    Editor.Lines.Add('141200000120028R$.:' + FormatFloat('0.00',
       StrToFloat(SgDados.Cells[3, L])) + ''); // valor
     // Cálculo para imprimir a qtd de etiquetas certo
     vqtd := StrToFloat(SgDados.Cells[2, L]);
