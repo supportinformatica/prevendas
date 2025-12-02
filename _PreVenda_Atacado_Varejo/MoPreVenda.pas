@@ -3548,8 +3548,7 @@ begin
           EdtDesconto.Text := '0,000';
         end;
         Application.OnMessage := FormPrincipal.ProcessaMsg;
-      end
-      else
+      end else
       begin
 //        if TestaFinanceiroNaConfirmacao = false then
 //        begin
@@ -3622,22 +3621,16 @@ begin
           prevenda.itens[i].precoVenda := (prevenda.itens[i].precoBruto);
       end;
     end;
-    // prevenda.itens[i].SubTotal := prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda;
     SgDados.Cells[3, i + 1] := FormatFloatQ(vCasasPreco, SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1));
     prevenda.itens[i].precoVenda := StrToFloat(SgDados.Cells[3, i + 1]);
     prevenda.itens[i].SubTotal := prevenda.itens[i].quantidade * prevenda.itens
       [i].precoVenda;
     prevenda.itens[i].SubTotal := SimpleRoundTo(prevenda.itens[i].SubTotal, -2);
     SgDados.Cells[4, i + 1] := FormatFloatQ(2, prevenda.itens[i].SubTotal);
-    // SgDados.Cells[4,i+1]:= FormatFloatQ(2,SimpleRoundTo(prevenda.itens[i].precoVenda * prevenda.itens[i].quantidade,-2)); // total
     temp := (prevenda.itens[i].quantidade * prevenda.itens[i].precoBruto);
     vlBruto := vlBruto + SimpleRoundTo(temp, -2);
-    // if prevenda.descontoPercentual <> 0 then
-    // vlLiquido := vlLiquido + (prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda)
-    // else
     temp := ((prevenda.itens[i].quantidade * prevenda.itens[i].precoVenda));
-    // temp := SimpleRoundTo(temp,-2);
-    vlLiquidoItemReal := temp;
+    vlLiquidoItemReal := SimpleRoundTo(temp, -2); // temp;
     vlLiquidoItem := SimpleRoundTo(temp, -2);
     vlLiquido := vlLiquido + SimpleRoundTo(temp, -2);
     vlDescDiff := vlLiquidoItem - vlLiquidoItemReal;
@@ -4855,8 +4848,6 @@ begin
     vlLiquido := vlLiquido + prevenda.itens[i].SubTotal;
   end;
   vlLiquido := SimpleRoundTo(vlLiquido, -2);
-//  if ((vlLiquido - StrToCurr(EdtSubTotal.Text)) > 0.005) or
-//    ((vlLiquido - StrToCurr(EdtSubTotal.Text)) < -0.005) then
   if vlLiquido <> StrToCurr(EdtSubTotal.Text) then
     vlLiquido := StrToCurr(EdtSubTotal.Text);
   vlLiquido := SimpleRoundTo(vlLiquido + GetValorIPILiquido(prevenda), -2);
@@ -4874,15 +4865,17 @@ begin
       StrToFloat(FormatFloatQ(vCasasPreco, vlProdutos));
   EdtDesconto.Text := FormatFloat('0.000000', vlDescPorc);
   EdtDescontoExit(self);
-  if (StrToFloat(FormatFloat('0.00', vlLiquido)) <> StrToFloat(EdtSubTotal.Text)) and
-   (StrtoFloatDef(EdtDesconto.Text,0) <> 0)
+  if (StrToCurr(FormatCurr('0.00', vlLiquido)) <> StrToCurr(EdtSubTotal.Text)) and
+   (StrtoCurrDef(EdtDesconto.Text,0) <> 0)
   then
   begin
-    valorAjustar := StrToFloat(EdtSubTotal.Text) -
-      StrToFloat(FormatFloat('0.00', vlLiquido));
+    valorAjustar := StrToCurr(EdtSubTotal.Text) - vlLiquido;
     prevenda.itens[0].precoVenda := prevenda.itens[0].precoVenda -
       (valorAjustar / prevenda.itens[0].quantidade);
-    EdtSubTotal.Text := FormatFloat('0.00', vlLiquido);
+    // antes da reforma não tinha essas duas linhas abaixo
+//    prevenda.itens[0].SubTotal := prevenda.itens[0].precoVenda * prevenda.itens[0].quantidade;
+//    prevenda.itens[0].SubTotal := SimpleRoundTo(prevenda.itens[0].SubTotal, -2);
+    EdtSubTotal.Text := FormatCurr('0.00', vlLiquido);
   end;
 end;
 
@@ -7884,6 +7877,7 @@ var
 begin
   totalIPI := 0;
   if UpperCase(vEmpresa) = 'MOTOPECAS_OLD' then
+  begin
     for item in prevenda.itens do
     begin
       if item.aliquotaIPI = nil then
@@ -7893,6 +7887,7 @@ begin
       temp := SimpleRoundTo(temp, -2);
       totalIPI := totalIPI + temp;
     end;
+  end;
   result := totalIPI;
 end;
 
@@ -8752,6 +8747,7 @@ begin
       StrToFloat(SgDados.Cells[2, SgDados.Row]);
     prevenda.itens[SgDados.Row - 1].SubTotal := prevenda.itens[SgDados.Row - 1]
       .quantidade * prevenda.itens[SgDados.Row - 1].precoVenda;
+    prevenda.itens[SgDados.Row - 1].SubTotal := SimpleRoundTo(prevenda.itens[SgDados.Row - 1].SubTotal ,-2);
     { INDICO NO ARRAY SE ESSA LINHA FICARÁ DESTACADA OU NÃO }
     if ((RgOpcoes.ItemIndex = 0) or ((transformarOrcamentoPrevenda = True) and
       (RgOpcoes.ItemIndex = 1))) then
