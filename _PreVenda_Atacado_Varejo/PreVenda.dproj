@@ -108,11 +108,11 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <DCC_Define>PREVENDA;$(DCC_Define)</DCC_Define>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
-        <VerInfo_Keys>CompanyName=;FileVersion=2.1.130.2;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=2.1.132.2;InternalName=4;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=2.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Build>2</VerInfo_Build>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <VerInfo_Release>130</VerInfo_Release>
+        <VerInfo_Release>132</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">

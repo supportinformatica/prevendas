@@ -18,6 +18,7 @@ uses
   IdComponent, IdTCPConnection, IdTCPClient, IdExplicitTLSClientServerBase,
   IdMessageClient, IdSMTPBase, IdSMTP, QRPDFFilt, Vcl.Imaging.pngimage,
   ACBrBase, ACBrPosPrinter,
+  System.NetEncoding,
   Prevenda.TagsGondola.G001,
   Prevenda.Tagsgondola.AtacadoVarejo001,
   Prevenda.Tagsgondola.G003,
@@ -967,6 +968,11 @@ const
 
 var
   FrmPrincipalPreVenda: TFrmPrincipalPreVenda;
+  userDB  : string;
+  senhaDB : string;
+  vIPMaquinaVirtual : string;
+  conn : string;
+  vnmBancoNuvem : string;
   vInternet: Boolean; // true - conectado  false - desconectado
   vSalvar: Integer;
   digitaAmbiente : boolean;
@@ -1104,6 +1110,19 @@ begin
   result := (temCOD_FTP) and (temCNPJ) and (temCampoCriptografado) and
     (campoCodFTPPreenchido) and (campoResgistroPreenchido);
   FreeAndNil(qry);
+end;
+
+function DescriptografarSimples(const TextoCriptografado, Chave: string): string;
+var
+  Texto: string;
+  i: Integer;
+  Resultado: string;
+begin
+  Texto := TNetEncoding.Base64.Decode(TextoCriptografado);
+  Resultado := '';
+  for i := 1 to Length(Texto) do
+    Resultado := Resultado + Char(Byte(Texto[i]) xor Byte(Chave[(i - 1) mod Length(Chave) + 1]));
+  Result := Resultado;
 end;
 
 function isChaveInvalida: Boolean;
@@ -1976,6 +1995,17 @@ begin
     // S --> sobe o print setup na hora de imprimir a pre-venda p o usuario escolher a qtd de copias
     usarLoteValidade := FieldByName('habilitaLoteValidade').AsBoolean;
     vAtacarejo := FieldByName('boAtacarejo').AsBoolean;
+    userDB  := 'sa';
+    senhaDB := DescriptografarSimples(fieldbyName('SenhaBD').AsString,'ChaveSaef2025');
+    vnmBancoNuvem     := FieldByName('nmBancoNuvem').AsString;
+    vIPMaquinaVirtual := FieldByName('dsIPMaquinaVirtual').asString;
+    conn := 'Provider=SQLOLEDB.1;Password='+senhaDB+';Persist Security Info=True;User ID='+userDB+';Initial Catalog='+vnmBancoNuvem+';'+
+    'Data Source='+vIPMaquinaVirtual+',1433;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation '+
+    'ID=NOTETHIAGO;Use Encryption for Data=False;Tag with column collation when possible=False';
+    DModulo.ConexaoWEB.Connected := false;
+    DModulo.ConexaoWEB.ConnectionString := conn;
+    if (vnmBancoNuvem = '') or (vIPMaquinaVirtual = '') then
+      DModulo.ConexaoWEB.ConnectionString := DModulo.Conexao.ConnectionString;
     vIpFTP := FieldByName('IpFTP').AsString;
     vDsUsuarioFTP := FieldByName('DsUsuarioFTP').AsString;
     vDsSenhaFTP := Cryptografia('D', FieldByName('DsSenhaFTP').AsString);
