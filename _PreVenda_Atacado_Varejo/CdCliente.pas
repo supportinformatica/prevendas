@@ -1069,505 +1069,515 @@ var
    i : integer;
 begin
   inherited;
-  cdOperador := FrmPrincipalPreVenda.vcdVendedor;
-  if CbxVendedor.Text = '' then
-  begin
-    application.MessageBox('Selecione o vendedor!', 'Atenção', mb_ok + MB_ICONWARNING);
-    PgCtrolMdCadastro.ActivePageIndex := 1;
-    CbxVendedor.setFocus;
-    exit;
-  end;
-  TornarObrigatorioRazaoSocial((vGerarSpedFiscal or vGerarSpedPis) and (RgPessoaD.ItemIndex = 1));
-  if not CamposObrigatoriosPreenchidos(TbSheetMdCadastroDados) then
-    Exit;
-  CkbAtivosD.Enabled := True;
-  ckbIsento.Enabled := True;
-  vdata := DtCadastro.Date;
-  if RgPessoaD.ItemIndex = -1 then
-  begin  // testa se foi escolhido se o cliente é pessoa fisica ou juridica
-    ShowMessage('Você deve especificar se o cliente é pessoa física ou jurídica!');
-    exit;
-  end;  // if
-  if CbxCidade.ItemIndex = (-1) then
-    EdtCdMunicipio.Clear;
-  if EdtCdMunicipio.Text = '' then
-  begin
-    MessageDlg('Selecione a cidade novamente', mtError, [mbOK],0);
-    CbxCidade.SetFocus;
-    exit;
-  end;
-  if RgPessoaD.ItemIndex = 0 then
-  begin     // testa o cpf
-    if Trim(MskCpf.Text) <> '' then
+  try
+    AdoQryAlterar.Connection := DModulo.ConexaoWEB;
+    AdoQryUltimoCodigo.Connection := DModulo.ConexaoWEB;
+    AdoQrySalvar.Connection := DModulo.ConexaoWEB;
+
+    cdOperador := FrmPrincipalPreVenda.vcdVendedor;
+    if CbxVendedor.Text = '' then
     begin
-      aux1 := Copy(CalculaCnpjCpf(Copy(MskCpf.Text,1,9)),10,2);
-      aux2 := Copy(MskCpf.Text,10,2);
-      If (aux1 <> aux2) then
-      begin
-        ShowMessage('CPF inválido redigite ou deixe em branco!');
-        PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-        MskCpf.SetFocus;
-        MskCpf.Clear;
-        exit;
-      end;  // if
+      application.MessageBox('Selecione o vendedor!', 'Atenção', mb_ok + MB_ICONWARNING);
+      PgCtrolMdCadastro.ActivePageIndex := 1;
+      CbxVendedor.setFocus;
+      exit;
     end;
-  end else
-  begin
-    if trim(MskCgc.Text) <> '' then
+    TornarObrigatorioRazaoSocial((vGerarSpedFiscal or vGerarSpedPis) and (RgPessoaD.ItemIndex = 1));
+    if not CamposObrigatoriosPreenchidos(TbSheetMdCadastroDados) then
+      Exit;
+    CkbAtivosD.Enabled := True;
+    ckbIsento.Enabled := True;
+    vdata := DtCadastro.Date;
+    if RgPessoaD.ItemIndex = -1 then
+    begin  // testa se foi escolhido se o cliente é pessoa fisica ou juridica
+      ShowMessage('Você deve especificar se o cliente é pessoa física ou jurídica!');
+      exit;
+    end;  // if
+    if CbxCidade.ItemIndex = (-1) then
+      EdtCdMunicipio.Clear;
+    if EdtCdMunicipio.Text = '' then
     begin
-      aux1 := Copy(CalculaCnpjCpf(Copy(MskCgc.Text,1,12)),13,2);
-      aux2 := Copy(MskCgc.Text,13,2);
-      if (aux1 <> aux2)  then
-      begin          // testa o cgc
-        ShowMessage('CNPJ invalido redigite ou deixe em branco!');
-        PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-        MskCgc.Clear;
-        MskCgc.SetFocus;
-        exit;
+      MessageDlg('Selecione a cidade novamente', mtError, [mbOK],0);
+      CbxCidade.SetFocus;
+      exit;
+    end;
+    if RgPessoaD.ItemIndex = 0 then
+    begin     // testa o cpf
+      if Trim(MskCpf.Text) <> '' then
+      begin
+        aux1 := Copy(CalculaCnpjCpf(Copy(MskCpf.Text,1,9)),10,2);
+        aux2 := Copy(MskCpf.Text,10,2);
+        If (aux1 <> aux2) then
+        begin
+          ShowMessage('CPF inválido redigite ou deixe em branco!');
+          PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
+          MskCpf.SetFocus;
+          MskCpf.Clear;
+          exit;
+        end;  // if
+      end;
+    end else
+    begin
+      if trim(MskCgc.Text) <> '' then
+      begin
+        aux1 := Copy(CalculaCnpjCpf(Copy(MskCgc.Text,1,12)),13,2);
+        aux2 := Copy(MskCgc.Text,13,2);
+        if (aux1 <> aux2)  then
+        begin          // testa o cgc
+          ShowMessage('CNPJ invalido redigite ou deixe em branco!');
+          PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
+          MskCgc.Clear;
+          MskCgc.SetFocus;
+          exit;
+        end;
       end;
     end;
-  end;
-  // TETA IGUALDADE DE CNPJ E OU CPF
-  if CNPJ_CPFIguais = False then
-    exit;
-  if status = [novo] then
-  begin
-    if (CbxTelefone.Text <> '') then
+    // TETA IGUALDADE DE CNPJ E OU CPF
+    if CNPJ_CPFIguais = False then
+      exit;
+    if status = [novo] then
     begin
-      dddTelefone := InputBox('DDD telefone 2 digitos', 'Digite o DDD do telefone:', '');
-      dddTelefone := Copy(SoNumeros(dddTelefone), 1, 2);
-    end;
-    if Length(CbxTelefone.Text) > 0 then
-    begin
-      with AdoQryAlterar do
+      if (CbxTelefone.Text <> '') then
       begin
-        Sql.Text := 'Select Max(cdTelefone) as UtCodigo From Telefone WITH (NOLOCK) ';
-        open;
-        vCodigo := IntToStr(AdoQryAlterar.FieldByName('UtCodigo').AsInteger + 1);
-        close;
+        dddTelefone := InputBox('DDD telefone 2 digitos', 'Digite o DDD do telefone:', '');
+        dddTelefone := Copy(SoNumeros(dddTelefone), 1, 2);
       end;
-    end;
-    With AdoQrySalvar do
-    begin
-      try
-        DModulo.Conexao.BeginTrans;
-        AdoQryUltimoCodigo.Open;
-        EdtCodigo.Text := IntToStr(AdoQryUltimoCodigo.FieldByName('UtCodigo').AsInteger + 1);
-        AdoQryUltimoCodigo.Close;
-        Sql.Text := 'INSERT INTO Pessoa (cdPessoa,nmPessoa,dtCadastro,dsTipoRecebimento,            '+
-        'dsAtivo,Ser,Existir,dsMemo,dsHomePage,dsEmail,dtAlteracao,dsUsuario, vlComissao,dsEmailNFe,'+
-        'dsIndIEDest)                                                                               '+
-        'VALUES (:CDPESSOA,:NMPESSOA,:DTCADASTRO,:FORMA,:DSATIVO,:SER,:EXISTIR,:DSMEMO,             '+
-        ':DSHOMEPAGE, :DSEMAIL, :DTALTERA, :DSUSUARIO, :COMISSAO, :DSEMAILNFE, :dsIndIEDest)        ';
-        parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
-        parameters.parambyname('FORMA').value      := EdtFormaReceb.Text;
-        parameters.parambyname('NMPESSOA').value   := EdtNome.Text;
-        parameters.parambyname('DSEMAILNFE').value := EdtEmail_Danfe.Text;
-        if CkbAtivosD.Checked then
-          parameters.parambyname('DSATIVO').value  := 'S'
-        else
-          parameters.parambyname('DSATIVO').value  := 'N';
-        parameters.parambyname('SER').value        := 'C';
-        parameters.parambyname('DTCADASTRO').value := DtCadastro.Date;
-        parameters.parambyname('DSMEMO').value     := MmCliente.Text;
-        parameters.parambyname('DSHOMEPAGE').value := EdtHomePage.Text;
-        Parameters.ParamByName('COMISSAO').Value   := edtComissao.Text;
-        parameters.parambyname('DSEMAIL').value    := EdtEmail.Text;
-        if RgPessoaD.ItemIndex = 0 then
-          parameters.parambyname('EXISTIR').value  := 'F'
-        else
-          parameters.parambyname('EXISTIR').value  := 'J';
-        parameters.parambyname('DTALTERA').value   := vData_Banco;
-        parameters.parambyname('DSUSUARIO').value  := cdOperador; //+ ' ' +FormPrincipal.StbPrincipal.Panels[0].Text;
-        if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
-          parameters.parambyname('dsIndIEDest').value  := 1
-        else
-          parameters.parambyname('dsIndIEDest').value  := 0;
-        ExecSql;
-        Grava_Pessoa;
-        if (UpperCase(vEmpresa)='MASSAPAULISTA') then // coloca os preços de todos os produtos para o novo cliente
-          salvar_em_itePreco(StrToInt(EdtCodigo.Text));
-        Sql.Text := 'Insert Into Cliente (cdPessoa,cdCodigo,dsPublicoPrivado,dsExcluir,dsLimCredito,                 '+
-                    'nrDiaVenc,nrDiaVenc2,cdRegiao,cdPessoa_1,dsMotivo,dsAtacado,dsRestricao,dsLocalizacao,dsPrevenda,'+
-                    'vlDescVista,vlDescPrazo,dsVista,nrCartao,dsInscricaoMunicipal,DSISENTO,dsIndIEDest,cdMatriz, dsFaturaUnica ';
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
-          sql.Add(',dsContrato,dtInicio,dtFim,nrVisitas,tpStatus,dsEquipamentos,nrRamais,dsOutros,cdTecnico,nrObjeto) ')
-        else
-          sql.Add(')');
-        sql.Add('Values (:CDPESSOA,:CDCODIGO,:DSPUBLICOPRIVADO,:DSEXCLUIR,:DSLIMCREDITO,:NRDIAVENC,                   ');
-        sql.Add(':NRDIAVENC2,:CDREGIAO,:CDPESSOA_1,:DSMOTIVO,:DSATACADO,:DSRESTRICAO,:DSLOCAL,:DSPREVENDA,            ');
-        sql.Add(':DESCVIST,:DESCPRAZO,:DSVISTA,:NRCARTAO,:DSINSCRICAOMUNICIPAL,:DSISENTO,:dsIndIEDest,:cdMatriz, :dsFaturaUnica ');
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
-          sql.Add(',:DSCONT,:dtInicio,:dtFim,:nrVisitas,:tpStatus,:dsEquipamentos,:nrRamais,:dsOutros,:cdTecnico,:nrObjeto) ')
-        else
-          sql.Add(')');
-        if trim(EdtCdMatriz.Text) <> '' then
-          parameters.parambyname('cdMatriz').value := EdtCdMatriz.Text
-        else
-          parameters.parambyname('cdMatriz').value := null;
-        parameters.parambyname('DSINSCRICAOMUNICIPAL').value := TRim(MskInscricaoMunic.Text);
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        parameters.parambyname('CDCODIGO').value := EdtcdtpCli.Text;
-        case RgTpVencimento.ItemIndex of
-          0: parameters.parambyname('DSPUBLICOPRIVADO').Value := 'I';
-          1: parameters.parambyname('DSPUBLICOPRIVADO').Value := '2';
-          2: parameters.parambyname('DSPUBLICOPRIVADO').Value := '3';
-          3: parameters.parambyname('DSPUBLICOPRIVADO').Value := '4';
-        end;
-        if ckbIsento.Checked then
-          parameters.parambyname('DSISENTO').value  := 1  // Isento de ICMS
-        else
-          parameters.parambyname('DSISENTO').value  := 0; // Sem Isencao
-        if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
-          parameters.parambyname('dsIndIEDest').value  := 1
-        else
-          parameters.parambyname('dsIndIEDest').value  := 0;
-        parameters.parambyname('DSEXCLUIR').value    := 'S';
-        parameters.parambyname('DSLIMCREDITO').value := StrToFloat(FormatFloat('0.00',StrToFloat(EdtLimite.Text)));
-        if Length(EdtDias.Text) > 0 then
-          parameters.parambyname('NRDIAVENC').value := EdtDias.Text
-        else
-          parameters.parambyname('NRDIAVENC').value := '0';
-        if Length(EdtDia2.Text) > 0 then
-          parameters.parambyname('NRDIAVENC2').value := EdtDia2.Text
-        else
-          parameters.parambyname('NRDIAVENC2').value := '0';
-        parameters.parambyname('CDREGIAO').value   := EdtCdregiao.Text;
-        parameters.parambyname('CDPESSOA_1').value := EdtCdVendedor.Text;
-        parameters.parambyname('DSMOTIVO').value   := EdtMotivo.Text;
-        parameters.parambyname('DSLOCAL').value    := EdtLocalizacao.Text;
-        parameters.parambyname('DSPREVENDA').value := EdtpreVenda.Text;
-        parameters.parambyname('DESCVIST').value   := EdtDescVista.Text;
-        parameters.parambyname('NRCARTAO').value   := EdtnrCartao.Text;
-        parameters.parambyname('DESCPRAZO').value  := EdtDescPrazo.Text;
-        if CbxFaturaUnica.Checked then
-          parameters.parambyname('dsFaturaUnica').value := 1
-        else
-          parameters.parambyname('dsFaturaUnica').value := 0;
-        if CkAtacado.Checked then   //  mudar se for ativo ou não
-          parameters.parambyname('DSATACADO').value := 'S'
-        else
-          parameters.parambyname('DSATACADO').value := 'N';
-        if ckRestricao.Checked then   //  mudar se for ativo ou não
-          parameters.parambyname('DSRESTRICAO').value := 'S'
-        else
-          parameters.parambyname('DSRESTRICAO').value := 'N';
-        if CkVista.Checked then //  mudar se for ativo ou não
-          parameters.parambyname('DSVISTA').value := 'S'
-        else
-          parameters.parambyname('DSVISTA').value := 'N';
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+      if Length(CbxTelefone.Text) > 0 then
+      begin
+        with AdoQryAlterar do
         begin
-          parameters.parambyname('DSCONT').value         := EdtContrato.text;
-          parameters.parambyname('dtInicio').value       := DateToStr(EdtDataChegada.Date);
-          parameters.parambyname('dtFim').value          := DateToStr(EdtDataSaida.Date);
-          if EdtVisitas.Text <> '' then
-            parameters.parambyname('nrVisitas').value       := EdtVisitas.Text
-          else parameters.parambyname('nrVisitas').value  := '0';
-          parameters.parambyname('tpStatus').value       := CBStatus.ItemIndex;
-          parameters.parambyname('dsEquipamentos').value := EdtEquipamento.Text;
-          if EdtRamais.Text <> '' then
-            parameters.parambyname('nrRamais').value       := EdtRamais.Text
-          else parameters.parambyname('nrRamais').value  := '0';
-          parameters.parambyname('dsOutros').value       := EdtOutros.Text;
-          if CBCodigoTec.Text <> '' then
-            parameters.parambyname('cdTecnico').value      := CBCodigoTec.Text
-          else parameters.parambyname('cdTecnico').value := 0;
-          if EdtNrObjeto.Text <> '' then
-            parameters.parambyname('nrObjeto').value       := EdtNrObjeto.Text
-          else parameters.parambyname('nrObjeto').value  := 0;
+          Sql.Text := 'Select Max(cdTelefone) as UtCodigo From Telefone WITH (NOLOCK) ';
+          open;
+          vCodigo := IntToStr(AdoQryAlterar.FieldByName('UtCodigo').AsInteger + 1);
+          close;
         end;
-        ExecSql;
-        Sql.Text :=
-        'Insert Into Endereco (cdPessoa,nmLogradouro,cdEndereco,          '+
-        'dsComplemento,dsCep,dsBairro,dsCidade,cdMunicipio,dsUf,nrnumero) '+
-        'Values (:CDPESSOA,:NMLOGRADOURO,:CDENDERECO,:DSCOMPLEMENTO,      '+
-        ':DSCEP,:DSBAIRRO,:DSCIDADE,:CDMUNICIPIO,:DSUF,:NRNUMERO)         ';
-        parameters.parambyname('CDPESSOA').value      := EdtCodigo.Text;
-        parameters.parambyname('NMLOGRADOURO').value  := EdtEndereco.Text;
-        parameters.parambyname('CDENDERECO').value    := EdtCodigo.Text;
-        parameters.parambyname('DSCOMPLEMENTO').value := EdtComplemento.Text;
-        parameters.parambyname('DSCEP').value         := EdtCep.Text;
-        parameters.parambyname('DSBAIRRO').value      := EdtBairro.Text;
-        parameters.parambyname('DSCIDADE').value      := CbxCidade.Text;
-        parameters.parambyname('CDMUNICIPIO').value   := EdtCdMunicipio.Text;
-        parameters.parambyname('NRNUMERO').value      := EdtNumero.Text;
-        parameters.parambyname('DSUF').value          := CbxEstado.Text;
-        ExecSql;
-        if Length(CbxTelefone.Text) > 0 then
-        begin
-          Sql.Text :=
-          'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone, nrDDD) '+
-          'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE, :nrDDD)         ';
-          parameters.parambyname('NMTELEFONE').value := CbxTelefone.Text;
-          parameters.parambyname('DSRAMAL').value    := EdtRamal.Text;
-          parameters.parambyname('DSTELEFONE').value := EdtTipoTel.Text;
+      end;
+      With AdoQrySalvar do
+      begin
+        try
+          DModulo.Conexao.BeginTrans;
+          AdoQryUltimoCodigo.Open;
+          EdtCodigo.Text := IntToStr(AdoQryUltimoCodigo.FieldByName('UtCodigo').AsInteger + 1);
+          AdoQryUltimoCodigo.Close;
+          Sql.Text := 'INSERT INTO Pessoa (cdPessoa,nmPessoa,dtCadastro,dsTipoRecebimento,            '+
+          'dsAtivo,Ser,Existir,dsMemo,dsHomePage,dsEmail,dtAlteracao,dsUsuario, vlComissao,dsEmailNFe,'+
+          'dsIndIEDest)                                                                               '+
+          'VALUES (:CDPESSOA,:NMPESSOA,:DTCADASTRO,:FORMA,:DSATIVO,:SER,:EXISTIR,:DSMEMO,             '+
+          ':DSHOMEPAGE, :DSEMAIL, :DTALTERA, :DSUSUARIO, :COMISSAO, :DSEMAILNFE, :dsIndIEDest)        ';
           parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
-          parameters.parambyname('CDTELEFONE').value := vCodigo;
-          parameters.parambyname('nrDDD').value := dddTelefone;
+          parameters.parambyname('FORMA').value      := EdtFormaReceb.Text;
+          parameters.parambyname('NMPESSOA').value   := EdtNome.Text;
+          parameters.parambyname('DSEMAILNFE').value := EdtEmail_Danfe.Text;
+          if CkbAtivosD.Checked then
+            parameters.parambyname('DSATIVO').value  := 'S'
+          else
+            parameters.parambyname('DSATIVO').value  := 'N';
+          parameters.parambyname('SER').value        := 'C';
+          parameters.parambyname('DTCADASTRO').value := DtCadastro.Date;
+          parameters.parambyname('DSMEMO').value     := MmCliente.Text;
+          parameters.parambyname('DSHOMEPAGE').value := EdtHomePage.Text;
+          Parameters.ParamByName('COMISSAO').Value   := edtComissao.Text;
+          parameters.parambyname('DSEMAIL').value    := EdtEmail.Text;
+          if RgPessoaD.ItemIndex = 0 then
+            parameters.parambyname('EXISTIR').value  := 'F'
+          else
+            parameters.parambyname('EXISTIR').value  := 'J';
+          parameters.parambyname('DTALTERA').value   := vData_Banco;
+          parameters.parambyname('DSUSUARIO').value  := cdOperador; //+ ' ' +FormPrincipal.StbPrincipal.Panels[0].Text;
+          if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
+            parameters.parambyname('dsIndIEDest').value  := 1
+          else
+            parameters.parambyname('dsIndIEDest').value  := 0;
           ExecSql;
-        end;
-        FrmPrincipalPreVenda.SalvaLogEventos('Cadastro de cliente',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
-                                                          EdtCodigo.Text,'',0,StrToInt(cdOperador),'1');
-        DModulo.Conexao.CommitTrans;
-        salvouOCiente := True;
-        Messagedlg('Inclusão Ok!', mtinformation, [mbOk], 0);
-      except
-        on ER: EDBEngineError do
-        begin
-          DModulo.Conexao.RollbackTrans;
-          Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.PegaHoraBanco, cdOperador,'TFrmCdCliente.BtnMdSalvarClick', ER.Message);
-          Messagedlg('Não foi possivel salvar os dados!', mterror, [mbOk], 0);
-          exit;
-        end;
-        on E: Exception do
-        begin
-          DModulo.Conexao.RollbackTrans;
-          Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.pegaHoraBanco, cdOperador,'TFrmCdCliente.BtnMdSalvarClick',e.Message);
-          Messagedlg('Não foi possivel salvar os dados!', mterror, [mbOk], 0);
-          EdtCodigo.Enabled := False;
-          exit;
-        end;
-      end; // except
-    end;   // With QrySalvar
-  end
-  else
-  begin
-//    if ((Length(MskCgc.Text) > 0) and (RgPessoaD.ItemIndex = 1) and (SoNumeros(MskCgc.Text) <> '')) and (UpperCase(vEmpresa)<>'PLANTA') and (UpperCase(vEmpresa)<>'BG') and (UpperCase(vEmpresa)<>'ATAKADINHO') and (UpperCase(vEmpresa)<>'TEPROLIM') then
-//    begin
-//      if UPPERCASE(FrmPrincipal.vEmpresa) <> 'SUPPORT' then begin
-//        With AdoQryCombFone do
-//        begin
-//          Sql.Text := 'Select P.cdPessoa,P.nmPessoa,J.CGC FROM Pessoa P WITH (NOLOCK) INNER JOIN '+
-//          'P_Juridica J WITH (NOLOCK) ON P.cdPessoa =  J.cdPessoa Where J.CGC = :CGC and P.ser = ''C'' and P.cdPessoa <> :CDPESSOA';
-//          Parameters.parambyname('CGC').Value := MskCgc.Text;
-//          Parameters.parambyname('CDPESSOA').Value := EdtCodigo.Text;
-//          Open;
-//          if (AdoQryCombFone.RecordCount <> 0)  then begin
-//            Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-//            {if} MessageDlg ('Este CNPJ já está cadastrado com o CLIENTE --> ' +
-//              AdoQryCombFone.FieldByName('cdPessoa').AsString + ' - ' +
-//              AdoQryCombFone.FieldByName('nmPessoa').AsString{+ #13'' +
-//              ' '+ #13'' +
-//              'Deseja cadastrá-lo mesmo assim?'}, mtWarning,[mbOK],0); {= mrNo then begin}
-//              Application.OnMessage := FormPrincipal.ProcessaMsg;
-//              PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-//              EdtNome.SetFocus;
-//              close;
-//              exit;
-//            {end else
-//              Application.OnMessage := FormPrincipal.ProcessaMsg;}
-//          end;
-//          close;
-//        end;
-//      end;
-//    end;
-    if (RgPessoaD.ItemIndex = 1) and (CNPJAtual <> MskCgc.Text) and participanteEmNFeNoMesAtual(StrToInt(EdtCodigo.text)) then
-    begin
-      application.MessageBox('Não é correto alteração do campo CNPJ porque o mesmo já está na EFD (SPED) deste mês.' + #13#10
-                            +'Esta alteração vai gerar um erro no EFD (SPED).'
-                            +'Dica: Fazer um novo cadastro para este CNPJ, ou aguarde a virada do mês.', 'Atenção', mb_ok + MB_ICONWARNING);
-      if Application.MessageBox(PChar('Clique em Sim para salvar as alterações exceto CNPJ, e Não para alterar inclusive o CNPJ'), 'Confirmação', MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
-      begin
-        MskCgc.Text:= CNPJAtual;
-      end;
-    end;
-
-    // testa CPF iguais
-//    if ((Length(MskCPF.Text) > 0) and (RgPessoaD.ItemIndex = 0) and (SoNumeros(MskCgc.Text) <> '')) and (UpperCase(vEmpresa)<>'PLANTA') and (UpperCase(vEmpresa)<>'BG') and (UpperCase(vEmpresa)<>'ATAKADINHO') and (UpperCase(vEmpresa)<>'TEPROLIM') then begin
-//      With AdoQryCombFone do begin
-//        Sql.Text := 'Select P.cdPessoa,P.nmPessoa,J.dsCPF FROM Pessoa P WITH (NOLOCK) INNER JOIN '+
-//        'P_Fisica J WITH (NOLOCK) ON P.cdPessoa = J.cdPessoa Where J.dsCPF = :CPF and P.ser = :TIPO and P.cdPessoa <> :CDPESSOA';
-//        Parameters.parambyname('CPF').Value := MskCpf.Text;
-//        Parameters.parambyname('TIPO').Value := 'C';
-//        Parameters.parambyname('CDPESSOA').Value := EdtCodigo.Text;
-//        Open;
-//        if (AdoQryCombFone.RecordCount <> 0)  then begin
-//          Application.OnMessage := FormPrincipal.NaoProcessaMsg;
-//          {if} MessageDlg ('Este CPF já está cadastrado com o CLIENTE --> ' +
-//            AdoQryCombFone.FieldByName('cdPessoa').AsString + ' - ' +
-//            AdoQryCombFone.FieldByName('nmPessoa').AsString{+ #13'' + ' '+ #13'' +
-//            'Deseja cadastrá-lo mesmo assim?'}, mtWarning,[mbOK],0); {= mrNo then begin}
-//            Application.OnMessage := FormPrincipal.ProcessaMsg;
-//            PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
-//            EdtNome.SetFocus;
-//            close;
-//            exit;
-//          {end else
-//            Application.OnMessage := FormPrincipal.ProcessaMsg;}
-//        end;
-//        close;
-//      end;
-//    end;
-     //SPED FISCAL
-     // pega os campos para comparar se foram alterados antes
-    if RgPessoaD.ItemIndex = 0 then // SE FOR PESSOA FÍSICA
-       preencheVetorSped('D',EdtNome.Text,mskCgc.Text,mskCpf.Text,MskInscricao2.Text,EdtCdMunicipio.Text,
-                         EdtEndereco.Text, EdtNumero.Text,EdtComplemento.Text,EdtBairro.Text)
-    else
-       preencheVetorSped('D',EdtNome.Text,mskCgc.Text,mskCpf.Text,MskInscricao.Text,EdtCdMunicipio.Text,
-                         EdtEndereco.Text, EdtNumero.Text,EdtComplemento.Text,EdtBairro.Text);
-
-    With AdoQryAlterar do
-    begin
-      try
-        DModulo.Conexao.BeginTrans;
-        Sql.Text := 'Delete From P_Fisica Where cdpessoa = :CODIGO ';
-        Parameters.ParamByName('CODIGO').Value := EdtCodigo.Text;
-        ExecSQL;
-        Sql.Text := 'Delete From P_Juridica Where cdPessoa = :CODIGO ';
-        Parameters.ParamByName('CODIGO').Value := EdtCodigo.Text;
-        ExecSQL;
-        Grava_Pessoa;
-        Sql.Text := 'Update Pessoa Set dsAtivo = :DSATIVO,nmPessoa = :NMPESSOA,                '+
-                    'dtCadastro = :DTCADASTRO,dsEmail = :DSEMAIL,dsMemo = :DSMEMO,             '+
-                    'dtAlteracao = :dtAlteracao,dsUsuario = :dsUsuario, vlComissao = :COMISSAO,'+
-                    'dsHomePage = :DSHOMEPAGE,EXISTIR = :EXISTIR,dsTipoRecebimento = :FORMA,   '+
-                    'dsEmailNFe = :DSEMAILNFE, dsIndIEDest = :dsIndIEDest Where cdPessoa = :CDPESSOA ';
-        if CkbAtivosD.Checked then   //  mudar se for ativo ou não
-          parameters.parambyname('DSATIVO').value  := 'S'
-        else
-          parameters.parambyname('DSATIVO').value  := 'N';
-        parameters.parambyname('NMPESSOA').value   := EdtNome.Text;
-        parameters.parambyname('FORMA').value      := EdtFormaReceb.Text;
-        parameters.parambyname('DTCADASTRO').value := DtCadastro.date;
-        parameters.parambyname('DSEMAIL').value    := EdtEmail.Text;
-        parameters.parambyname('DSEMAILNFE').value := EdtEmail_Danfe.Text;
-        parameters.parambyname('DSMEMO').value     := MmCliente.Text;
-        parameters.parambyname('DSHOMEPAGE').value := EdtHomePage.Text;
-        parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
-        Parameters.ParamByName('COMISSAO').Value   := edtComissao.Text;
-        parameters.parambyname('dtalteracao').value := vData_Banco;
-        parameters.parambyname('dsUsuario').value   := cdOperador; //+ ' ' +FormPrincipal.StbPrincipal.Panels[0].Text;
-        if RgPessoaD.ItemIndex = 0 then
-          parameters.parambyname('EXISTIR').value := 'F'
-        else
-          parameters.parambyname('EXISTIR').value := 'J';
-        if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
-          parameters.parambyname('dsIndIEDest').value  := 1
-        else
-          parameters.parambyname('dsIndIEDest').value  := 0;
-        ExecSql;
-        Sql.Text := 'Update Endereco Set nmLogradouro = :NMLOGRADOURO,dsComplemento = :DSCOMPLEMENTO,                  '+
-                    'dsCep = :DSCEP,dsBairro = :DSBAIRRO,dsUf = :DSUF,dsCidade = :DSCIDADE,CDMunicipio = :CDMUNICIPIO, '+
-                    'nrnumero = :NRNUMERO Where cdPessoa = :CDPESSOA                                                   ';
-        parameters.parambyname('NMLOGRADOURO').value  := copy(EdtEndereco.Text,1,40); //copy pra não passar do tamanho do campo qd busca pelo cep
-        parameters.parambyname('DSCOMPLEMENTO').value := EdtComplemento.Text;
-        parameters.parambyname('DSCEP').value         := EdtCep.Text;
-        parameters.parambyname('DSBAIRRO').value      := EdtBairro.Text;
-        parameters.parambyname('DSUF').value          := CbxEstado.Text;
-        parameters.parambyname('DSCIDADE').value      := CbxCidade.Text;
-        parameters.parambyname('CDMUNICIPIO').value   := EdtCdMunicipio.Text;
-        parameters.parambyname('CDPESSOA').value      := EdtCodigo.Text;
-        parameters.parambyname('NRNUMERO').value      := EdtNumero.Text;
-        ExecSql;
-
-        Sql.Text := 'Update Cliente Set dsLimCredito = :LIMITE,dsPublicoPrivado = :DSPUBLICOPRIVADO,'+
-                    'nrDiaVenc = :NRDIAVENC,nrDiaVenc2 = :NRDIAVENC2,cdCodigo = :CDCODIGO,          '+
-                    'cdRegiao = :CDREGIAO, cdPessoa_1 = :CDPESSOA_1,                                '+
-                    'dsAtacado = :DSATACADO,dsRestricao = :DSRESTRICAO, dsMotivo = :DSMOTIVO,       '+
-                    'dsLocalizacao = :DSLOCAL,dsPreVenda = :DSPREVENDA,dsIndIEDest = :dsIndIEDest,  '+
-                    'vlDescVista = :DESCVISTA, vlDescPrazo = :DESCPRAZO,DSVISTA = :DSVISTA,         '+
-                    'nrCartao = :NRCARTAO,dsInscricaoMunicipal = :DSINSCRICAOMUNICIPAL,             '+
-                    'DSISENTO = :DSISENTO, cdMatriz = :cdMatriz, dsFaturaUnica = :dsFaturaUnica ';
-
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
-        begin
-          sql.add(',dsContrato = :DSCONT, dtInicio = :dtInicio,      ');
-          sql.add('dtFim = :dtFim,nrVisitas = :nrVisitas,tpStatus = :tpStatus,dsEquipamentos = :dsEquipamentos, ');
-          sql.add('nrRamais = :nrRamais,dsOutros = :dsOutros,cdTecnico = :cdTecnico,nrObjeto = :nrObjeto  ');
-        end;
-        sql.add('Where cdPessoa = :CDPESSOA  ');
-
-        if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
-        begin
-          parameters.parambyname('DSCONT').value            := EdtContrato.Text;
-          parameters.parambyname('dtInicio').value          := DateToStr(EdtDataChegada.Date);
-          parameters.parambyname('dtFim').value             := DateToStr(EdtDataSaida.Date);
-          if EdtVisitas.Text <> '' then
-            parameters.parambyname('nrVisitas').value       := EdtVisitas.Text
+          Grava_Pessoa;
+          if (UpperCase(vEmpresa)='MASSAPAULISTA') then // coloca os preços de todos os produtos para o novo cliente
+            salvar_em_itePreco(StrToInt(EdtCodigo.Text));
+          Sql.Text := 'Insert Into Cliente (cdPessoa,cdCodigo,dsPublicoPrivado,dsExcluir,dsLimCredito,                 '+
+                      'nrDiaVenc,nrDiaVenc2,cdRegiao,cdPessoa_1,dsMotivo,dsAtacado,dsRestricao,dsLocalizacao,dsPrevenda,'+
+                      'vlDescVista,vlDescPrazo,dsVista,nrCartao,dsInscricaoMunicipal,DSISENTO,dsIndIEDest,cdMatriz, dsFaturaUnica ';
+          if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+            sql.Add(',dsContrato,dtInicio,dtFim,nrVisitas,tpStatus,dsEquipamentos,nrRamais,dsOutros,cdTecnico,nrObjeto) ')
+          else
+            sql.Add(')');
+          sql.Add('Values (:CDPESSOA,:CDCODIGO,:DSPUBLICOPRIVADO,:DSEXCLUIR,:DSLIMCREDITO,:NRDIAVENC,                   ');
+          sql.Add(':NRDIAVENC2,:CDREGIAO,:CDPESSOA_1,:DSMOTIVO,:DSATACADO,:DSRESTRICAO,:DSLOCAL,:DSPREVENDA,            ');
+          sql.Add(':DESCVIST,:DESCPRAZO,:DSVISTA,:NRCARTAO,:DSINSCRICAOMUNICIPAL,:DSISENTO,:dsIndIEDest,:cdMatriz, :dsFaturaUnica ');
+          if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+            sql.Add(',:DSCONT,:dtInicio,:dtFim,:nrVisitas,:tpStatus,:dsEquipamentos,:nrRamais,:dsOutros,:cdTecnico,:nrObjeto) ')
+          else
+            sql.Add(')');
+          if trim(EdtCdMatriz.Text) <> '' then
+            parameters.parambyname('cdMatriz').value := EdtCdMatriz.Text
+          else
+            parameters.parambyname('cdMatriz').value := null;
+          parameters.parambyname('DSINSCRICAOMUNICIPAL').value := TRim(MskInscricaoMunic.Text);
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          parameters.parambyname('CDCODIGO').value := EdtcdtpCli.Text;
+          case RgTpVencimento.ItemIndex of
+            0: parameters.parambyname('DSPUBLICOPRIVADO').Value := 'I';
+            1: parameters.parambyname('DSPUBLICOPRIVADO').Value := '2';
+            2: parameters.parambyname('DSPUBLICOPRIVADO').Value := '3';
+            3: parameters.parambyname('DSPUBLICOPRIVADO').Value := '4';
+          end;
+          if ckbIsento.Checked then
+            parameters.parambyname('DSISENTO').value  := 1  // Isento de ICMS
+          else
+            parameters.parambyname('DSISENTO').value  := 0; // Sem Isencao
+          if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
+            parameters.parambyname('dsIndIEDest').value  := 1
+          else
+            parameters.parambyname('dsIndIEDest').value  := 0;
+          parameters.parambyname('DSEXCLUIR').value    := 'S';
+          parameters.parambyname('DSLIMCREDITO').value := StrToFloat(FormatFloat('0.00',StrToFloat(EdtLimite.Text)));
+          if Length(EdtDias.Text) > 0 then
+            parameters.parambyname('NRDIAVENC').value := EdtDias.Text
+          else
+            parameters.parambyname('NRDIAVENC').value := '0';
+          if Length(EdtDia2.Text) > 0 then
+            parameters.parambyname('NRDIAVENC2').value := EdtDia2.Text
+          else
+            parameters.parambyname('NRDIAVENC2').value := '0';
+          parameters.parambyname('CDREGIAO').value   := EdtCdregiao.Text;
+          parameters.parambyname('CDPESSOA_1').value := EdtCdVendedor.Text;
+          parameters.parambyname('DSMOTIVO').value   := EdtMotivo.Text;
+          parameters.parambyname('DSLOCAL').value    := EdtLocalizacao.Text;
+          parameters.parambyname('DSPREVENDA').value := EdtpreVenda.Text;
+          parameters.parambyname('DESCVIST').value   := EdtDescVista.Text;
+          parameters.parambyname('NRCARTAO').value   := EdtnrCartao.Text;
+          parameters.parambyname('DESCPRAZO').value  := EdtDescPrazo.Text;
+          if CbxFaturaUnica.Checked then
+            parameters.parambyname('dsFaturaUnica').value := 1
+          else
+            parameters.parambyname('dsFaturaUnica').value := 0;
+          if CkAtacado.Checked then   //  mudar se for ativo ou não
+            parameters.parambyname('DSATACADO').value := 'S'
+          else
+            parameters.parambyname('DSATACADO').value := 'N';
+          if ckRestricao.Checked then   //  mudar se for ativo ou não
+            parameters.parambyname('DSRESTRICAO').value := 'S'
+          else
+            parameters.parambyname('DSRESTRICAO').value := 'N';
+          if CkVista.Checked then //  mudar se for ativo ou não
+            parameters.parambyname('DSVISTA').value := 'S'
+          else
+            parameters.parambyname('DSVISTA').value := 'N';
+          if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+          begin
+            parameters.parambyname('DSCONT').value         := EdtContrato.text;
+            parameters.parambyname('dtInicio').value       := DateToStr(EdtDataChegada.Date);
+            parameters.parambyname('dtFim').value          := DateToStr(EdtDataSaida.Date);
+            if EdtVisitas.Text <> '' then
+              parameters.parambyname('nrVisitas').value       := EdtVisitas.Text
             else parameters.parambyname('nrVisitas').value  := '0';
-          parameters.parambyname('tpStatus').value          := CBStatus.ItemIndex;
-          parameters.parambyname('dsEquipamentos').value    := EdtEquipamento.Text;
-          if EdtRamais.Text <> '' then
-            parameters.parambyname('nrRamais').value        := EdtRamais.Text
-            else parameters.parambyname('nrRamais').value   := '0';
-          parameters.parambyname('dsOutros').value          := EdtOutros.Text;
-          if CBCodigoTec.Text <> '' then
-            parameters.parambyname('cdTecnico').value       := CBCodigoTec.Text
-            else parameters.parambyname('cdTecnico').value  := 0;
-          if EdtNrObjeto.Text <> '' then
-            parameters.parambyname('nrObjeto').value       := EdtNrObjeto.Text
+            parameters.parambyname('tpStatus').value       := CBStatus.ItemIndex;
+            parameters.parambyname('dsEquipamentos').value := EdtEquipamento.Text;
+            if EdtRamais.Text <> '' then
+              parameters.parambyname('nrRamais').value       := EdtRamais.Text
+            else parameters.parambyname('nrRamais').value  := '0';
+            parameters.parambyname('dsOutros').value       := EdtOutros.Text;
+            if CBCodigoTec.Text <> '' then
+              parameters.parambyname('cdTecnico').value      := CBCodigoTec.Text
+            else parameters.parambyname('cdTecnico').value := 0;
+            if EdtNrObjeto.Text <> '' then
+              parameters.parambyname('nrObjeto').value       := EdtNrObjeto.Text
             else parameters.parambyname('nrObjeto').value  := 0;
+          end;
+          ExecSql;
+          Sql.Text :=
+          'Insert Into Endereco (cdPessoa,nmLogradouro,cdEndereco,          '+
+          'dsComplemento,dsCep,dsBairro,dsCidade,cdMunicipio,dsUf,nrnumero) '+
+          'Values (:CDPESSOA,:NMLOGRADOURO,:CDENDERECO,:DSCOMPLEMENTO,      '+
+          ':DSCEP,:DSBAIRRO,:DSCIDADE,:CDMUNICIPIO,:DSUF,:NRNUMERO)         ';
+          parameters.parambyname('CDPESSOA').value      := EdtCodigo.Text;
+          parameters.parambyname('NMLOGRADOURO').value  := EdtEndereco.Text;
+          parameters.parambyname('CDENDERECO').value    := EdtCodigo.Text;
+          parameters.parambyname('DSCOMPLEMENTO').value := EdtComplemento.Text;
+          parameters.parambyname('DSCEP').value         := EdtCep.Text;
+          parameters.parambyname('DSBAIRRO').value      := EdtBairro.Text;
+          parameters.parambyname('DSCIDADE').value      := CbxCidade.Text;
+          parameters.parambyname('CDMUNICIPIO').value   := EdtCdMunicipio.Text;
+          parameters.parambyname('NRNUMERO').value      := EdtNumero.Text;
+          parameters.parambyname('DSUF').value          := CbxEstado.Text;
+          ExecSql;
+          if Length(CbxTelefone.Text) > 0 then
+          begin
+            Sql.Text :=
+            'Insert Into Telefone (nmTelefone,dsRamal,dsTelefone,cdPessoa,CdTelefone, nrDDD) '+
+            'Values (:NMTELEFONE,:DSRAMAL,:DSTELEFONE,:CDPESSOA,:CDTELEFONE, :nrDDD)         ';
+            parameters.parambyname('NMTELEFONE').value := CbxTelefone.Text;
+            parameters.parambyname('DSRAMAL').value    := EdtRamal.Text;
+            parameters.parambyname('DSTELEFONE').value := EdtTipoTel.Text;
+            parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
+            parameters.parambyname('CDTELEFONE').value := vCodigo;
+            parameters.parambyname('nrDDD').value := dddTelefone;
+            ExecSql;
+          end;
+          FrmPrincipalPreVenda.SalvaLogEventos('Cadastro de cliente',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
+                                                            EdtCodigo.Text,'',0,StrToInt(cdOperador),'1');
+          DModulo.Conexao.CommitTrans;
+          salvouOCiente := True;
+          Messagedlg('Inclusão Ok!', mtinformation, [mbOk], 0);
+        except
+          on ER: EDBEngineError do
+          begin
+            DModulo.Conexao.RollbackTrans;
+            Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.PegaHoraBanco, cdOperador,'TFrmCdCliente.BtnMdSalvarClick', ER.Message);
+            Messagedlg('Não foi possivel salvar os dados!', mterror, [mbOk], 0);
+            exit;
+          end;
+          on E: Exception do
+          begin
+            DModulo.Conexao.RollbackTrans;
+            Salvar_erro(vData_Banco + ' | ' + FrmPrincipalPreVenda.pegaHoraBanco, cdOperador,'TFrmCdCliente.BtnMdSalvarClick',e.Message);
+            Messagedlg('Não foi possivel salvar os dados!', mterror, [mbOk], 0);
+            EdtCodigo.Enabled := False;
+            exit;
+          end;
+        end; // except
+      end;   // With QrySalvar
+    end
+    else
+    begin
+  //    if ((Length(MskCgc.Text) > 0) and (RgPessoaD.ItemIndex = 1) and (SoNumeros(MskCgc.Text) <> '')) and (UpperCase(vEmpresa)<>'PLANTA') and (UpperCase(vEmpresa)<>'BG') and (UpperCase(vEmpresa)<>'ATAKADINHO') and (UpperCase(vEmpresa)<>'TEPROLIM') then
+  //    begin
+  //      if UPPERCASE(FrmPrincipal.vEmpresa) <> 'SUPPORT' then begin
+  //        With AdoQryCombFone do
+  //        begin
+  //          Sql.Text := 'Select P.cdPessoa,P.nmPessoa,J.CGC FROM Pessoa P WITH (NOLOCK) INNER JOIN '+
+  //          'P_Juridica J WITH (NOLOCK) ON P.cdPessoa =  J.cdPessoa Where J.CGC = :CGC and P.ser = ''C'' and P.cdPessoa <> :CDPESSOA';
+  //          Parameters.parambyname('CGC').Value := MskCgc.Text;
+  //          Parameters.parambyname('CDPESSOA').Value := EdtCodigo.Text;
+  //          Open;
+  //          if (AdoQryCombFone.RecordCount <> 0)  then begin
+  //            Application.OnMessage := FormPrincipal.NaoProcessaMsg;
+  //            {if} MessageDlg ('Este CNPJ já está cadastrado com o CLIENTE --> ' +
+  //              AdoQryCombFone.FieldByName('cdPessoa').AsString + ' - ' +
+  //              AdoQryCombFone.FieldByName('nmPessoa').AsString{+ #13'' +
+  //              ' '+ #13'' +
+  //              'Deseja cadastrá-lo mesmo assim?'}, mtWarning,[mbOK],0); {= mrNo then begin}
+  //              Application.OnMessage := FormPrincipal.ProcessaMsg;
+  //              PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
+  //              EdtNome.SetFocus;
+  //              close;
+  //              exit;
+  //            {end else
+  //              Application.OnMessage := FormPrincipal.ProcessaMsg;}
+  //          end;
+  //          close;
+  //        end;
+  //      end;
+  //    end;
+      if (RgPessoaD.ItemIndex = 1) and (CNPJAtual <> MskCgc.Text) and participanteEmNFeNoMesAtual(StrToInt(EdtCodigo.text)) then
+      begin
+        application.MessageBox('Não é correto alteração do campo CNPJ porque o mesmo já está na EFD (SPED) deste mês.' + #13#10
+                              +'Esta alteração vai gerar um erro no EFD (SPED).'
+                              +'Dica: Fazer um novo cadastro para este CNPJ, ou aguarde a virada do mês.', 'Atenção', mb_ok + MB_ICONWARNING);
+        if Application.MessageBox(PChar('Clique em Sim para salvar as alterações exceto CNPJ, e Não para alterar inclusive o CNPJ'), 'Confirmação', MB_YESNO + MB_ICONQUESTION + MB_APPLMODAL) = id_yes then
+        begin
+          MskCgc.Text:= CNPJAtual;
         end;
-        if trim(EdtCdMatriz.Text) <> '' then
-          parameters.parambyname('cdMatriz').value := EdtCdMatriz.Text
-        else
-          parameters.parambyname('cdMatriz').value := null;
+      end;
 
-        if CbxFaturaUnica.Checked then
-          parameters.parambyname('dsFaturaUnica').value := 1
-        else
-          parameters.parambyname('dsFaturaUnica').value := 0;
-        if (ckbIndIEDest.Checked) then //and (Length(MskInscricao.Text) > 0) then
-          parameters.parambyname('dsIndIEDest').value  := 1
-        else
-          parameters.parambyname('dsIndIEDest').value  := 0;
-        parameters.parambyname('DSINSCRICAOMUNICIPAL').value := TRim(MskInscricaoMunic.Text);
-        parameters.parambyname('LIMITE').Value       := StrToFloat(FormatFloat('0.00',StrToFloat(EdtLimite.Text)));
-        parameters.parambyname('CDPESSOA').Value     := EdtCodigo.Text;
-        parameters.parambyname('CDREGIAO').value     := EdtCdRegiao.Text;
-        parameters.parambyname('CDPESSOA_1').value   := EdtCdVendedor.Text;
-        parameters.parambyname('NRCARTAO').value     := EdtnrCartao.Text;
-        if ckbIsento.Checked then
-          parameters.parambyname('DSISENTO').value  := 1
-        else
-          parameters.parambyname('DSISENTO').value  := 0;
-        if Length(EdtDias.Text) > 0 then
-          parameters.parambyname('NRDIAVENC').value  := EdtDias.Text
-        else
-          parameters.parambyname('NRDIAVENC').value  := '0';
-        if Length(EdtDia2.Text) > 0 then
-          parameters.parambyname('NRDIAVENC2').value := EdtDia2.Text
-        else
-          parameters.parambyname('NRDIAVENC2').value := '0';
-        parameters.parambyname('CDCODIGO').value := EdtcdtpCli.Text;
-        case RgTpVencimento.ItemIndex of
-           0: parameters.parambyname('DSPUBLICOPRIVADO').value := 'I'; // normal
-           1: parameters.parambyname('DSPUBLICOPRIVADO').value := '2'; // data base
-           2: parameters.parambyname('DSPUBLICOPRIVADO').value := '3'; // quantidade de dias
-           3: parameters.parambyname('DSPUBLICOPRIVADO').value := '4'; // Dois vencimentos
-        end;
-        if ckRestricao.Checked then   // mudar se for ativo ou não
-          parameters.parambyname('DSRESTRICAO').value := 'S'
-        else
-          parameters.parambyname('DSRESTRICAO').value := 'N';
-        if CkAtacado.Checked then   //  mudar se for ativo ou não
-          parameters.parambyname('DSATACADO').value := 'S'
-        else
-          parameters.parambyname('DSATACADO').value := 'N';
-        if ckVista.Checked then   //  mudar se for ativo ou não
-          parameters.parambyname('DSVISTA').value := 'S'
-        else
-          parameters.parambyname('DSVISTA').value := 'N';
-        parameters.parambyname('DSMOTIVO').Value   := EdtMotivo.Text;
-        parameters.parambyname('DSLOCAL').Value    := EdtLocalizacao.Text;
-        parameters.parambyname('DSPREVENDA').Value := EdtPreVenda.Text;
-        parameters.parambyname('DESCVISTA').Value  := EdtDescVista.Text;
-        parameters.parambyname('DESCPRAZO').Value  := EdtDescPrazo.Text;
-        FrmPrincipalPreVenda.SalvaLogEventos('Alteração de Cliente',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
-                                                          EdtCodigo.Text,'',0,StrToInt(cdOperador),'1');
-        ExecSql;
-        Grava_Sped(EdtCodigo.Text);
-        DModulo.Conexao.CommitTrans;
-        salvouOCiente := True;
-        Messagedlg('Alteração ok!', mtinformation, [mbOk], 0);
-      except
-        DModulo.Conexao.RollbackTrans;
-        Messagedlg('Não foi possivel alterar os dados!', mterror, [mbOk], 0);
-      end; // except
-    end;
-  end;  // if
+      // testa CPF iguais
+  //    if ((Length(MskCPF.Text) > 0) and (RgPessoaD.ItemIndex = 0) and (SoNumeros(MskCgc.Text) <> '')) and (UpperCase(vEmpresa)<>'PLANTA') and (UpperCase(vEmpresa)<>'BG') and (UpperCase(vEmpresa)<>'ATAKADINHO') and (UpperCase(vEmpresa)<>'TEPROLIM') then begin
+  //      With AdoQryCombFone do begin
+  //        Sql.Text := 'Select P.cdPessoa,P.nmPessoa,J.dsCPF FROM Pessoa P WITH (NOLOCK) INNER JOIN '+
+  //        'P_Fisica J WITH (NOLOCK) ON P.cdPessoa = J.cdPessoa Where J.dsCPF = :CPF and P.ser = :TIPO and P.cdPessoa <> :CDPESSOA';
+  //        Parameters.parambyname('CPF').Value := MskCpf.Text;
+  //        Parameters.parambyname('TIPO').Value := 'C';
+  //        Parameters.parambyname('CDPESSOA').Value := EdtCodigo.Text;
+  //        Open;
+  //        if (AdoQryCombFone.RecordCount <> 0)  then begin
+  //          Application.OnMessage := FormPrincipal.NaoProcessaMsg;
+  //          {if} MessageDlg ('Este CPF já está cadastrado com o CLIENTE --> ' +
+  //            AdoQryCombFone.FieldByName('cdPessoa').AsString + ' - ' +
+  //            AdoQryCombFone.FieldByName('nmPessoa').AsString{+ #13'' + ' '+ #13'' +
+  //            'Deseja cadastrá-lo mesmo assim?'}, mtWarning,[mbOK],0); {= mrNo then begin}
+  //            Application.OnMessage := FormPrincipal.ProcessaMsg;
+  //            PgCtrolMdCadastro.ActivePage := TBSheetMdCadastroDados;
+  //            EdtNome.SetFocus;
+  //            close;
+  //            exit;
+  //          {end else
+  //            Application.OnMessage := FormPrincipal.ProcessaMsg;}
+  //        end;
+  //        close;
+  //      end;
+  //    end;
+       //SPED FISCAL
+       // pega os campos para comparar se foram alterados antes
+      if RgPessoaD.ItemIndex = 0 then // SE FOR PESSOA FÍSICA
+         preencheVetorSped('D',EdtNome.Text,mskCgc.Text,mskCpf.Text,MskInscricao2.Text,EdtCdMunicipio.Text,
+                           EdtEndereco.Text, EdtNumero.Text,EdtComplemento.Text,EdtBairro.Text)
+      else
+         preencheVetorSped('D',EdtNome.Text,mskCgc.Text,mskCpf.Text,MskInscricao.Text,EdtCdMunicipio.Text,
+                           EdtEndereco.Text, EdtNumero.Text,EdtComplemento.Text,EdtBairro.Text);
+
+      With AdoQryAlterar do
+      begin
+        try
+          DModulo.Conexao.BeginTrans;
+          Sql.Text := 'Delete From P_Fisica Where cdpessoa = :CODIGO ';
+          Parameters.ParamByName('CODIGO').Value := EdtCodigo.Text;
+          ExecSQL;
+          Sql.Text := 'Delete From P_Juridica Where cdPessoa = :CODIGO ';
+          Parameters.ParamByName('CODIGO').Value := EdtCodigo.Text;
+          ExecSQL;
+          Grava_Pessoa;
+          Sql.Text := 'Update Pessoa Set dsAtivo = :DSATIVO,nmPessoa = :NMPESSOA,                '+
+                      'dtCadastro = :DTCADASTRO,dsEmail = :DSEMAIL,dsMemo = :DSMEMO,             '+
+                      'dtAlteracao = :dtAlteracao,dsUsuario = :dsUsuario, vlComissao = :COMISSAO,'+
+                      'dsHomePage = :DSHOMEPAGE,EXISTIR = :EXISTIR,dsTipoRecebimento = :FORMA,   '+
+                      'dsEmailNFe = :DSEMAILNFE, dsIndIEDest = :dsIndIEDest Where cdPessoa = :CDPESSOA ';
+          if CkbAtivosD.Checked then   //  mudar se for ativo ou não
+            parameters.parambyname('DSATIVO').value  := 'S'
+          else
+            parameters.parambyname('DSATIVO').value  := 'N';
+          parameters.parambyname('NMPESSOA').value   := EdtNome.Text;
+          parameters.parambyname('FORMA').value      := EdtFormaReceb.Text;
+          parameters.parambyname('DTCADASTRO').value := DtCadastro.date;
+          parameters.parambyname('DSEMAIL').value    := EdtEmail.Text;
+          parameters.parambyname('DSEMAILNFE').value := EdtEmail_Danfe.Text;
+          parameters.parambyname('DSMEMO').value     := MmCliente.Text;
+          parameters.parambyname('DSHOMEPAGE').value := EdtHomePage.Text;
+          parameters.parambyname('CDPESSOA').value   := EdtCodigo.Text;
+          Parameters.ParamByName('COMISSAO').Value   := edtComissao.Text;
+          parameters.parambyname('dtalteracao').value := vData_Banco;
+          parameters.parambyname('dsUsuario').value   := cdOperador; //+ ' ' +FormPrincipal.StbPrincipal.Panels[0].Text;
+          if RgPessoaD.ItemIndex = 0 then
+            parameters.parambyname('EXISTIR').value := 'F'
+          else
+            parameters.parambyname('EXISTIR').value := 'J';
+          if (ckbIndIEDest.Checked) then//and (Length(MskInscricao.Text) > 0) then
+            parameters.parambyname('dsIndIEDest').value  := 1
+          else
+            parameters.parambyname('dsIndIEDest').value  := 0;
+          ExecSql;
+          Sql.Text := 'Update Endereco Set nmLogradouro = :NMLOGRADOURO,dsComplemento = :DSCOMPLEMENTO,                  '+
+                      'dsCep = :DSCEP,dsBairro = :DSBAIRRO,dsUf = :DSUF,dsCidade = :DSCIDADE,CDMunicipio = :CDMUNICIPIO, '+
+                      'nrnumero = :NRNUMERO Where cdPessoa = :CDPESSOA                                                   ';
+          parameters.parambyname('NMLOGRADOURO').value  := copy(EdtEndereco.Text,1,40); //copy pra não passar do tamanho do campo qd busca pelo cep
+          parameters.parambyname('DSCOMPLEMENTO').value := EdtComplemento.Text;
+          parameters.parambyname('DSCEP').value         := EdtCep.Text;
+          parameters.parambyname('DSBAIRRO').value      := EdtBairro.Text;
+          parameters.parambyname('DSUF').value          := CbxEstado.Text;
+          parameters.parambyname('DSCIDADE').value      := CbxCidade.Text;
+          parameters.parambyname('CDMUNICIPIO').value   := EdtCdMunicipio.Text;
+          parameters.parambyname('CDPESSOA').value      := EdtCodigo.Text;
+          parameters.parambyname('NRNUMERO').value      := EdtNumero.Text;
+          ExecSql;
+
+          Sql.Text := 'Update Cliente Set dsLimCredito = :LIMITE,dsPublicoPrivado = :DSPUBLICOPRIVADO,'+
+                      'nrDiaVenc = :NRDIAVENC,nrDiaVenc2 = :NRDIAVENC2,cdCodigo = :CDCODIGO,          '+
+                      'cdRegiao = :CDREGIAO, cdPessoa_1 = :CDPESSOA_1,                                '+
+                      'dsAtacado = :DSATACADO,dsRestricao = :DSRESTRICAO, dsMotivo = :DSMOTIVO,       '+
+                      'dsLocalizacao = :DSLOCAL,dsPreVenda = :DSPREVENDA,dsIndIEDest = :dsIndIEDest,  '+
+                      'vlDescVista = :DESCVISTA, vlDescPrazo = :DESCPRAZO,DSVISTA = :DSVISTA,         '+
+                      'nrCartao = :NRCARTAO,dsInscricaoMunicipal = :DSINSCRICAOMUNICIPAL,             '+
+                      'DSISENTO = :DSISENTO, cdMatriz = :cdMatriz, dsFaturaUnica = :dsFaturaUnica ';
+
+          if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+          begin
+            sql.add(',dsContrato = :DSCONT, dtInicio = :dtInicio,      ');
+            sql.add('dtFim = :dtFim,nrVisitas = :nrVisitas,tpStatus = :tpStatus,dsEquipamentos = :dsEquipamentos, ');
+            sql.add('nrRamais = :nrRamais,dsOutros = :dsOutros,cdTecnico = :cdTecnico,nrObjeto = :nrObjeto  ');
+          end;
+          sql.add('Where cdPessoa = :CDPESSOA  ');
+
+          if UPPERCASE(vEmpresa) = 'TELEQUIPE' then
+          begin
+            parameters.parambyname('DSCONT').value            := EdtContrato.Text;
+            parameters.parambyname('dtInicio').value          := DateToStr(EdtDataChegada.Date);
+            parameters.parambyname('dtFim').value             := DateToStr(EdtDataSaida.Date);
+            if EdtVisitas.Text <> '' then
+              parameters.parambyname('nrVisitas').value       := EdtVisitas.Text
+              else parameters.parambyname('nrVisitas').value  := '0';
+            parameters.parambyname('tpStatus').value          := CBStatus.ItemIndex;
+            parameters.parambyname('dsEquipamentos').value    := EdtEquipamento.Text;
+            if EdtRamais.Text <> '' then
+              parameters.parambyname('nrRamais').value        := EdtRamais.Text
+              else parameters.parambyname('nrRamais').value   := '0';
+            parameters.parambyname('dsOutros').value          := EdtOutros.Text;
+            if CBCodigoTec.Text <> '' then
+              parameters.parambyname('cdTecnico').value       := CBCodigoTec.Text
+              else parameters.parambyname('cdTecnico').value  := 0;
+            if EdtNrObjeto.Text <> '' then
+              parameters.parambyname('nrObjeto').value       := EdtNrObjeto.Text
+              else parameters.parambyname('nrObjeto').value  := 0;
+          end;
+          if trim(EdtCdMatriz.Text) <> '' then
+            parameters.parambyname('cdMatriz').value := EdtCdMatriz.Text
+          else
+            parameters.parambyname('cdMatriz').value := null;
+
+          if CbxFaturaUnica.Checked then
+            parameters.parambyname('dsFaturaUnica').value := 1
+          else
+            parameters.parambyname('dsFaturaUnica').value := 0;
+          if (ckbIndIEDest.Checked) then //and (Length(MskInscricao.Text) > 0) then
+            parameters.parambyname('dsIndIEDest').value  := 1
+          else
+            parameters.parambyname('dsIndIEDest').value  := 0;
+          parameters.parambyname('DSINSCRICAOMUNICIPAL').value := TRim(MskInscricaoMunic.Text);
+          parameters.parambyname('LIMITE').Value       := StrToFloat(FormatFloat('0.00',StrToFloat(EdtLimite.Text)));
+          parameters.parambyname('CDPESSOA').Value     := EdtCodigo.Text;
+          parameters.parambyname('CDREGIAO').value     := EdtCdRegiao.Text;
+          parameters.parambyname('CDPESSOA_1').value   := EdtCdVendedor.Text;
+          parameters.parambyname('NRCARTAO').value     := EdtnrCartao.Text;
+          if ckbIsento.Checked then
+            parameters.parambyname('DSISENTO').value  := 1
+          else
+            parameters.parambyname('DSISENTO').value  := 0;
+          if Length(EdtDias.Text) > 0 then
+            parameters.parambyname('NRDIAVENC').value  := EdtDias.Text
+          else
+            parameters.parambyname('NRDIAVENC').value  := '0';
+          if Length(EdtDia2.Text) > 0 then
+            parameters.parambyname('NRDIAVENC2').value := EdtDia2.Text
+          else
+            parameters.parambyname('NRDIAVENC2').value := '0';
+          parameters.parambyname('CDCODIGO').value := EdtcdtpCli.Text;
+          case RgTpVencimento.ItemIndex of
+             0: parameters.parambyname('DSPUBLICOPRIVADO').value := 'I'; // normal
+             1: parameters.parambyname('DSPUBLICOPRIVADO').value := '2'; // data base
+             2: parameters.parambyname('DSPUBLICOPRIVADO').value := '3'; // quantidade de dias
+             3: parameters.parambyname('DSPUBLICOPRIVADO').value := '4'; // Dois vencimentos
+          end;
+          if ckRestricao.Checked then   // mudar se for ativo ou não
+            parameters.parambyname('DSRESTRICAO').value := 'S'
+          else
+            parameters.parambyname('DSRESTRICAO').value := 'N';
+          if CkAtacado.Checked then   //  mudar se for ativo ou não
+            parameters.parambyname('DSATACADO').value := 'S'
+          else
+            parameters.parambyname('DSATACADO').value := 'N';
+          if ckVista.Checked then   //  mudar se for ativo ou não
+            parameters.parambyname('DSVISTA').value := 'S'
+          else
+            parameters.parambyname('DSVISTA').value := 'N';
+          parameters.parambyname('DSMOTIVO').Value   := EdtMotivo.Text;
+          parameters.parambyname('DSLOCAL').Value    := EdtLocalizacao.Text;
+          parameters.parambyname('DSPREVENDA').Value := EdtPreVenda.Text;
+          parameters.parambyname('DESCVISTA').Value  := EdtDescVista.Text;
+          parameters.parambyname('DESCPRAZO').Value  := EdtDescPrazo.Text;
+          FrmPrincipalPreVenda.SalvaLogEventos('Alteração de Cliente',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
+                                                            EdtCodigo.Text,'',0,StrToInt(cdOperador),'1');
+          ExecSql;
+          Grava_Sped(EdtCodigo.Text);
+          DModulo.Conexao.CommitTrans;
+          salvouOCiente := True;
+          Messagedlg('Alteração ok!', mtinformation, [mbOk], 0);
+        except
+          DModulo.Conexao.RollbackTrans;
+          Messagedlg('Não foi possivel alterar os dados!', mterror, [mbOk], 0);
+        end; // except
+      end;
+    end;  // if
+  finally
+    AdoQryAlterar.Connection := DModulo.Conexao;
+    AdoQryUltimoCodigo.Connection := DModulo.Conexao;
+    AdoQrySalvar.Connection := DModulo.Conexao;
+  end;
   self.DesativaCampos;
   TrataBotoesPadrao(Sender,Padrao);
   Status := [Padrao];
@@ -1713,34 +1723,42 @@ begin
         Sql.Text := 'Delete From Orcamento Where cdCliente = :CDPESSOA AND nrObjeto = 0 ';
         parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
         ExecSql;
-        if RgPessoaD.ItemIndex = 0 then
-          Sql.Text := 'Delete From P_Fisica Where cdPessoa = :CDPESSOA '
-        else
-          Sql.Text := 'Delete From P_Juridica Where cdPessoa = :CDPESSOA ';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
-        Sql.Text := 'Delete From Endereco Where cdPessoa = :CDPESSOA ';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
-        Sql.Text := 'Delete From Telefone Where cdPessoa = :CDPESSOA ';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
-        if UPPERCASE(vEmpresa) = 'MASSAPAULISTA' then
-        begin
-          Sql.Text := 'Delete From itePreco Where cdPessoa = :CDPESSOA ';
+        if (vIPMaquinaVirtual <> '') and (vnmBancoNuvem <> '') then begin
+          Sql.Text := 'UPDATE Pessoa SET dsAtivo = ''N'' Where cdPessoa = :CDPESSOA ';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+        end
+        else begin
+          if RgPessoaD.ItemIndex = 0 then
+            Sql.Text := 'Delete From P_Fisica Where cdPessoa = :CDPESSOA '
+          else
+            Sql.Text := 'Delete From P_Juridica Where cdPessoa = :CDPESSOA ';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+          Sql.Text := 'Delete From Endereco Where cdPessoa = :CDPESSOA ';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+          Sql.Text := 'Delete From Telefone Where cdPessoa = :CDPESSOA ';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+          if UPPERCASE(vEmpresa) = 'MASSAPAULISTA' then
+          begin
+            Sql.Text := 'Delete From itePreco Where cdPessoa = :CDPESSOA ';
+            parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+            ExecSql;
+          end;
+          sql.Text := 'delete PESSOA_ALT_SPED where cdPessoa = :cdPessoa';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+
+          Sql.Text := 'Delete From Cliente Where cdPessoa = :CDPESSOA ';
+          parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
+          ExecSql;
+          Sql.Text := 'Delete From Pessoa Where cdPessoa = :CDPESSOA ';
           parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
           ExecSql;
         end;
-        sql.Text := 'delete PESSOA_ALT_SPED where cdPessoa = :cdPessoa';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
 
-        Sql.Text := 'Delete From Cliente Where cdPessoa = :CDPESSOA ';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
-        Sql.Text := 'Delete From Pessoa Where cdPessoa = :CDPESSOA ';
-        parameters.parambyname('CDPESSOA').value := EdtCodigo.Text;
-        ExecSql;
         FrmPrincipalPreVenda.SalvaLogEventos('Exclusão de cliente.',FrmPrincipalPreVenda.PegaDataBanco,FrmPrincipalPreVenda.PegaHoraBanco,
                                                           EdtCodigo.Text,'',0,StrToInt(cdOperador),'1');
         DModulo.Conexao.CommitTrans;
