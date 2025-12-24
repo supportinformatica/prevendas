@@ -4873,8 +4873,8 @@ begin
     prevenda.itens[0].precoVenda := prevenda.itens[0].precoVenda -
       (valorAjustar / prevenda.itens[0].quantidade);
     // antes da reforma não tinha essas duas linhas abaixo
-//    prevenda.itens[0].SubTotal := prevenda.itens[0].precoVenda * prevenda.itens[0].quantidade;
-//    prevenda.itens[0].SubTotal := SimpleRoundTo(prevenda.itens[0].SubTotal, -2);
+    prevenda.itens[0].SubTotal := prevenda.itens[0].precoVenda * prevenda.itens[0].quantidade;
+    prevenda.itens[0].SubTotal := SimpleRoundTo(prevenda.itens[0].SubTotal, -2);
     EdtSubTotal.Text := FormatCurr('0.00', vlLiquido);
   end;
 end;
