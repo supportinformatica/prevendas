@@ -2220,7 +2220,10 @@ begin
      (dsCGC = '10393562000368') or (dsCGC = '10393562000449') or
      (dsCGC = '20307080000130') or (dsCGC = '09524113000160') or
      (dsCGC = '04620694000110') or (dsCGC = '03178643000118') or
-     (dsCGC = '09102306000123') or (dsCGC = '12462220000116')
+     (dsCGC = '09102306000123') or (dsCGC = '12462220000116') or
+     (dsCGC = '63600190000106') or (dsCGC = '12726637000149') or
+     (dsCGC = '22071174000188') or (dsCGC = '44823917000161') or
+     (dsCGC = '38924391000103')
   then
   begin
     ADOSPConsultaDESCRIO.Size := 100;
