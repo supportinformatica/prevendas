@@ -4896,7 +4896,7 @@ begin
       (StrToFloat(FormatFloatQ(vCasasPreco, vlLiquido)) -
       StrToFloat(FormatFloatQ(vCasasPreco, vlProdutos)))) * 100) /
       StrToFloat(FormatFloatQ(vCasasPreco, vlProdutos));
-  EdtDesconto.Text := FormatFloat('0.000000', vlDescPorc);
+  EdtDesconto.Text := FormatFloat('0.00000000', vlDescPorc);
   EdtDescontoExit(self);
   if (StrToCurr(FormatCurr('0.00', vlLiquido)) <> StrToCurr(EdtSubTotal.Text)) and
    (StrtoCurrDef(EdtDesconto.Text,0) <> 0)
