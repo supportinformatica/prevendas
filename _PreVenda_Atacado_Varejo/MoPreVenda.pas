@@ -5162,11 +5162,16 @@ begin
     FrmRelOrcamentos.RLLabel1.Caption := 'C. Barras';
   end else if dsCGC = '86994175000187' then // CASA DE PARAFUSOS VASCONCELOS
   begin
-    FrmRelOrcamentos.RLLabel24.Left := 181;
-    FrmRelOrcamentos.QREDescricao.Left := 181;
+    FrmRelOrcamentos.RLLabel24.Left := 89;// 181;
+    FrmRelOrcamentos.QREDescricao.Left := 89; // 181;
+    FrmRelOrcamentos.QREDescricao.Width:= 500;
+    FrmRelOrcamentos.QREDescricao.Font.SIZE := 7;
+    FrmRelOrcamentos.RLDBText6.SendToBack;
+    FrmRelOrcamentos.RLDBText6.Enabled := False;
     FrmRelOrcamentos.RLDBText6.Visible := False;
     FrmRelOrcamentos.RLLabel1.Visible := True;
     FrmRelOrcamentos.RLDBText1.Visible := True;
+    FrmRelOrcamentos.RLDBText1.Width := 50;
     FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
     FrmRelOrcamentos.RLLabel1.Caption := 'NCM';
   end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
