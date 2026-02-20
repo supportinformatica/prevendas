@@ -5174,6 +5174,10 @@ begin
     FrmRelOrcamentos.RLDBText1.Width := 50;
     FrmRelOrcamentos.RLDBText1.DataField := 'dsMercosul';
     FrmRelOrcamentos.RLLabel1.Caption := 'NCM';
+    FrmRelOrcamentos.RLLblUnitario.left := 592;
+    FrmRelOrcamentos.QRLabel8.left := 589;
+    FrmRelOrcamentos.RLLblUnitario.Visible := True;
+    FrmRelOrcamentos.RLLblUnitario.BringToFront;
   end else if (RgOpcoes.ItemIndex = 2) and ((dsCGC = '10805128000186') or (dsCGC = '32836157000148')) then  // AUTO ELETRICA PLANAUTO e AUTOPECASBOMFIM NÃO IMPRIME QUANDO FOR ORÇAMENTO
   begin
     FrmRelOrcamentos.RLDBText6.Visible := False;
@@ -7377,9 +7381,9 @@ begin
     EdtTotal.Text := '0,00';
     edtValorBruto.Text := '0,00';
     EdtSubTotal.Text := '0,00';
-    AtualizaCombProduto; // pega o nome do produto
-    verificarDispEmEstoque := false;
-    transformarOrcamentoPrevenda := false;
+    AtualizaCombProduto;
+    verificarDispEmEstoque := False;
+    transformarOrcamentoPrevenda := False;
     if (vOrcamento = 'O') then
     begin // se for orcamento preguntar se ele vai transormar em pre-venda
       Application.OnMessage := FrmPrincipalPreVenda.NaoProcessaMsg;
@@ -8545,7 +8549,8 @@ begin
         SimpleRoundTo(prevenda.itens[i].quantidade, vCasasQtd * -1));
       Cells[3, i + 1] := FormatFloatQ(vCasasPreco,
         SimpleRoundTo(prevenda.itens[i].precoVenda, vCasasPreco * -1));
-      prevenda.itens[i].precoVenda := StrToFloat(Cells[3, i + 1]);
+      if RgOpcoes.ItemIndex <> 1 then // diferente de alterar
+        prevenda.itens[i].precoVenda := StrToFloat(Cells[3, i + 1]);
       Cells[4, i + 1] := FormatFloatQ(2,
         SimpleRoundTo(prevenda.itens[i].SubTotal, -2)); // total
       Cells[5, i + 1] := prevenda.itens[i].prateleira;

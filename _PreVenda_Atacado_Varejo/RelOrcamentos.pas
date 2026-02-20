@@ -315,8 +315,9 @@ begin
   temp := SimpleRoundTo(temp, -2);
   totalBruto := totalBruto + temp;
   temp := 0;
-  temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
-  temp := SimpleRoundTo(temp, -2);
+  temp := ADOSPRelDados.FieldByName('nrQtd').asFloat * ADOSPRelDados.FieldByName('vlPreco').asFloat;
+//  temp := (SimpleRoundTo(ADOSPRelDados.FieldByName('nrQtd').asFloat, MoPreVenda.vCasasQtd*-1) * SimpleRoundTo(ADOSPRelDados.FieldByName('vlPreco').asFloat, MoPreVenda.vCasasPreco*-1));
+//  temp := SimpleRoundTo(temp, -2);
   totalLiquido := totalLiquido + temp;
 end;
 
@@ -332,7 +333,6 @@ begin
   RLDBResult3.Font.Color := rlband2.Color;
   QREPreco.Font.Color := rlband2.Color;
 	QRETotal.Font.Color := rlband2.Color;
-
   if (ADOSPRelDados.FieldByName('nrQtd').asFloat * ADOSPRelDados.FieldByName('vlPreco').AsFloat) > 999999 then
     RLBand2.Font.Size := 6
   else
@@ -387,7 +387,7 @@ procedure TfrmRelOrcamentos.RLBand3BeforePrint(Sender: TObject;
 begin
   lblSubTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalBruto,-2));
   lblTotal.Caption := FormatFloat('0.00',SimpleRoundTo(totalLiquido,-2));
-  lblValorDesconto.Caption := FloatToStr(StrtoFloat(StringReplace(lblSubTotal.Caption,'.','',[rfReplaceAll])) - StrtoFloat(StringReplace(lblTotal.Caption,'.','',[rfReplaceAll])));
+  lblValorDesconto.Caption := FloatToStr(StrtoFloat(StringReplace(lblSubTotal.Caption, '.', '', [rfReplaceAll])) - StrtoFloat(StringReplace(lblTotal.Caption, '.', '', [rfReplaceAll])));
   if (lblPorcDesconto.Visible = True) and ((StrToFloatDef(lblValorDesconto.Caption, 0) > 0)) then
   begin
     lblPorcDesconto.Caption := FormatFloat('0.00',(1 - (StrtoFloat(lblTotal.Caption) / StrtoFloat(lblSubTotal.Caption)) )*100);
