@@ -16837,45 +16837,20 @@ begin
       exit;
     end;
     Close;
-    // if (UpperCase(vEmpresa) = 'PBFARMA') then
-    // begin
-    // Connection := DModulo.ADODeposito;
-    // SQL.Text := 'SELECT DB_NAME() AS DataBaseName';
-    // Open;
-    // banco_deposito := '[' + fieldbyname('DataBaseName').asString + ']' + '.dbo.';
-    // Connection := DModulo.Conexao;
-    // SQL.Text := 'select LOTES.lote lote, LOTES.validade strValidade, sum(LOTES.nrqtd) nrqtd, LOTES.cdFabricante, LOTES.validade '+
-    // 'from (select 	NRLOTE lote,                                                                 '+
-    // '	CONVERT(VARCHAR(10),VALIDADE,103) strvalidade,                                             '+
-    // '	nrqtd, cdFabricante,                                                                                    '+
-    // '	validade                                                                                   '+
-    // 'FROM ITELOTE where cdproduto = :CODIGO1 and nrqtd > 0                                       '+
-    // 'union all                                                                                   '+
-    // 'select 	NRLOTE lote,                                                                       '+
-    // '	CONVERT(VARCHAR(10),                                                                       '+
-    // '	VALIDADE,103) strvalidade,                                                                 '+
-    // '	nrqtd, cdFabricante,                                                                                    '+
-    // '	validade                                                                                   '+
-    // 'FROM '+ banco_deposito +'ITELOTE where cdproduto = :CODIGO2 and nrqtd > 0) as LOTES         '+
-    // 'group by LOTES.lote, LOTES.validade, LOTES.cdFabricante                                                         '+
-    // 'order by validade                                                                           ';
-    // Parameters.ParamByName('CODIGO1').Value:= cdproduto;
-    // Parameters.ParamByName('CODIGO2').Value:= cdproduto;
-    // end
-    // else
-    begin
-      Connection := DModulo.Conexao;
-      sql.Text :=
-      'Select lote, CONVERT(VARCHAR(10),VALIDADE,103) validade,'+
-      'nrqtd, Fabricacao                                       '+
-      'From (Select NRLOTE lote, validade,                     '+
-      'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,        '+
-      'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao        '+
-      'FROM ITELOTE WITH (NOLOCK)                              '+
-      'Where cdproduto = :CODIGO                               '+
-      'Group by nrLote, validade, dtFabricacao                 '+
-      'Having (SUM(nrqtd) > 0) ) Selecao                       '+
-      'Order by cast(validade as date) ASC                     ';
+//    begin
+    Connection := DModulo.Conexao;
+    sql.Text :=
+    'Select lote, CONVERT(VARCHAR(10),VALIDADE,103) validade,'+
+    'nrqtd, Fabricacao                                       '+
+    'From (Select NRLOTE lote, validade,                     '+
+//      'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,      '+
+    'REPLACE (CONVERT(VARCHAR(MAX), cast(SUM(isnull(NRQTD,0)) as decimal(18,2))), ''.'', '','') nrqtd,'+
+    'CONVERT(VARCHAR(10),dtFabricacao,103) Fabricacao '+
+    'FROM ITELOTE WITH (NOLOCK)              '+
+    'Where cdproduto = :CODIGO               '+
+    'Group by nrLote, validade, dtFabricacao '+
+    'Having (SUM(nrqtd) > 0) ) Selecao       '+
+    'Order by cast(validade as date) ASC     ';
 //        'Select NRLOTE lote,                             '+
 //        'CONVERT(VARCHAR(10),VALIDADE,103) validade,     '+
 //        'CONVERT(VARCHAR(10),SUM(isnull(NRQTD,0))) nrqtd,'+
@@ -16886,8 +16861,8 @@ begin
 //        'ITELOTE.dtFabricacao                            '+
 //        'order by 2 ASC '+
 //        'having (SUM(nrqtd) > 0)                         ';
-      Parameters.ParamByName('CODIGO').Value := cdProduto;
-    end;
+    Parameters.ParamByName('CODIGO').Value := cdProduto;
+//    end;
     MontaComboListComposto(query, CbLote, 3);
     CbLote.Enabled := True;
     CbLote.ItemIndex := -1;
