@@ -3,7 +3,7 @@ unit Sobre;
 interface
 
 uses Windows, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls, jpeg, sysutils;
+  Buttons, ExtCtrls, jpeg, sysutils, Vcl.Imaging.pngimage;
 
 type
   TfrmSobre = class(TForm)

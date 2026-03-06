@@ -9,9 +9,6 @@ uses
 
 type
   TFrmPedeSenha = class(TForm)
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
     EditSenha: TEdit;
     ADOQuery1: TADOQuery;
     ADOQuery2: TADOQuery;
@@ -22,20 +19,22 @@ type
     editUsuario: TComboBox;
     LblData: TLabel;
     Image1: TImage;
-    Label10: TLabel;
-    Label12: TLabel;
-    Label4: TLabel;
-    Label15: TLabel;
-    Label17: TLabel;
     LblNomeCliente: TLabel;
-    Label6: TLabel;
     lblRegistro: TLabel;
-    LblAlterar: TLabel;
-    LblInserirChave: TLabel;
     Definirimpressora40colunas1: TMenuItem;
     Image2: TImage;
     Label9: TLabel;
-    Shape1: TShape;
+    LblQtdDiasRestantes: TLabel;
+    Image4: TImage;
+    Image5: TImage;
+    Image6: TImage;
+    Image7: TImage;
+    Image8: TImage;
+    Image9: TImage;
+    Image10: TImage;
+    Image3: TImage;
+    Image11: TImage;
+    Image12: TImage;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -43,13 +42,19 @@ type
     procedure Cancelar1Click(Sender: TObject);
     procedure EditSenhaKeyPress(Sender: TObject; var Key: Char);
     procedure EditSenhaChange(Sender: TObject);
-    procedure LblAlterarClick(Sender: TObject);
-    procedure LblAlterarMouseLeave(Sender: TObject);
-    procedure LblAlterarMouseEnter(Sender: TObject);
-    procedure LblInserirChaveClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Definirimpressora40colunas1Click(Sender: TObject);
     procedure Label17Click(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
+    procedure Image7MouseEnter(Sender: TObject);
+    procedure Image7MouseLeave(Sender: TObject);
+    procedure Image8Click(Sender: TObject);
+    procedure Image8MouseEnter(Sender: TObject);
+    procedure Image8MouseLeave(Sender: TObject);
+    procedure Image9Click(Sender: TObject);
+    procedure Image11Click(Sender: TObject);
+    procedure Image11MouseEnter(Sender: TObject);
+    procedure Image11MouseLeave(Sender: TObject);
   private
     isLoginInicial : Boolean;
     Procedure Confirma;
@@ -117,33 +122,68 @@ begin
   FreeMem(VerInfo, VerInfoSize);
 end;
 
-procedure TFrmPedeSenha.Label17Click(Sender: TObject);
+procedure TFrmPedeSenha.Image11Click(Sender: TObject);
 begin
   ShellExecute(Application.Handle, nil, PChar('https://supportinformatica.net/'), nil, nil, sw_hide);
 end;
 
-procedure TFrmPedeSenha.LblAlterarClick(Sender: TObject);
+procedure TFrmPedeSenha.Image11MouseEnter(Sender: TObject);
+begin
+  Image11.Cursor := crHandPoint;
+end;
+
+procedure TFrmPedeSenha.Image11MouseLeave(Sender: TObject);
+begin
+  Image11.Cursor := crDefault;
+end;
+
+procedure TFrmPedeSenha.Image7Click(Sender: TObject);
 begin
   FormAlteraSenha := TFormAlteraSenha.Create(Application);
   FormAlteraSenha.ShowModal;
 end;
 
-procedure TFrmPedeSenha.LblAlterarMouseEnter(Sender: TObject);
+procedure TFrmPedeSenha.Image7MouseEnter(Sender: TObject);
 begin
-  LblAlterar.GlowSize := 1;
-//  LblAlterar.Font.Style := [fsUnderline, fsBold];
+  Image7.Cursor := crHandPoint;
 end;
 
-procedure TFrmPedeSenha.LblAlterarMouseLeave(Sender: TObject);
+procedure TFrmPedeSenha.Image7MouseLeave(Sender: TObject);
 begin
-  LblAlterar.GlowSize := 0;
-//  LblAlterar.Font.Style := [fsBold];
+  Image7.Cursor := crDefault;
 end;
 
-procedure TFrmPedeSenha.LblInserirChaveClick(Sender: TObject);
+procedure TFrmPedeSenha.Image8Click(Sender: TObject);
 begin
   FrmRegistroSistema := TFrmRegistroSistema.Create(Application);
   FrmRegistroSistema.ShowModal;
+end;
+
+procedure TFrmPedeSenha.Image8MouseEnter(Sender: TObject);
+begin
+  Image8.Cursor := crHandPoint;
+end;
+
+procedure TFrmPedeSenha.Image8MouseLeave(Sender: TObject);
+begin
+  Image8.Cursor := crDefault;
+end;
+
+procedure TFrmPedeSenha.Image9Click(Sender: TObject);
+begin
+  if isLoginInicial then
+  begin
+    FrmPrincipalPreVenda.Close;
+  end else
+  begin
+    FrmPrincipalPreVenda.Enabled := True;
+    Close;
+  end;
+end;
+
+procedure TFrmPedeSenha.Label17Click(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, nil, PChar('https://supportinformatica.net/'), nil, nil, sw_hide);
 end;
 
 procedure TFrmPedeSenha.atualizarSenhaADM;
